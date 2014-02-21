@@ -1,0 +1,277 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+          
+      
+    <h:head>
+        <title>Sistema de controle de rotas : Pontos de Coleta : Inserir</title>
+    </h:head>
+    <h:body>
+    <ui:decorate template="/layout/logado/template.xhtml">
+        <ui:define name="titulo">Pontos de Coleta: Inserir</ui:define>
+        <ui:define name="conteudo">    
+            <p:panel styleClass="semBorda" header="#{bundle.pontoColeta}">  
+            <h:form id="formInserirPontosColeta">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                <p:panelGrid styleClass="semBorda">
+                
+                    <!-- ID -->
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="inseirID"
+                                           styleClass="fontepadrao"
+                                           value="Código"/>
+                        </p:column>
+                         <p:column colspan="4">
+                            <p:inputText id="inseirID"
+                                         value="#{pontosColetaManager.pontoColeta.idPontoColeta}"
+                                         style="background-color:#EEEEEE;"
+                                         size="5"
+                                         readonly="true"/>
+                         </p:column>
+                    </p:row>
+                                        
+                    <!-- DESCRIÇÃO -->
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel  for="pontoColetaDescricao"
+                                            value="Descrição"  
+                                            styleClass="label"/>
+                        </p:column>
+                        <p:column colspan="4">
+                            <p:inputText    id="pontoColetaDescricao" 
+                                            required="true"
+                                            size="70"
+                                            requiredMessage="Por favor, insira uma descrição para o ponto de coleta."
+                                            value="#{pontosColetaManager.pontoColeta.descricao}"/>
+                                           <p:watermark for="pontoColetaDescricao" value="Descricao do ponto de coleta"/>
+                                             
+                            
+                        </p:column>
+                    </p:row>
+                    
+                    <!-- LATITUDE -->
+                    <p:row>
+                        <p:column style="width:5%;">
+                            <p:outputLabel  for="pontoColetaLatitude"
+                                            value="Latitude"  
+                                            styleClass="label"/>
+                        </p:column>
+                       <p:column style="width:5%;">
+                           <p:inputText    id="pontoColetaLatitude" 
+                                            required="true"
+                                            size="10"
+                                            requiredMessage="Por favor, insira uma latitude para o ponto de coleta."
+                                            value="#{pontosColetaManager.pontoColeta.latitude}" />
+                           <p:watermark for="pontoColetaLatitude" value="Latitude" />    
+                        </p:column>
+                        
+                        <!-- LONGITUDE -->
+                        <p:column style="text-align:right;width:5%;">
+                            <p:outputLabel  for="pontoColetaLongitude"
+                                            value="Longitude"  
+                                            styleClass="label"/>
+                        </p:column>
+                        
+                        <p:column style="text-align:left; ">
+                            <p:inputText    id="pontoColetaLongitude" 
+                                            required="true"
+                                            size="10"
+                                            requiredMessage="Por favor, insira uma longitude para o ponto de coleta."
+                                            value="#{pontosColetaManager.pontoColeta.longitude}" />
+                            <p:watermark for="pontoColetaLongitude" value="Longitude"/>
+                        </p:column>
+                     </p:row>
+
+                   <!-- ATIVO OU INATIVO -->
+                    <p:row>
+                        <p:column colspan="2">   
+                            <p:outputLabel  value="Ativo  "
+                                            styleClass="label"
+                                            for="pontoAtivo"/>
+                            <p:selectBooleanCheckbox id="pontoAtivo" value="#{pontosColetaManager.pontoColeta.ativo}"
+                                                     rendererType="boolean"/> 
+                            <h:outputLabel  value=""/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <div style="margin-left: 2%;width:60%;">
+                    <fieldset>
+                        <legend> Endereço </legend>
+                    <p:panelGrid styleClass="semBorda">
+
+                        <!-- CEP -->
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel  for="CEP"
+                                                value="CEP" 
+                                                styleClass="label"/> 
+                            </p:column>
+                            <p:column colspan="3">
+                                <p:inputMask    id="CEP"
+                                                value="#{pontosColetaManager.pontoColeta.endereco.cep}"
+                                                mask="99999-999"
+                                                required="true"
+                                                size="8"
+                                                requiredMessage="Por favor, informe o CEP."/>
+                                <p:watermark for="CEP" value="CEP"/>
+                                
+                            </p:column>
+                        </p:row>
+
+                        <!-- TIPO DE LOGRADOURO -->
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel  for="pontoColetaTipoLogradouro" 
+                                                value="Tipo de Logradouro"
+                                                styleClass="label"/>
+
+                            </p:column>
+                            <p:column colspan="3">
+                                <p:selectOneMenu id="pontoColetaTipoLogradouro"
+                                    required="true"
+                                    style="width: 150px !important"
+                                    requiredMessage="Por favor, insira o tipo de logradouro."
+                                    value="#{pontosColetaManager.pontoColeta.endereco.tipo}">
+                                    <f:selectItems value="#{pontosColetaManager.tipoLogradouros}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <!-- LOGRADOURO -->
+                            <p:column>
+                                <p:outputLabel  for="enderecoLogradouro"
+                                                value="Logradouro"  
+                                                styleClass="label"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="enderecoLogradouro" 
+                                             required="true"
+                                             size="35"
+                                             requiredMessage="Por favor, insira um logradouro."
+                                             value="#{pontosColetaManager.pontoColeta.endereco.logradouro}" />
+                                <p:watermark for="enderecoLogradouro" value="Endereco"/>
+                            </p:column>
+
+                            <!-- NÚMERO -->
+                            <p:column>
+                                 <p:outputLabel  for="enderecoNumero"
+                                                 value="Número"  
+                                                 styleClass="label"/>
+                            </p:column>
+
+                            <p:column>
+                                 <p:inputText id="enderecoNumero" 
+                                              required="true"
+                                              size="3"
+                                              requiredMessage="Por favor, insira um número."
+                                              value="#{pontosColetaManager.pontoColeta.endereco.numero}" /> 
+                                 <p:watermark for="enderecoNumero" value="Nº"/>
+                            </p:column>
+
+                        </p:row>
+
+                        <!-- COMPLEMENTO -->
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel  for="enderecoComplemento"
+                                                value="Complemento"  
+                                                styleClass="label"/>
+                            </p:column>
+                            <p:column colspan="3">
+                                <p:inputText    id="enderecoComplemento" 
+                                                required="false"
+                                                size="62"
+                                                requiredMessage="Por favor, insira um complemento."
+                                                value="#{pontosColetaManager.pontoColeta.endereco.complemento}" />
+                                <p:watermark for="enderecoComplemento" value="Complemento"/>
+                            </p:column>
+                        </p:row>
+
+                        <!-- BAIRRO -->
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel  for="enderecoBairro"
+                                                value="Bairro"  
+                                                styleClass="label"/>
+                            </p:column>
+                            <p:column colspan="3">
+                                <p:inputText    id="enderecoBairro" 
+                                                required="true"
+                                                size="62"
+                                                requiredMessage="Por favor, insira um bairro."
+                                                value="#{pontosColetaManager.pontoColeta.endereco.bairro}" />
+                                <p:watermark for="enderecoBairro" value="Bairro"/>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <!-- CIDADE -->
+                            <p:column>
+                                <p:outputLabel  for="enderecoCidade"
+                                                value="Cidade"  
+                                                styleClass="label"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText    id="enderecoCidade" 
+                                                required="true"
+                                                size="40"
+                                                requiredMessage="Por favor, insira uma cidade."
+                                                value="#{pontosColetaManager.pontoColeta.endereco.cidade}" />
+                                <p:watermark for="enderecoCidade" value="Cidade"/>
+                            </p:column>
+
+                            <!-- ESTADO -->
+                            <p:column>
+                                <p:outputLabel  for="enderecoEstado" 
+                                                value="Estado"  
+                                                styleClass="label"/>
+                                </p:column>
+                            <p:column>
+                                <p:inputText    id="enderecoEstado" 
+                                                required="true"
+                                                size="3"
+                                                requiredMessage="Por favor, insira um estado."
+                                                value="#{pontosColetaManager.pontoColeta.endereco.estado}" />
+                                <p:watermark for="enderecoEstado" value="Estado"/>
+                            </p:column>
+                        </p:row>
+
+                        <!-- PAÍS -->
+                        <p:row>
+                        <p:column>
+                            <p:outputLabel  for="enderecoPais"
+                                            value="País"  
+                                            styleClass="label"/>
+                        </p:column>
+                        <p:column colspan="3">
+                            <p:inputText    id="enderecoPais" 
+                                            required="true"
+                                            requiredMessage="Por favor, insira um país."
+                                            value="#{pontosColetaManager.pontoColeta.endereco.pais}" />
+                            <p:watermark for="enderecoPais" value="País"/>
+                        </p:column>
+                        </p:row>
+                        <!-- BOTÃO -->
+                    </p:panelGrid>
+                    </fieldset>
+                  </div>
+                  <div style="width:62%;text-align: right;" >
+                   <p:commandButton id="Btninserir" 
+                                    action="#{pontosColetaManager.alterar()}" 
+                                    value="Confirmar" 
+                                    styleClass="botao"
+                                    update='messages'/>
+                  </div>
+                </h:form>
+            </p:panel>
+        </ui:define>
+    </ui:decorate>
+    </h:body>
+</html>
+

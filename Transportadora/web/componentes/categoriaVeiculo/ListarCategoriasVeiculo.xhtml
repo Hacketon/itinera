@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>#{msg.headerCategoriaVeiculo}</title>
+    </h:head>
+    <h:body onload="selecionado($('#btnCategoriaVeiculo'));">
+        <h:outputScript>selecionado($('#btnCategoriaVeiculo'));</h:outputScript>
+        <f:view>      
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">
+                    <p:panel styleClass="semBorda" header="#{msg.listaCategoriaVeiculo}">
+                    <h:form>
+                        <p:messages id="messages" showDetail="true"/>
+                        <p:commandButton icon="ui-icon-plus" 
+                                             action="#{categoriaVeiculoManager.montarPaginaParaIncluirCategoriaVeiculo}" 
+                                             styleClass="fontepadrao" value="Novo"/>
+                        <h:panelGrid id="gridCategorias" >
+                            <h:outputText value="Não existem categorias cadastradas" 
+                                          rendered="#{empty categoriaVeiculoManager.categoriaVeiculos}" />
+
+                            <p:dataTable value="#{categoriaVeiculoManager.categoriaVeiculos}" 
+                                         var="categoria" 
+                                         paginator="true" 
+                                         emptyMessage="Não existem categorias de veículos para essa busca."
+                                         rows="10" 
+                                         rendered="#{not empty categoriaVeiculoManager.categoriaVeiculos}">
+
+                                <p:column headerText="Código" 
+                                          styleClass="fontepadrao"
+                                          style="text-align:center"
+                                          sortBy="#{categoria.idCategoriaVeiculo}" 
+                                          filterBy="#{categoria.idCategoriaVeiculo}">
+                                    
+                                    <h:outputText value="#{categoria.idCategoriaVeiculo}" />
+                                </p:column>
+
+                                <p:column headerText="Descrição" 
+                                          styleClass="fontepadrao"
+                                          sortBy="#{categoria.descricaoCategoria}" 
+                                          filterBy="#{categoria.descricaoCategoria}">
+                                    <h:outputText value="#{categoria.descricaoCategoria}" />
+                                </p:column>
+
+                                <p:column sortBy="#{categoria.reboqueSemiReboque}" 
+                                          styleClass="fontepadrao"
+                                          style="text-align: center;"
+                                          headerText="Reboque"
+                                          filterBy="#{categoria.reboqueSemiReboque}">
+                                    <h:selectBooleanCheckbox readonly="true" 
+                                                             disabled="true"
+                                                             value="#{categoria.reboqueSemiReboque}" />
+                                </p:column>
+
+                                <p:column headerText="">
+                                    <h:commandLink styleClass="fontepadrao" 
+                                                   action="#{categoriaVeiculoManager.montarPaginaParaAlterarCategoriaVeiculo()}"
+                                                   value="Alterar">
+                                        <f:setPropertyActionListener value="#{categoria}" target="#{categoriaVeiculoManager.categoriaVeiculo}" />  
+                                    </h:commandLink>
+
+                                </p:column>
+
+                                <p:column headerText="">
+                                    <p:commandLink styleClass="fontepadrao" 
+                                                   oncomplete="exclui.show();"
+                                                   value="Excluir">
+                                        <f:setPropertyActionListener value="#{categoria}" 
+                                                                     target="#{categoriaVeiculoManager.categoriaVeiculo}" />  
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+                        
+                        
+                        <!--DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
+                        <p:confirmDialog header="Excluir?" message="Você confirma a exclusão desta categoria de veículo?" id="excluiDlg" widgetVar="exclui">
+                            <p:commandButton value="Sim" action="#{categoriaVeiculoManager.excluir}" update="gridCategorias messages" />
+                            <p:commandButton value="Não" onclick="exclui.hide();" />
+                        </p:confirmDialog>
+                    </h:form>
+                    </p:panel>
+                </ui:define>
+            </ui:decorate>
+        </f:view>
+    </h:body>
+</html>
