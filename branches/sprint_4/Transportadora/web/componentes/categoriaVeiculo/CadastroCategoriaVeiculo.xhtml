@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+        <h:outputScript>selecionado($('#btnCategoriaVeiculo'));</h:outputScript>
+        <f:view>
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">        
+                    <h:form id="formInserirCategoria" styleClass="semBorda tr">
+                        <p:messages id="messages" showDetail="true"/>
+                        <p:panel styleClass="semBorda" header="#{bundle.categoriaVeiculo}" >
+                            <p:panelGrid columns="2" styleClass="semBorda">
+                                <h:outputLabel  for="inserirId" 
+                                                styleClass="label"
+                                                value="Código"/>
+                                <p:inputText    id="inserirId"
+                                                readonly="true"
+                                                style="background-color:#EEEEEE;"
+                                                value="#{categoriaVeiculoManager.categoriaVeiculo.idCategoriaVeiculo}" />
+                                <h:outputLabel  value="Descrição*"
+                                                styleClass="label"/>
+                                <p:column>
+                                    <p:inputText id="inserirDescricao" 
+                                                 maxlength="50"
+                                                 required="true"
+                                                 requiredMessage="Por favor, insira uma descrição para a categoria."
+                                                 size="50"
+                                                 value="#{categoriaVeiculoManager.categoriaVeiculo.descricaoCategoria}" />
+                                    <p:watermark for="inserirDescricao" value="Descrição da categoria do veículo" />
+                                </p:column>
+                                <h:outputLabel  value="Reboque ou Semi-Reboque"
+                                                styleClass="label"/>                                
+                                <p:selectBooleanCheckbox 
+                                    id="reboque_semireboque"
+                                    rendererType="boolean"
+                                    value="#{categoriaVeiculoManager.categoriaVeiculo.reboqueSemiReboque}" />
+                                <p:commandButton 
+                                    id="Btninserir" 
+                                    action="#{categoriaVeiculoManager.inserir}"
+                                    styleClass="botao"
+                                    value="Salvar"
+                                    update="messages"/>
+                                <p:spacer/>                                
+                            </p:panelGrid>
+                        </p:panel>
+                    </h:form>
+                </ui:define>
+            </ui:decorate>
+        </f:view>
+    </h:body>
+</html>
