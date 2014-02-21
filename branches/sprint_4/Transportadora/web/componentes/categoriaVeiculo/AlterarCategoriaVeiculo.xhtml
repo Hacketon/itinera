@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body onload="selecionado($('#btnCategoriaVeiculo'));">  
+        <ui:decorate template="/layout/logado/template.xhtml">
+            <ui:define name="conteudo">
+            <h:form id="formAlterarCategoria" styleClass="semBorda">
+                <p:panel styleClass="semBorda" header="#{bundle.alteraCategoriaVeiculo}">
+                
+                <p:messages id="messages" showDetail="true"/>
+                <p:panelGrid columns="2" >
+                    <h:outputLabel  for="AlterarId" 
+                                    value="Código"
+                                    styleClass="fontepadrao"/>
+                    <p:inputText    id="AlterarId"
+                                    value="#{categoriaVeiculoManager.categoriaVeiculo.idCategoriaVeiculo}" 
+                                    readonly="true"
+                                    style="background-color:#EEEEEE;"/>
+                    <h:outputLabel  value="Descrição*"  
+                                    for="AlterarDescricao"
+                                    styleClass="fontepadrao"/>
+                    <p:inputText    id="AlterarDescricao" 
+                                    required="true"
+                                    requiredMessage="Por favor, insira uma descrição para a categoria."
+                                    value="#{categoriaVeiculoManager.categoriaVeiculo.descricaoCategoria}" />
+                    <h:outputLabel  value="Reboque ou Semi-Reboque"
+                                    for="AlterarReboque"
+                                    styleClass="fontepadrao"/>
+                    <p:selectBooleanCheckbox 
+                                    id="AlterarReboque"
+                                    value="#{categoriaVeiculoManager.categoriaVeiculo.reboqueSemiReboque}"
+                                    rendererType="boolean"/> 
+                    <p:commandButton 
+                                     id="BtnAlterar" 
+                                     action="#{categoriaVeiculoManager.alterar()}" 
+                                     value="Confirmar" 
+                                     styleClass="botao"
+                                     update="messages"/>
+                    <h:outputLabel  value=""/>
+                </p:panelGrid>
+                </p:panel>
+            </h:form>
+        </ui:define>
+        </ui:decorate>
+
+    </h:body>
+</html>
