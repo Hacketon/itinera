@@ -34,123 +34,119 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Veiculo.findByIdVeiculo", query = "SELECT v FROM Veiculo v WHERE v.idVeiculo = :idVeiculo"),
     @NamedQuery(name = "Veiculo.findByPlacaVeiculo", query = "SELECT v FROM Veiculo v WHERE v.placaVeiculo = :placaVeiculo"),
     @NamedQuery(name = "Veiculo.findByNumeroVeiculo", query = "SELECT v FROM Veiculo v WHERE v.numeroVeiculo = :numeroVeiculo"),
+    @NamedQuery(name = "Veiculo.findByMarcaVeiculo", query = "SELECT v FROM Veiculo v WHERE v.marcaVeiculo = :marcaVeiculo"),
+    @NamedQuery(name = "Veiculo.findByModeloVeiculo", query = "SELECT v FROM Veiculo v WHERE v.modeloVeiculo = :modeloVeiculo"),
+    @NamedQuery(name = "Veiculo.findByAnoFabricacao", query = "SELECT v FROM Veiculo v WHERE v.anoFabricacao = :anoFabricacao"),
+    @NamedQuery(name = "Veiculo.findByAnoModelo", query = "SELECT v FROM Veiculo v WHERE v.anoModelo = :anoModelo"),
+    @NamedQuery(name = "Veiculo.findByChassi", query = "SELECT v FROM Veiculo v WHERE v.chassi = :chassi"),
+    @NamedQuery(name = "Veiculo.findByNumeroRenavan", query = "SELECT v FROM Veiculo v WHERE v.numeroRenavan = :numeroRenavan"),
+    @NamedQuery(name = "Veiculo.findByExercicioAtual", query = "SELECT v FROM Veiculo v WHERE v.exercicioAtual = :exercicioAtual"),
+    @NamedQuery(name = "Veiculo.findByCidadeVeiculo", query = "SELECT v FROM Veiculo v WHERE v.cidadeVeiculo = :cidadeVeiculo"),
+    @NamedQuery(name = "Veiculo.findByUfVeiculo", query = "SELECT v FROM Veiculo v WHERE v.ufVeiculo = :ufVeiculo"),
+    @NamedQuery(name = "Veiculo.findByTipoCombustivel", query = "SELECT v FROM Veiculo v WHERE v.tipoCombustivel = :tipoCombustivel"),
+    @NamedQuery(name = "Veiculo.findByCorPredominante", query = "SELECT v FROM Veiculo v WHERE v.corPredominante = :corPredominante"),
+    @NamedQuery(name = "Veiculo.findByQtdeEixos", query = "SELECT v FROM Veiculo v WHERE v.qtdeEixos = :qtdeEixos"),
+    @NamedQuery(name = "Veiculo.findByKmAtual", query = "SELECT v FROM Veiculo v WHERE v.kmAtual = :kmAtual"),
+    @NamedQuery(name = "Veiculo.findByMediaKmLitro", query = "SELECT v FROM Veiculo v WHERE v.mediaKmLitro = :mediaKmLitro"),
+    @NamedQuery(name = "Veiculo.findByLarguraVeiculo", query = "SELECT v FROM Veiculo v WHERE v.larguraVeiculo = :larguraVeiculo"),
+    @NamedQuery(name = "Veiculo.findByComprimentoVeiculo", query = "SELECT v FROM Veiculo v WHERE v.comprimentoVeiculo = :comprimentoVeiculo"),
+    @NamedQuery(name = "Veiculo.findByAlturaVeiculo", query = "SELECT v FROM Veiculo v WHERE v.alturaVeiculo = :alturaVeiculo"),
+    @NamedQuery(name = "Veiculo.findByPbt", query = "SELECT v FROM Veiculo v WHERE v.pbt = :pbt"),
+    @NamedQuery(name = "Veiculo.findByObservacao", query = "SELECT v FROM Veiculo v WHERE v.observacao = :observacao"),
     @NamedQuery(name = "Veiculo.findByAtivo", query = "SELECT v FROM Veiculo v WHERE v.ativo = :ativo")})
 public class Veiculo implements Serializable {
     @Column(name = "data_inclusao")
     @Temporal(TemporalType.DATE)
     private Date dataInclusao;
-
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
     @NotNull
+    //Annotations referentes à sequence
     @SequenceGenerator(name="Veiculo_Generator", sequenceName="seq_veiculo", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="Veiculo_Generator")
     @Column(name = "id_veiculo")
     private BigDecimal idVeiculo;
-    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 7)
     @Column(name = "placa_veiculo")
     private String placaVeiculo;
-    
     @Size(max = 10)
     @Column(name = "numero_veiculo")
     private String numeroVeiculo;
-    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "marca_veiculo")
     private String marcaVeiculo;
-    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "modelo_veiculo")
     private String modeloVeiculo;
-    
     @Column(name = "ano_fabricacao")
     private Short anoFabricacao;
-    
     @Column(name = "ano_modelo")
     private Short anoModelo;
-    
     @Size(max = 30)
     @Column(name = "chassi")
     private String chassi;
-    
     @Size(max = 20)
     @Column(name = "numero_renavan")
     private String numeroRenavan;
-    
     @Column(name = "exercicio_atual")
     private Short exercicioAtual;
-    
     @Size(max = 100)
     @Column(name = "cidade_veiculo")
     private String cidadeVeiculo;
-    
     @Size(max = 2)
     @Column(name = "uf_veiculo")
     private String ufVeiculo;
-    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "tipo_combustivel")
     private String tipoCombustivel;
-    
     @Size(max = 50)
     @Column(name = "cor_predominante")
     private String corPredominante;
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "qtde_eixos")
     private BigInteger qtdeEixos;
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "km_atual")
     private BigDecimal kmAtual;
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "media_km_litro")
     private BigDecimal mediaKmLitro;
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "largura_veiculo")
     private BigDecimal larguraVeiculo;
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "comprimento_veiculo")
     private BigDecimal comprimentoVeiculo;
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "altura_veiculo")
     private BigDecimal alturaVeiculo;
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "pbt")
     private BigDecimal pbt;
-    
     @Size(max = 250)
     @Column(name = "observacao")
     private String observacao;
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "ativo")
     private boolean ativo;
-    
     @JoinColumn(name = "id_categoria_veiculo", referencedColumnName = "id_categoria_veiculo")
     @ManyToOne(optional = false)
     private CategoriaVeiculo idCategoriaVeiculo;
