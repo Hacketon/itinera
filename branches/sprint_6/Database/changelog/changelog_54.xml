@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="54">
+		<comment>
+			Faltou as foreign key para empresa com relação à criação do changelog de Fornecedor para Empresa .  
+		</comment>
+        
+		<addForeignKeyConstraint baseColumnNames="id_empresa" baseTableName="empresa_email" constraintName="fk_empresa_email" referencedColumnNames="id_empresa" referencedTableName="empresa"/>
+		
+		<addForeignKeyConstraint baseColumnNames="id_empresa_telefone" baseTableName="empresa_telefone" constraintName="fk_empresa_telefone" referencedColumnNames="id_empresa" referencedTableName="empresa"/>
+		
+		
+     </changeSet>
+</databaseChangeLog>

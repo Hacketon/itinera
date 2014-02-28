@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="ivens" id="84">
+		<comment>
+			Insere os dados na tabela estado.
+		</comment>
+		
+			<loadData tableName="estado"  file="estadosBrasileiros.csv" encoding="UTF-8">			
+				<column name="id_pais" type="numeric" />
+				<column name="codigo_estado" type="numeric"/>
+				<column name="sigla_estado" type="string"/>
+				<column name="nome_estado" type="string"/>
+			</loadData>
+     </changeSet>
+</databaseChangeLog>

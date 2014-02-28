@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="80">
+		<comment>
+			Rollback das instruções do changeset 58, para preparar o banco de dados para realizar as alterações necessárias da estória de telefone e email de empresa. 
+		</comment>
+		
+		<dropTable schemaName="public" tableName="telefone"/>
+		<dropTable schemaName="public" tableName="email"/>
+		<dropTable schemaName="public" tableName="empresa_contato"/>
+		<dropSequence schemaName="public" sequenceName="seq_empresa_contato"/>
+     </changeSet>
+</databaseChangeLog>
