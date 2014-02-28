@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="bruno" id="94">
+		<comment>
+			1) Drop da sequence contato_emp_telefone_Id 
+			2) Re-Criacao da sequence da tabela contato_emp_telefone
+		</comment>
+		
+	<dropSequence schemaName="public" sequenceName="contato_emp_tel_Id" />
+
+       <createSequence sequenceName="seq_contato_emp_tel_id" schemaName="public" incrementBy="1"/>
+		
+     </changeSet>
+</databaseChangeLog>
