@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="ivens" id="59">
+		<comment>
+			Criação da Tabela 'pais' (País), a partir do padrão Internacional ISO 3166-1.
+		</comment>
+
+        <createTable remarks="Tabela de Países" tableName="pais">
+			<column name="sigla_pais" remarks="Sigla que identifica o País, de acordo com a ISO 3166-1" type="BPCHAR(2)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="codigo_pais" remarks="Código que identifica o Páis, de acordo com a ISO 3166-1" type="numeric">
+				<constraints nullable="false"/>
+			</column>
+			<column name="nome_pais" remarks="Nome do País" type="BPCHAR(40)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="ddi_pais" remarks="Código único de acesso telefônico do País" type="BPCHAR(2)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<addPrimaryKey columnNames="sigla_pais" constraintName="pk_pais" tableName="pais"/>
+		
+		
+		<comment>
+			Criação da Tabela 'estado' (Estado), a partir dos dados obtidos junto ao site do IBGE em 12/01/2014.
+		</comment>
+
+        <createTable remarks="Tabela de Estados" tableName="estado">
+			<column name="sigla_estado" remarks="Sigla do Estado, de acordo com o IBGE" type="BPCHAR(2)">
+				<constraints nullable="false"/>				
+			</column>
+			<column name="sigla_pais" remarks="Sigla que identifica o País, de acordo com a ISO 3166-1" type="BPCHAR(2)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="codigo_estado" remarks="Código do Estado, de acordo com o IBGE" type="numeric">
+				<constraints nullable="false"/>
+			</column>
+			<column name="nome_estado" remarks="Nome do Estado" type="BPCHAR(40)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<addPrimaryKey columnNames="sigla_estado" constraintName="pk_estado" tableName="estado"/>
+		
+		
+		<comment>
+			Criação da Tabela 'municipio' (Municipio), a partir dos dados obtidos junto ao site do IBGE em 12/01/2014.
+		</comment>
+
+        <createTable remarks="Tabela de Municipios" tableName="municipio">
+			<column name="codigo_municipio" remarks="Código único com até cinco digitos, de acordo com o IBGE" type="numeric">
+				<constraints nullable="false"/>
+			</column>
+			<column name="sigla_estado" remarks="Sigla do Esatdo, de acordo com o IBGE" type="BPCHAR(2)">
+				<constraints nullable="false"/>				
+			</column>
+			<column name="nome_municipio" remarks="Nome do Municipio" type="BPCHAR(40)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="ddd_municipio" remarks="Código único de acesso telefônico do Municipio" type="BPCHAR(2)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<addPrimaryKey columnNames="codigo_municipio" constraintName="pk_municipio" tableName="municipio"/>
+		
+		<addForeignKeyConstraint baseColumnNames="sigla_pais" baseTableName="estado" constraintName="fk_pais_estado" 
+		referencedColumnNames="sigla_pais" referencedTableName="pais"/>
+				<addForeignKeyConstraint baseColumnNames="sigla_estado" baseTableName="municipio" constraintName="fk_estado_municipio" 
+		referencedColumnNames="sigla_estado" referencedTableName="estado"/>			
+     </changeSet>
+</databaseChangeLog>

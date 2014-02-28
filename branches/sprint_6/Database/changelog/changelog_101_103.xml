@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="bruno" id="101">
+		<comment>
+			1) Drop da primary key da tabela contato_emp_tel pois nao vai precisar do campo ID
+		</comment>
+		
+	<dropPrimaryKey constraintName="pk_contato_emp_tel"
+	            schemaName="public"
+            tableName="contato_emp_tel"/>
+            
+        <rollback>
+           <addPrimaryKey columnNames="contato_emp_tel_id"
+	               constraintName="pk_contato_emp_tel"
+	               schemaName="public"
+	               tableName="contato_emp_tel" />
+	</rollback>            
+		
+     </changeSet>
+     
+     <changeSet author="bruno" id="102">
+     		<comment>
+     			1) Drop da coluna contato_emp_tel.contato_emp_tel_Id pois nao vai precisar da coluna
+     		</comment>
+     		
+     	<dropColumn columnName="contato_emp_tel_Id"
+	            schemaName="public"
+            	    tableName="contato_emp_tel"/>
+            	    
+        <rollback>
+          <rollback changeSetId="101" changeSetAuthor="bruno"/>
+          <addColumn schemaName="public"
+	  	               tableName="contato_emp_tel">
+<<<<<<< .mine
+	  	           <column name="contato_emp_tel_id" type="numeric" remarks="Código sequencial do contato de telefone.">
+=======
+	  	           <column name="contato_emp_tel_id" type="numeric" remarks="Codigo sequencial do contato de telefone.">
+>>>>>>> .r333
+	  	             <constraints nullable="false"/>
+	  	           </column>
+    	   </addColumn>
+    	  
+    	</rollback>
+     		
+     </changeSet>
+     
+     <changeSet author="bruno" id="103">
+     		<comment>
+     			1) Criacao da PK composta
+     		</comment>
+     		
+     	<addPrimaryKey columnNames="telefone_id, empresa_id"
+		               constraintName="pk_contato_emp_tel"
+		               schemaName="public"
+	               tableName="contato_emp_tel" />
+	<rollback>
+	  <dropPrimaryKey constraintName="pk_contato_emp_tel"
+	  	            schemaName="public"
+            tableName="contato_emp_tel"/>
+        </rollback>
+	               
+        <rollback changeSetId="102" changeSetAuthor="bruno"/>
+        <rollback changeSetId="101" changeSetAuthor="bruno"/>
+     		
+     </changeSet>
+     
+</databaseChangeLog>

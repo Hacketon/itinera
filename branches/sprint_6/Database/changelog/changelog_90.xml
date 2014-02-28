@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="ivens" id="90">
+					
+		<comment>
+			Inserindo a FK da tabela endereco referente a municipio.
+		</comment>		
+		
+		<addForeignKeyConstraint baseColumnNames="id_municipio" baseTableName="endereco" constraintName="fk_id_municipio_endereco" 
+		referencedColumnNames="id_municipio" referencedTableName="municipio"/>
+		
+		<comment>
+			Inserindo a FK da tabela municipio referente a estado.
+		</comment>		
+		
+		<addForeignKeyConstraint baseColumnNames="codigo_estado" baseTableName="municipio" constraintName="fk_municipio_estado" 
+		referencedColumnNames="codigo_estado" referencedTableName="estado"/>			
+     
+	 </changeSet>
+</databaseChangeLog>

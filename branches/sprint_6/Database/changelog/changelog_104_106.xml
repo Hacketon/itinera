@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="bruno" id="104">
+		<comment>
+<<<<<<< .mine
+			1) Drop da primary key da tabela contato_emp_email pois não vai precisar do campo ID
+=======
+			1) Drop da primary key da tabela contato_emp_email pois nao vai precisar do campo ID
+>>>>>>> .r333
+		</comment>
+		
+	<dropPrimaryKey constraintName="pk_contato_emp_email"
+	            schemaName="public"
+            tableName="contato_emp_email"/>
+            
+        <rollback>
+           <addPrimaryKey columnNames="contato_emp_email_id"
+	               constraintName="pk_contato_emp_email"
+	               schemaName="public"
+	               tableName="contato_emp_email" />
+	</rollback>            
+		
+     </changeSet>
+     
+     <changeSet author="bruno" id="105">
+     		<comment>
+<<<<<<< .mine
+     			1) Drop da coluna contato_emp_email.contato_emp_email_id pois não vai precisar da coluna
+=======
+     			1) Drop da coluna contato_emp_email.contato_emp_email_id pois nao vai precisar da coluna
+>>>>>>> .r333
+     		</comment>
+     		
+     	<dropColumn columnName="contato_emp_email_id"
+	            schemaName="public"
+            	    tableName="contato_emp_email"/>
+            	    
+        <rollback>
+          <addColumn schemaName="public"
+	  	               tableName="contato_emp_email">
+<<<<<<< .mine
+	  	           <column name="contato_emp_email_id" type="numeric" remarks="Código sequencial do contato de email.">
+=======
+	  	           <column name="contato_emp_email_id" type="numeric" remarks="Codigo sequencial do contato de email.">
+>>>>>>> .r333
+	  	             <constraints nullable="false"/>
+	  	           </column>
+    	   </addColumn>
+    	</rollback>
+            	    
+        <rollback changeSetId="104" changeSetAuthor="bruno"/>
+     		
+     </changeSet>
+     
+     <changeSet author="bruno" id="106">
+     		<comment>
+<<<<<<< .mine
+     			1) Criação da PK composta
+=======
+     			1) Criacao da PK composta
+>>>>>>> .r333
+     		</comment>
+     		
+     	<addPrimaryKey columnNames="email_id, empresa_id"
+		               constraintName="pk_contato_emp_email"
+		               schemaName="public"
+	               tableName="contato_emp_email" />
+	<rollback>
+	  <dropPrimaryKey constraintName="pk_contato_emp_email"
+	  	            schemaName="public"
+            tableName="contato_emp_email"/>
+        </rollback>
+	               
+        <rollback changeSetId="105" changeSetAuthor="bruno"/>
+        <rollback changeSetId="104" changeSetAuthor="bruno"/>
+     		
+     </changeSet>
+     
+</databaseChangeLog>
