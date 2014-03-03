@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Itinera - Transportes</string>
+    <string name="despesas">Despesas</string>
+    <string name="consultas">Consultas</string>
+    <string name="action_settings">Settings</string>
+    <string name="usuario">Usuário</string>
+    <string name="senha">Senha</string>
+    <string name="entrar">Entrar</string>
+    <string name="Logado">Logado</string>
+    <string name="Logo">Logo</string>
+    <string name="voltar">Voltar</string>
+    <string name="title_activity_login">Login</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_menu">Menu Principal</string>
+    <string name="title_activity_menu_principal">Menu Principal</string>
+    <string name="title_activity_menu_consultas">Consultas</string>
+    <string name="consulta_empresa_nome">Empresa - Nome</string>
+    <string name="consulta_empresa_endereco">Empresa - Endereço</string>
+    <string name="consulta_empresa_cnpj">Empresa - CNPJ</string>
+    <string name="menu_despesa_cadastrar">Cadastrar</string>
+    <string name="menu_despesa_pesquisar">Pesquisar</string>
+    <string name="title_activity_menu_despesas">Despesas</string>
+    <string name="title_activity_cadastro_despesa">Cadastro de Despesa</string>
+    <string name="cadastro_despesa_nome_Fornecedor">Fornecedor</string>
+    <string name="cadastro_despesa_numero_documento">Nr Doc</string>
+    <string name="cadastro_despesa_valor">Valor</string>
+    <string name="cadastro_despesa_data">Data</string>
+    <string name="cadastro_despesa_tipo_despesa">Tipo</string>
+    <string name="botao_salvar">Salvar</string>
+    <string name="botao_alterar">Alterar</string>
+    <string name="botao_excluir">Excluir</string>
+    <string name="title_activity_pesquisar_despesa">Pesquisar Despesa</string>
+
+</resources>
