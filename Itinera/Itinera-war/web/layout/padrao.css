@@ -1,0 +1,192 @@
+/* 
+    Document   : padrao
+    Created on : 09/07/2013, 22:03:14
+    Author     : LeticiaSena
+    Description:
+        Padrão geral de CSS. Deve estar presente em todas as páginas.
+*/
+
+root { 
+    display: block;
+}
+
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+.header {
+    position: absolute;
+    top:0px;
+    height: 82px;
+    width: 100%;
+    background-color: #1D63A0;
+    border-bottom: solid #1D63A0 1px;
+}
+
+.detail {
+    
+    text-align: center;
+}
+h1 .pageName{
+    margin-right: 40%;
+    color: white;
+    font-family: Verdana;
+    font-size: 12pt;
+}
+
+.login{
+    top: 5%;
+    position: absolute;
+    width: 25%;
+    height: 100%;
+    right: 0.2%;
+    opacity: 0.7;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    border-width: 1px;
+    border-style: solid;
+    text-align: left;
+}
+
+.header .logo{
+    position: absolute;
+}
+
+.header .logo .left{
+    position:relative;
+    float:left;
+}
+
+.header .logo .right{
+    position:absolute;
+    height: 100%;
+    float:right;
+}
+
+.botao{
+    text-align: right;
+}
+
+.fontepadrao{
+    font-family: Verdana,Arial;
+    font-size: 12pt;
+    font-weight: normal;
+}
+
+h1.fontepadrao{
+    font-family: Verdana,Arial;
+    font-size: 18pt;
+    font-weight: bold;
+}
+.label{
+    font-size: 12pt;
+    font-family: Verdana;
+}
+.noborder{
+    border-style: none;
+    border-width: 0px;
+    margin: 0px;
+    padding: 0px;
+    background-color: white;
+}
+
+.desativado{
+    background-color:#EEEEEE;
+}
+
+.titulo{
+    position:absolute;
+    left:35%;
+    top:10px;
+    vertical-align: middle;
+    color: #FFFFFF;
+}
+
+.botaomenu{
+    font-size: 10pt !important; 
+    background: #0062c4 !important; 
+    color: white !important;
+    /*background-color: white !important;
+    color: #103360 !important;*/
+}
+
+.botaomenu:hover{
+    font-size: 10pt !important; 
+    color: orange !important;
+}
+
+.botaomenuselecionado{
+    font-size: 10pt !important; 
+    background: #103360 !important; 
+    color: white !important;
+}
+
+.semBorda{  
+    border: none !important;  
+}  
+
+.semBorda td{
+    border: none !important;  
+}  
+
+.semBorda tr{
+    border: none !important;  
+}  
+
+.growl{
+    background-color:red;
+}
+
+.ui-editable-column, .ui-row-editor {
+    background-color: #FFF;
+}
+
+.ui-selectonemenu{
+    width: 100% !important;
+}
+
+.ui-selectonemenu-label{
+    width: 100% !important;
+}
+
+.ui-datatable .ui-datatable-data .ui-datatable-odd td{    
+    background-color: #e5f0f6;
+}  
+  
+.ui-datatable .ui-datatable-data .ui-datatable-even td{    
+    background-color: #fcfdfd;
+}
+
+.semFundo{
+    background-color: #1D63A0;
+}
+.menuBackground{
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    background-color: #B7CEEC;
+    height: 36px; 
+}
+.posicaoMenu{
+    top:85px;
+    position:relative;
+}
+
+.corpo{
+    top:85px;
+    position:relative;
+    width:100%;
+    border-bottom: solid 1px rgb(223, 239, 252);
+}
+
+.mensagemAviso{
+    font-family: Verdana, Arial;
+    font-size: 10pt;
+    color: #736F6E;
+    border-right: solid 1px #736F6E;
+    padding-right: 100px;
+}
+fieldset {
+    border: #CCCCCC 1px solid;
+    border-radius: 5px;
+}
