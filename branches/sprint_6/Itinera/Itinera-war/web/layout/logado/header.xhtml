@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/layout/padrao.css" />
+    </h:head>
+    <body>
+        <p:outputPanel styleClass="header">
+              <p:outputPanel styleClass="logo">
+                  <div style="background-color: white;width:200px;text-align: center;position:absolute;height: 83px;">
+                    <a href="#{facesContext.externalContext.requestContextPath}/">
+                        <img src="#{facesContext.externalContext.requestContextPath}/img/Itinera.png" alt="Logotipo" class="left"  style="height: 83px;background-color: white;left:20px;"/>
+                    <img src="#{facesContext.externalContext.requestContextPath}/img/borda.png"   alt="Borda"        class="right" />			
+                    </a>
+                  </div>
+            </p:outputPanel>
+            <p:outputPanel>
+                <ui:include src="/componentes/login/LoginLogado.xhtml"/>
+            </p:outputPanel>
+        </p:outputPanel>
+    </body>
+</html>

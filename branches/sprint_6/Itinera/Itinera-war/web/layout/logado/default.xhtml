@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Sistema de controle de rotas</title>
+    </h:head>
+    <h:body>
+                <p:outputPanel style="height:70%;margin-left:5%;background-image: URL('img/frota.png');background-repeat: no-repeat;background-position: right bottom;">
+                    <h1 class="fontepadrao">Sistema de Gestão de Frotas</h1>
+                    <p class="fontepadrao"><b>#{loginManager.usuario.nome}</b>, bem vindo ao <b>Sistema de Gestão de Frotas</b>!</p>
+                    <!-- Favor colocar a versão correta abaixo -->
+                    <p class="fontepadrao"> Status atual do sistema: </p>
+                    <ul>
+                        <li><p class="fontepadrao"> #{categoriaVeiculoManager.contagem()} categorias de veículos, </p></li>
+                        <li><p class="fontepadrao"> #{veiculoManager.contagem()} veículos, </p></li>
+                        <li><p class="fontepadrao"> #{pontosColetaManager.contagem()} pontos de coleta, </p></li>
+                        <li><p class="fontepadrao"> #{usuariosManager.contagem()} usuários. </p></li>
+                        <li><p class="fontepadrao"> #{fornecedorManager.contagem()} fornecedores. </p></li>
+                    </ul>
+                </p:outputPanel>
+    </h:body>
+</html>
+
+
+
