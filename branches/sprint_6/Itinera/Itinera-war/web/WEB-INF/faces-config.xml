@@ -9,11 +9,11 @@
 
     <application>
         <resource-bundle>
-            <base-name>recursos.mensagens.MsgFormularios</base-name>
+            <base-name>br.com.itinera.recursos.mensagens.MsgFormularios</base-name>
             <var>msg</var>
         </resource-bundle>
         <resource-bundle>
-            <base-name>recursos.mensagens.Mensagens</base-name>
+            <base-name>br.com.itinera.recursos.mensagens.Mensagens</base-name>
             <var>msgSis</var>
         </resource-bundle>
     </application>
