@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import br.com.itinera.modelo.Usuario;
 import br.com.itinera.persistencia.UsuarioDAO;
+import java.math.BigDecimal;
 
 /**
  *
@@ -38,6 +39,10 @@ public class UsuarioFachada {
     
     public Usuario buscarPorLogin(String login){
         return usuarioDao.buscarPorLogin(login);
+    }
+    
+    public Usuario buscarPorID(BigDecimal id){
+        return usuarioDao.buscarPorId(id);
     }
     
     public Integer contagem(){

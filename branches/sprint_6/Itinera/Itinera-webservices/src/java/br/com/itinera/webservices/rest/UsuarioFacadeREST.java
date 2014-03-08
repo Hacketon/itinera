@@ -4,6 +4,7 @@
  */
 package br.com.itinera.webservices.rest;
 
+import br.com.itinera.fachada.UsuarioFachada;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,6 +19,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import br.com.itinera.modelo.Usuario;
+import javax.ejb.EJB;
 
 /**
  *
@@ -25,73 +27,49 @@ import br.com.itinera.modelo.Usuario;
  */
 @Stateless
 @Path("usuario")
-public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
-    @PersistenceContext(unitName = "TransportadoraPU ")
-    private EntityManager em;
+public class UsuarioFacadeREST {
 
-    public UsuarioFacadeREST() {
-        super(Usuario.class);
-    }
+    @EJB
+    private UsuarioFachada fachada;
 
     @POST
-    @Override
     @Consumes({"application/xml", "application/json"})
     public void create(Usuario entity) {
-        super.create(entity);
+        fachada.inserir(entity);
     }
 
     @PUT
-    @Override
     @Consumes({"application/xml", "application/json"})
     public void edit(Usuario entity) {
-        super.edit(entity);
+        fachada.alterar(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") BigDecimal id) {
-        super.remove(super.find(id));
+        Usuario user = fachada.buscarPorID(id);
+        fachada.remover(user);
     }
 
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Usuario find(@PathParam("id") BigDecimal id) {
-        return super.find(id);
+        return fachada.buscarPorID(id);
     }
     
     @GET
     @Path("/login/{login}")
     @Produces({"application/json; charset=UTF-8"})
     public Usuario recuperarPorLogin(@PathParam("login") String login) {
-        List<Usuario> users = em.createNamedQuery("Usuario.findByLogin").setParameter("login", login).getResultList();
-       return (users.size() == 1)?users.get(0):null;   
+        return fachada.buscarPorLogin(login);
     }
 
     @GET
-    @Override
     @Produces({"application/xml", "application/json"})
     public List<Usuario> findAll() {
-        return super.findAll();
+        return fachada.listar();
     }
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
-    public List<Usuario> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
     
 }

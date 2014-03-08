@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import br.com.itinera.modelo.Usuario;
+import java.math.BigDecimal;
 
 /**
  *
@@ -40,6 +41,10 @@ public class UsuarioDAO {
     public Usuario buscarPorLogin(String login){
        List<Usuario> users = em.createNamedQuery("Usuario.findByLogin").setParameter("login", login).getResultList();
        return (users.size() == 1)?users.get(0):null;   
+    }
+
+    public Usuario buscarPorId(BigDecimal id) {
+        return (Usuario) em.createNamedQuery("Usuario.findByIdUsuario").setParameter("idUsuario", id).getSingleResult();
     }
     
 }
