@@ -31,14 +31,21 @@
                                     id="reboque_semireboque"
                                     rendererType="boolean"
                                     value="#{categoriaVeiculoManager.categoriaVeiculo.reboqueSemiReboque}" />
+                                </p:panelGrid>
+                                
                                 <p:commandButton 
                                     id="Btninserir" 
                                     action="#{categoriaVeiculoManager.inserir}"
                                     styleClass="botao"
-                                    value="Salvar"
+                                    value="#{msg.acaoOK}"
                                     update="messages"/>
-                                <p:spacer/>                                
-                            </p:panelGrid>
+                                 <p:commandButton id="BtnFechar" 
+                                                  action="#{categoriaVeiculoManager.montarPaginaParaListarCategoriaVeiculo()}" 
+                                         value="#{msg.acaoFechar}" 
+                                         immediate="true"
+                                         styleClass="botao"/>
+                                
+                            
                         </p:panel>
                     </h:form>
                 </ui:define>
