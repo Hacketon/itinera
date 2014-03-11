@@ -21,8 +21,19 @@ import org.primefaces.context.RequestContext;
 public class CategoriaVeiculoManager implements Serializable {
 
     private String mensagem;
-    private String titulo;
+    private String descricaoAnterior;
+    private Boolean reboqueAnterior;
+    private String mensagem1;
+    private String mensagem2;
 
+    public String getMensagem1(){
+        return mensagem1;
+    }
+    
+    public String getMensagem2(){
+        return mensagem2;
+    }
+    
     public String getMensagem() {
         return mensagem;
     }
@@ -61,6 +72,8 @@ public class CategoriaVeiculoManager implements Serializable {
     }
 
     public String montarPaginaParaAlterarCategoriaVeiculo() {
+        this.descricaoAnterior = this.categoriaVeiculo.getDescricaoCategoria();
+        this.reboqueAnterior = this.categoriaVeiculo.isReboqueSemiReboque();
         return "/componentes/categoriaVeiculo/AlterarCategoriaVeiculo";
     }
 
@@ -72,11 +85,34 @@ public class CategoriaVeiculoManager implements Serializable {
     private void recuperarCategoriaVeiculo() {
         this.setCategoriaVeiculos(categoriaVeiculoFachada.listar());
     }
-
+    
     public String alterar() {
-        try {
+            boolean mudou = false;
+            mensagem1 = "";
+            mensagem2 = "";
+            if(!(this.descricaoAnterior.compareTo(this.categoriaVeiculo.getDescricaoCategoria()) == 0)){
+                mensagem1 = "Descrição: " + this.categoriaVeiculo.getDescricaoCategoria() + "(" + this.descricaoAnterior +")";
+                mudou = true;
+            }
+            if(!(this.reboqueAnterior == this.categoriaVeiculo.isReboqueSemiReboque())){
+                mudou = true;
+                mensagem2 = "É reboque: " + ((this.categoriaVeiculo.isReboqueSemiReboque())?"Sim":"Não") + "(" + (this.reboqueAnterior?"Sim":"Não") + ")";
+            }
+            if(mudou){
+                RequestContext rc = RequestContext.getCurrentInstance();
+                rc.execute("altera.show()");
+                return "";
+            }
+            else{
+                return realizarAlteracao();
+            }
+    }
+    
+    public String realizarAlteracao(){
+        try{
             categoriaVeiculoFachada.alterar(this.getCategoriaVeiculo());
             Mensagem.mostrarMensagemSucesso("Sucesso!", "A categoria de veículos foi alterada com sucesso.");
+            this.categoriaVeiculo = new CategoriaVeiculo();
             this.recuperarCategoriaVeiculo();
             return "/componentes/categoriaVeiculo/ListarCategoriasVeiculo";
         } catch (EntityExistsException e) {
@@ -92,8 +128,9 @@ public class CategoriaVeiculoManager implements Serializable {
         try {
             categoriaVeiculoFachada.inserir(this.getCategoriaVeiculo());
             Mensagem.mostrarMensagemSucesso("Sucesso!", "Categoria de veículo inserida com sucesso!");
+            this.categoriaVeiculo = new CategoriaVeiculo();
             this.recuperarCategoriaVeiculo();
-            return "/componentes/categoriaVeiculo/ListarCategoriasVeiculo?aces-redirect=true";
+            return "/componentes/categoriaVeiculo/ListarCategoriasVeiculo";
         } catch (EntityExistsException e) {
             Mensagem.mostrarMensagemErro("Erro:", "Uma categoria com esta descrição já foi inserida. Por favor, verifique!");
             return "";
