@@ -12,20 +12,22 @@
                 <ui:define name="conteudo">        
                     <h:form id="formInserirCategoria" styleClass="semBorda tr">
                         <p:messages id="messages" showDetail="true"/>
-                        <p:panel styleClass="semBorda" header="#{bundle.categoriaVeiculo}" >
+                        <p:panel styleClass="semBorda" header="#{msg.categoriaVeiculo}" >
                             <p:panelGrid columns="2" styleClass="semBorda">
-                                <h:outputLabel  value="Descrição*"
+                                <p:outputLabel  for="inserirDescricao"
+                                                id="lblInserirDescricao"
+                                                value="#{msg.descricaoCategoriaVeiculo}"
                                                 styleClass="label"/>
                                 <p:column>
                                     <p:inputText id="inserirDescricao" 
                                                  maxlength="50"
                                                  required="true"
-                                                 requiredMessage="Por favor, insira uma descrição para a categoria."
+                                                 requiredMessage="#{msgSis.obrigatorioDescricaoCategoriaVeiculos}"
                                                  size="50"
                                                  value="#{categoriaVeiculoManager.categoriaVeiculo.descricaoCategoria}" />
-                                    <p:watermark for="inserirDescricao" value="Descrição da categoria do veículo" />
+                                    <p:watermark for="inserirDescricao" value="#{msg.watermarkDescricaoCategoriaVeiculo}" />
                                 </p:column>
-                                <h:outputLabel  value="Reboque ou Semi-Reboque"
+                                <h:outputLabel  value="#{msg.reboqueSemiReboqueCategoriaVeiculo}"
                                                 styleClass="label"/>                                
                                 <p:selectBooleanCheckbox 
                                     id="reboque_semireboque"

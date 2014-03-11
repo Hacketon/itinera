@@ -9,19 +9,22 @@
         <ui:decorate template="/layout/logado/template.xhtml">
             <ui:define name="conteudo">
             <h:form id="formAlterarCategoria" styleClass="semBorda">
-                <p:panel styleClass="semBorda" header="#{bundle.alteraCategoriaVeiculo}">
+                <p:panel styleClass="semBorda" header="#{msg.alteraCategoriaVeiculo}">
                 
                 <p:messages id="messages" showDetail="true"/>
                 <p:panelGrid columns="2" >
 
-                    <h:outputLabel  value="Descrição*"  
+                    <p:outputLabel 
+                                    value="#{msg.descricaoCategoriaVeiculo}"  
                                     for="AlterarDescricao"
                                     styleClass="fontepadrao"/>
                     <p:inputText    id="AlterarDescricao" 
                                     required="true"
-                                    requiredMessage="Por favor, insira uma descrição para a categoria."
+                                    size="50"
+                                    maxlength="50"
+                                    requiredMessage="#{msgSis.obrigatorioDescricaoCategoriaVeiculos}"
                                     value="#{categoriaVeiculoManager.categoriaVeiculo.descricaoCategoria}" />
-                    <h:outputLabel  value="Reboque ou Semi-Reboque"
+                    <h:outputLabel  value="#{msg.reboqueSemiReboqueCategoriaVeiculo}"
                                     for="AlterarReboque"
                                     styleClass="fontepadrao"/>
                     <p:selectBooleanCheckbox 
