@@ -38,14 +38,27 @@
                                      action="#{categoriaVeiculoManager.alterar()}" 
                                      value="#{msg.acaoOK}" 
                                      styleClass="botao"
-                                     update="messages"/>
+                                     update="messages mensagem1 mensagem2">
+                        
+                    </p:commandButton>
                      <p:commandButton id="BtnFechar" 
                                       action="#{categoriaVeiculoManager.montarPaginaParaListarCategoriaVeiculo()}" 
-                                         value="#{msg.acaoFechar}" 
-                                         immediate="true"
-                                         styleClass="botao"/>
+                                      value="#{msg.acaoFechar}" 
+                                      immediate="true"
+                                      styleClass="botao"/>
               
                 </p:panel>
+                
+                <p:confirmDialog header="#{msg.headerAlterar}" message="#{msg.headerConfirmaAlterar}" id="AlterarDlg" widgetVar="altera">
+                    <p:outputLabel id="mensagem1" value="#{categoriaVeiculoManager.mensagem1}" />
+                    <br/>
+                    <p:outputLabel id="mensagem2" value="#{categoriaVeiculoManager.mensagem2}" />
+                    <br/>
+                    <p:commandButton value="#{msg.acaoSim}" action="#{categoriaVeiculoManager.realizarAlteracao()}"  />
+                    <p:commandButton value="#{msg.acaoNao}" onclick="altera.hide();" />
+                    
+                </p:confirmDialog>
+                
             </h:form>
         </ui:define>
         </ui:decorate>
