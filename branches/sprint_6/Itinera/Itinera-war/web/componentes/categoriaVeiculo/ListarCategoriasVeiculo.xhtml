@@ -20,29 +20,34 @@
                                              action="#{categoriaVeiculoManager.montarPaginaParaIncluirCategoriaVeiculo}" 
                                              styleClass="fontepadrao" value="Novo"/>
                         <h:panelGrid id="gridCategorias" >
-                            <h:outputText value="Não existem categorias cadastradas" 
+                            <h:outputText value="#{msg.listagemSemCategorias}" 
                                           rendered="#{empty categoriaVeiculoManager.categoriaVeiculos}" />
 
                             <p:dataTable value="#{categoriaVeiculoManager.categoriaVeiculos}" 
                                          var="categoria" 
                                          paginator="true" 
-                                         emptyMessage="Não existem categorias de veículos para essa busca."
+                                         emptyMessage="#{msg.listagemBuscaSemCategorias}"
                                          rows="10" 
                                          rendered="#{not empty categoriaVeiculoManager.categoriaVeiculos}">
 
 
-                                <p:column headerText="Descrição" 
+                                <p:column headerText="#{msg.descricaoCategoriaVeiculo}" 
                                           styleClass="fontepadrao"
                                           sortBy="#{categoria.descricaoCategoria}" 
-                                          filterBy="#{categoria.descricaoCategoria}">
-                                    <h:outputText value="#{categoria.descricaoCategoria}" />
+                                          filterBy="#{categoria.descricaoCategoria}"
+                                          filterStyle="width: 300px;"
+                                          >
+                                    <h:outputText value="#{categoria.descricaoCategoria}" 
+                                                  />
                                 </p:column>
 
                                 <p:column sortBy="#{categoria.reboqueSemiReboque}" 
                                           styleClass="fontepadrao"
                                           style="text-align: center;"
-                                          headerText="Reboque"
-                                          filterBy="#{categoria.reboqueSemiReboque}">
+                                          headerText="#{msg.reboqueRedCategoriaVeiculo}"
+                                          filterBy="#{categoria.reboqueSemiReboque}"
+                                          >
+                                          
                                     <h:selectBooleanCheckbox readonly="true" 
                                                              disabled="true"
                                                              value="#{categoria.reboqueSemiReboque}" />
@@ -51,7 +56,7 @@
                                 <p:column headerText="">
                                     <h:commandLink styleClass="fontepadrao" 
                                                    action="#{categoriaVeiculoManager.montarPaginaParaAlterarCategoriaVeiculo()}"
-                                                   value="Alterar">
+                                                   value="#{msg.acaoAlterar}">
                                         <f:setPropertyActionListener value="#{categoria}" target="#{categoriaVeiculoManager.categoriaVeiculo}" />  
                                     </h:commandLink>
 
@@ -60,7 +65,7 @@
                                 <p:column headerText="">
                                     <p:commandLink styleClass="fontepadrao" 
                                                    oncomplete="exclui.show();"
-                                                   value="Excluir">
+                                                   value="#{msg.acaoExcluir}">
                                         <f:setPropertyActionListener value="#{categoria}" 
                                                                      target="#{categoriaVeiculoManager.categoriaVeiculo}" />  
                                     </p:commandLink>
@@ -70,9 +75,9 @@
                         
                         
                         <!--DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
-                        <p:confirmDialog header="Excluir?" message="Você confirma a exclusão desta categoria de veículo?" id="excluiDlg" widgetVar="exclui">
-                            <p:commandButton value="Sim" action="#{categoriaVeiculoManager.excluir}" update="gridCategorias messages" />
-                            <p:commandButton value="Não" onclick="exclui.hide();" />
+                        <p:confirmDialog header="#{msg.headerExcluir}" message="#{msg.perguntaExcluirCategoria}" id="excluiDlg" widgetVar="exclui">
+                            <p:commandButton value="#{msg.acaoSim}" action="#{categoriaVeiculoManager.excluir}" update="gridCategorias messages" />
+                            <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
                         </p:confirmDialog>
                     </h:form>
                     </p:panel>
