@@ -12,8 +12,7 @@
             
             <h:form id="inserirVeiculo" styleClass="semBorda">
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-                <p:panel styleClass="semBorda" header= "#{bundle.veiculo}">   
-                    <div style="margin-left: 15%;">
+                <p:panel styleClass="semBorda" header= "#{msg.veiculo}">   
                     <p:panelGrid styleClass="semBorda"> 
                         <p:row>
                             <p:column>
@@ -63,11 +62,29 @@
                                 <p:watermark for="veiculoModelo" value="Modelo do Veículo" />
                             </p:column>
                         </p:row>
+                        <p:row>
+                                        <p:column>
+                                            <p:outputLabel for="veiculoCategoria"
+                                                           value="Categoria"
+                                                           styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column colspan="3">
+                                            <p:selectOneMenu id="veiculoCategoria"
+                                                             value="#{veiculoManager.veiculo.idCategoriaVeiculo}"
+                                                             required="true"
+                                                             style="width: 450px !important"
+                                                             requiredMessage="Por favor, informe uma categoria de veículo.">
+                                                <f:selectItem itemValue="" itemLabel="Selecione"/>
+                                                <f:selectItems value="#{veiculoManager.categoriasVeiculos}" var="categoria" 
+                                                               itemLabel="#{categoria.description}" itemValue="#{categoriasVeiculos}" />
+                                                <f:converter converterId="conversorCategoriaVeiculo"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
                     </p:panelGrid>
-                    </div>
                     <br/>
 
-                    <div style="width:90%;margin-left:5%;">
+                  
                         <p:tabView id="cadastroVeiculosTAB" >
                             <p:tab id="dadosPrincipais" title="Dados Principais" >
                                 <p:panelGrid>
@@ -286,25 +303,6 @@
                                 <p:panelGrid>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel for="veiculoCategoria"
-                                                           value="Categoria"
-                                                           styleClass="fontepadrao"/>
-                                        </p:column>
-                                        <p:column colspan="3">
-                                            <p:selectOneMenu id="veiculoCategoria"
-                                                             value="#{veiculoManager.veiculo.idCategoriaVeiculo}"
-                                                             required="true"
-                                                             style="width: 450px !important"
-                                                             requiredMessage="Por favor, informe uma categoria de veículo.">
-                                                <f:selectItem itemValue="" itemLabel="Selecione"/>
-                                                <f:selectItems value="#{veiculoManager.categoriasVeiculos}" var="categoria" 
-                                                               itemLabel="#{categoria.description}" itemValue="#{categoriasVeiculos}" />
-                                                <f:converter converterId="conversorCategoriaVeiculo"/>
-                                            </p:selectOneMenu>
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>
                                              <p:outputLabel for="veiculoAltura"
                                                            value="Altura"
                                                            styleClass="fontepadrao"/>
@@ -400,15 +398,15 @@
                                 </p:panelGrid>
                             </p:tab>
                         </p:tabView>
-                        <div style="width:100%;text-align: right;" >
+                    
                             <p:commandButton 
                                              id="Btninserir" 
                                              action="#{veiculoManager.inserir()}" 
                                              value="Confirmar" 
                                              styleClass="botao"
                                              update="messages"/>
-                        </div>
-                    </div>
+                    
+                    
                 </p:panel>
                 
             </h:form>
