@@ -27,26 +27,6 @@
                                      rows="10" 
                                      rendered="#{not empty veiculoManager.veiculos}">
                             
-                            <p:column headerText="Código" 
-                                      styleClass="fontepadrao"
-                                      style="text-align:center"
-                                      sortBy="#{veiculo.idVeiculo}" 
-                                      filterBy="#{veiculo.idVeiculo}">
-                                
-                                <h:outputText value="#{veiculo.idVeiculo}" />
-                                
-                            </p:column>
-                            
-                            <p:column headerText="Nº Interno" 
-                                      styleClass="fontepadrao"
-                                      style="text-align:center"
-                                      sortBy="#{veiculo.numeroVeiculo}" 
-                                      filterBy="#{veiculo.numeroVeiculo}">
-                                
-                                <h:outputText value="#{veiculo.numeroVeiculo}" />
-                                
-                            </p:column>
-                            
                             <p:column headerText="Placa"
                                       styleClass="fontepadrao"
                                       sortBy="#{veiculo.placaVeiculo}" 
