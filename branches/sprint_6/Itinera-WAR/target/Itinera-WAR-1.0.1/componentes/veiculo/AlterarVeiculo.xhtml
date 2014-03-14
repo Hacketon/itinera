@@ -1,0 +1,413 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body onload="selecionado($('#btnVeiculo'));">
+    <ui:decorate template="/layout/logado/template.xhtml">
+        <ui:define name="conteudo">    
+            <h:form id="displayMessages">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            </h:form>
+            <h:form styleClass="semBorda">                
+                <p:panel styleClass="semBorda" header="#{msg.alteraVeiculo}">
+                    <p:panelGrid styleClass="semBorda">
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="veiculoPlaca"
+                                               styleClass="fontepadrao semBorda"
+                                               value="Placa" />
+                            </p:column>
+                            
+                            <p:column>
+                                <p:inputMask id="veiculoPlaca"
+                                           value="#{veiculoManager.veiculo.placaVeiculo}"
+                                           mask="aaa9999"
+                                           required="true"
+                                           requiredMessage="Por favor, preencha a placa do veículo." />
+                                <p:watermark for="veiculoPlaca" value="ABC1234" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                        <p:column>
+                                <p:outputLabel for="veiculoMarca"
+                                               value="Marca" 
+                                               styleClass="fontepadrao semBorda"/>
+                            </p:column>
+                            
+                            <p:column>
+                                <p:inputText id="veiculoMarca"
+                                             required="true"
+                                             requiredMessage="Por favor, preencha a marca para o veículo."
+                                             value="#{veiculoManager.veiculo.marcaVeiculo}" 
+                                             maxlength="100"/>
+                                <p:watermark for="veiculoMarca" value="Marca do Veículo" />
+                            </p:column>
+                            </p:row>    
+                        
+                        <p:row>
+
+                            <p:column>
+                                <p:outputLabel for="veiculoModelo"
+                                               value="Modelo" 
+                                               styleClass="fontepadrao semBorda"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="veiculoModelo"
+                                             required="true"
+                                             maxlength="100"
+                                             requiredMessage="Por favor, preencha o modelo para o veículo."
+                                             value="#{veiculoManager.veiculo.modeloVeiculo}" />
+                                <p:watermark for="veiculoModelo" value="Modelo do Veículo" />
+                                
+                            </p:column>
+                            
+                        </p:row>
+                         <p:row>
+                                        <p:column>
+                                            <p:outputLabel for="veiculoCategoria"
+                                                           value="Categoria"
+                                                           styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column colspan="3">
+                                            <p:selectOneMenu id="veiculoCategoria"
+                                                             value="#{veiculoManager.veiculo.idCategoriaVeiculo}"
+                                                             required="true"
+                                                             style="width: 450px !important"
+                                                             requiredMessage="Por favor, informe uma categoria de veículo.">
+                                                <f:selectItem itemValue="" itemLabel="Selecione"/>
+                                                <f:selectItems value="#{veiculoManager.categoriasVeiculos}" var="categoria" 
+                                                               itemLabel="#{categoria.description}" itemValue="#{categoriasVeiculos}" />
+                                                <f:converter converterId="conversorCategoriaVeiculo"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>                                  
+                    </p:panelGrid>
+                    
+                
+                        <p:tabView id="cadastroVeiculosTAB">
+                            <p:tab id="dadosPrincipais" title="Dados principais">
+                                <p:panelGrid styleClass="semBorda" >
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel for="numeroInterno" value="Número Interno" styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputMask id="numeroInterno" 
+                                                         value="#{veiculoManager.veiculo.numeroVeiculo}"
+                                                         mask="?99999999"/>
+                                            <p:watermark for="numeroInterno" value="Número interno do veículo" />
+                                            
+                                        </p:column>
+                                    </p:row>
+                                    
+                                    <p:row>
+                                        <p:column style="border: solid black 1px;">
+                                            <p:outputLabel for="observacaoVeiculo" 
+                                                           value="Observação" 
+                                                           styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column colspan="3">
+                                            <p:inputTextarea id="observacaoVeiculo" 
+                                                             cols="60" 
+                                                             maxlength="250"
+                                                             value="#{veiculoManager.veiculo.observacao}"
+                                                             />
+                                            <p:watermark for="observacaoVeiculo" value="Observação com no máximo 250 caracteres." />
+                                        </p:column>
+                                        
+                                    </p:row>
+                                    
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel for="veiculoAtivo" value="Veículo ativo?" styleClass="fontepadrao" />
+                                        </p:column>
+                                        <p:column>
+                                            <p:selectBooleanCheckbox id="veiculoAtivo" value="#{veiculoManager.veiculo.ativo}" rendererType="boolean" />
+                                        </p:column>
+
+                                        <p:column colspan="2" style="text-align:right;">
+                                            <h:outputText
+                                                           styleClass="fontepadrao"
+                                                           value="Cadastro efetuado em #{veiculoManager.formataData(veiculoManager.veiculo.dataInclusao)}"/>
+                                            
+                                        </p:column>
+                                    </p:row>
+                                    
+                                </p:panelGrid> 
+
+                            </p:tab>
+
+                            <p:tab id="tabDocumentacao" title="Documentação do veículo">
+                                <p:panelGrid styleClass="semBorda" >
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel  for="veiculoRenavam"
+                                                            value="Renavam"
+                                                            styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column colspan="3">
+                                            <p:inputMask    id="veiculoRenavam"
+                                                            mask="99999999999" 
+                                                            value="#{veiculoManager.veiculo.numeroRenavan}"
+                                                            rendererType="integer"
+                                                            size="80"/>
+                                            <p:watermark for="veiculoRenavam" value="01010101011" />
+                                        </p:column>
+                                    </p:row>                                    
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel  for="veiculoChassi"
+                                                            value="Chassi"
+                                                            styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column colspan="3">
+                                            <p:inputText    id="veiculoChassi"
+                                                            value="#{veiculoManager.veiculo.chassi}"
+                                                            maxlength="30"
+                                                            size="80"/>
+                                            <p:watermark for="veiculoChassi" value="Chassi do Veículo" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel  for="veiculoCidade"
+                                                            value="Cidade"
+                                                            styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column colspan="3">
+                                            <p:inputText    id="veiculoCidade"
+                                                            value="#{veiculoManager.veiculo.cidadeVeiculo}"
+                                                            rendererType="integer"
+                                                            maxlength="100"
+                                                            size="80"/>
+                                            <p:watermark for="veiculoCidade" value="Cidade na qual o veículo está registrado." />
+                                        </p:column>
+                                        <p:column style="text-align:right;">
+                                            <p:outputLabel  for="veiculoUF"
+                                                            value="UF"
+                                                            styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputMask    id="veiculoUF"
+                                                            mask="aa"
+                                                            value="#{veiculoManager.veiculo.ufVeiculo}"
+                                                            rendererType="character"
+                                                            size="10"/>
+                                            <p:watermark for="veiculoUF" value="SP" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel  for="veiculoExercicio"
+                                                            value="Exercício"
+                                                            styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputMask    id="veiculoExercicio"
+                                                            mask="2099"
+                                                            value="#{veiculoManager.veiculo.exercicioAtual}"
+                                                            rendererType="integer"
+                                                            size="10"/>
+                                        </p:column>
+                                        <p:column style="text-align:right;">
+                                            <p:outputLabel  for="veiculoAno"
+                                                            value="Ano do Modelo"
+                                                            styleClass="fontepadrao"/>
+                                            <p:watermark for="veiculoExercicio" value="2013" />
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputMask    id="veiculoAno"
+                                                            value="#{veiculoManager.veiculo.anoModelo}"
+                                                            mask="9999"
+                                                            rendererType="integer"
+                                                            size="10"/>
+                                            
+                                            <p:watermark for="veiculoAno" value="2013" />
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel  for="veiculoFabricacao"
+                                                            value="Ano de Fabricação"
+                                                            styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputMask    id="veiculoFabricacao"
+                                                            value="#{veiculoManager.veiculo.anoFabricacao}"
+                                                            mask="9999"
+                                                            rendererType="integer"
+                                                            size="10"/>
+                                            <p:watermark for="veiculoFabricacao" value="2013" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel  for="veiculoCor"
+                                                            value="Cor predominante"
+                                                            styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column colspan="3">
+                                            <p:inputText    id="veiculoCor"
+                                                            value="#{veiculoManager.veiculo.corPredominante}"
+                                                            maxlength="50"
+                                                            size="50"/>
+                                            <p:watermark for="veiculoCor" value="Cor do veículo" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid> 
+                            </p:tab>
+
+                            <p:tab id="tabCombustivel" title="Combustível">
+                                <p:panelGrid styleClass="semBorda" >
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel for="veiculoCombustivel"
+                                                           value="Tipo de Combustível"
+                                                           styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:selectOneMenu id="veiculoCombustivel"
+                                                             required="true"
+                                                             style="width: 300px !important"
+                                                             requiredMessage="Por favor, informe o tipo de combustível do veículo."
+                                                             value="#{veiculoManager.veiculo.tipoCombustivel}">
+                                                <f:selectItems value="#{veiculoManager.tipoCombustiveis}" var="tpCombustivel"
+                                                               itemLabel="#{tpCombustivel.description}" itemValue="#{tpCombustivel}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>                                    
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel for="veiculoCombustivelMedia"
+                                                           value="Média km/litro"
+                                                           styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputMask id="veiculoCombustivelMedia"
+                                                         value="#{veiculoManager.veiculo.mediaKmLitro}"
+                                                         required="true"
+                                                         mask="?9999.99"
+                                                         requiredMessage="Por favor, informe a média de Km/Litro do veículo."
+                                                         size="10"/>
+                                            <p:watermark for="veiculoCombustivelMedia" value="Km/Litro" />
+
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid> 
+                            </p:tab>
+                            <p:tab id="tabCaracteristicas" title="Características do veículo">
+                                <p:panelGrid styleClass="semBorda" >
+                                    <p:row>
+                                        <p:column>
+                                             <p:outputLabel for="veiculoAltura"
+                                                           value="Altura"
+                                                           styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputMask   id="veiculoAltura"   
+                                                           required="true"
+                                                           mask="?9999.99"
+                                                           requiredMessage="Por favor, insira a Altura do veículo."
+                                                           value="#{veiculoManager.veiculo.alturaVeiculo}"
+                                                           />
+                                            <p:watermark for="veiculoAltura" value="00001.00" />
+                                        </p:column>
+                                        <p:column>
+                                             <p:outputLabel for="veiculoLargura"
+                                                           value="Largura"
+                                                           styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputMask   id="veiculoLargura"
+                                                           value="#{veiculoManager.veiculo.larguraVeiculo}"
+                                                           mask="?9999.99"
+                                                           required="true"
+                                                           requiredMessage="Por favor, insira a largura do veículo."
+                                                           />
+                                            <p:watermark for="veiculoLargura" value="0001.00" />
+                                        </p:column>
+                                        <p:column>
+                                             <p:outputLabel for="veiculoComprimento"
+                                                           value="Comprimento"
+                                                           styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputMask   id="veiculoComprimento"
+                                                           required="true" 
+                                                           mask="?9999.99"
+                                                           requiredMessage="Por favor, insira o comprimento do veículo."
+                                                           value="#{veiculoManager.veiculo.comprimentoVeiculo}"
+                                                           />
+                                            <p:watermark for="veiculoComprimento" value="0001.00" />
+                                        </p:column>
+                                    </p:row>                                    
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel for="pesoBrutoVeiculo"
+                                                           value="Peso Bruto Total"
+                                                           styleClass="fontepadrao"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputMask   id="pesoBrutoVeiculo"
+                                                           value="#{veiculoManager.veiculo.pbt}"
+                                                           required="true"
+                                                           mask="?9999999999999.999"
+                                                           requiredMessage="Por favor, insira o peso bruto total do veículo."/>
+                                            <p:watermark for="pesoBrutoVeiculo" value="000000000001.00" />
+                                        </p:column>
+                                    </p:row>                                    
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel  for="veiculoEixo"
+                                                            styleClass="fontepadrao"
+                                                            value="Eixos"
+                                                            />
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputMask    id="veiculoEixo"
+                                                            value="#{veiculoManager.veiculo.qtdeEixos}"
+                                                            mask="99"
+                                                            required="true"
+                                                            requiredMessage="Por favor, insira o número de eixos do veículo."/>
+                                            <p:watermark for="veiculoEixo" value="01" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel for="kmAtualVeiculo"
+                                                           styleClass="fontepadrao"
+                                                           value="Km Atual"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputMask   id="kmAtualVeiculo"
+                                                           value="#{veiculoManager.veiculo.kmAtual}"
+                                                           required="true"
+                                                           mask="?9999999999999.999"
+                                                           requiredMessage="Por favor, insira a quilometragem atual do veículo."
+                                                           style="background-color:#EEEEEE" 
+                                                           disabled="true"
+                                                           />
+                                            <p:watermark for="kmAtualVeiculo" value="1.000" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid> 
+
+                            </p:tab>
+
+                        </p:tabView>
+                       <p:commandButton 
+                        id="BtnAlterar" 
+                        action="#{veiculoManager.alterar()}" 
+                        value="Confirmar" 
+                        styleClass="botao"/>
+                    
+                </p:panel>
+                
+                
+            </h:form>
+        </ui:define>
+    </ui:decorate>
+    </h:body>
+</html>
+
