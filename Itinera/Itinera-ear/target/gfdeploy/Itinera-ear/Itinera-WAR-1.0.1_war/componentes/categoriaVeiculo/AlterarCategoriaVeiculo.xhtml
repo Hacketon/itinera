@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body onload="selecionado($('#btnCategoriaVeiculo'));">  
+        <ui:decorate template="/layout/logado/template.xhtml">
+            <ui:define name="conteudo">
+            <h:form id="formAlterarCategoria" styleClass="semBorda">
+                <p:panel styleClass="semBorda" header="#{msg.alteraCategoriaVeiculo}">
+                
+                <p:messages id="messages" showDetail="true"/>
+                <p:panelGrid columns="2" >
+
+                    <p:outputLabel 
+                                    value="#{msg.descricaoCategoriaVeiculo}"  
+                                    for="AlterarDescricao"
+                                    styleClass="fontepadrao"/>
+                    <p:inputText    id="AlterarDescricao" 
+                                    required="true"
+                                    size="50"
+                                    maxlength="50"
+                                    requiredMessage="#{msgSis.obrigatorioDescricaoCategoriaVeiculos}"
+                                    value="#{categoriaVeiculoManager.categoriaVeiculo.descricaoCategoria}" />
+                    <h:outputLabel  value="#{msg.reboqueSemiReboqueCategoriaVeiculo}"
+                                    for="AlterarReboque"
+                                    styleClass="fontepadrao"/>
+                    <p:selectBooleanCheckbox 
+                                    id="AlterarReboque"
+                                    value="#{categoriaVeiculoManager.categoriaVeiculo.reboqueSemiReboque}"
+                                    rendererType="boolean"/> 
+                    </p:panelGrid>
+                
+                    <p:commandButton 
+                                     id="BtnAlterar" 
+                                     action="#{categoriaVeiculoManager.alterar()}" 
+                                     value="#{msg.acaoOK}" 
+                                     styleClass="botao"
+                                     update="messages mensagem1 mensagem2">
+                        
+                    </p:commandButton>
+                     <p:commandButton id="BtnFechar" 
+                                      action="#{categoriaVeiculoManager.montarPaginaParaListarCategoriaVeiculo()}" 
+                                      value="#{msg.acaoFechar}" 
+                                      immediate="true"
+                                      styleClass="botao"/>
+              
+                </p:panel>
+                
+                <p:confirmDialog header="#{msg.headerAlterar}" message="#{msg.headerConfirmaAlterar}" id="AlterarDlg" widgetVar="altera">
+                    <p:outputLabel id="mensagem1" value="#{categoriaVeiculoManager.mensagem1}" />
+                    <br/>
+                    <p:outputLabel id="mensagem2" value="#{categoriaVeiculoManager.mensagem2}" />
+                    <br/>
+                    <p:commandButton value="#{msg.acaoSim}" action="#{categoriaVeiculoManager.realizarAlteracao()}"  />
+                    <p:commandButton value="#{msg.acaoNao}" onclick="altera.hide();" />
+                    
+                </p:confirmDialog>
+                
+            </h:form>
+        </ui:define>
+        </ui:decorate>
+
+    </h:body>
+</html>
