@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+     <h:head>
+        <title>#{msg.headerRota}</title>
+    </h:head>
+    <h:body onload="selecionado($('#btnRota'));" >
+        <f:view>
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo"> 
+                    <p:panel styleClass="semBorda" header="#{msg.listaRota}">
+                        <h:form id="ListagemdeRota">
+                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                            <p:commandButton icon="ui-icon-plus" action="#{rotaManager.montarPaginaParaCadastro()}" styleClass="fontepadrao" value="Novo"/>
+                            <h:panelGrid id="gridTipoRota">
+                                <h:outputText value="Não existem tipos de rota para serem listadas." 
+                                              rendered="#{empty rotaManager.rotas}" />
+
+                                <p:dataTable value="#{rotaManager.rotas}" 
+                                             var="rota" 
+                                             paginator="true" 
+                                             emptyMessage="Não existem tipos de rota para listar."
+                                             rows="10" 
+                                             rendered="#{not empty rotaManager.rotas}">
+
+                                    <p:column headerText="Código" 
+                                              styleClass="fontepadrao"
+                                              style="text-align:center"
+                                              sortBy="#{rota.codigoRota}" 
+                                              filterBy="#{rota.codigoRota}">
+
+                                        <h:outputText value="#{rota.codigoRota}" />
+
+                                    </p:column>
+                                    <p:column headerText="">
+                                        <h:commandLink styleClass="fontepadrao" 
+                                                       action="#{rotaManager.montarPaginaParaAlterar()}" 
+                                                       value="Alterar">
+                                            <f:setPropertyActionListener value="#{rota}" target="#{rotaManager.rota}" />  
+                                        </h:commandLink>
+
+                                    </p:column>
+
+                                </p:dataTable>
+                            </h:panelGrid>
+                            <!--            DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
+                            <p:confirmDialog header="Excluir?" message="Você confirma a exclusão deste tipo de rota?" id="excluiDlg" widgetVar="exclui">
+                                <p:commandButton value="Sim" action="#{rotaManager.excluir()}" update="gridTipoRota messages" />
+                                <p:commandButton value="Não" onclick="exclui.hide();" />
+                            </p:confirmDialog>
+                        </h:form>
+                    </p:panel>
+                </ui:define>
+            </ui:decorate>
+        </f:view>
+    </h:body>
+</html>
+
