@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityExistsException;
 import br.com.itinera.modelo.CategoriaVeiculo;
+import javax.faces.model.SelectItem;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -19,19 +20,43 @@ import org.primefaces.context.RequestContext;
 @ManagedBean(name = "categoriaVeiculoManager")
 @SessionScoped
 public class CategoriaVeiculoManager implements Serializable {
-
+    
+    
+    
+    
     private String mensagem;
     private String descricaoAnterior;
     private Boolean reboqueAnterior;
     private String mensagem1;
     private String mensagem2;
+    private CategoriaVeiculo categoriaVeiculo;
+    private List<CategoriaVeiculo> categoriaVeiculos = new ArrayList<CategoriaVeiculo>();
+    @EJB
+    private CategoriaVeiculoFachada categoriaVeiculoFachada;
 
+    public CategoriaVeiculoManager(){
+    }
+    
     public String getMensagem1(){
         return mensagem1;
     }
     
     public String getMensagem2(){
         return mensagem2;
+    }
+    
+    
+    public String textoReboqueSemiReboque(CategoriaVeiculo c){
+        return c.isReboqueSemiReboque()?"Sim":"Não";
+    }
+    
+    public SelectItem[] getReboqueSemiReboqueOpcoes(){
+        SelectItem[] opcoes = new SelectItem[3];
+        opcoes[0] = new SelectItem("","Selecione");
+        opcoes[1] = new SelectItem("true","Sim");
+        opcoes[2] = new SelectItem("false","Não");
+        return opcoes;
+//        return reboqueSemiReboqueOpcoes;
     }
     
     public String getMensagem() {
@@ -41,15 +66,7 @@ public class CategoriaVeiculoManager implements Serializable {
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
     }
-    private CategoriaVeiculo categoriaVeiculo;
-    private List<CategoriaVeiculo> categoriaVeiculos = new ArrayList<CategoriaVeiculo>();
     
-    @EJB
-    private CategoriaVeiculoFachada categoriaVeiculoFachada;
-
-    public CategoriaVeiculoManager() {
-    }
-
     public CategoriaVeiculo getCategoriaVeiculo() {
         return categoriaVeiculo;
     }
