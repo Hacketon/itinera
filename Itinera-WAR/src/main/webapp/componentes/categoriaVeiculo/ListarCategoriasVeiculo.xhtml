@@ -23,22 +23,23 @@
                             <h:outputText value="#{msg.listagemSemCategorias}" 
                                           rendered="#{empty categoriaVeiculoManager.categoriaVeiculos}" />
 
-                            <p:dataTable value="#{categoriaVeiculoManager.categoriaVeiculos}" 
-                                         var="categoria" 
+                            <p:dataTable emptyMessage="#{msg.listagemBuscaSemCategorias}"
                                          paginator="true" 
-                                         emptyMessage="#{msg.listagemBuscaSemCategorias}"
                                          rows="10" 
-                                         rendered="#{not empty categoriaVeiculoManager.categoriaVeiculos}">
-
+                                         rendered="#{not empty categoriaVeiculoManager.categoriaVeiculos}"
+                                         value="#{categoriaVeiculoManager.categoriaVeiculos}" 
+                                         var="categoria"
+                                         >
 
                                 <p:column headerText="#{msg.descricaoCategoriaVeiculo}" 
-                                          styleClass="fontepadrao"
-                                          sortBy="#{categoria.descricaoCategoria}" 
                                           filterBy="#{categoria.descricaoCategoria}"
                                           filterMatchMode="contains"
                                           filterStyle="width: 300px;"
+                                          style="min-width: 510px;"
+                                          styleClass="fontepadrao"
+                                          sortBy="#{categoria.descricaoCategoria}" 
                                           >
-                                    <h:outputText value="#{categoria.descricaoCategoria}" 
+                                    <h:outputText value="#{categoria.descricaoCategoria}"
                                                   />
                                 </p:column>
 
