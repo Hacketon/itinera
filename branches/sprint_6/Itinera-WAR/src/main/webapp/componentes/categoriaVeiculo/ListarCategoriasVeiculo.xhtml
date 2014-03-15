@@ -35,6 +35,7 @@
                                           styleClass="fontepadrao"
                                           sortBy="#{categoria.descricaoCategoria}" 
                                           filterBy="#{categoria.descricaoCategoria}"
+                                          filterMatchMode="contains"
                                           filterStyle="width: 300px;"
                                           >
                                     <h:outputText value="#{categoria.descricaoCategoria}" 
@@ -46,11 +47,10 @@
                                           style="text-align: center;"
                                           headerText="#{msg.reboqueRedCategoriaVeiculo}"
                                           filterBy="#{categoria.reboqueSemiReboque}"
+                                          filterOptions="#{categoriaVeiculoManager.reboqueSemiReboqueOpcoes}"
                                           >
                                           
-                                    <h:selectBooleanCheckbox readonly="true" 
-                                                             disabled="true"
-                                                             value="#{categoria.reboqueSemiReboque}" />
+                                    <h:outputText value="#{categoriaVeiculoManager.textoReboqueSemiReboque(categoria)}" />
                                 </p:column>
 
                                 <p:column headerText="">
