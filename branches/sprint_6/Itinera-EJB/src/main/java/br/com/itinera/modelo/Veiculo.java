@@ -68,85 +68,100 @@ public class Veiculo implements Serializable {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="Veiculo_Generator")
     @Column(name = "id_veiculo")
     private BigDecimal idVeiculo;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 7)
     @Column(name = "placa_veiculo")
     private String placaVeiculo;
+    
     @Size(max = 10)
     @Column(name = "numero_veiculo")
     private String numeroVeiculo;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "marca_veiculo")
     private String marcaVeiculo;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "modelo_veiculo")
     private String modeloVeiculo;
+    
     @Column(name = "ano_fabricacao")
     private Short anoFabricacao;
+    
     @Column(name = "ano_modelo")
     private Short anoModelo;
+    
     @Size(max = 30)
     @Column(name = "chassi")
     private String chassi;
+    
     @Size(max = 20)
     @Column(name = "numero_renavan")
     private String numeroRenavan;
+    
     @Column(name = "exercicio_atual")
     private Short exercicioAtual;
+    
     @Size(max = 100)
     @Column(name = "cidade_veiculo")
     private String cidadeVeiculo;
+    
     @Size(max = 2)
     @Column(name = "uf_veiculo")
     private String ufVeiculo;
+    
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "tipo_combustivel")
     private String tipoCombustivel;
+    
     @Size(max = 50)
     @Column(name = "cor_predominante")
     private String corPredominante;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "qtde_eixos")
     private BigInteger qtdeEixos;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "km_atual")
     private BigDecimal kmAtual;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "media_km_litro")
     private BigDecimal mediaKmLitro;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "largura_veiculo")
     private BigDecimal larguraVeiculo;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "comprimento_veiculo")
     private BigDecimal comprimentoVeiculo;
+   
     @Basic(optional = false)
-    @NotNull
     @Column(name = "altura_veiculo")
     private BigDecimal alturaVeiculo;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "pbt")
     private BigDecimal pbt;
+    
     @Size(max = 250)
     @Column(name = "observacao")
     private String observacao;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "ativo")
     private boolean ativo;
+    
     @JoinColumn(name = "id_categoria_veiculo", referencedColumnName = "id_categoria_veiculo")
     @ManyToOne(optional = false)
     private CategoriaVeiculo idCategoriaVeiculo;
