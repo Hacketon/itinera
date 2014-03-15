@@ -405,8 +405,12 @@
                                              value="Confirmar" 
                                              styleClass="botao"
                                              update="messages"/>
-                    
-                    
+                            
+                             <p:commandButton id="BtnFechar"
+                                              action="#{veiculoManager.montarPaginaParaListarVeiculo()}"
+                                              value="#{msg.acaoFechar}" 
+                                              immediate="true"
+                                              styleClass="botao"/>            
                 </p:panel>
                 
             </h:form>

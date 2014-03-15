@@ -401,9 +401,13 @@
                         action="#{veiculoManager.alterar()}" 
                         value="Confirmar" 
                         styleClass="botao"/>
-                    
-                </p:panel>
-                
+                       
+                        <p:commandButton id="BtnFechar"
+                        action="#{veiculoManager.montarPaginaParaListarVeiculo()}"
+                        value="#{msg.acaoFechar}" 
+                        immediate="true"
+                        styleClass="botao"/>                                       
+                </p:panel>              
                 
             </h:form>
         </ui:define>
