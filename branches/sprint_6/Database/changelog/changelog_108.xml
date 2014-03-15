@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="marcelo" id="108">
+		<comment>
+			Alteração da tabela de veiculo para remover campos nao obrigatorios
+		</comment>
+        <dropNotNullConstraint 
+            columnName="tipo_combustivel"
+            schemaName="public"
+            tableName="veiculo"/>
+        <dropNotNullConstraint 
+            columnName="qtde_eixos"
+            schemaName="public"
+            tableName="veiculo"/>
+        <dropNotNullConstraint 
+            columnName="km_atual"
+            schemaName="public"
+            tableName="veiculo"/>
+        <dropNotNullConstraint 
+            columnName="media_km_litro"
+            schemaName="public"
+            tableName="veiculo"/>
+        <dropNotNullConstraint 
+            columnName="largura_veiculo"
+            schemaName="public"
+            tableName="veiculo"/>
+        <dropNotNullConstraint 
+            columnName="comprimento_veiculo"
+            schemaName="public"
+            tableName="veiculo"/>
+        <dropNotNullConstraint 
+            columnName="altura_veiculo"
+            schemaName="public"
+            tableName="veiculo"/>
+        <dropNotNullConstraint 
+            columnName="pbt"
+            schemaName="public"
+            tableName="veiculo"/>
+    </changeSet>
+</databaseChangeLog>
