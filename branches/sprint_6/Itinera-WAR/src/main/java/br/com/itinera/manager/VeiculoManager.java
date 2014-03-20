@@ -33,7 +33,8 @@ public class VeiculoManager implements Serializable{
     private Veiculo veiculo;
     private List<Veiculo> veiculos = new ArrayList<Veiculo>();
     private Boolean tabVisivelComCombustivel;
-    private Boolean tabVisivelSemCombustivel;
+    private Boolean tabVisivelSemCombustivel; 
+    
     @EJB
     private VeiculoFachada fachada;
     
@@ -161,6 +162,15 @@ public class VeiculoManager implements Serializable{
         return categoriasVeiculos;
     }
    
-       
+   public String converterBooleanTexto(Boolean ativo){
+       return ativo?"Ativo":"Inativo";
+   }
     
+   public SelectItem[] getListaOpcoesAtivoInativo(){
+       SelectItem[] opcoes = new SelectItem[3];
+       opcoes[0] = new SelectItem("","Selecione");
+       opcoes[1] = new SelectItem("True","Ativo");
+       opcoes[2] = new SelectItem("False","Inativo");
+       return opcoes;
+   }
 }
