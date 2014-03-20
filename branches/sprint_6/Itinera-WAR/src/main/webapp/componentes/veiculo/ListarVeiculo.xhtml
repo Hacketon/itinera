@@ -31,6 +31,7 @@
                                       styleClass="fontepadrao"
                                       sortBy="#{veiculo.placaVeiculo}" 
                                       filterBy="#{veiculo.placaVeiculo}"
+                                      style="text-align: center"
                                       filterStyle="text-transform: uppercase;">
                                 
                                 <h:outputText value="#{veiculo.placaVeiculo}" />
@@ -39,7 +40,9 @@
                             
                             <p:column headerText="Marca"
                                       styleClass="fontepadrao"
-                                      sortBy="#{veiculo.marcaVeiculo}" 
+                                      sortBy="#{veiculo.marcaVeiculo}"
+                                      filterMatchMode="contains"
+                                      style="text-align: center"
                                       filterBy="#{veiculo.marcaVeiculo}">
                                 
                                 <h:outputText value="#{veiculo.marcaVeiculo}" />
@@ -48,9 +51,10 @@
                             
                             <p:column headerText="Modelo"
                                       styleClass="fontepadrao"
-                                      style="text-align: center;"
                                       sortBy="#{veiculo.modeloVeiculo}" 
-                                      filterBy="#{veiculo.modeloVeiculo}">
+                                      filterBy="#{veiculo.modeloVeiculo}"
+                                      filterMatchMode="contains"
+                                      filterStyle="width: 250px;">
                                 
                                 <h:outputText value="#{veiculo.modeloVeiculo}" />
                                 
@@ -60,11 +64,10 @@
                                       styleClass="fontepadrao"
                                       style="text-align: center;"
                                       sortBy="#{veiculo.ativo}" 
+                                      filterOptions="#{veiculoManager.listaOpcoesAtivoInativo}"
                                       filterBy="#{veiculo.ativo}">
                                 
-                                <h:selectBooleanCheckbox readonly="true" 
-                                                         disabled="true" 
-                                                         value="#{veiculo.ativo}" />
+                                <p:outputLabel value="#{veiculoManager.converterBooleanTexto(veiculo.ativo)}" />
                                 
                             </p:column>
                             
