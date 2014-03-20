@@ -19,6 +19,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 import br.com.itinera.modelo.CategoriaVeiculo;
 import br.com.itinera.modelo.Veiculo;
+import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -31,7 +32,8 @@ public class VeiculoManager implements Serializable{
     
     private Veiculo veiculo;
     private List<Veiculo> veiculos = new ArrayList<Veiculo>();
-
+    private Boolean tabVisivelComCombustivel;
+    private Boolean tabVisivelSemCombustivel;
     @EJB
     private VeiculoFachada fachada;
     
@@ -39,7 +41,8 @@ public class VeiculoManager implements Serializable{
     private CategoriaVeiculoFachada categoriaFachada;
     
     //Parte 1 - GETs e SETs
-    public VeiculoManager(){}
+    public VeiculoManager(){
+    }
     
     public void setVeiculo(Veiculo veiculo){
         this.veiculo = veiculo;
@@ -49,8 +52,28 @@ public class VeiculoManager implements Serializable{
         return this.veiculo;
     }
     
+    public boolean getTabVisivelComCombustivel(){
+        return this.tabVisivelComCombustivel;
+    }
+    
+    public boolean getTabVisivelSemCombustivel(){
+        return this.tabVisivelSemCombustivel;
+    }
+    
     public List<Veiculo> getVeiculos(){
         return this.veiculos;
+    }
+    
+    public void combustivelVisualizar(AjaxBehaviorEvent abe){
+       CategoriaVeiculo selected = categoriaFachada.recuperarPorId(veiculo.getIdCategoriaVeiculo().getIdCategoriaVeiculo());
+       if(selected.isReboqueSemiReboque()){
+        this.tabVisivelComCombustivel = false;
+        this.tabVisivelSemCombustivel = true;
+       }else{
+        this.tabVisivelComCombustivel = true;
+        this.tabVisivelSemCombustivel = false;
+       }
+               
     }
     
     public Integer contagem(){
@@ -58,6 +81,7 @@ public class VeiculoManager implements Serializable{
     }
     //Parte 2 - CRUD
     public String inserir(){
+        
         fachada.inserir(this.veiculo);
         Mensagem.mostrarMensagemSucesso("Sucesso!","Veiculo inserido com sucesso!");
         recuperarVeiculos();
@@ -89,11 +113,12 @@ public class VeiculoManager implements Serializable{
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(data);
     }
-    
-    
+   
     
     //Parte 3 - Chamadas de Tela
     public String montarPaginaParaCadastrarVeiculo(){
+        this.tabVisivelComCombustivel = false;
+        this.tabVisivelSemCombustivel = false;
         this.veiculo = new Veiculo();
         Date data = new Date();
         this.veiculo.setAtivo(true);
@@ -102,6 +127,13 @@ public class VeiculoManager implements Serializable{
     }
     
     public String montarPaginaParaAlterarVeiculo(){
+        if(this.veiculo.getIdCategoriaVeiculo().isReboqueSemiReboque()){
+            this.tabVisivelComCombustivel = false;
+            this.tabVisivelSemCombustivel = true;
+        }else{
+            this.tabVisivelComCombustivel = true;
+            this.tabVisivelSemCombustivel = false;
+        }
         return "/componentes/veiculo/AlterarVeiculo";
     }
     
