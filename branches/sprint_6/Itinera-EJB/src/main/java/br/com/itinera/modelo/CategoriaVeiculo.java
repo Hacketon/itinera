@@ -119,7 +119,7 @@ public class CategoriaVeiculo implements Serializable {
 
     @Override
     public String toString() {
-        return "persistencia.CategoriaVeiculo[ idCategoriaVeiculo=" + idCategoriaVeiculo + " ]";
+        return this.descricaoCategoria;
     }
 
     @XmlTransient

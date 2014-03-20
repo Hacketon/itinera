@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import br.com.itinera.modelo.CategoriaVeiculo;
 import br.com.itinera.persistencia.CategoriaVeiculoDAO;
+import java.math.BigDecimal;
 
 /**
  *
@@ -35,5 +36,9 @@ public class CategoriaVeiculoFachada {
     public Integer contagem(){
         return categoriaVeiculoDAO.listar().size();
                 
+    }
+    
+    public CategoriaVeiculo recuperarPorId(BigDecimal id){
+        return categoriaVeiculoDAO.recuperarPorId(id);
     }
 }
