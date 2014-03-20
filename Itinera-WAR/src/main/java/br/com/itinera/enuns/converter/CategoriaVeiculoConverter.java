@@ -4,12 +4,14 @@
  */
 package br.com.itinera.enuns.converter;
 
-import java.math.BigDecimal;
+import br.com.itinera.fachada.CategoriaVeiculoFachada;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import br.com.itinera.modelo.CategoriaVeiculo;
+import java.math.BigDecimal;
+import javax.ejb.EJB;
 
 /**
  *
@@ -17,15 +19,20 @@ import br.com.itinera.modelo.CategoriaVeiculo;
  */
 @FacesConverter(value="conversorCategoriaVeiculo")
 public class CategoriaVeiculoConverter implements Converter{
-
+    @EJB
+    private CategoriaVeiculoFachada fachada;
+    
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        CategoriaVeiculo cv = new CategoriaVeiculo();
+        
         if (value.equals("")) {
+            return null;
         } else {
+            CategoriaVeiculo cv = new CategoriaVeiculo(); 
             cv.setIdCategoriaVeiculo(new BigDecimal(value));
+            return cv;
         }
-        return cv;
+        
     }
 
     @Override
