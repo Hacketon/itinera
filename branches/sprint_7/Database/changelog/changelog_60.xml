@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="ivens" id="60">
+		<comment>
+			Adição chave UNIQUE na tabela 'pais' (País).
+		</comment>
+
+       <addUniqueConstraint tableName="pais" columnNames="codigo_pais" constraintName="uk_codigo_pais"/>
+	   <addUniqueConstraint tableName="pais" columnNames="ddi_pais" constraintName="uk_ddi_pais"/>
+		
+     </changeSet>
+</databaseChangeLog>

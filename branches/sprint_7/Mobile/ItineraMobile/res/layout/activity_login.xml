@@ -1,0 +1,83 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fundo_main"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".Login" >
+
+    <TextView
+        android:id="@+id/txtDataAtual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp"
+        android:text="@string/hello_world" />
+
+    <TextView
+        android:id="@+id/jlbUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtDataAtual"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="68dp"
+        android:text="@string/usuario" />
+
+    <EditText
+        android:id="@+id/txtUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/jlbUsuario"
+        android:layout_alignLeft="@+id/txtDataAtual"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/jlbSenha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/jlbUsuario"
+        android:layout_below="@+id/jlbUsuario"
+        android:layout_marginTop="38dp"
+        android:text="@string/senha" />
+
+    <EditText
+        android:id="@+id/txtSenha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/jlbSenha"
+        android:layout_alignBottom="@+id/jlbSenha"
+        android:layout_alignLeft="@+id/txtUsuario"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btnLoginEntrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/txtSenha"
+        android:layout_below="@+id/txtSenha"
+        android:layout_marginTop="32dp"
+        android:layout_toRightOf="@+id/txtDataAtual"
+        android:background="@color/botao_entrar"
+        android:text="@string/entrar" />
+
+    <Button
+        android:id="@+id/btnLVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnLoginEntrar"
+        android:layout_alignBottom="@+id/btnLoginEntrar"
+        android:layout_alignLeft="@+id/jlbSenha"
+        android:layout_toLeftOf="@+id/txtSenha"
+        android:background="@color/botao_normal"
+        android:text="@string/voltar" />
+
+</RelativeLayout>

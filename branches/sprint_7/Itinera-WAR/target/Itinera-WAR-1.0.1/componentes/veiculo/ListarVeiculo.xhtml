@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">    
+    <h:head>
+        <title>#{msg.headerVeiculo}</title>
+    </h:head>
+    <body onload="selecionado($('#btnVeiculo'));">
+    <ui:decorate template="/layout/logado/template.xhtml">
+        <ui:define name="titulo">Veículos: Listagem</ui:define>
+        <ui:define name="conteudo">
+            <p:panel styleClass="semBorda" header= "#{msg.listaVeiculo}">
+            <h:form>
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                   <p:commandButton icon="ui-icon-plus" action="#{veiculoManager.montarPaginaParaCadastrarVeiculo()}" styleClass="fontepadrao" value="Novo"/>
+                    <h:panelGrid id="gridVeiculos">
+                        <h:outputText value="Não existem veículos cadastrados" 
+                                      rendered="#{empty veiculoManager.veiculos}" />
+
+                        <p:dataTable value="#{veiculoManager.veiculos}" 
+                                     var="veiculo" 
+                                     emptyMessage="Não existem veículos para essa busca."
+                                     paginator="true" 
+                                     rows="10" 
+                                     rendered="#{not empty veiculoManager.veiculos}">
+                            
+                            <p:column headerText="Placa"
+                                      styleClass="fontepadrao"
+                                      sortBy="#{veiculo.placaVeiculo}" 
+                                      filterBy="#{veiculo.placaVeiculo}">
+                                
+                                <h:outputText value="#{veiculo.placaVeiculo}" />
+                                
+                            </p:column>
+                            
+                            <p:column headerText="Marca"
+                                      styleClass="fontepadrao"
+                                      sortBy="#{veiculo.marcaVeiculo}" 
+                                      filterBy="#{veiculo.marcaVeiculo}">
+                                
+                                <h:outputText value="#{veiculo.marcaVeiculo}" />
+                                
+                            </p:column>
+                            
+                            <p:column headerText="Modelo"
+                                      styleClass="fontepadrao"
+                                      style="text-align: center;"
+                                      sortBy="#{veiculo.modeloVeiculo}" 
+                                      filterBy="#{veiculo.modeloVeiculo}">
+                                
+                                <h:outputText value="#{veiculo.modeloVeiculo}" />
+                                
+                            </p:column>
+                            
+                            <p:column headerText="Ativo?"
+                                      styleClass="fontepadrao"
+                                      style="text-align: center;"
+                                      sortBy="#{veiculo.ativo}" 
+                                      filterBy="#{veiculo.ativo}">
+                                
+                                <h:selectBooleanCheckbox readonly="true" 
+                                                         disabled="true" 
+                                                         value="#{veiculo.ativo}" />
+                                
+                            </p:column>
+                            
+                            <p:column headerText="">
+                                <h:commandLink styleClass="fontepadrao" 
+                                               action="#{veiculoManager.montarPaginaParaAlterarVeiculo()}" 
+                                               value="Alterar">
+                                    <f:setPropertyActionListener value="#{veiculo}" target="#{veiculoManager.veiculo}" />  
+                                </h:commandLink>
+                                
+                            </p:column>
+                            
+                            <p:column headerText="">
+                                <p:commandLink styleClass="fontepadrao" 
+                                               oncomplete="exclui.show();"
+                                               value="Excluir">
+                                    <f:setPropertyActionListener value="#{veiculo}" 
+                                                                 target="#{veiculoManager.veiculo}" />  
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                </h:panelGrid>
+            
+            <!--DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
+            <p:confirmDialog header="Excluir?" message="Você confirma a exclusão deste veículo?" id="excluiDlg" widgetVar="exclui">
+                <p:commandButton value="Sim" action="#{veiculoManager.excluir()}" update="gridVeiculos" />
+                <p:commandButton value="Não" onclick="exclui.hide();" />
+            </p:confirmDialog>
+            
+            </h:form>
+            </p:panel>
+        </ui:define>
+    </ui:decorate>
+    </body>
+</html>
+

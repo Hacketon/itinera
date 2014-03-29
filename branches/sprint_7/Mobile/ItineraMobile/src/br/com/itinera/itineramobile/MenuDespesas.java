@@ -1,0 +1,115 @@
+package br.com.itinera.itineramobile;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class MenuDespesas extends Activity {
+
+	private int codigoUsuario;
+	private String nomeUsuario;
+	private TextView txtMenuDespesasSaudacao;
+	private TextView txtMenuDespesasDataAtual;
+	private Button btnMenuDespesasCadastrar;
+	private Button btnMenuDespesasPesquisar;
+	private Button btnMenuDespesasVoltar;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_menu_despesas);
+		
+		txtMenuDespesasSaudacao = (TextView)findViewById(R.id.txtMenuDespesasDataAtual);
+		txtMenuDespesasDataAtual = (TextView)findViewById(R.id.txtMenuDespesasSaudacao);
+		btnMenuDespesasCadastrar = (Button)findViewById(R.id.btnMenuDespesasCadastrar);
+		btnMenuDespesasPesquisar = (Button)findViewById(R.id.btnMenuDespesasPesquisar);
+		btnMenuDespesasVoltar = (Button)findViewById(R.id.btnMenuDespesasVoltar);
+		
+		btnMenuDespesasPesquisar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// click botao voltar
+				Intent i = new Intent(MenuDespesas.this, PesquisarDespesa.class);
+				
+				Bundle parametros = new Bundle();
+				parametros.putInt("codigo", codigoUsuario);
+				parametros.putString("nome", nomeUsuario);
+				
+				i.putExtras(parametros);
+				
+				startActivity(i);				
+			}
+		});
+		
+		btnMenuDespesasVoltar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// click botao voltar
+				Intent i = new Intent(MenuDespesas.this, MenuPrincipal.class);
+				
+				Bundle parametros = new Bundle();
+				parametros.putInt("codigo", codigoUsuario);
+				parametros.putString("nome", nomeUsuario);
+				
+				i.putExtras(parametros);
+				
+				startActivity(i);				
+			}
+		});
+		
+		btnMenuDespesasCadastrar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// click botao voltar
+				Intent i = new Intent(MenuDespesas.this, CadastroDespesa.class);
+				
+				Bundle parametros = new Bundle();
+				parametros.putInt("codigo", codigoUsuario);
+				parametros.putString("nome", nomeUsuario);
+				
+				i.putExtras(parametros);
+				
+				startActivity(i);				
+			}
+		});
+		
+		txtMenuDespesasDataAtual.setText(dataAtual());
+		
+		//Recupera parâmetros da tela anterior
+		Intent i = getIntent();
+		Bundle parametros = i.getExtras();
+		
+		if(parametros != null){
+			txtMenuDespesasSaudacao.setText("Bem-vindo, "+parametros.getString("nome"));
+			
+			codigoUsuario = parametros.getInt("codigo");
+			nomeUsuario = parametros.getString("nome");
+		}
+		
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_despesas, menu);
+		return true;
+	}
+	
+	private String dataAtual(){
+	    //Método que retorna uma String com a data formatada nos padrões convencionais
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		return simpleDateFormat.format(new Date());
+	}
+
+}
