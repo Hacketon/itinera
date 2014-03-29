@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="86">
+		<comment>
+			Criação das tabelas ContatoEmpTelefone e ContatoEmpEmail, as constraints unique das mesmas e as sequences faltantes
+		</comment>
+
+		
+		 <createTable remarks="Tabela responsável por relacionar um telefone a uma empresa" tableName="contato_emp_tel">
+            <column name="contato_emp_tel_Id" remarks="Código sequencial do contato de telefone." type="numeric">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_contato_emp_tel"/>
+            </column>
+            <column name="telefone_Id" remarks="código do telefone." type="numeric">
+                <constraints nullable="false" />
+            </column>
+            <column name="empresa_Id" remarks="código da empresa." type="numeric">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        
+        <createTable remarks="Tabela responsável por relacionar um email a uma empresa" tableName="contato_emp_email">
+            <column name="contato_emp_email_Id" remarks="Código sequencial do contato de email." type="numeric">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_contato_emp_email"/>
+            </column>
+            <column name="email_Id" remarks="código do email." type="numeric">
+                <constraints nullable="false" />
+            </column>
+            <column name="empresa_Id" remarks="código da empresa." type="numeric">
+                <constraints nullable="false" />
+            </column>
+		</createTable>
+		
+		 <addForeignKeyConstraint baseColumnNames="telefone_Id" baseTableName="contato_emp_tel" constraintName="fk_contato_emp_tel_telefone" referencedColumnNames="telefone_Id" referencedTableName="telefone"/>
+		 <addForeignKeyConstraint baseColumnNames="empresa_Id" baseTableName="contato_emp_tel" constraintName="fk_contato_emp_tel_empresa" referencedColumnNames="id_empresa" referencedTableName="empresa"/>
+		 
+		 <addForeignKeyConstraint baseColumnNames="email_Id" baseTableName="contato_emp_email" constraintName="fk_contato_emp_email_email" referencedColumnNames="email_Id" referencedTableName="email"/>
+		 <addForeignKeyConstraint baseColumnNames="empresa_Id" baseTableName="contato_emp_email" constraintName="fk_contato_emp_email_empresa" referencedColumnNames="id_empresa" referencedTableName="empresa"/>
+		 
+		
+		<addUniqueConstraint columnNames="telefone_Id,empresa_Id" constraintName="unique_contato_empresa_tel" tableName="contato_emp_tel"/>
+		<addUniqueConstraint columnNames="email_Id,empresa_Id" constraintName="unique_contato_empresa_email" tableName="contato_emp_email"/>
+		
+		<createSequence sequenceName="telefone_Id" />
+		<createSequence sequenceName="email_Id" />
+		<createSequence sequenceName="contato_emp_email_Id" />
+		<createSequence sequenceName="contato_emp_tel_Id" />
+     </changeSet>
+</databaseChangeLog>

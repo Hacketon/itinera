@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+   <h:body onload="selecionado($('#btnUsuario'));">
+    <ui:decorate template="/layout/logado/template.xhtml">
+        <ui:define name="conteudo">    
+            <p:panel styleClass="semBorda" header="#{bundle.alteraUsuario}">
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                <h:form id="formInserirUsuario">
+                    <p:panelGrid styleClass="semBorda">
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel  for="usuarioLogin" 
+                                                value="Login"   
+                                                styleClass="fontepadrao"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText    id="usuarioLogin"
+                                                readonly="true"
+                                                value="#{usuariosManager.usuario.login}" 
+                                                style="text-transform: uppercase;background-color:#EEEEEE;"
+                                                />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel  for="usuarioNome"
+                                                value="Nome"  
+                                                styleClass="fontepadrao"/>
+
+                            </p:column>
+                            <p:column>
+                                <p:inputText    id="usuarioNome" 
+                                                required="true"
+                                                size="30"
+                                                requiredMessage="Por favor, insira um nome para o usuário."
+                                                value="#{usuariosManager.usuario.nome}" >
+                                </p:inputText>
+                            </p:column>
+                            <p:message id="ajudaNome" for="usuarioNome" />
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel  for="usuarioAtivo"
+                                                value="Ativo?"
+                                                styleClass="fontepadrao"/>
+                            </p:column>
+                            <p:column>
+                                <p:selectBooleanCheckbox 
+                                        id="usuarioAtivo"
+                                        value="#{usuariosManager.usuario.ativo}"
+                                        rendererType="boolean"/> 
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="2" style="text-align: right;">
+                                <p:commandButton 
+                                         id="Btninserir" 
+                                         action="#{usuariosManager.alterar()}" 
+                                         value="Confirmar" 
+                                         styleClass="botao"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:form>
+                </p:panel>
+        </ui:define>
+    </ui:decorate>
+    </h:body>
+</html>
+
