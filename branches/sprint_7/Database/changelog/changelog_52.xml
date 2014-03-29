@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="52">
+		<comment>
+			Adição das tabelas de:
+				- empresa
+				- empresa email 
+				- empresa responsável
+				- empresa telefone 
+			Alteração da tabela de ponto de coleta, adicionado a constrant para empresa. 
+		</comment>
+        <createSequence sequenceName="seq_empresa"/>
+        
+        <createTable remarks="Tabela responsÃ¡vel por registrar os dados de uma empresa" tableName="empresa">
+            <column name="id_empresa" remarks="Chave primÃ¡ria lÃ³gia da empresa" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cnpj" remarks="NÃºmero do cadastro nacional de pessoa jurÃ­dica nacional. Chave real da empresa." type="BPCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ie" remarks="InscriÃ§Ã£o Estadual da empresa" type="BPCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nome_fantasia" remarks="Apelido ou Nome Fantasia da empresa" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="razao_social" remarks="RazÃ£o social registrado da empresa" type="BPCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo" remarks="Tipo da empresa - é possível setar como [C]liente, [F]ornecedor, [G]rupo ou [U]sina " type="character(1)"/>
+            <column name="endereco" type="numeric"/>
+        </createTable>
+        
+        <createTable remarks="Tabela dos e-mails de uma empresa." tableName="empresa_email">
+            <column name="id_empresa" remarks="CÃ³digo da fonecedor deste email." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_empresa_email" remarks="CÃ³digo numerador deste email." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" remarks="E-mail da empresa" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+         <createTable remarks="Tabela responsÃ¡vel por registrar os dados dos responsÃ¡veis e contatos de uma empresa" tableName="empresa_responsavel">
+            <column name="id_empresa" remarks="CÃ³digo da empresa deste responsÃ¡vel." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_empresa_responsavel" remarks="CÃ³digo do responsÃ¡vel da empresa." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nome" remarks="Nome do responsÃ¡vel da empresa." type="BPCHAR(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cargo" remarks="Cargo do responsÃ¡vel da empresa." type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+         <createTable remarks="Tabela dos telefones de uma empresa." tableName="empresa_telefone">
+            <column name="id_empresa" remarks="CÃ³digo da empresa deste telefone." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_empresa_telefone" remarks="CÃ³digo numerador deste telefone." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="telefone" remarks="Telefone da empresa" type="BPCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ramal" remarks="Ramal da empresa" type="BPCHAR(6)"/>
+            <column name="descricao" remarks="DescriÃ§Ã£o do telefone" type="BPCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <renameColumn 
+            newColumnName="id_empresa"
+            oldColumnName="id_fornecedor"
+            schemaName="public"
+            tableName="ponto_coleta"/>
+         
+        <addPrimaryKey columnNames="id_empresa" constraintName="pk_id_empresa" tableName="empresa"/>
+        <addPrimaryKey columnNames="id_empresa_email" constraintName="pk_id_empresa_email" tableName="empresa_email"/>
+        <addPrimaryKey columnNames="id_empresa_responsavel" constraintName="pk_id_empresa_responsavel" tableName="empresa_responsavel"/>
+        <addPrimaryKey columnNames="id_empresa_telefone" constraintName="pk_id_empresa_telefone" tableName="empresa_telefone"/>
+        
+        <addForeignKeyConstraint baseColumnNames="endereco" baseTableName="empresa" constraintName="fk_id_endereco" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id_endereco" referencedTableName="endereco"/>
+        <addForeignKeyConstraint baseColumnNames="id_empresa" baseTableName="empresa_responsavel" constraintName="fk_id_empresa" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id_empresa" referencedTableName="empresa"/>
+        <addForeignKeyConstraint baseColumnNames="id_empresa" baseTableName="ponto_coleta" constraintName="fk_id_empresa" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id_empresa" referencedTableName="empresa"/>
+         
+        
+    </changeSet>
+</databaseChangeLog>

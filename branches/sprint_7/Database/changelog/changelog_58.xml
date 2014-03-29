@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="58">
+		<comment>
+			*Reorganização para nova realidade de tabelas de Responsável,E-mail e Telefone.
+			*Mantida como atualmente é a tabela de Responsável. 
+			
+			- Removida tabela empresa_telefone
+			- Removida tabela empresa_email
+			+ Adicionado tabela telefone
+			+ Adicionado tabela email
+			+ Adicionado tabela empresa_contato
+		</comment>
+
+        <dropTable schemaName="public" tableName="empresa_telefone"/>
+        
+        <dropTable schemaName="public" tableName="empresa_email"/>
+        
+        <createTable remarks="Tabela de telefones" tableName="telefone">
+			<column name="id_telefone" remarks="CÃ³digo numerador deste telefone." type="numeric">
+				<constraints nullable="false"/>
+			</column>
+			<column name="telefone" remarks="Telefone da empresa" type="BPCHAR(15)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="ramal" remarks="Ramal da empresa" type="BPCHAR(6)"/>
+			<column name="descricao" remarks="DescriÃ§Ã£o do telefone" type="BPCHAR(30)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+		<addPrimaryKey columnNames="id_telefone" constraintName="pk_telefone" tableName="telefone"/>
+		<createSequence sequenceName="seq_telefone"/>
+		
+		
+        <createTable remarks="Tabela de e-mails" tableName="email">
+            <column name="id_email" remarks="CÃ³digo numerador deste email." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" remarks="E-mail" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+		<addPrimaryKey columnNames="id_email" constraintName="pk_email" tableName="email"/>
+		<createSequence sequenceName="seq_email"/>
+        
+        
+        <createTable remarks="Tabela de contatos para a empresa" tableName="empresa_contato">
+            <column name="id_contato" remarks="CÃ³digo numerador deste contato." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_empresa" remarks="CÃ³digo da empresa deste contato." type="numeric">
+				<constraints nullable="false"/>
+			</column>
+            <column name="tipo_contato" remarks="Tipo de contato (Email ou Telefone)" type="BPCHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_meio_contato" remarks="código do meio de contato (id_telefone ou id_email)" type="numeric">
+				<constraints nullable="false"/>
+			</column>
+        </createTable>
+		<addPrimaryKey columnNames="id_contato" constraintName="pk_empresa_contato" tableName="empresa_contato"/>
+		<createSequence sequenceName="seq_empresa_contato"/>
+		<addForeignKeyConstraint baseColumnNames="id_empresa" baseTableName="empresa_contato" constraintName="fk_id_empresa_contato" referencedColumnNames="id_empresa" referencedTableName="empresa"/>
+        
+     </changeSet>
+</databaseChangeLog>

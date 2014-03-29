@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="bruno" id="62">
+		<comment>
+			Refatorando a tabela Pais, para incluir a chave artificial.
+		</comment>
+
+       <addColumn tableName="pais">
+         <column name="id_pais" remarks="Chave primaria da empresa" type="numeric" />
+       </addColumn>
+		
+     </changeSet>
+     
+     <changeSet author="bruno" id="63">
+		<comment>
+			Dropando a FK da tabela estado referente a pais
+		</comment>
+
+       <dropForeignKeyConstraint constraintName="fk_pais_estado" 
+			baseTableName="estado"/>
+		
+     </changeSet>
+     
+     <changeSet author="bruno" id="64">
+		<comment>
+			Dropando na estado a coluna que faz referencia a pk de pais
+		</comment>
+
+       <dropColumn tableName="estado" 
+			columnName="sigla_pais"/>
+     </changeSet>
+     
+     <changeSet author="bruno" id="65">
+		<comment>
+			Dropando a PK da tabela pais
+		</comment>
+
+       <dropPrimaryKey tableName="pais" constraintName="pk_pais"/>
+		
+     </changeSet>
+     
+     <changeSet author="bruno" id="66">
+		<comment>
+			Adicionando a nova PK da tabela pais
+		</comment>
+
+       <addPrimaryKey tableName="pais" columnNames="id_pais" constraintName="pk_pais"/>
+		
+     </changeSet>
+     
+     <changeSet author="bruno" id="67">
+       <comment>
+          Adicionado a chave unica para o campo que estava como PK
+       </comment>
+       <addUniqueConstraint tableName="pais" columnNames="sigla_pais" constraintName="uk_sigla_pais"/>
+     </changeSet>
+     
+     <changeSet author="bruno" id="68">
+       <comment>
+          Adicionado o campo na  tabela estado referente a tabela pais
+       </comment>
+       <addColumn tableName="estado">
+         <column name="id_pais" type="numeric" />
+       </addColumn>
+     </changeSet>
+     
+     <changeSet author="bruno" id="69">
+       <comment>
+          Adicionado a FK que referencia a tabela pais na tabela estado
+       </comment>
+	<addForeignKeyConstraint constraintName="fk_pais_estado" 
+			baseTableName="estado" 
+			baseColumnNames="id_pais" 
+			referencedTableName="pais" 
+			referencedColumnNames="id_pais"/>
+     </changeSet>
+     
+</databaseChangeLog>
