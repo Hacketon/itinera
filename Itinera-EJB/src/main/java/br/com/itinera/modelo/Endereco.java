@@ -9,91 +9,28 @@ package br.com.itinera.modelo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author lesena
  */
-@Entity
-@Table(name = "endereco")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Endereco.findAll", query = "SELECT e FROM Endereco e"),
-    @NamedQuery(name = "Endereco.findByIdEndereco", query = "SELECT e FROM Endereco e WHERE e.idEndereco = :idEndereco"),
-    @NamedQuery(name = "Endereco.findByCep", query = "SELECT e FROM Endereco e WHERE e.cep = :cep"),
-    @NamedQuery(name = "Endereco.findByTipoLogradouro", query = "SELECT e FROM Endereco e WHERE e.tipoLogradouro = :tipoLogradouro"),
-    @NamedQuery(name = "Endereco.findByNomeLogradouro", query = "SELECT e FROM Endereco e WHERE e.nomeLogradouro = :nomeLogradouro"),
-    @NamedQuery(name = "Endereco.findByNumero", query = "SELECT e FROM Endereco e WHERE e.numero = :numero"),
-    @NamedQuery(name = "Endereco.findByComplemento", query = "SELECT e FROM Endereco e WHERE e.complemento = :complemento"),
-    @NamedQuery(name = "Endereco.findByBairro", query = "SELECT e FROM Endereco e WHERE e.bairro = :bairro"),
-    @NamedQuery(name = "Endereco.findByLatitude", query = "SELECT e FROM Endereco e WHERE e.latitude = :latitude"),
-    @NamedQuery(name = "Endereco.findByLongitude", query = "SELECT e FROM Endereco e WHERE e.longitude = :longitude")})
+
 public class Endereco implements Serializable {
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_endereco")
-    //Anotations referentes à sequence
-    @SequenceGenerator(name="Endereco_Generator", sequenceName="seq_endereco", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="Endereco_Generator")
-    //fim anotations Sequence
+
     private BigDecimal idEndereco;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 9)
-    @Column(name = "cep")
     private String cep;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "tipo_logradouro")
     private String tipoLogradouro;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nome_logradouro")
     private String nomeLogradouro;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "numero")
     private BigInteger numero;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "complemento")
     private String complemento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "bairro")
     private String bairro;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "latitude")
     private String latitude;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "longitude")
     private String longitude;
+    @NotNull
     @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
     @ManyToOne
     private Municipio idMunicipio;
