@@ -9,27 +9,82 @@ package br.com.itinera.modelo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author lesena
  */
-
+@Entity
+@Table(name = "endereco")
 public class Endereco implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "id_endereco")
+    @SequenceGenerator(name="Endereco_Generator", sequenceName="seq_endereco", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="Endereco_Generator")
     private BigDecimal idEndereco;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 9)
+    @Column(name = "cep")
     private String cep;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "tipo_logradouro")
     private String tipoLogradouro;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "nome_logradouro")
     private String nomeLogradouro;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "numero")
     private BigInteger numero;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "complemento")
     private String complemento;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "bairro")
     private String bairro;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
+    @Column(name = "latitude")
     private String latitude;
+    
+    @NotNull
+    @Size(min = 1, max = 10)
+    @Column(name = "longitude")
     private String longitude;
+    
     @NotNull
     @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
     @ManyToOne
