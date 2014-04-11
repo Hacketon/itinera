@@ -266,7 +266,8 @@
                             <p:commandButton id="BtnAlterar" 
                                              action="#{empresaManager.salvar()}" 
                                              value="#{msg.acaoOK}" 
-                                             styleClass="botao"/>
+                                             styleClass="botao"
+                                             update="messages mensagem"/>
                             <p:commandButton id="BtnFechar" 
                                              action="#{empresaManager.listarEmpresa()}" 
                                              value="#{msg.acaoFechar}" 
@@ -274,7 +275,11 @@
                                              styleClass="botao"/>
                             
                         </p:panel>
-
+                        <p:confirmDialog header="#{msg.headerAlterar}" message="#{msg.headerConfirmaAlterar}" id="AlterarDlg" widgetVar="altera">
+                            <p:outputLabel id="mensagem" value="#{empresaManager.mensagemAlteracao}" escape="false"/>
+                            <p:commandButton value="#{msg.acaoSim}" action="#{empresaManager.alterar()}"  />
+                            <p:commandButton value="#{msg.acaoNao}" onclick="altera.hide();" />
+                        </p:confirmDialog>
                     </h:form>
                 </ui:define>
             </ui:decorate>

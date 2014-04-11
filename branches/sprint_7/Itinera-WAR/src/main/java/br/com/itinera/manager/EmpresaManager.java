@@ -28,6 +28,8 @@ import org.primefaces.event.RowEditEvent;
 @SessionScoped
 public class EmpresaManager implements Serializable {
     private boolean inserindo;
+    private Empresa empresaAntiga;
+    private String mensagemAlteracao;
     private Empresa empresa;
     private Telefone telefone;
     private Email empresaEmail;
@@ -37,16 +39,21 @@ public class EmpresaManager implements Serializable {
     @EJB
     private EmpresaFachada fachada;
 
-      public EmpresaManager() {
+    public EmpresaManager() {
         telefone = new Telefone();
         empresaResp = new EmpresaResponsavel();
         empresaEmail = new Email();
+    }
+    
+    public String getMensagemAlteracao(){
+        return this.mensagemAlteracao;
     }
 
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
 
+      
     public Empresa getEmpresa() {
         return this.empresa;
     }
@@ -66,14 +73,27 @@ public class EmpresaManager implements Serializable {
                  Mensagem.mostrarMensagemSucesso("Sucesso!", "Empresa inserida com sucesso!");
            }
             else{
-                fachada.alterar(empresa);
-                 Mensagem.mostrarMensagemSucesso("Sucesso!", "Empresa alterada com sucesso!");
+                if(verificaAlteracao()){
+                    System.out.println(this.mensagemAlteracao);
+                    RequestContext rc = RequestContext.getCurrentInstance();
+                    rc.execute("altera.show()");
+                }
+                else{
+                    alterar();
+                }
             }
         } catch (Exception e) {
             Mensagem.mostrarMensagemErro("Erro!", "Problema ao finalizar registro. " + e.getMessage());
         }
     }
             
+    public void alterar() throws Exception{
+        RequestContext rc = RequestContext.getCurrentInstance();
+        rc.execute("altera.hide()");
+        fachada.alterar(empresa);
+        Mensagem.mostrarMensagemSucesso("Sucesso!", "Empresa alterada com sucesso!");
+    }
+    
     public void excluir() {
         try {
             fachada.remover(this.empresa);
@@ -106,6 +126,12 @@ public class EmpresaManager implements Serializable {
             this.empresa = new Empresa();
         }else{
             this.inserindo = false;
+            this.empresaAntiga = new Empresa();
+            this.empresaAntiga.setTipo(this.empresa.getTipo());
+            this.empresaAntiga.setRazaoSocial(this.empresa.getRazaoSocial());
+            this.empresaAntiga.setCnpj(this.empresa.getCnpj());
+            this.empresaAntiga.setNomeFantasia(this.empresa.getNomeFantasia());
+            this.empresaAntiga.setIe(this.empresa.getIe());
         }
         return "/componentes/empresa/AlterarEmpresa";
     }
@@ -201,11 +227,47 @@ public class EmpresaManager implements Serializable {
         this.endereco = endereco;
     }
     
-       public List<SelectItem> getTipoEmpresa() {
+   public List<SelectItem> getTipoEmpresa() {
         List<SelectItem> tipoEmpresa = new ArrayList<SelectItem>();
         for (TipoEmpresa te : TipoEmpresa.values()) {
             tipoEmpresa.add(new SelectItem(te.name(),te.toString()));
         }
         return tipoEmpresa;
     }
+   
+    public List<SelectItem> getTipoEmpresaOpcoes() {
+        List<SelectItem> tipoEmpresa = new ArrayList<SelectItem>();
+        tipoEmpresa.add(new SelectItem(null,"Selecione"));
+        for (TipoEmpresa te : TipoEmpresa.values()) {
+            tipoEmpresa.add(new SelectItem(te.name(),te.toString()));
+        }
+        return tipoEmpresa;
+    }
+    
+    public String converterTipo(String tipoChar){
+        TipoEmpresa tipo = TipoEmpresa.valueOf(tipoChar);
+        return tipo.toString();
+    }
+
+    private boolean verificaAlteracao() {
+       this.mensagemAlteracao = "";
+       if(!this.empresaAntiga.getTipo().equals(this.empresa.getTipo())){
+           this.mensagemAlteracao += "Tipo de Empresa: "+this.empresa.getTipo() + " (" + this.empresaAntiga.getTipo() + ")<br>";
+       }
+       if(!this.empresaAntiga.getCnpj().equals(this.empresa.getCnpj())){
+           this.mensagemAlteracao += "CNPJ: "+this.empresa.getCnpj() + " (" + this.empresaAntiga.getCnpj() + ")<br>";
+       }
+       if(!this.empresaAntiga.getNomeFantasia().equals(this.empresa.getNomeFantasia())){
+           this.mensagemAlteracao += "Nome Fantasia: "+this.empresa.getNomeFantasia()+ " (" + this.empresaAntiga.getNomeFantasia()+ ")<br>";
+       }
+       if(!this.empresaAntiga.getRazaoSocial().equals(this.empresa.getRazaoSocial())){
+           this.mensagemAlteracao += "Razão Social: "+this.empresa.getRazaoSocial()+ " (" + this.empresaAntiga.getRazaoSocial()+ ")<br>";
+       }
+       if(!this.empresaAntiga.getIe().equals(this.empresa.getIe())){
+           this.mensagemAlteracao += "Inscrição Estadual: "+this.empresa.getIe() + " (" + this.empresaAntiga.getIe() + ")<br>";
+       }
+       return !this.mensagemAlteracao.isEmpty();
+    }
+       
+     
 }

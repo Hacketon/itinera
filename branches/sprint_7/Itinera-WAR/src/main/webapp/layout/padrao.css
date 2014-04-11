@@ -195,3 +195,7 @@ fieldset {
     border: #CCCCCC 1px solid;
     border-radius: 5px;
 }
+.aumentarTamanhoComboBoxGrid{
+    width: 150px !important;
+    text-align: center !important;
+}
