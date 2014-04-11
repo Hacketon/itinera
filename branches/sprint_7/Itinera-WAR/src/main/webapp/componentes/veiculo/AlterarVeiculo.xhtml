@@ -194,6 +194,7 @@
                                                            styleClass="fontepadrao"/>
                                             <p:inputText id="veiculoCombustivelMedia"
                                                          maxlength="10"
+                                                         converter="conversorMoedaVirgula" 
                                                          onkeypress="mascara(this, formatarNumeroDuasCasas)"
                                                          size="10" 
                                                          value="#{veiculoManager.veiculo.mediaKmLitro}" />
@@ -207,6 +208,7 @@
                                                            styleClass="fontepadrao"/>
                                             <p:inputText   id="veiculoAltura"
                                                            maxlength="10"
+                                                           converter="conversorMoedaVirgula" 
                                                            onkeypress="mascara(this, formatarNumeroDuasCasas)"
                                                            size="10"
                                                            value="#{veiculoManager.veiculo.alturaVeiculo}" />
@@ -216,6 +218,7 @@
                                                            styleClass="fontepadrao"/>
                                             <p:inputText   id="veiculoLargura"
                                                            maxlength="10"
+                                                           converter="conversorMoedaVirgula" 
                                                            onkeypress="mascara(this, formatarNumeroDuasCasas)"
                                                            size="10"
                                                            value="#{veiculoManager.veiculo.larguraVeiculo}" />
@@ -225,6 +228,7 @@
                                                            styleClass="fontepadrao"/>
                                             <p:inputText   id="veiculoComprimento"
                                                            maxlength="10"
+                                                           converter="conversorMoedaVirgula" 
                                                            onkeypress="mascara(this, formatarNumeroDuasCasas)"
                                                            size="10"
                                                            value="#{veiculoManager.veiculo.comprimentoVeiculo}" />
@@ -234,6 +238,7 @@
                                                            styleClass="fontepadrao"/>
                                             <p:inputText   id="pesoBrutoVeiculo"
                                                            maxlength="11"
+                                                           converter="conversorMoedaVirgula" 
                                                            onkeypress="mascara(this, formatarNumeroTresCasas)"
                                                            size="10"
                                                            value="#{veiculoManager.veiculo.pbt}"
@@ -255,6 +260,7 @@
                                                            value="#{msg.kmAtual}"/>
                                             <p:inputText   id="kmAtualVeiculo"
                                                            maxlength="11"
+                                                           converter="conversorMoedaVirgula" 
                                                            onkeypress="mascara(this, formatarKm)"
                                                            size="11"
                                                            value="#{veiculoManager.veiculo.kmAtual}" />
@@ -379,6 +385,7 @@
                                                            styleClass="fontepadrao"/>
                                             <p:inputText   id="veiculoAlturaPSC"
                                                            maxlength="10"
+                                                           converter="conversorMoedaVirgula" 
                                                            onkeypress="mascara(this, formatarNumeroDuasCasas)"
                                                            value="#{veiculoManager.veiculo.alturaVeiculo}"
                                                            />
@@ -388,6 +395,7 @@
                                                            styleClass="fontepadrao"/>
                                             <p:inputText   id="veiculoLarguraPSC"
                                                            maxlength="10"
+                                                           converter="conversorMoedaVirgula" 
                                                            onkeypress="mascara(this, formatarNumeroDuasCasas)"
                                                            value="#{veiculoManager.veiculo.larguraVeiculo}" />
                                             <p:watermark for="veiculoLarguraPSC" value="#{msg.mascaraAltura}" />
@@ -396,6 +404,7 @@
                                                            styleClass="fontepadrao"/>
                                             <p:inputText   id="veiculoComprimentoPSC"
                                                            maxlength="10"
+                                                           converter="conversorMoedaVirgula" 
                                                            onkeypress="mascara(this, formatarNumeroDuasCasas)"
                                                            value="#{veiculoManager.veiculo.comprimentoVeiculo}"
                                                            />
@@ -405,6 +414,7 @@
                                                            styleClass="fontepadrao"/>
                                             <p:inputText   id="pesoBrutoVeiculoPSC"
                                                            maxlength="11"
+                                                           converter="conversorMoedaVirgula" 
                                                            onkeypress="mascara(this, formatarNumeroTresCasas)"
                                                            value="#{veiculoManager.veiculo.pbt}"
                                                            />
