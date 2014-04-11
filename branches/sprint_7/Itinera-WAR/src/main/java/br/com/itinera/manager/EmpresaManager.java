@@ -16,6 +16,7 @@ import br.com.itinera.modelo.Empresa;
 import br.com.itinera.modelo.Email;
 import br.com.itinera.modelo.EmpresaResponsavel;
 import br.com.itinera.modelo.Telefone;
+import java.math.BigDecimal;
 import javax.persistence.EntityExistsException;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
@@ -32,6 +33,15 @@ public class EmpresaManager implements Serializable {
     private Empresa empresaAntiga;
     private String mensagemAlteracao;
     private Empresa empresa;
+    private BigDecimal testando;
+
+    public BigDecimal getTestando() {
+        return testando;
+    }
+
+    public void setTestando(BigDecimal testando) {
+        this.testando = testando;
+    }
     private Telefone telefone;
     private Email empresaEmail;
     private EmpresaResponsavel empresaResp;
