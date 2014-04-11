@@ -30,6 +30,7 @@
                                          rows="10" 
                                          rendered="#{not empty empresaManager.empresas}">
                                 <p:column filterBy="#{empresa.cnpj}"
+                                          filterStyle="width:180px"
                                           headerText="#{msg.formularioCampoCNPJ}"
                                           sortBy="#{empresa.cnpj}"
                                           style=""
@@ -38,6 +39,7 @@
                                                   title="#{msg.formularioCampoCNPJ}:" /> 
                                 </p:column>
                                 <p:column filterBy="#{empresa.ie}"
+                                          filterStyle="width:180px"
                                           headerText="#{msg.formularioCampoIE}"
                                           sortBy="#{empresa.ie}"
                                           style=""
@@ -46,6 +48,7 @@
                                                   title="#{msg.formularioCampoIE}:" /> 
                                 </p:column>
                                 <p:column filterBy="#{empresa.nomeFantasia}"
+                                          filterStyle="width:300px"
                                           headerText="#{msg.formularioCampoNomeFantasia}"
                                           sortBy="#{empresa.nomeFantasia}"
                                           style=""
@@ -54,6 +57,7 @@
                                                   title="#{msg.formularioCampoNomeFantasia}:" /> 
                                 </p:column>
                                 <p:column filterBy="#{empresa.razaoSocial}"
+                                          filterStyle="width:300px"
                                           headerText="#{msg.formularioCampoRazaoSocial}"
                                           sortBy="#{empresa.razaoSocial}"
                                           style=""
@@ -64,7 +68,6 @@
                                                   /> 
                                     
                                 </p:column>
-
                                 <p:column headerText="">
                                     <h:commandLink styleClass="fontepadrao" 
                                                    action="#{empresaManager.salvarEmpresa(empresa)}"
