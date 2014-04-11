@@ -11,21 +11,20 @@ package br.com.itinera.enuns;
  * @author lesena
  */
 public enum TipoEmpresa {
-    CLIENTE, USINA, FORNECEDOR, GRUPO;
+    C, U, F, G;
     
     @Override
     public String toString(){
         switch(this){
-            case CLIENTE:
+            case C:
                 return "Cliente";
-            case USINA:
+            case U:
                 return "Usina";
-            case FORNECEDOR:
+            case F:
                 return "Fornecedor";
-            case GRUPO:
+            case G:
                 return "Empresa do Grupo";
         }
         return null;
     }
-
 }

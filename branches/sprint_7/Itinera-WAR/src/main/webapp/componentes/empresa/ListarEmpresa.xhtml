@@ -47,6 +47,14 @@
                                     <h:outputText value="#{empresa.ie}" 
                                                   title="#{msg.formularioCampoIE}:" /> 
                                 </p:column>
+                                <p:column filterBy="#{empresa.tipo}"
+                                          filterStyleClass="aumentarTamanhoComboBoxGrid"
+                                          filterOptions="#{empresaManager.tipoEmpresaOpcoes}"
+                                          headerText="#{msg.formularioTipoGrid}"
+                                          sortBy="#{empresa.tipo}">
+                                    <h:outputText value="#{empresaManager.converterTipo(empresa.tipo)}" 
+                                                  title="#{msg.formularioTipoGrid}:" /> 
+                                </p:column>
                                 <p:column filterBy="#{empresa.nomeFantasia}"
                                           filterStyle="width:300px"
                                           headerText="#{msg.formularioCampoNomeFantasia}"
@@ -55,18 +63,6 @@
                                           styleClass="" >
                                     <h:outputText value="#{empresa.nomeFantasia.length() > 40 ? empresa.nomeFantasia.substring(0,40) : empresa.nomeFantasia}" 
                                                   title="#{msg.formularioCampoNomeFantasia}:" /> 
-                                </p:column>
-                                <p:column filterBy="#{empresa.razaoSocial}"
-                                          filterStyle="width:300px"
-                                          headerText="#{msg.formularioCampoRazaoSocial}"
-                                          sortBy="#{empresa.razaoSocial}"
-                                          style=""
-                                          styleClass="" >
-                                    <h:outputText value="#{empresa.razaoSocial.length() >  40 ? empresa.razaoSocial.substring(0,40):empresa.razaoSocial}" 
-                                                  title="#{msg.formularioCampoRazaoSocial}:"
-                                                  
-                                                  /> 
-                                    
                                 </p:column>
                                 <p:column headerText="">
                                     <h:commandLink styleClass="fontepadrao" 
