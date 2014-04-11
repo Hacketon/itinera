@@ -47,7 +47,10 @@
                                                         required="true" 
                                                         requiredMessage="#{msgSis.obrigatorioEmpresaCNPJ}"
                                                         size="20"
-                                                        value="#{empresaManager.empresa.cnpj}" />
+                                                        value="#{empresaManager.empresa.cnpj}" 
+                                                        validatorMessage="#{msgSis.formularioCNPJTamanhoMinimo}">
+                                            <f:validateLength minimum="19" maximum="19"/>
+                                        </p:inputText>
                                         <p:watermark value="#{msg.formularioCampoCNPJDescricao}" for="cnpj"/>
                                     </p:column>
                                 </p:row>
