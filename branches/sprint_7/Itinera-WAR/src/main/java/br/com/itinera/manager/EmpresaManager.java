@@ -27,7 +27,7 @@ import org.primefaces.event.RowEditEvent;
 @ManagedBean(name = "empresaManager")
 @SessionScoped
 public class EmpresaManager implements Serializable {
-
+    private boolean inserindo;
     private Empresa empresa;
     private Telefone telefone;
     private Email empresaEmail;
@@ -63,14 +63,14 @@ public class EmpresaManager implements Serializable {
         try {   
         if(this.empresa.getIdEmpresa() == null){ 
                 fachada.salvar(empresa);
+                 Mensagem.mostrarMensagemSucesso("Sucesso!", "Empresa inserida com sucesso!");
            }
             else{
                 fachada.alterar(empresa);
+                 Mensagem.mostrarMensagemSucesso("Sucesso!", "Empresa alterada com sucesso!");
             }
-            Mensagem.mostrarMensagemSucesso("Sucesso!", "Empresa salva com sucesso!");
-            
         } catch (Exception e) {
-            Mensagem.mostrarMensagemErro("Erro!", "Problema ao salvar registro. " + e.getMessage());
+            Mensagem.mostrarMensagemErro("Erro!", "Problema ao finalizar registro. " + e.getMessage());
         }
     }
             
@@ -102,7 +102,10 @@ public class EmpresaManager implements Serializable {
 
     public String salvarEmpresa(Empresa fornecedor) {
         if (fornecedor == null) {
+            this.inserindo = true;
             this.empresa = new Empresa();
+        }else{
+            this.inserindo = false;
         }
         return "/componentes/empresa/AlterarEmpresa";
     }
