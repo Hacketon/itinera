@@ -15,19 +15,19 @@
             <p:panel styleClass="semBorda" header= "#{msg.listaVeiculo}">
             <h:form>
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-                   <p:commandButton icon="ui-icon-plus" action="#{veiculoManager.montarPaginaParaCadastrarVeiculo()}" styleClass="fontepadrao" value="Novo"/>
+                <p:commandButton icon="ui-icon-plus" action="#{veiculoManager.montarPaginaParaCadastrarVeiculo()}" styleClass="fontepadrao" value="#{msg.novo}"/>
                     <h:panelGrid id="gridVeiculos">
-                        <h:outputText value="Não existem veículos cadastrados" 
+                        <h:outputText value="#{msgSis.naoExisteVeiculoCadastrado}" 
                                       rendered="#{empty veiculoManager.veiculos}" />
 
                         <p:dataTable value="#{veiculoManager.veiculos}" 
                                      var="veiculo" 
-                                     emptyMessage="Não existem veículos para essa busca."
+                                     emptyMessage="#{msgSis.naoExisteVeiculoBusca}"
                                      paginator="true" 
                                      rows="10" 
                                      rendered="#{not empty veiculoManager.veiculos}">
                             
-                            <p:column headerText="Placa"
+                            <p:column headerText="#{msg.placa}"
                                       styleClass="fontepadrao"
                                       sortBy="#{veiculo.placaVeiculo}" 
                                       filterBy="#{veiculo.placaVeiculo}"
@@ -38,7 +38,7 @@
                                 
                             </p:column>
                             
-                            <p:column headerText="Marca"
+                            <p:column headerText="#{msg.marca}"
                                       styleClass="fontepadrao"
                                       sortBy="#{veiculo.marcaVeiculo}"
                                       filterMatchMode="contains"
@@ -49,7 +49,7 @@
                                 
                             </p:column>
                             
-                            <p:column headerText="Modelo"
+                            <p:column headerText="#{msg.modelo}"
                                       styleClass="fontepadrao"
                                       sortBy="#{veiculo.modeloVeiculo}" 
                                       filterBy="#{veiculo.modeloVeiculo}"
@@ -60,7 +60,7 @@
                                 
                             </p:column>
                             
-                            <p:column headerText="Ativo?"
+                            <p:column headerText="#{msg.veiculoAtivo2}"
                                       styleClass="fontepadrao"
                                       style="text-align: center;"
                                       sortBy="#{veiculo.ativo}" 
@@ -74,7 +74,7 @@
                             <p:column headerText="">
                                 <h:commandLink styleClass="fontepadrao" 
                                                action="#{veiculoManager.montarPaginaParaAlterarVeiculo()}" 
-                                               value="Alterar">
+                                               value="#{msg.acaoAlterar}">
                                     <f:setPropertyActionListener value="#{veiculo}" target="#{veiculoManager.veiculo}" />  
                                 </h:commandLink>
                                 
@@ -83,7 +83,7 @@
                             <p:column headerText="">
                                 <p:commandLink styleClass="fontepadrao" 
                                                oncomplete="exclui.show();"
-                                               value="Excluir">
+                                               value="#{msg.acaoExcluir}">
                                     <f:setPropertyActionListener value="#{veiculo}" 
                                                                  target="#{veiculoManager.veiculo}" />  
                                 </p:commandLink>
@@ -92,9 +92,9 @@
                 </h:panelGrid>
             
             <!--DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
-            <p:confirmDialog header="Excluir?" message="Você confirma a exclusão deste veículo?" id="excluiDlg" widgetVar="exclui">
-                <p:commandButton value="Sim" action="#{veiculoManager.excluir()}" update="gridVeiculos" />
-                <p:commandButton value="Não" onclick="exclui.hide();" />
+            <p:confirmDialog header="#{msg.acaoExcluir2}" message="#{msgSis.perguntaExclusao}" id="excluiDlg" widgetVar="exclui">
+                <p:commandButton value="#{msg.acaoSim}" action="#{veiculoManager.excluir()}" update="gridVeiculos" />
+                <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
             </p:confirmDialog>
             
             </h:form>
