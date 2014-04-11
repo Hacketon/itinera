@@ -11,10 +11,9 @@
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
                     <h:form id="cadastro" styleClass="semBorda">                
-                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                        <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
                         <p:panel header="#{msg.empresa}">
                             <p:panelGrid styleClass="semBorda">
-
                                 <p:row>
                                     <p:column>
                                         <p:outputLabel for="tipoEmpresa"
@@ -45,7 +44,7 @@
                                         <p:inputText    id="cnpj"
                                                         maxlength="19"
                                                         onkeypress="mascara(this, formatarCNPJ)"
-                                                        required="true"
+                                                        required="true" 
                                                         requiredMessage="#{msgSis.obrigatorioEmpresaCNPJ}"
                                                         size="20"
                                                         value="#{empresaManager.empresa.cnpj}" />
@@ -92,7 +91,9 @@
                                                 value="Inscrição Estadual"/>
                                     </p:column>
                                     <p:column>
-                                        <p:inputText    id="inscEstadual"
+                                        <p:inputMask
+                                                    mask="?99999999999999999999"
+                                                    id="inscEstadual"
                                                     maxlength="20"
                                                     onkeypress="mascara(this, valor)"
                                                     required="true"
@@ -100,8 +101,8 @@
                                                     size="25"
                                                     validatorMessage="#{msgSis.somenteNumeroInscricaoEstadual}"
                                                     value="#{empresaManager.empresa.ie}">
-                                            <f:validateRegex pattern="[0-9]+" for="inscEstadual" />
-                                            </p:inputText>
+                                            
+                                            </p:inputMask>
                                         <p:watermark value="#{msg.formularioCampoIEDescricao}" for="inscEstadual"/>
                                     </p:column>
                                 </p:row>
@@ -208,108 +209,6 @@
                                             </p:column>
                                         </p:dataTable>
                                     </p:tab>
-    <!--                                <p:tab id="fornEndereco" title="Endereço" >
-                                        <p:panelGrid columns="3">
-                                            <p:outputLabel for="cep"
-                                                           styleClass="fontepadrao semBorda"
-                                                           value="CEP" />
-                                            <p:inputText id="cep"
-                                                         maxlength="100"
-                                                         required="true"
-                                                         requiredMessage="#{msgSis.campoObrigatorio}"
-                                                         value="#{empresaManager.endereco.cep}"
-                                                         size="100" />
-                                            <p:watermark for="cep" value="CEP do empresa" />
-
-                                            <p:outputLabel for="tipo"
-                                                           styleClass="fontepadrao semBorda"
-                                                           value="Tipo" />
-                                            <p:inputText id="tipo"
-                                                         maxlength="20"
-                                                         required="true"
-                                                         requiredMessage="#{msgSis.campoObrigatorio}"
-                                                         value="#{empresaManager.endereco.tipo}"
-                                                         size="20"/>
-                                            <p:watermark for="tipo" value="Tipo do empresa (Rua, Av)" />
-
-                                            <p:outputLabel for="logradouro"
-                                                           styleClass="fontepadrao semBorda"
-                                                           value="Logradouro" />
-                                            <p:inputText id="logradouro"
-                                                         maxlength="100"
-                                                         required="true"
-                                                         requiredMessage="#{msgSis.campoObrigatorio}"
-                                                         value="#{empresaManager.endereco.logradouro}"
-                                                         size="100"/>
-                                            <p:watermark for="logradouro" value="Logradouro do empresa" />
-
-                                            <p:outputLabel for="numero"
-                                                           styleClass="fontepadrao semBorda"
-                                                           value="Número" />
-                                            <p:inputText id="numero"
-                                                         maxlength="5"
-                                                         required="true"
-                                                         requiredMessage="#{msgSis.campoObrigatorio}"
-                                                         value="#{empresaManager.endereco.numero}"
-                                                         size="5" />
-                                            <p:watermark for="numero" value="Número do empresa" />
-
-                                            <p:outputLabel for="complemento"
-                                                           styleClass="fontepadrao semBorda"
-                                                           value="Complemento" />
-                                            <p:inputText id="complemento"
-                                                         maxlength="250"
-                                                         required="true"
-                                                         requiredMessage="#{msgSis.campoObrigatorio}"
-                                                         value="#{empresaManager.endereco.complemento}"
-                                                         size="100" />
-                                            <p:watermark for="complemento" value="Complemento endereço do empresa" />
-
-                                            <p:outputLabel for="bairro"
-                                                           styleClass="fontepadrao semBorda"
-                                                           value="Bairro" />
-                                            <p:inputText id="bairro"
-                                                         maxlength="100"
-                                                         required="true"
-                                                         requiredMessage="#{msgSis.campoObrigatorio}"
-                                                         value="#{empresaManager.endereco.bairro}" 
-                                                         size="100" />
-                                            <p:watermark for="bairro" value="Bairro do empresa" />
-
-                                            <p:outputLabel for="cidade"
-                                                           styleClass="fontepadrao semBorda"
-                                                           value="Cidade" />
-                                            <p:inputText id="cidade"
-                                                         maxlength="100"
-                                                         required="true"
-                                                         requiredMessage="#{msgSis.campoObrigatorio}"
-                                                         value="#{empresaManager.endereco.cidade}" 
-                                                         size="100" />
-                                            <p:watermark for="cidade" value="Cidade do empresa" />
-
-                                            <p:outputLabel for="estado"
-                                                           styleClass="fontepadrao semBorda"
-                                                           value="Estado" />
-                                            <p:inputText id="estado"
-                                                         maxlength="2"
-                                                         required="true"
-                                                         requiredMessage="#{msgSis.campoObrigatorio}"
-                                                         value="#{empresaManager.endereco.estado}" 
-                                                         size="2" />
-                                            <p:watermark for="estado" value="Estado do empresa" />
-
-                                            <p:outputLabel for="pais"
-                                                           styleClass="fontepadrao semBorda"
-                                                           value="País" />
-                                            <p:inputText id="pais"
-                                                         maxlength="50"
-                                                         required="true"
-                                                         requiredMessage="#{msgSis.campoObrigatorio}"
-                                                         value="#{empresaManager.endereco.pais}" 
-                                                         size="50" />
-                                            <p:watermark for="pais" value="País do empresa" />
-                                        </p:panelGrid>
-                                    </p:tab>-->
                                     <p:tab id="empResponsavel" title="#{msg.formularioEmpresaAbaResponsavel}">
                                         <p:commandButton action="#{empresaManager.novoResponsavel()}" 
                                                          icon="ui-icon-plus" 
@@ -361,7 +260,6 @@
                                     </p:tab>
                                 </p:tabView>
                             </p:panelGrid>
-                            <div style="width:100%;text-align:right;">
                             <p:commandButton id="BtnAlterar" 
                                              action="#{empresaManager.salvar()}" 
                                              value="#{msg.acaoOK}" 
@@ -371,7 +269,7 @@
                                              value="#{msg.acaoFechar}" 
                                              immediate="true"
                                              styleClass="botao"/>
-                            </div>
+                            
                         </p:panel>
 
                     </h:form>
