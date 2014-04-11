@@ -16,6 +16,7 @@ import br.com.itinera.modelo.Empresa;
 import br.com.itinera.modelo.Email;
 import br.com.itinera.modelo.EmpresaResponsavel;
 import br.com.itinera.modelo.Telefone;
+import javax.persistence.EntityExistsException;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
@@ -66,7 +67,7 @@ public class EmpresaManager implements Serializable {
     }
 
 
-    public void salvar() throws Exception {
+    public void salvar(){
         try {   
         if(this.empresa.getIdEmpresa() == null){ 
                 fachada.salvar(empresa);
@@ -82,16 +83,24 @@ public class EmpresaManager implements Serializable {
                     alterar();
                 }
             }
+        } catch (EntityExistsException e) {
+            Mensagem.mostrarMensagemErro("Uma empresa com este cnpj já foi inserida. Por favor, verifique!","Uma empresa com este cnpj já foi inserida. Por favor, verifique!");
         } catch (Exception e) {
-            Mensagem.mostrarMensagemErro("Erro!", "Problema ao finalizar registro. " + e.getMessage());
+            Mensagem.mostrarMensagemErro("Problema ao finalizar registro. " + e.getMessage(),"Problema ao finalizar registro. " + e.getMessage());
         }
     }
             
-    public void alterar() throws Exception{
+    public void alterar(){
+        try{
         RequestContext rc = RequestContext.getCurrentInstance();
         rc.execute("altera.hide()");
         fachada.alterar(empresa);
         Mensagem.mostrarMensagemSucesso("Sucesso!", "Empresa alterada com sucesso!");
+        } catch (EntityExistsException e) {
+            Mensagem.mostrarMensagemErro("Uma empresa com este cnpj já foi inserida. Por favor, verifique!","Uma empresa com este cnpj já foi inserida. Por favor, verifique!");
+        } catch (Exception e) {
+            Mensagem.mostrarMensagemErro("Um erro inesperado aconteceu." + e.getMessage(),"Um erro inesperado aconteceu." + e.getMessage());
+        }
     }
     
     public void excluir() {
@@ -252,7 +261,8 @@ public class EmpresaManager implements Serializable {
     private boolean verificaAlteracao() {
        this.mensagemAlteracao = "";
        if(!this.empresaAntiga.getTipo().equals(this.empresa.getTipo())){
-           this.mensagemAlteracao += "Tipo de Empresa: "+this.empresa.getTipo() + " (" + this.empresaAntiga.getTipo() + ")<br>";
+           
+           this.mensagemAlteracao += "Tipo de Empresa: "+ converterTipo(this.empresa.getTipo().toString()) + " (" + converterTipo(this.empresaAntiga.getTipo().toString()) + ")<br>";
        }
        if(!this.empresaAntiga.getCnpj().equals(this.empresa.getCnpj())){
            this.mensagemAlteracao += "CNPJ: "+this.empresa.getCnpj() + " (" + this.empresaAntiga.getCnpj() + ")<br>";
