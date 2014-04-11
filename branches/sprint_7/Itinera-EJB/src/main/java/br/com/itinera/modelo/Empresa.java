@@ -68,7 +68,7 @@ public class Empresa implements Serializable {
     private BigDecimal idEmpresa;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 19, max = 20)
     @Column(name = "cnpj")
     private String cnpj;
     @Basic(optional = false)
