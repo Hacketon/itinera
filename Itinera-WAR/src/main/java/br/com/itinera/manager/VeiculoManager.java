@@ -19,6 +19,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 import br.com.itinera.modelo.CategoriaVeiculo;
 import br.com.itinera.modelo.Veiculo;
+import java.math.BigDecimal;
 import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.context.RequestContext;
 
@@ -164,7 +165,14 @@ public class VeiculoManager implements Serializable{
    
    public String converterBooleanTexto(Boolean ativo){
        return ativo?"Ativo":"Inativo";
+       
    }
+   
+   public String converterNumerico(String valor){
+       valor = valor.replace(",", ".");
+       return valor;
+   }
+  
     
    public SelectItem[] getListaOpcoesAtivoInativo(){
        SelectItem[] opcoes = new SelectItem[3];
