@@ -33,15 +33,6 @@ public class EmpresaManager implements Serializable {
     private Empresa empresaAntiga;
     private String mensagemAlteracao;
     private Empresa empresa;
-    private BigDecimal testando;
-
-    public BigDecimal getTestando() {
-        return testando;
-    }
-
-    public void setTestando(BigDecimal testando) {
-        this.testando = testando;
-    }
     private Telefone telefone;
     private Email empresaEmail;
     private EmpresaResponsavel empresaResp;
@@ -85,7 +76,6 @@ public class EmpresaManager implements Serializable {
            }
             else{
                 if(verificaAlteracao()){
-                    System.out.println(this.mensagemAlteracao);
                     RequestContext rc = RequestContext.getCurrentInstance();
                     rc.execute("altera.show()");
                 }

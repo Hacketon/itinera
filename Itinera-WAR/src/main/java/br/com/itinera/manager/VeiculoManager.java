@@ -19,7 +19,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 import br.com.itinera.modelo.CategoriaVeiculo;
 import br.com.itinera.modelo.Veiculo;
-import java.math.BigDecimal;
 import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.context.RequestContext;
 
@@ -30,11 +29,13 @@ import org.primefaces.context.RequestContext;
 @ManagedBean(name = "veiculoManager")
 @SessionScoped
 public class VeiculoManager implements Serializable{
-    
+    private Veiculo antigo;
     private Veiculo veiculo;
     private List<Veiculo> veiculos = new ArrayList<Veiculo>();
     private Boolean tabVisivelComCombustivel;
     private Boolean tabVisivelSemCombustivel; 
+    private String mensagemAlteracao;
+
     
     @EJB
     private VeiculoFachada fachada;
@@ -44,6 +45,7 @@ public class VeiculoManager implements Serializable{
     
     //Parte 1 - GETs e SETs
     public VeiculoManager(){
+        antigo = new Veiculo();
     }
     
     public void setVeiculo(Veiculo veiculo){
@@ -52,6 +54,14 @@ public class VeiculoManager implements Serializable{
     
     public Veiculo getVeiculo(){
         return this.veiculo;
+    }
+    
+    public String getMensagemAlteracao() {
+        return mensagemAlteracao;
+    }
+
+    public void setMensagemAlteracao(String mensagemAlteracao) {
+        this.mensagemAlteracao = mensagemAlteracao;
     }
     
     public boolean getTabVisivelComCombustivel(){
@@ -91,10 +101,22 @@ public class VeiculoManager implements Serializable{
     }
     
     public String alterar(){
+         if(verificaAlteracao()){
+            RequestContext rc = RequestContext.getCurrentInstance();
+            rc.execute("altera.show()");
+            return "";
+        }
+        else{
+            return realizarAlteracao();
+        }
+        
+    }
+    
+    public String realizarAlteracao(){
         fachada.alterar(this.getVeiculo());
         recuperarVeiculos();
         Mensagem.mostrarMensagemSucesso("Sucesso!","Veiculo alterado com sucesso!");
-      return montarPaginaParaListarVeiculo();
+        return montarPaginaParaListarVeiculo();
     }
     
     public void excluir(){
@@ -129,6 +151,12 @@ public class VeiculoManager implements Serializable{
     }
     
     public String montarPaginaParaAlterarVeiculo(){
+        antigo = new Veiculo();
+        antigo.setPlacaVeiculo(veiculo.getPlacaVeiculo());
+        antigo.setMarcaVeiculo(veiculo.getMarcaVeiculo());
+        antigo.setModeloVeiculo(veiculo.getModeloVeiculo());
+        antigo.setIdCategoriaVeiculo(veiculo.getIdCategoriaVeiculo());
+        
         if(this.veiculo.getIdCategoriaVeiculo().isReboqueSemiReboque()){
             this.tabVisivelComCombustivel = false;
             this.tabVisivelSemCombustivel = true;
@@ -181,4 +209,24 @@ public class VeiculoManager implements Serializable{
        opcoes[2] = new SelectItem("False","Inativo");
        return opcoes;
    }
+
+    private boolean verificaAlteracao() {
+        veiculo.setIdCategoriaVeiculo(this.categoriaFachada.recuperarPorId(veiculo.getIdCategoriaVeiculo().getIdCategoriaVeiculo()));
+        this.mensagemAlteracao = "";
+        if(!antigo.getPlacaVeiculo().equals(veiculo.getPlacaVeiculo())){
+            this.mensagemAlteracao += "Placa: "+ veiculo.getPlacaVeiculo() + " ("+antigo.getPlacaVeiculo()+")<br>";
+        }
+        if(!antigo.getMarcaVeiculo().equals(veiculo.getMarcaVeiculo())){
+            this.mensagemAlteracao += "Marca: "+ veiculo.getMarcaVeiculo() + " ("+antigo.getMarcaVeiculo()+")<br>";
+        }
+        if(!antigo.getModeloVeiculo().equals(veiculo.getModeloVeiculo())){
+            this.mensagemAlteracao += "Modelo: "+ veiculo.getModeloVeiculo() + " ("+antigo.getModeloVeiculo()+")<br>";
+        }
+        if(!(antigo.getIdCategoriaVeiculo().getIdCategoriaVeiculo() == veiculo.getIdCategoriaVeiculo().getIdCategoriaVeiculo())){
+            
+            this.mensagemAlteracao += "Categoria: "+ veiculo.getIdCategoriaVeiculo() + " ("+antigo.getIdCategoriaVeiculo()+")<br>";
+        }
+        
+        return !this.mensagemAlteracao.isEmpty();
+    }
 }

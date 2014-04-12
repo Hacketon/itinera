@@ -449,6 +449,7 @@
                             id="BtnAlterar" 
                             action="#{veiculoManager.alterar()}" 
                             value="#{msg.acaoOK}" 
+                            update="mensagem"
                             styleClass="botao"/>
 
                         <p:commandButton id="BtnFechar"
@@ -457,6 +458,11 @@
                                          immediate="true"
                                          styleClass="botao"/>
                     </p:panel>
+                    <p:confirmDialog header="#{msg.headerAlterar}" message="#{msg.headerConfirmaAlterar}" id="AlterarDlg" widgetVar="altera">
+                        <p:outputLabel id="mensagem" value="#{veiculoManager.mensagemAlteracao}" escape="false"/>
+                        <p:commandButton value="#{msg.acaoSim}" action="#{veiculoManager.realizarAlteracao()}"  />
+                        <p:commandButton value="#{msg.acaoNao}" onclick="altera.hide();" />
+                    </p:confirmDialog>
                 </h:form>
             </ui:define>
         </ui:decorate>
