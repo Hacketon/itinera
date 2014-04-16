@@ -14,73 +14,73 @@
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
                     <p:panel styleClass="semBorda" header="#{msg.listaCategoriaVeiculo}">
-                    <h:form>
-                        <p:messages id="messages" showDetail="true"/>
-                        <p:commandButton icon="ui-icon-plus" 
+                        <h:form>
+                            <p:messages id="messages" showDetail="true"/>
+                            <p:commandButton icon="ui-icon-plus" 
                                              action="#{categoriaVeiculoManager.montarPaginaParaIncluirCategoriaVeiculo}" 
                                              styleClass="fontepadrao" value="Novo"/>
-                        <h:panelGrid id="gridCategorias" >
-                            <h:outputText value="#{msg.listagemSemCategorias}" 
-                                          rendered="#{empty categoriaVeiculoManager.categoriaVeiculos}" />
+                            <h:panelGrid id="gridCategorias" >
+                                <h:outputText value="#{msg.listagemSemCategorias}" 
+                                              rendered="#{empty categoriaVeiculoManager.categoriaVeiculos}" />
 
-                            <p:dataTable emptyMessage="#{msg.listagemBuscaSemCategorias}"
-                                         paginator="true" 
-                                         rows="10" 
-                                         rendered="#{not empty categoriaVeiculoManager.categoriaVeiculos}"
-                                         value="#{categoriaVeiculoManager.categoriaVeiculos}" 
-                                         var="categoria"
-                                         >
+                                <p:dataTable emptyMessage="#{msg.listagemBuscaSemCategorias}"
+                                             paginator="true" 
+                                             rows="10" 
+                                             rendered="#{not empty categoriaVeiculoManager.categoriaVeiculos}"
+                                             value="#{categoriaVeiculoManager.categoriaVeiculos}" 
+                                             var="categoria"
+                                             >
 
-                                <p:column headerText="#{msg.descricaoCategoriaVeiculo}" 
-                                          filterBy="#{categoria.descricaoCategoria}"
-                                          filterMatchMode="contains"
-                                          filterStyle="width: 300px;"
-                                          style="min-width: 510px;"
-                                          styleClass="fontepadrao"
-                                          sortBy="#{categoria.descricaoCategoria}" 
-                                          >
-                                    <h:outputText value="#{categoria.descricaoCategoria}"
-                                                  />
-                                </p:column>
+                                    <p:column headerText="#{msg.descricaoCategoriaVeiculo}" 
+                                              filterBy="#{categoria.descricaoCategoria}"
+                                              filterMatchMode="contains"
+                                              filterStyle="width: 300px;"
+                                              style="min-width: 510px;"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{categoria.descricaoCategoria}" 
+                                              >
+                                        <h:outputText value="#{categoria.descricaoCategoria}"
+                                                      />
+                                    </p:column>
 
-                                <p:column sortBy="#{categoria.reboqueSemiReboque}" 
-                                          styleClass="fontepadrao"
-                                          style="text-align: center;"
-                                          headerText="#{msg.reboqueRedCategoriaVeiculo}"
-                                          filterBy="#{categoria.reboqueSemiReboque}"
-                                          filterOptions="#{categoriaVeiculoManager.reboqueSemiReboqueOpcoes}"
-                                          >
-                                          
-                                    <h:outputText value="#{categoriaVeiculoManager.textoReboqueSemiReboque(categoria)}" />
-                                </p:column>
+                                    <p:column sortBy="#{categoria.reboqueSemiReboque}" 
+                                              styleClass="fontepadrao"
+                                              style="text-align: center;"
+                                              headerText="#{msg.reboqueRedCategoriaVeiculo}"
+                                              filterBy="#{categoria.reboqueSemiReboque}"
+                                              filterOptions="#{categoriaVeiculoManager.reboqueSemiReboqueOpcoes}"
+                                              >
 
-                                <p:column headerText="">
-                                    <h:commandLink styleClass="fontepadrao" 
-                                                   action="#{categoriaVeiculoManager.montarPaginaParaAlterarCategoriaVeiculo()}"
-                                                   value="#{msg.acaoAlterar}">
-                                        <f:setPropertyActionListener value="#{categoria}" target="#{categoriaVeiculoManager.categoriaVeiculo}" />  
-                                    </h:commandLink>
+                                        <h:outputText value="#{categoriaVeiculoManager.textoReboqueSemiReboque(categoria)}" />
+                                    </p:column>
 
-                                </p:column>
+                                    <p:column headerText="">
+                                        <h:commandLink styleClass="fontepadrao" 
+                                                       action="#{categoriaVeiculoManager.montarPaginaParaAlterarCategoriaVeiculo()}"
+                                                       value="#{msg.acaoAlterar}">
+                                            <f:setPropertyActionListener value="#{categoria}" target="#{categoriaVeiculoManager.categoriaVeiculo}" />  
+                                        </h:commandLink>
 
-                                <p:column headerText="">
-                                    <p:commandLink styleClass="fontepadrao" 
-                                                   oncomplete="exclui.show();"
-                                                   value="#{msg.acaoExcluir}">
-                                        <f:setPropertyActionListener value="#{categoria}" 
-                                                                     target="#{categoriaVeiculoManager.categoriaVeiculo}" />  
-                                    </p:commandLink>
-                                </p:column>
-                            </p:dataTable>
-                        </h:panelGrid>
-                        
-                        
-                        <!--DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
-                        <p:confirmDialog header="#{msg.headerExcluir}" message="#{msg.perguntaExcluirCategoria}" id="excluiDlg" widgetVar="exclui">
-                            <p:commandButton value="#{msg.acaoSim}" action="#{categoriaVeiculoManager.excluir}" update="gridCategorias messages" />
-                            <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
-                        </p:confirmDialog>
-                    </h:form>
+                                    </p:column>
+
+                                    <p:column headerText="">
+                                        <p:commandLink styleClass="fontepadrao" 
+                                                       oncomplete="exclui.show();"
+                                                       value="#{msg.acaoExcluir}">
+                                            <f:setPropertyActionListener value="#{categoria}" 
+                                                                         target="#{categoriaVeiculoManager.categoriaVeiculo}" />  
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGrid>
+
+
+                            <!--DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
+                            <p:confirmDialog header="#{msg.headerExcluir}" message="#{msg.perguntaExcluirCategoria}" id="excluiDlg" widgetVar="exclui">
+                                <p:commandButton value="#{msg.acaoSim}" action="#{categoriaVeiculoManager.excluir}" update="gridCategorias messages" />
+                                <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
+                            </p:confirmDialog>
+                        </h:form>
                     </p:panel>
                 </ui:define>
             </ui:decorate>
