@@ -5,16 +5,14 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-    
-    <h:body>
+
+    <h:body onload="selecionado($('#btnEmpresa'));">
         <ui:decorate template="/layout/logado/template.xhtml">
             <ui:define name="conteudo">
-               
+                <p:panel styleClass="semBorda" header="#{msg.listaEmpresa}">
                     <h:form styleClass="semBorda">
-                        <h:outputScript>selecionado($('#btnEmpresa'));</h:outputScript>
                         <p:messages id="messages" showDetail="true"/>
-                        <p:panel header="#{msg.listaEmpresa}" styleClass="semBorda" >
-                        
+
                         <p:commandButton icon="ui-icon-plus" 
                                          action="#{empresaManager.salvarEmpresa(null)}" 
                                          styleClass="fontepadrao" value="#{msg.acaoNovo}"/>
@@ -82,19 +80,16 @@
                                                                      target="#{empresaManager.empresa}" />  
                                     </p:commandLink>
                                 </p:column>
-                                
+
                             </p:dataTable>
                         </h:panelGrid>
-                                
+
                         <p:confirmDialog header="#{msg.acaoExcluir}?" message="#{msg.mensagemExcluir}" id="excluiDlg" widgetVar="exclui">
                             <p:commandButton value="Sim" action="#{empresaManager.excluir}" update="gridEmpresas messages" />
                             <p:commandButton value="Não" onclick="exclui.hide();" />
                         </p:confirmDialog>
-                        
-                    
+                    </h:form>
                 </p:panel>
-              </h:form>
-                
             </ui:define>
         </ui:decorate>
     </h:body>

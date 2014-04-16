@@ -11,105 +11,75 @@
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
                     <h:form id="cadastro" styleClass="semBorda">                
-                        <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
-                        <p:panel header="#{msg.empresa}">
-                            <p:panelGrid styleClass="semBorda">
-                                <p:row>
-                                    <p:column>
-                                        <p:outputLabel for="tipoEmpresa"
-                                                       value="#{msg.formularioCampoTipoEmpresa}"
-                                                       styleClass="fontepadrao"/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:row>
-                                            <p:selectOneMenu id="tipoEmpresa"
-                                                             required="true"
-                                                             style="width: 300px !important"
-                                                             requiredMessage="#{msgSis.obrigatorioTipoEmpresa}"
-                                                             value="#{empresaManager.empresa.tipo}"
-                                                             >
-                                                <f:selectItems value="#{empresaManager.tipoEmpresa}" var="tpEmpresa"
-                                                               itemLabel="#{tpEmpresa.description}" itemValue="#{tpEmpresa.value}"/>
-                                            </p:selectOneMenu>
-                                        </p:row>
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column>
-                                        <p:outputLabel  for="cnpj" 
-                                                        styleClass="label"
-                                                        value="#{msg.formularioCampoCNPJ}"/>
-                                    </p:column>
-                                    <p:column >
-                                        <p:inputText    id="cnpj"
-                                                        maxlength="19"
-                                                        onkeypress="mascara(this, formatarCNPJ)"
-                                                        required="true" 
-                                                        requiredMessage="#{msgSis.obrigatorioEmpresaCNPJ}"
-                                                        size="20"
-                                                        value="#{empresaManager.empresa.cnpj}" 
-                                                        validatorMessage="#{msgSis.formularioCNPJTamanhoMinimo}">
-                                            <f:validateLength minimum="19" maximum="19"/>
-                                        </p:inputText>
-                                        <p:watermark value="#{msg.formularioCampoCNPJDescricao}" for="cnpj"/>
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column>
-                                        <p:outputLabel  for="nomeFantasia" 
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                        <p:panel styleClass="semBorda" header="#{msg.empresa}">
+                            <p:panelGrid columns="3" styleClass="semBorda">
+                                <p:outputLabel for="tipoEmpresa"
+                                               value="#{msg.formularioCampoTipoEmpresa}"
+                                               styleClass="fontepadrao"/>
+                                <p:selectOneMenu id="tipoEmpresa"
+                                                 required="true"
+                                                 style="width: 300px !important"
+                                                 requiredMessage="#{msgSis.obrigatorioTipoEmpresa}"
+                                                 value="#{empresaManager.empresa.tipo}"
+                                                 >
+                                    <f:selectItems value="#{empresaManager.tipoEmpresa}" var="tpEmpresa"
+                                                   itemLabel="#{tpEmpresa.description}" itemValue="#{tpEmpresa.value}"/>
+                                </p:selectOneMenu>
+                                <p:spacer />
+
+                                <p:outputLabel  for="cnpj" 
+                                                styleClass="label"
+                                                value="#{msg.formularioCampoCNPJ}"/>
+                                <p:inputText    id="cnpj"
+                                                maxlength="19"
+                                                onkeypress="mascara(this, formatarCNPJ)"
+                                                required="true" 
+                                                requiredMessage="#{msgSis.obrigatorioEmpresaCNPJ}"
+                                                size="20"
+                                                value="#{empresaManager.empresa.cnpj}" 
+                                                validatorMessage="#{msgSis.formularioCNPJTamanhoMinimo}">
+                                    <f:validateLength minimum="19" maximum="19"/>
+                                </p:inputText>
+                                <p:watermark value="#{msg.formularioCampoCNPJDescricao}" for="cnpj"/>
+
+                                <p:outputLabel  for="nomeFantasia" 
                                                 styleClass="label"
                                                 value="#{msg.formularioCampoNomeFantasia}"/>
-
-                                    </p:column>
-                                    <p:column>
-                                        <p:inputText    id="nomeFantasia"
+                                <p:inputText    id="nomeFantasia"
                                                 maxlength="100"
                                                 required="true"
                                                 requiredMessage="#{msgSis.obrigatorioEmpresaNomeFantasia}"
                                                 size="100"
                                                 value="#{empresaManager.empresa.nomeFantasia}" />
-                                        <p:watermark value="#{msg.formularioCampoNomeFantasiaDescricao}" for="nomeFantasia"/>
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column>
-                                        <p:outputLabel  for="razaoSocial" 
+                                <p:watermark value="#{msg.formularioCampoNomeFantasiaDescricao}" for="nomeFantasia"/>
+
+                                <p:outputLabel  for="razaoSocial" 
                                                 styleClass="label"
                                                 value="#{msg.formularioCampoRazaoSocial}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:inputText    id="razaoSocial"
+                                <p:inputText    id="razaoSocial"
                                                 maxlength="200"
                                                 required="true"
                                                 requiredMessage="#{msgSis.obrigatorioEmpresaRazaoSocial}"
                                                 size="100"
                                                 value="#{empresaManager.empresa.razaoSocial}" />
-                                        <p:watermark value="#{msg.formularioCampoRazaoSocial}" for="razaoSocial"/>
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column>
-                                        <p:outputLabel  for="inscEstadual" 
+                                <p:watermark value="#{msg.formularioCampoRazaoSocial}" for="razaoSocial"/>
+
+                                <p:outputLabel  for="inscEstadual" 
                                                 styleClass="label"
                                                 value="Inscrição Estadual"/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:inputMask
-                                                    mask="?99999999999999999999"
-                                                    id="inscEstadual"
-                                                    maxlength="20"
-                                                    onkeypress="mascara(this, valor)"
-                                                    required="true"
-                                                    requiredMessage="#{msgSis.obrigatorioEmpresaInscricaoEstadual}"
-                                                    size="25"
-                                                    validatorMessage="#{msgSis.somenteNumeroInscricaoEstadual}"
-                                                    value="#{empresaManager.empresa.ie}">
-                                            
-                                            </p:inputMask>
-                                        <p:watermark value="#{msg.formularioCampoIEDescricao}" for="inscEstadual"/>
-                                    </p:column>
-                                </p:row>
+                                <p:inputText
+                                    id="inscEstadual"
+                                    maxlength="20"
+                                    onkeypress="mascara(this, formatarNumero)"
+                                    required="true"
+                                    requiredMessage="#{msgSis.obrigatorioEmpresaInscricaoEstadual}"
+                                    size="25"
+                                    validatorMessage="#{msgSis.somenteNumeroInscricaoEstadual}"
+                                    value="#{empresaManager.empresa.ie}" />
+                                <p:watermark value="#{msg.formularioCampoIEDescricao}" for="inscEstadual"/>
                             </p:panelGrid>
+
                             <p:panelGrid columns="1" style="width: 100%">
                                 <p:tabView id="tabEmpresa">
                                     <p:tab id="empTelefone" title="#{msg.formularioEmpresaAbaTelefone}">
@@ -273,7 +243,7 @@
                                              value="#{msg.acaoFechar}" 
                                              immediate="true"
                                              styleClass="botao"/>
-                            
+
                         </p:panel>
                         <p:confirmDialog header="#{msg.headerAlterar}" message="#{msg.headerConfirmaAlterar}" id="AlterarDlg" widgetVar="altera">
                             <p:outputLabel id="mensagem" value="#{empresaManager.mensagemAlteracao}" escape="false"/>
