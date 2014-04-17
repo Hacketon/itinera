@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -41,8 +41,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empresa.findByRazaoSocial", query = "SELECT e FROM Empresa e WHERE e.razaoSocial = :razaoSocial"),
     @NamedQuery(name = "Empresa.findByTipo", query = "SELECT e FROM Empresa e WHERE e.tipo = :tipo")})
 public class Empresa implements Serializable {
-    @OneToMany(mappedBy = "idEmpresa")
-    private List<PontoColeta> pontoColetaList;
     @ManyToMany( cascade = CascadeType.ALL )
     @JoinTable( name = "contato_emp_email", 
                 joinColumns = @JoinColumn(name = "empresa_id"),
@@ -88,8 +86,8 @@ public class Empresa implements Serializable {
     private String razaoSocial;
     @Column(name = "tipo")
     private Character tipo;
-    @JoinColumn(name = "endereco", referencedColumnName = "id_endereco")
-    @ManyToOne
+    
+    @Embedded
     private Endereco endereco;
 
     public Empresa() {
@@ -232,15 +230,6 @@ public class Empresa implements Serializable {
 
     public void setEmpresaTelefoneList(List<Telefone> telefoneList) {
         this.telefoneList = telefoneList;
-    }
-
-    @XmlTransient
-    public List<PontoColeta> getPontoColetaList() {
-        return pontoColetaList;
-    }
-
-    public void setPontoColetaList(List<PontoColeta> pontoColetaList) {
-        this.pontoColetaList = pontoColetaList;
     }
     
 }

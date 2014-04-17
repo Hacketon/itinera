@@ -11,7 +11,6 @@ import br.com.itinera.modelo.Empresa;
 import br.com.itinera.modelo.Telefone;
 import br.com.itinera.persistencia.EmailDAO;
 import br.com.itinera.persistencia.EmpresaDAO;
-import br.com.itinera.persistencia.PontosColetaDAO;
 import br.com.itinera.persistencia.TelefoneDAO;
 
 /**
@@ -20,8 +19,6 @@ import br.com.itinera.persistencia.TelefoneDAO;
  */
 @Stateless
 public class EmpresaFachada {
-    @EJB
-    private PontosColetaDAO pontosColetaDAO;
     @EJB
     private EmpresaDAO dao;
     @EJB

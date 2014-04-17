@@ -7,115 +7,54 @@
 package br.com.itinera.modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.math.BigInteger;
-import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author lesena
  */
-@Entity
-@Table(name = "endereco")
+@Embeddable
 public class Endereco implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_endereco")
-    @SequenceGenerator(name="Endereco_Generator", sequenceName="seq_endereco", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="Endereco_Generator")
-    private BigDecimal idEndereco;
-    
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 9)
     @Column(name = "cep")
     private String cep;
     
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
     @Column(name = "tipo_logradouro")
     private String tipoLogradouro;
     
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "nome_logradouro")
     private String nomeLogradouro;
     
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "numero")
     private BigInteger numero;
     
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "complemento")
     private String complemento;
     
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "bairro")
     private String bairro;
     
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "latitude")
-    private String latitude;
-    
-    @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "longitude")
-    private String longitude;
-    
-    @NotNull
     @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Municipio idMunicipio;
 
     public Endereco() {
     }
 
-    public Endereco(BigDecimal idEndereco) {
-        this.idEndereco = idEndereco;
-    }
-
-    public Endereco(BigDecimal idEndereco, String cep, String tipoLogradouro, String nomeLogradouro, BigInteger numero, String complemento, String bairro, String latitude, String longitude) {
-        this.idEndereco = idEndereco;
+    public Endereco(String cep, String tipoLogradouro, String nomeLogradouro, BigInteger numero, String complemento, String bairro) {
         this.cep = cep;
         this.tipoLogradouro = tipoLogradouro;
         this.nomeLogradouro = nomeLogradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.bairro = bairro;
-        this.latitude = latitude;
-        this.longitude = longitude;
     }
 
-    public BigDecimal getIdEndereco() {
-        return idEndereco;
-    }
-
-    public void setIdEndereco(BigDecimal idEndereco) {
-        this.idEndereco = idEndereco;
-    }
 
     public String getCep() {
         return cep;
@@ -165,22 +104,6 @@ public class Endereco implements Serializable {
         this.bairro = bairro;
     }
 
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
     public Municipio getIdMunicipio() {
         return idMunicipio;
     }
@@ -192,7 +115,7 @@ public class Endereco implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idEndereco != null ? idEndereco.hashCode() : 0);
+        hash += (cep != null ? cep.hashCode() : 0);
         return hash;
     }
 
@@ -203,7 +126,14 @@ public class Endereco implements Serializable {
             return false;
         }
         Endereco other = (Endereco) object;
-        if ((this.idEndereco == null && other.idEndereco != null) || (this.idEndereco != null && !this.idEndereco.equals(other.idEndereco))) {
+        if ( ((this.cep == null && other.cep != null) || (this.cep != null && !this.cep.equals(other.cep)))
+             && ((this.tipoLogradouro == null && other.tipoLogradouro != null) || (this.tipoLogradouro != null && !this.tipoLogradouro.equals(other.tipoLogradouro)) ) 
+             && ((this.nomeLogradouro == null && other.nomeLogradouro != null) || (this.nomeLogradouro != null && !this.nomeLogradouro.equals(other.nomeLogradouro)) )
+             && ((this.numero == null && other.numero != null) || (this.numero != null && !this.numero.equals(other.numero)) ) 
+             && ((this.complemento == null && other.complemento != null) || (this.complemento != null && !this.complemento.equals(other.complemento)) ) 
+             && ((this.bairro == null && other.bairro != null) || (this.bairro != null && !this.bairro.equals(other.bairro)) ) 
+//             && ((this.idMunicipio == null && other.idMunicipio != null) || (this.idMunicipio != null && !this.idMunicipio.equals(other.idMunicipio)) ) 
+                ){
             return false;
         }
         return true;
@@ -211,7 +141,7 @@ public class Endereco implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Endereco[ idEndereco=" + idEndereco + " ]";
+        return "modelo.Endereco[ cep=" + cep + " ]";
     }
     
 }
