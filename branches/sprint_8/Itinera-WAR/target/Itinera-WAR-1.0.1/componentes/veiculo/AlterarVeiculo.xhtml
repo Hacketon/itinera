@@ -1,0 +1,454 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body onload="selecionado($('#btnVeiculo'));">
+        <ui:decorate template="/layout/logado/template.xhtml">
+            <ui:define name="conteudo">    
+                <h:form id="displayMessages">
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                </h:form>
+                <h:form styleClass="semBorda">                
+                    <p:panel styleClass="semBorda" header="#{msg.alteraVeiculo}">
+                        <p:panelGrid id="painelcadastro" styleClass="semBorda" columns="3"> 
+                            <p:outputLabel for="veiculoPlaca"
+                                           styleClass="fontepadrao semBorda"
+                                           value="Placa"/>
+                            <p:inputMask   id="veiculoPlaca"
+                                           mask="aaa9999"
+                                           maxlength="8"
+                                           required="true"
+                                           requiredMessage="Por favor, preencha a placa do veículo."
+                                           style="text-transform: uppercase;"
+                                           value="#{veiculoManager.veiculo.placaVeiculo}"
+                                           />
+                            <p:watermark for="veiculoPlaca" value="ABC1234" />
+                            <p:outputLabel for="veiculoMarca"
+                                           styleClass="fontepadrao"
+                                           value="Marca"/>
+                            <p:inputText   id="veiculoMarca"
+                                           value="#{veiculoManager.veiculo.marcaVeiculo}"
+                                           required="true"
+                                           requiredMessage="Por favor, preencha a marca do veículo."
+                                           maxlength="100"
+                                           />  
+                            <p:watermark for="veiculoMarca" value="Marca do Veículo" />
+                            <p:outputLabel for="veiculoModelo"
+                                           styleClass="fontepadrao"
+                                           value="Modelo"/>
+                            <p:inputText   id="veiculoModelo"
+                                           value="#{veiculoManager.veiculo.modeloVeiculo}"
+                                           required="true"
+                                           maxlength="100"
+                                           requiredMessage="Por favor, preencha o modelo do veículo."
+                                           />
+                            <p:watermark for="veiculoModelo" value="Modelo do Veículo" />
+                            <p:outputLabel for="veiculoCategoria"
+                                           value="Categoria"
+                                           styleClass="fontepadrao"/>
+                            <p:selectOneMenu id="veiculoCategoria"
+                                             value="#{veiculoManager.veiculo.idCategoriaVeiculo}"
+                                             required="true"
+                                             style="width: 450px !important"
+                                             requiredMessage="Por favor, informe uma categoria de veículo."
+                                             >
+                                <f:selectItem itemValue="" itemLabel="Selecione"/>
+                                <f:selectItems value="#{veiculoManager.categoriasVeiculos}" var="categoria" 
+                                               itemLabel="#{categoria.description}" itemValue="#{categoriasVeiculos}" >
+                                </f:selectItems>
+                                <p:ajax event="change" listener="#{veiculoManager.combustivelVisualizar}"  update="masterTabs"/>
+                                <f:converter converterId="conversorCategoriaVeiculo"/>
+
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        
+                        <p:panel id="masterTabs" styleClass="semBorda" style="padding-left: 0px !important;margin:0px !important;">
+
+                            <p:panel id="painelComCombustivel" rendered="#{veiculoManager.tabVisivelComCombustivel}" styleClass="semBorda" style="padding-left: 0px !important;margin:0px !important;">
+                                <p:tabView id="tabs" >
+                                    <p:tab id="dadosPrincipais" title="Dados Principais" >
+                                        <p:panelGrid columns="3">
+                                            <p:outputLabel  for="veiculoNumInterno"
+                                                            styleClass="fontepadrao"
+                                                            value="Nº Interno"/>
+                                            <p:inputText   id="veiculoNumInterno"
+                                                           maxlength="10"
+                                                           onkeypress="mascara(this, formataNumero)"
+                                                           value="#{veiculoManager.veiculo.numeroVeiculo}"
+                                                           />
+                                            <p:watermark for="veiculoNumInterno" value="Nº interno" />
+                                            <p:outputLabel  for="veiculoObservacao"
+                                                            styleClass="fontepadrao"
+                                                            value="Observação"/>
+                                            <p:inputTextarea    id="veiculoObservacao"
+                                                                value="#{veiculoManager.veiculo.observacao}"
+                                                                cols="60"
+                                                                maxlength="250"/>
+                                            <p:watermark for="veiculoObservacao" value="Observação com no máximo 250 caracteres." />
+                                            <p:outputLabel for="veiculoAtivo"
+                                                           styleClass="fontepadrao"
+                                                           value="Ativo?"/>
+                                            <p:selectBooleanCheckbox id="veiculoAtivo"
+                                                                     value="#{veiculoManager.veiculo.ativo}"
+                                                                     rendererType="boolean"/>
+                                            <h:outputText
+                                                styleClass="fontepadrao"
+                                                value="Cadastro efetuado em #{veiculoManager.formataData(veiculoManager.veiculo.dataInclusao)}"/>
+                                        </p:panelGrid>
+                                    </p:tab>
+                                    <p:tab id="documentacao" title="Documentação">
+                                        <p:panelGrid id="documentacaoPanel" columns="3">
+                                            <p:outputLabel  for="veiculoRenavam"
+                                                            value="Renavam"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputText    id="veiculoRenavam"
+                                                            maxlength="20"
+                                                            onkeypress="mascara(this, formataNumero)"
+                                                            value="#{veiculoManager.veiculo.numeroRenavan}"
+                                                            rendererType="integer"
+                                                            size="80"/>
+                                            <p:watermark for="veiculoRenavam" value="01010101011" />
+                                            <p:outputLabel  for="veiculoChassi"
+                                                            value="Chassi"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputText    id="veiculoChassi"
+                                                            value="#{veiculoManager.veiculo.chassi}"
+                                                            maxlength="30"
+                                                            size="80"/>
+                                            <p:watermark for="veiculoChassi" value="Chassi do Veículo" />
+                                            <p:outputLabel  for="veiculoCidade"
+                                                            value="Cidade"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputText    id="veiculoCidade"
+                                                            value="#{veiculoManager.veiculo.cidadeVeiculo}"
+                                                            rendererType="integer"
+                                                            maxlength="100"
+                                                            size="80"/>
+                                            <p:watermark for="veiculoCidade" value="Cidade na qual o veículo está registrado." />
+                                            <p:outputLabel  for="veiculoUF"
+                                                            value="UF"
+                                                            styleClass="fontepadrao"/>
+
+                                            <p:inputMask    id="veiculoUF"
+                                                            mask="aa"
+                                                            value="#{veiculoManager.veiculo.ufVeiculo}"
+                                                            rendererType="character"
+                                                            size="10"/>
+                                            <p:watermark for="veiculoUF" value="SP" />
+                                            <p:outputLabel  for="veiculoExercicio"
+                                                            value="Exercício"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputMask    id="veiculoExercicio"
+                                                            mask="2099"
+                                                            value="#{veiculoManager.veiculo.exercicioAtual}"
+                                                            rendererType="integer"
+                                                            size="10"/>
+                                            <p:watermark for="veiculoExercicio" value="2013" />
+                                            <p:outputLabel  for="veiculoAno"
+                                                            value="Ano do Modelo"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputText    id="veiculoAno"
+                                                            onkeypress="mascara(this, formataNumero)"
+                                                            rendererType="integer"
+                                                            size="4"
+                                                            value="#{veiculoManager.veiculo.anoModelo}" />
+                                            <p:watermark for="veiculoAno" value="2013" />
+                                            <p:outputLabel  for="veiculoFabricacao"
+                                                            value="Ano de Fabricação"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputText    id="veiculoFabricacao"
+                                                            onkeypress="mascara(this, formataNumero)"
+                                                            rendererType="integer"
+                                                            size="4"
+                                                            value="#{veiculoManager.veiculo.anoFabricacao}" />
+                                            <p:watermark for="veiculoFabricacao" value="2013" />
+                                            <p:outputLabel  for="veiculoCor"
+                                                            value="Cor predominante"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputText    id="veiculoCor"
+                                                            maxlength="50"
+                                                            value="#{veiculoManager.veiculo.corPredominante}"
+                                                            size="50"/>
+                                            <p:watermark for="veiculoCor" value="Cor do veículo" />
+                                        </p:panelGrid>
+                                    </p:tab>
+                                    <p:tab id="combustivel" title="Combustível" rendered="#{veiculoManager.tabVisivelComCombustivel}" >
+                                        <p:panelGrid  id="gridCombustivel" columns="2">   
+                                            <p:outputLabel for="veiculoCombustivel"
+                                                           value="Tipo de Combustível"
+                                                           styleClass="fontepadrao"/>
+                                            <p:selectOneMenu id="veiculoCombustivel"
+
+                                                             style="width: 300px !important"
+
+                                                             value="#{veiculoManager.veiculo.tipoCombustivel}"
+                                                             >
+                                                <f:selectItems value="#{veiculoManager.tipoCombustiveis}" var="tpCombustivel"
+                                                               itemLabel="#{tpCombustivel.description}" itemValue="#{tpCombustivel}"/>
+                                            </p:selectOneMenu>
+                                            <p:outputLabel for="veiculoCombustivelMedia"
+                                                           value="Média km/litro"
+                                                           styleClass="fontepadrao"/>
+                                            <p:inputText id="veiculoCombustivelMedia"
+                                                         maxlength="10"
+                                                         onkeypress="mascara(this, formatarNumeroDuasCasas)"
+                                                         size="10" 
+                                                         value="#{veiculoManager.veiculo.mediaKmLitro}" />
+                                            <p:watermark for="veiculoCombustivelMedia" value="Km/Litro" />
+                                        </p:panelGrid>
+                                    </p:tab>
+                                    <p:tab id="detalhamento" title="Características do veículo">
+                                        <p:panelGrid columns="3">
+                                            <p:outputLabel for="veiculoAltura"
+                                                           value="Altura"
+                                                           styleClass="fontepadrao"/>
+                                            <p:inputText   id="veiculoAltura"
+                                                           maxlength="10"
+                                                           onkeypress="mascara(this, formatarNumeroDuasCasas)"
+                                                           size="10"
+                                                           value="#{veiculoManager.veiculo.alturaVeiculo}" />
+                                            <p:watermark for="veiculoAltura" value="1.00" />
+                                            <p:outputLabel for="veiculoLargura"
+                                                           value="Largura"
+                                                           styleClass="fontepadrao"/>
+                                            <p:inputText   id="veiculoLargura"
+                                                           maxlength="10"
+                                                           onkeypress="mascara(this, formatarNumeroDuasCasas)"
+                                                           size="10"
+                                                           value="#{veiculoManager.veiculo.larguraVeiculo}" />
+                                            <p:watermark for="veiculoLargura" value="0001.00" />
+                                            <p:outputLabel for="veiculoComprimento"
+                                                           value="Comprimento"
+                                                           styleClass="fontepadrao"/>
+                                            <p:inputText   id="veiculoComprimento"
+                                                           maxlength="10"
+                                                           onkeypress="mascara(this, formatarNumeroDuasCasas)"
+                                                           size="10"
+                                                           value="#{veiculoManager.veiculo.comprimentoVeiculo}" />
+                                            <p:watermark for="veiculoComprimento" value="0001.00" />
+                                            <p:outputLabel for="pesoBrutoVeiculo"
+                                                           value="Peso Bruto Total"
+                                                           styleClass="fontepadrao"/>
+                                            <p:inputText   id="pesoBrutoVeiculo"
+                                                           maxlength="11"
+                                                           onkeypress="mascara(this, formatarNumeroTresCasas)"
+                                                           size="10"
+                                                           value="#{veiculoManager.veiculo.pbt}"
+                                                           />
+                                            <p:watermark for="pesoBrutoVeiculo" value="9999.000" />
+                                            <p:outputLabel  for="veiculoEixo"
+                                                            styleClass="fontepadrao"
+                                                            value="Eixos"
+                                                            />
+                                            <p:inputText    id="veiculoEixo"
+                                                            maxlength="2"
+                                                            onkeypress="mascara(this, formatarNumero)"
+                                                            size="2"
+                                                            value="#{veiculoManager.veiculo.qtdeEixos}"
+                                                            />
+                                            <p:watermark for="veiculoEixo" value="01" />
+                                            <p:outputLabel for="kmAtualVeiculo"
+                                                           styleClass="fontepadrao"
+                                                           value="Km Atual"/>
+                                            <p:inputText   id="kmAtualVeiculo"
+                                                           maxlength="11"
+                                                           onkeypress="mascara(this, formatarKm)"
+                                                           size="11"
+                                                           value="#{veiculoManager.veiculo.kmAtual}" />
+                                            <p:watermark for="kmAtualVeiculo" value="1.000" />
+                                        </p:panelGrid>
+                                    </p:tab>
+                                </p:tabView>
+                            </p:panel>
+                            <p:panel id="painelSemCombustivel" rendered="#{veiculoManager.tabVisivelSemCombustivel}" styleClass="semBorda" style="">
+                                <p:tabView id="tabsPSC" >
+                                    <p:tab id="dadosPrincipaisPSC" title="Dados Principais" >
+                                        <p:panelGrid columns="3">
+                                            <p:outputLabel  for="veiculoNumInternoPSC"
+                                                            styleClass="fontepadrao"
+                                                            value="Nº Interno"/>
+                                            <p:inputText   id="veiculoNumInternoPSC"
+                                                           maxlength="10"
+                                                           onkeypress="mascara(this, formataNumero)"
+                                                           value="#{veiculoManager.veiculo.numeroVeiculo}" />
+                                            <p:watermark for="veiculoNumInternoPSC" value="Nº interno" />
+                                            <p:outputLabel  for="veiculoObservacaoPSC"
+                                                            styleClass="fontepadrao"
+                                                            value="Observação"/>
+                                            <p:inputTextarea    id="veiculoObservacaoPSC"
+                                                                value="#{veiculoManager.veiculo.observacao}"
+                                                                cols="60"
+                                                                maxlength="250"/>
+                                            <p:watermark for="veiculoObservacaoPSC" value="Observação com no máximo 250 caracteres." />
+                                            <p:outputLabel for="veiculoAtivoPSC"
+                                                           styleClass="fontepadrao"
+                                                           value="Ativo?"/>
+                                            <p:selectBooleanCheckbox id="veiculoAtivoPSC"
+                                                                     value="#{veiculoManager.veiculo.ativo}"
+                                                                     rendererType="boolean"/>
+                                            <h:outputText
+                                                styleClass="fontepadrao"
+                                                value="Cadastro efetuado em #{veiculoManager.formataData(veiculoManager.veiculo.dataInclusao)}"/>
+
+                                        </p:panelGrid>
+                                    </p:tab>
+                                    <p:tab id="documentacaoPSC" title="Documentação">
+                                        <p:panelGrid id="documentacaoPanelPSC" columns="3">
+                                            <p:outputLabel  for="veiculoRenavamPSC"
+                                                            value="Renavam"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputText    id="veiculoRenavamPSC"
+                                                            maxlength="20"
+                                                            onkeypress="mascara(this, formataNumero)"
+                                                            value="#{veiculoManager.veiculo.numeroRenavan}"
+                                                            rendererType="integer"
+                                                            size="80"/>
+                                            <p:watermark for="veiculoRenavamPSC" value="01010101011" />
+                                            <p:outputLabel  for="veiculoChassiPSC"
+                                                            value="Chassi"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputText    id="veiculoChassiPSC"
+                                                            value="#{veiculoManager.veiculo.chassi}"
+                                                            maxlength="30"
+                                                            size="80"/>
+                                            <p:watermark for="veiculoChassiPSC" value="Chassi do Veículo" />
+                                            <p:outputLabel  for="veiculoCidadePSC"
+                                                            value="Cidade"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputText    id="veiculoCidadePSC"
+                                                            value="#{veiculoManager.veiculo.cidadeVeiculo}"
+                                                            rendererType="integer"
+                                                            maxlength="100"
+                                                            size="80"/>
+                                            <p:watermark for="veiculoCidadePSC" value="Cidade na qual o veículo está registrado." />
+                                            <p:outputLabel  for="veiculoUFPSC"
+                                                            value="UF"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputMask    id="veiculoUFPSC"
+                                                            mask="aa"
+                                                            value="#{veiculoManager.veiculo.ufVeiculo}"
+                                                            rendererType="character"
+                                                            size="10"/>
+                                            <p:watermark for="veiculoUFPSC" value="SP" />
+                                            <p:outputLabel  for="veiculoExercicioPSC"
+                                                            value="Exercício"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputMask    id="veiculoExercicioPSC"
+                                                            mask="2099"
+                                                            value="#{veiculoManager.veiculo.exercicioAtual}"
+                                                            rendererType="integer"
+                                                            size="10"/>
+                                            <p:watermark for="veiculoExercicioPSC" value="2013" />
+                                            <p:outputLabel  for="veiculoAnoPSC"
+                                                            value="Ano do Modelo"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputText    id="veiculoAnoPSC"
+                                                            maxlength="4"
+                                                            onkeypress="mascara(this, formataNumero)"
+                                                            value="#{veiculoManager.veiculo.anoModelo}"
+                                                            rendererType="integer"
+                                                            size="10"/>
+                                            <p:watermark for="veiculoAnoPSC" value="2013" />
+                                            <p:outputLabel  for="veiculoFabricacaoPSC"
+                                                            value="Ano de Fabricação"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputText    id="veiculoFabricacaoPSC"
+                                                            maxlength="4"
+                                                            onkeypress="mascara(this, formataNumero)"
+                                                            value="#{veiculoManager.veiculo.anoFabricacao}"
+                                                            rendererType="integer"
+                                                            size="10"/>
+                                            <p:watermark for="veiculoFabricacaoPSC" value="2013" />
+                                            <p:outputLabel  for="veiculoCorPSC"
+                                                            value="Cor predominante"
+                                                            styleClass="fontepadrao"/>
+                                            <p:inputText    id="veiculoCorPSC"
+                                                            maxlength="50"
+                                                            value="#{veiculoManager.veiculo.corPredominante}"
+                                                            size="50"/>
+                                            <p:watermark for="veiculoCorPSC" value="Cor do veículo" />
+                                        </p:panelGrid>
+                                    </p:tab>
+                                    <p:tab id="detalhamentoPSC" title="Características do veículo">
+                                        <p:panelGrid columns="3">
+                                            <p:outputLabel for="veiculoAlturaPSC"
+                                                           value="Altura"
+                                                           styleClass="fontepadrao"/>
+                                            <p:inputText   id="veiculoAlturaPSC"
+                                                           maxlength="10"
+                                                           onkeypress="mascara(this, formatarNumeroDuasCasas)"
+                                                           value="#{veiculoManager.veiculo.alturaVeiculo}"
+                                                           />
+                                            <p:watermark for="veiculoAlturaPSC" value="00001.00" />
+                                            <p:outputLabel for="veiculoLarguraPSC"
+                                                           value="Largura"
+                                                           styleClass="fontepadrao"/>
+                                            <p:inputText   id="veiculoLarguraPSC"
+                                                           maxlength="10"
+                                                           onkeypress="mascara(this, formatarNumeroDuasCasas)"
+                                                           value="#{veiculoManager.veiculo.larguraVeiculo}" />
+                                            <p:watermark for="veiculoLarguraPSC" value="0001.00" />
+                                            <p:outputLabel for="veiculoComprimentoPSC"
+                                                           value="Comprimento"
+                                                           styleClass="fontepadrao"/>
+                                            <p:inputText   id="veiculoComprimentoPSC"
+                                                           maxlength="10"
+                                                           onkeypress="mascara(this, formatarNumeroDuasCasas)"
+                                                           value="#{veiculoManager.veiculo.comprimentoVeiculo}"
+                                                           />
+                                            <p:watermark for="veiculoComprimentoPSC" value="0001.00" />
+                                            <p:outputLabel for="pesoBrutoVeiculoPSC"
+                                                           value="Peso Bruto Total"
+                                                           styleClass="fontepadrao"/>
+                                            <p:inputText   id="pesoBrutoVeiculoPSC"
+                                                           maxlength="11"
+                                                           onkeypress="mascara(this, formatarNumeroTresCasas)"
+                                                           value="#{veiculoManager.veiculo.pbt}"
+                                                           />
+                                            <p:watermark for="pesoBrutoVeiculoPSC" value="000000000001.00" />
+                                            <p:outputLabel  for="veiculoEixoPSC"
+                                                            styleClass="fontepadrao"
+                                                            value="Eixos"
+                                                            />
+                                            <p:inputText    id="veiculoEixoPSC"
+                                                            maxlength="2"
+                                                            onkeypress="mascara(this, formatarNumero)"
+                                                            value="#{veiculoManager.veiculo.qtdeEixos}"
+                                                            />
+                                            <p:watermark for="veiculoEixoPSC" value="01" />
+                                            <p:outputLabel for="kmAtualVeiculoPSC"
+                                                           styleClass="fontepadrao"
+                                                           value="Km Atual"/>
+                                            <p:inputText   id="kmAtualVeiculoPSC"
+                                                           maxlength="11"
+                                                           onkeypress="mascara(this, formatarKm)"
+                                                           value="#{veiculoManager.veiculo.kmAtual}"
+                                                           />
+                                            <p:watermark for="kmAtualVeiculoPSC" value="1.000" />
+                                        </p:panelGrid>
+                                    </p:tab>
+                                </p:tabView>
+                            </p:panel>
+
+                        </p:panel>
+                        
+                        <p:commandButton 
+                            id="BtnAlterar" 
+                            action="#{veiculoManager.alterar()}" 
+                            value="Confirmar" 
+                            styleClass="botao"/>
+
+                        <p:commandButton id="BtnFechar"
+                                         action="#{veiculoManager.montarPaginaParaListarVeiculo()}"
+                                         value="#{msg.acaoFechar}" 
+                                         immediate="true"
+                                         styleClass="botao"/>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+        </ui:decorate>
+    </h:body>
+</html>

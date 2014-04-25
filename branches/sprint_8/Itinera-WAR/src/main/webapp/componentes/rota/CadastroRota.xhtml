@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body >
+        <h:outputScript>selecionado($('#btnRota'));</h:outputScript>
+        <f:view>
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">
+                    <h:form id="formInserirTipoRota" styleClass="semBorda tr">
+                        <p:messages id="messages" showDetail="true"/>
+                        <p:panel styleClass="semBorda" header="#{msgs.rota}">
+                            <p:panelGrid styleClass="semBorda" >
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Código" for="rotaCodigo"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="rotaCodigo" 
+                                                     value="#{rotaManager.rota.codigoRota}" 
+                                                     maxlength="10" 
+                                                     required="true" 
+                                                     requiredMessage="#{msgSis.obrigatorioRotaCodigo}"/>
+                                        <p:watermark for="rotaCodigo" value="Identificador"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Descrição" for="rotaDescricao" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="rotaDescricao"
+                                                     value="#{rotaManager.rota.descricao}"
+                                                     maxlength="150"
+                                                     size="100"
+                                                     required="true"
+                                                     requiredMessage="#{msgSis.obrigatorioRotaDescricao}"/>
+                                        <p:watermark for="rotaDescricao" value="Descrição da Rota"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Distância" for="rotaDistancia"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputMask value="#{rotaManager.rota.distancia}" id="rotaDistancia" mask="99999.999"
+                                                     required="true" requiredMessage="#{msgSis.obrigatorioRotaDistancia}"/>
+                                        <p:outputLabel value="KM"/>
+                                        <p:watermark value="000000.000" for="rotaDistancia"/>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        <hr/>
+                        <p:panelGrid styleClass="semBorda">
+                            <p:row>
+                            <p:column>
+                                <div class="mensagemAviso">
+                                    <p>Caso deseje finalizar a rota sem pontos de coleta, ela será inserida, porém de forma <b>inativa</b>. </p>
+                                    <p>Para inserir pontos de coleta, e assim torna-la <b>ativa</b> clique em <b>Próximo</b>.</p>
+                                </div>
+                            </p:column>
+                            <p:column style="width:45%; text-align: right;">
+                                        <p:commandButton 
+                                             id="Btninserir" 
+                                             oncomplete="inclui.show();"
+                                             value="Confirmar" 
+                                             styleClass="botao"
+                                             update="messages"/>
+                                         <p:commandButton 
+                                             id="BtninserirPontoColeta" 
+                                             action="#{rotaManager.montarPaginaParaCadastrarPontosColeta()}"
+                                             value="Próximo" 
+                                             styleClass="botao"
+                                             icon="ui-icon-play"
+                                             iconPos="right"
+                                             />
+                                    
+                            </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                        <p:confirmDialog header="Incluir uma rota inativa?" message="Ao incluir uma rota que não possui pontos de coleta, não é possível inseri-la de forma ativa.  Deseja inserir uma rota inativa?" id="incluiDlg" widgetVar="inclui">
+                            <p:commandButton value="Sim" action="#{rotaManager.inserir()}" update="messages"/>
+                            <p:commandButton value="Não" onclick="inclui.hide();" />
+                        </p:confirmDialog>
+                        </p:panel>
+                    </h:form>
+                </ui:define>
+            </ui:decorate>
+        </f:view>
+        </h:body>
+</html>
+

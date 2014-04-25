@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	
+	<changeSet author="ivens" id="74">
+		<comment>
+			Removendo a fk_id_endereco da tabela empresa
+		</comment>
+       <dropForeignKeyConstraint constraintName="fk_id_endereco" 
+			baseTableName="empresa"/>
+     </changeSet>
+	
+	
+	<changeSet author="ivens" id="75">
+		<comment>
+			Remoção da Tabela endereço.
+		</comment>
+		<dropTable schemaName="public" tableName="endereco"/>
+    </changeSet>    
+        
+		 
+</databaseChangeLog>
