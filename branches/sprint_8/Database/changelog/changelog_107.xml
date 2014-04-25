@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="marcelo" id="107">
+		<comment>
+			Criação da tabela de despesa
+		</comment>
+        <createTable tableName="despesa">
+            <column name="id_despesa" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="num_docto" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="motorista" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="veiculo" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="plano_contas" type="BPCHAR(1)" remarks="[C]ombustível, [D]iária, [M]anutenção e [P]lano de contas">
+                <constraints nullable="false" />
+            </column>
+            <column name="local" type="BPCHAR(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="valor" type="numeric">
+                <constraints nullable="false" />
+            </column>
+            <column name="quantidade" type="numeric">
+                <constraints nullable="false" />
+            </column>
+            <column name="km" type="numeric" />
+            <column name="status" type="BPCHAR(1)" remarks="[E]nviado, [C]onfirmado, [E]rro e [N]ão enviado">
+                <constraints nullable="false"/>
+            </column>
+            <column name="observacao" type="BPCHAR(250)"/>
+        </createTable>
+        <addPrimaryKey columnNames="id_despesa"
+                   constraintName="pk_id_despesa"
+                   schemaName="public"
+                   tableName="despesa" />
+        <addForeignKeyConstraint baseColumnNames="veiculo" baseTableName="despesa" constraintName="fk_despesa_veiculo" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id_veiculo" referencedTableName="veiculo"/>
+    </changeSet>
+</databaseChangeLog>

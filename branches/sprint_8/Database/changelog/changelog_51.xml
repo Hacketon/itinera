@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="51">
+		<comment>
+			Remoção das tabelas de:
+				- fornecedor
+				- fornecedor email 
+				- fornecedor responsável
+				- fornecedor telefone 
+				- sequence de fornecedor
+		</comment>
+		<comment>
+			[HORA DA FAXINA]
+        </comment>
+        <dropSequence sequenceName="seq_fornecedor"/>
+        <dropTable schemaName="public" tableName="fornecedor_email"/>
+        <dropTable schemaName="public" tableName="fornecedor_responsavel"/>
+        <dropTable schemaName="public" tableName="fornecedor_telefone"/>
+        <dropTable schemaName="public" tableName="fornecedor" cascadeConstraints="true"/>
+    </changeSet>
+</databaseChangeLog>

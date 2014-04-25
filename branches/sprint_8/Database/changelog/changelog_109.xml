@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+	<changeSet author="bruno" id="109">
+		<comment>
+			Alteração da tabela de empresa incuindo os campos referente a endereço
+		</comment>
+		<addColumn schemaName="public"
+		    tableName="empresa">
+			<column name="cep" 
+				type="varchar(9)" 
+				remarks="Informação do CEP dos Correios referente ao logradouro.">
+				<constraints nullable="false"/>
+			</column>
+		</addColumn>
+		<addColumn schemaName="public"
+		    tableName="empresa">
+			<column name="tipo_logradouro" 
+				type="varchar(20)"
+				remarks="Definição do  tipo do logradouro (Rua, Avenida, etc..)">
+				<constraints nullable="false"/>
+			</column>
+		</addColumn>
+		<addColumn schemaName="public"
+		    tableName="empresa">
+			<column name="nome_logradouro" 
+				type="varchar(100)"
+				remarks="Descrição do nome do logradouro.">
+				<constraints nullable="false"/>
+			</column>
+		</addColumn>
+		<addColumn schemaName="public"
+		    tableName="empresa">
+			<column name="numero" 
+				type="numeric"
+				remarks="Número do logradouro.">
+				<constraints nullable="false"/>
+			</column>
+		</addColumn>
+		<addColumn schemaName="public"
+		    tableName="empresa">
+			<column name="complemento" 
+				type="varchar(50)"
+				remarks="Complemento referente ao logradouro.">
+				<constraints nullable="false"/>
+			</column>
+		</addColumn>
+		<addColumn schemaName="public"
+		    tableName="empresa">
+			<column name="bairro" 
+				type="varchar(100)"
+				remarks="Nome do bairro do logradouro.">
+				<constraints nullable="false"/>
+			</column>
+		</addColumn>
+		<addColumn schemaName="public"
+		    tableName="empresa">
+			<column name="id_municipio" 
+				type="numeric"
+				remarks="Id Municipio fk">
+				<constraints nullable="false"/>
+			</column>
+		</addColumn>
+	</changeSet>
+</databaseChangeLog>

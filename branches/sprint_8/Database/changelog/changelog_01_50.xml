@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="leticia" id="1">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createSequence sequenceName="seq_categoria_veiculo"/>
+    </changeSet>
+    <changeSet author="leticia" id="2">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createSequence sequenceName="seq_endereco"/>
+    </changeSet>
+    <changeSet author="leticia" id="3">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createSequence sequenceName="seq_fornecedor"/>
+    </changeSet>
+    <changeSet author="leticia" id="4">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createSequence sequenceName="seq_funcionalidade_sistema"/>
+    </changeSet>
+    <changeSet author="leticia" id="5">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createSequence sequenceName="seq_ponto_coleta"/>
+    </changeSet>
+    <changeSet author="leticia" id="6">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createSequence sequenceName="seq_rota"/>
+    </changeSet>
+    <changeSet author="leticia" id="7">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createSequence sequenceName="seq_tipo_rota"/>
+    </changeSet>
+    <changeSet author="leticia" id="8">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createSequence sequenceName="seq_usuario"/>
+    </changeSet>
+    <changeSet author="leticia" id="9">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createSequence sequenceName="seq_veiculo"/>
+    </changeSet>
+    <changeSet author="leticia" id="10">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createTable tableName="categoria_veiculo">
+            <column name="id_categoria_veiculo" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao_categoria" type="BPCHAR(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="reboque_semireboque" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="leticia" id="11">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createTable remarks="Tabela para inclusão dos endereços referente aos pontos de coleta" tableName="endereco">
+            <column name="id_endereco" remarks="ID da chave artificial da tabela" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cep" remarks="Informação do CEP dos correios referente ao logradouro" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo" remarks="Definição do tipo de logradouro:&#10;Rua, Avenida, Travessa, Rodovia" type="BPCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="logradouro" remarks="Descrição do nome do logradour" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numero" remarks="Número do logradouro" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="complemento" remarks="Complemento referente ao endereço" type="BPCHAR(250)"/>
+            <column name="bairro" remarks="Descrição do bairro referente ao endereço" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cidade" remarks="Descrição da Cidade referente ao endereço" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="estado" remarks="Estado referente ao endereço" type="BPCHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pais" remarks="País referente ao endereço" type="BPCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="leticia" id="12">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createTable remarks="Tabela responsÃ¡vel por registrar os dados de um fornecedor" tableName="fornecedor">
+            <column name="id_fornecedor" remarks="Chave primÃ¡ria lÃ³gia de fornecedor" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cnpj" remarks="NÃºmero do cadastro nacional de pessoa jurÃ­dica nacional. Chave real de fornecedor." type="BPCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ie" remarks="InscriÃ§Ã£o Estadual do fornecedor" type="BPCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nome_fantasia" remarks="Apelido ou Nome Fantasia do fornecedor" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="razao_social" remarks="RazÃ£o social registrado do fornecedor" type="BPCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="endereco" type="numeric"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="leticia" id="13">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createTable remarks="Tabela dos e-mails de um fornecedor." tableName="fornecedor_email">
+            <column name="id_fornecedor" remarks="CÃ³digo do fonecedor deste email." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_fornecedor_email" remarks="CÃ³digo numerador deste email." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" remarks="E-mail do fornecedor" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="leticia" id="14">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createTable remarks="Tabela responsÃ¡vel por registrar os dados dos responsÃ¡veis e contatos de um fornecedor" tableName="fornecedor_responsavel">
+            <column name="id_fornecedor" remarks="CÃ³digo do fonecedor deste responsÃ¡vel." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_fornecedor_responsavel" remarks="CÃ³digo do responsÃ¡vel do fornecedor." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nome" remarks="Nome do responsÃ¡vel do fornecedor." type="BPCHAR(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cargo" remarks="Cargo do responsÃ¡vel do fornecedor." type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="leticia" id="15">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createTable remarks="Tabela dos telefones de um fornecedor." tableName="fornecedor_telefone">
+            <column name="id_fornecedor" remarks="CÃ³digo do fonecedor deste telefone." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_fornecedor_telefone" remarks="CÃ³digo numerador deste telefone." type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="telefone" remarks="Telefone do fornecedor" type="BPCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ramal" remarks="Ramal do fornecedor" type="BPCHAR(6)"/>
+            <column name="descricao" remarks="DescriÃ§Ã£o do telefone" type="BPCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="leticia" id="16">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createTable tableName="funcionalidade_sistema">
+            <column name="id_funcionalidade_sistema" remarks="ID da tabela funcionalidade do sistema" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao_funcionalidade" type="BPCHAR(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="funcionalidade_ativa" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="leticia" id="17">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createTable remarks="Tabela responsável por cadastrar os pontos de coletea que serão percorridos pela transportadora para coleta de produtos." tableName="ponto_coleta">
+            <column name="id_ponto_coleta" remarks="ID referente a chave artificial da tabela" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao" remarks="Descrição que identifica o ponto de coleta" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="latitude" remarks="Campo para preenchimento da latitude referente ao ponto de coleta" type="BPCHAR(20)"/>
+            <column name="longitude" remarks="Campo para preenchimento da longitude referente ao ponto de coleta" type="BPCHAR(20)"/>
+            <column name="id_endereco" remarks="ID referente a tabela de endereços" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="ativo" remarks="O ponto de coleta está ativo ou não" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_fornecedor" remarks="Id referente a chave artificial da tabela e foreign key de fornecedor" type="numeric"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="leticia" id="18">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createTable remarks="Tabela responsável por cadastrar as rotas previstas de uso para Viagem." tableName="rota">
+            <column name="id_rota" remarks="Id referente a chave artificial da tabela" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codigo_rota" remarks="código identificador real da rota" type="BPCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao" remarks="Descrição que identifica a rota" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo_rota" remarks="Tipo de rota desta rota, relacionamento com tabela tipo_rota" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="distancia" remarks="distancia total da rota" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="ativo" remarks="A rota está ativo ou não" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="leticia" id="19">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createTable remarks="Tabela responsável por relacionar uma rota a vários pontos de coleta" tableName="rota_ponto_coleta">
+            <column name="id_rota" remarks="Rota a qual será relacionada" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_ponto_coleta" remarks="Código do Ponto de Coleta relacionado" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="posicao" remarks="Posição deste ponto de coleta nesta rota" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="leticia" id="20">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createTable remarks="Definição do tipo de rota" tableName="tipo_rota">
+            <column name="id_tipo_rota" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao" remarks="Descrição que identifica o tipo de rota" type="BPCHAR(150)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="leticia" id="21">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createTable remarks="Tabela referente aos usuários que podem acessar o sistema" tableName="usuario">
+            <column name="id_usuario" remarks="ID referente a chave artificial da tabela" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login" remarks="Login do usuário que será utilizado para acessar o sistema" type="BPCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="senha" remarks="Senha que deverá ser informada para que o usuário possa acessar o sistema" type="BPCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nome" remarks="Nome do usuário que deverá ser informada para que o usuário possa acessar o sistema" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="ativo" remarks="Se o usuário está ativo ou não no sistema" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="leticia" id="22">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <createTable tableName="veiculo">
+            <column name="id_veiculo" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="placa_veiculo" type="BPCHAR(7)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numero_veiculo" type="BPCHAR(10)"/>
+            <column name="marca_veiculo" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modelo_veiculo" type="BPCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ano_fabricacao" type="numeric"/>
+            <column name="ano_modelo" type="numeric"/>
+            <column name="chassi" type="BPCHAR(30)"/>
+            <column name="numero_renavan" type="BPCHAR(20)"/>
+            <column name="exercicio_atual" type="numeric"/>
+            <column name="cidade_veiculo" type="BPCHAR(100)"/>
+            <column name="uf_veiculo" type="BPCHAR(2)"/>
+            <column name="tipo_combustivel" type="BPCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cor_predominante" type="BPCHAR(50)"/>
+            <column name="qtde_eixos" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="km_atual" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="media_km_litro" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="largura_veiculo" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comprimento_veiculo" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="altura_veiculo" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pbt" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="observacao" type="BPCHAR(250)"/>
+            <column defaultValueBoolean="true" name="ativo" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_categoria_veiculo" remarks="FK referente a tabela categoria_veiculo" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="now()" name="data_inclusao" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="leticia" id="23">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addPrimaryKey columnNames="id_categoria_veiculo" constraintName="pk_id_categoria_veiculo" tableName="categoria_veiculo"/>
+    </changeSet>
+    <changeSet author="leticia" id="24">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addPrimaryKey columnNames="id_endereco" constraintName="pk_id_endereco" tableName="endereco"/>
+    </changeSet>
+    <changeSet author="leticia" id="25">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addPrimaryKey columnNames="id_fornecedor" constraintName="pk_id_fornecedor" tableName="fornecedor"/>
+    </changeSet>
+    <changeSet author="leticia" id="26">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addPrimaryKey columnNames="id_fornecedor_email" constraintName="pk_id_fornecedor_email" tableName="fornecedor_email"/>
+    </changeSet>
+    <changeSet author="leticia" id="27">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addPrimaryKey columnNames="id_fornecedor_responsavel" constraintName="pk_id_fornecedor_responsavel" tableName="fornecedor_responsavel"/>
+    </changeSet>
+    <changeSet author="leticia" id="28">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addPrimaryKey columnNames="id_fornecedor_telefone" constraintName="pk_id_fornecedor_telefone" tableName="fornecedor_telefone"/>
+    </changeSet>
+    <changeSet author="leticia" id="29">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addPrimaryKey columnNames="id_funcionalidade_sistema" constraintName="pk_id_funcionalidade_sistema" tableName="funcionalidade_sistema"/>
+    </changeSet>
+    <changeSet author="leticia" id="30">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addPrimaryKey columnNames="id_ponto_coleta" constraintName="pk_id_ponto_coleta" tableName="ponto_coleta"/>
+    </changeSet>
+    <changeSet author="leticia" id="31">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addPrimaryKey columnNames="id_rota" constraintName="pk_id_rota" tableName="rota"/>
+    </changeSet>
+    <changeSet author="leticia" id="32">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addPrimaryKey columnNames="id_rota, id_ponto_coleta" constraintName="pk_id_rota_pontos_coleta" tableName="rota_ponto_coleta"/>
+    </changeSet>
+    <changeSet author="leticia" id="33">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addPrimaryKey columnNames="id_tipo_rota" constraintName="pk_id_tipo_rota" tableName="tipo_rota"/>
+    </changeSet>
+    <changeSet author="leticia" id="34">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addPrimaryKey columnNames="id_usuario" constraintName="pk_id_usuario" tableName="usuario"/>
+    </changeSet>
+    <changeSet author="leticia" id="35">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addPrimaryKey columnNames="id_veiculo" constraintName="pk_veiculo" tableName="veiculo"/>
+    </changeSet>
+    <changeSet author="leticia" id="36">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addForeignKeyConstraint baseColumnNames="id_categoria_veiculo" baseTableName="veiculo" constraintName="fk_categoria_veiculo" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id_categoria_veiculo" referencedTableName="categoria_veiculo"/>
+    </changeSet>
+    <changeSet author="leticia" id="37">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addForeignKeyConstraint baseColumnNames="endereco" baseTableName="fornecedor" constraintName="fk_id_endereco" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id_endereco" referencedTableName="endereco"/>
+    </changeSet>
+    <changeSet author="leticia" id="38">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addForeignKeyConstraint baseColumnNames="id_fornecedor" baseTableName="fornecedor_responsavel" constraintName="fk_id_fornecedor" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id_fornecedor" referencedTableName="fornecedor"/>
+    </changeSet>
+    <changeSet author="leticia" id="39">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addForeignKeyConstraint baseColumnNames="id_fornecedor" baseTableName="ponto_coleta" constraintName="fk_id_forneedor" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id_fornecedor" referencedTableName="fornecedor"/>
+    </changeSet>
+    <changeSet author="leticia" id="40">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addForeignKeyConstraint baseColumnNames="id_rota" baseTableName="rota_ponto_coleta" constraintName="fk_id_rota" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id_rota" referencedTableName="rota"/>
+    </changeSet>
+    <changeSet author="leticia" id="41">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addForeignKeyConstraint baseColumnNames="tipo_rota" baseTableName="rota" constraintName="fk_id_tipo_rota" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id_tipo_rota" referencedTableName="tipo_rota"/>
+    </changeSet>
+    <changeSet author="leticia" id="42">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addForeignKeyConstraint baseColumnNames="id_ponto_coleta" baseTableName="rota_ponto_coleta" constraintName="fk_ponto_coleta" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id_ponto_coleta" referencedTableName="ponto_coleta"/>
+    </changeSet>
+    <changeSet author="leticia" id="43">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addUniqueConstraint columnNames="descricao_categoria" constraintName="un_categoria_veiculo" deferrable="false" disabled="false" initiallyDeferred="false" tableName="categoria_veiculo"/>
+    </changeSet>
+    <changeSet author="leticia" id="44">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addUniqueConstraint columnNames="cnpj" constraintName="un_cnpj" deferrable="false" disabled="false" initiallyDeferred="false" tableName="fornecedor"/>
+    </changeSet>
+    <changeSet author="leticia" id="45">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addUniqueConstraint columnNames="codigo_rota" constraintName="un_codigo_rota" deferrable="false" disabled="false" initiallyDeferred="false" tableName="rota"/>
+    </changeSet>
+    <changeSet author="leticia" id="46">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addUniqueConstraint columnNames="descricao_funcionalidade" constraintName="un_descricao_funcionalidade" deferrable="false" disabled="false" initiallyDeferred="false" tableName="funcionalidade_sistema"/>
+    </changeSet>
+    <changeSet author="leticia" id="47">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addUniqueConstraint columnNames="descricao" constraintName="un_ponto_coleta" deferrable="false" disabled="false" initiallyDeferred="false" tableName="ponto_coleta"/>
+    </changeSet>
+    <changeSet author="leticia" id="48">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addUniqueConstraint columnNames="descricao" constraintName="un_tipo_rota" deferrable="false" disabled="false" initiallyDeferred="false" tableName="tipo_rota"/>
+    </changeSet>
+    <changeSet author="leticia" id="49">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addUniqueConstraint columnNames="login" constraintName="un_usuario" deferrable="false" disabled="false" initiallyDeferred="false" tableName="usuario"/>
+    </changeSet>
+    <changeSet author="leticia" id="50">
+		<comment>
+			Criado automaticamente pela opção 'generatechangelog' em 02/01/2014.
+		</comment>
+        <addUniqueConstraint columnNames="placa_veiculo" constraintName="un_veiculo" deferrable="false" disabled="false" initiallyDeferred="false" tableName="veiculo"/>
+    </changeSet>
+</databaseChangeLog>

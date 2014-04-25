@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="85">
+		<comment>
+			Criação das tabelas Telefone e Email
+		</comment>
+		
+	<createTable remarks="Tabela responsável por registrar todos os e-mails do sistema" tableName="email">
+            <column name="email_Id" remarks="Código sequencial do e-mail." type="numeric">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_email"/>
+            </column>
+            <column name="email_Endereco" remarks="Endereço de e-mail." type="varchar(100)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="unique_email"/>
+            </column>
+            <column name="email_Descricao" remarks="Descrição do E-mail." type="varchar(200)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        
+        <createTable remarks="Tabela responsável por registrar todos os telefones do sistema" tableName="telefone">
+            <column name="telefone_Id" remarks="Código sequencial do telefone." type="numeric">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_telefone"/>
+            </column>
+            <column name="telefone_Numero" remarks="Número de telefone (com máscara)" type="varchar(15)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="unique_telefone"/>
+            </column>
+            <column name="telefone_Tipo" remarks="Tipos do telefone - (T)elefone (C)elular (F)ax " type="char(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="telefone_Descricao" remarks="Descrição ou anotação adicional do telefone." type="varchar(200)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="telefone_Ramal" remarks="Ramal relacionado ao telefone." type="numeric">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+ 
+		
+     </changeSet>
+</databaseChangeLog>
