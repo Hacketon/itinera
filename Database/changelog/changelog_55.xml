@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="55">
+		<comment>
+			Tabela empresa_telefone criada com Ids com erro. Id errado. Segue abaixo correção.
+		</comment>
+        
+        <dropTable schemaName="public" tableName="empresa_telefone"/>
+        
+		<createTable remarks="Tabela dos telefones de uma empresa." tableName="empresa_telefone">
+			<column name="id_empresa" remarks="CÃ³digo da empresa deste telefone." type="numeric">
+				<constraints nullable="false"/>
+			</column>
+			<column name="id_empresa_telefone" remarks="CÃ³digo numerador deste telefone." type="numeric">
+				<constraints nullable="false"/>
+			</column>
+			<column name="telefone" remarks="Telefone da empresa" type="BPCHAR(15)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="ramal" remarks="Ramal da empresa" type="BPCHAR(6)"/>
+			<column name="descricao" remarks="DescriÃ§Ã£o do telefone" type="BPCHAR(30)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+        
+		<addPrimaryKey columnNames="id_empresa_telefone" constraintName="pk_id_empresa_telefone" tableName="empresa_telefone"/>
+		
+		<addForeignKeyConstraint baseColumnNames="id_empresa" baseTableName="empresa_telefone" constraintName="fk_id_empresa_telefone" referencedColumnNames="id_empresa" referencedTableName="empresa"/>
+		
+     </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+        
+    xmlns:p="http://primefaces.org/ui">  
+<h:head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/layout/padrao.css" />
+    <script type="text/javascript" language="javascript" src="..\..\layout\menu.js"></script>
+</h:head>
+<h:body>
+    <p:outputPanel>
+        <div style="height:1px;border-bottom: #1D63A0 solid 1px;">
+        <ui:include src="/layout/logado/header.xhtml"/>
+        </div>
+    </p:outputPanel>
+    <p:outputPanel styleClass="posicaoMenu" > 
+        <div style="background-color: #B7CEEC;border-bottom: #7692B8 solid 1px; border-top: #7692B8 solid 1px;">
+        <ui:include src="/layout/MenuNovo.xhtml"/>
+        </div>
+    </p:outputPanel>
+    <p:outputPanel styleClass="corpo">
+        <ui:insert name="conteudo" />
+    </p:outputPanel>             
+    </h:body>
+</html>
