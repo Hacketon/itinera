@@ -39,10 +39,6 @@ public class Endereco implements Serializable {
     @Column(name = "bairro")
     private String bairro;
     
-    @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
-    @ManyToOne(optional = false)
-    private Municipio idMunicipio;
-
     public Endereco() {
     }
 
@@ -102,14 +98,6 @@ public class Endereco implements Serializable {
 
     public void setBairro(String bairro) {
         this.bairro = bairro;
-    }
-
-    public Municipio getIdMunicipio() {
-        return idMunicipio;
-    }
-
-    public void setIdMunicipio(Municipio idMunicipio) {
-        this.idMunicipio = idMunicipio;
     }
 
     @Override
