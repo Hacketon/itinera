@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -86,6 +87,9 @@ public class Empresa implements Serializable {
     private String razaoSocial;
     @Column(name = "tipo")
     private Character tipo;
+    @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
+    @ManyToOne(optional = false)
+    private Municipio idMunicipio;
     
     @Embedded
     private Endereco endereco;
@@ -151,6 +155,15 @@ public class Empresa implements Serializable {
 
     public void setTipo(Character tipo) {
         this.tipo = tipo;
+    }
+    
+    
+    public Municipio getIdMunicipio() {
+        return idMunicipio;
+    }
+
+    public void setIdMunicipio(Municipio idMunicipio) {
+        this.idMunicipio = idMunicipio;
     }
 
     public Endereco getEndereco() {
