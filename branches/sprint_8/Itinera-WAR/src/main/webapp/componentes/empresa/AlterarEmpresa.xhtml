@@ -99,29 +99,32 @@
                                             <p:ajax event="rowEdit" listener="#{empresaManager.onEdit}" update="tabelaEmpresaTelefone" />
                                             <p:ajax event="rowEditCancel" listener="#{empresaManager.onCancel}" update="tabelaEmpresaTelefone" />
 
-                                            <p:column headerText="#{msg.formularioCampoTelefoneNumero}">
+                                            <p:column headerText="#{msg.formularioCampoTelefoneNumero}" style="text-align: center">
                                                 <p:cellEditor>
                                                     <f:facet name="output">
                                                         <h:outputText value="#{empTelefone.telefoneNumero}" />
                                                     </f:facet>
                                                     <f:facet name="input">
-                                                        <h:inputText value="#{empTelefone.telefoneNumero}" />
+                                                        <h:inputText 
+                                                              onkeypress="mascara(this, formataTelefone)" 
+                                                              value="#{empTelefone.telefoneNumero}" />
                                                     </f:facet>
                                                 </p:cellEditor>
                                             </p:column>
 
-                                            <p:column headerText="#{msg.formularioCampoTelefoneRamal}" >
+                                            <p:column headerText="#{msg.formularioCampoTelefoneRamal}"  style="text-align: center">
                                                 <p:cellEditor>
                                                     <f:facet name="output">
                                                         <h:outputText value="#{empTelefone.telefoneRamal}"  />
                                                     </f:facet>
                                                     <f:facet name="input">
-                                                        <h:inputText value="#{empTelefone.telefoneRamal}" />
+                                                        <h:inputText value="#{empTelefone.telefoneRamal}" 
+                                                                     onkeypress="mascara(this, formatarNumero)" />
                                                     </f:facet>
                                                 </p:cellEditor>
                                             </p:column>
 
-                                            <p:column headerText="#{msg.formularioCampoTelefoneDescricao}">
+                                            <p:column headerText="#{msg.formularioCampoTelefoneDescricao}" style="text-align: center">
                                                 <p:cellEditor>
                                                     <f:facet name="output">
                                                         <h:outputText value="#{empTelefone.telefoneDescricao}" />
@@ -136,10 +139,9 @@
                                                 <p:rowEditor />
                                             </p:column>
 
-                                            <p:column headerText="#{msg.acaoExcluir}">
-                                                <p:commandButton action="#{empresaManager.excluirTelefone(empTelefone)}"
-                                                                 icon="ui-icon-circle-close"
-                                                                 update=":cadastro:tabEmpresa:tabelaEmpresaTelefone"/>
+                                            <p:column style="text-align: center">
+                                                <p:commandLink value="#{msg.acaoExcluir}" action="#{empresaManager.excluirTelefone(empTelefone)}"
+                                                               update=":cadastro:tabEmpresa:tabelaEmpresaTelefone"/>
                                             </p:column>
                                         </p:dataTable>
                                     </p:tab>
