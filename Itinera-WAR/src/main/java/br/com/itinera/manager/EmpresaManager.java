@@ -114,16 +114,6 @@ public class EmpresaManager implements Serializable {
         }
     }
 
-    public void onEdit(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Salvo", "ok");
-        Mensagem.mostrarMensagem("Editar.", "Registro Alterado");
-    }
-
-    public void onCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancelado", "!!!");
-        Mensagem.mostrarMensagem("Cancelar.", "Alteração Cancelada");
-    }
-
     public void recuperarEmpresas() {
         this.empresas = fachada.listar();
     }
@@ -277,5 +267,7 @@ public class EmpresaManager implements Serializable {
         }
         return !this.mensagemAlteracao.isEmpty();
     }
+    
+    
 
 }
