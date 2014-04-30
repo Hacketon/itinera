@@ -153,7 +153,8 @@
                                             <p:inputText    id="veiculoAno"
                                                             onkeypress="mascara(this, formataNumero)"
                                                             rendererType="integer"
-                                                            size="4"
+                                                            size="10"
+                                                            maxlength="4"
                                                             value="#{veiculoManager.veiculo.anoModelo}" />
                                             <p:watermark for="veiculoAno" value="#{msg.ano2013}" />
                                             <p:outputLabel  for="veiculoFabricacao"
@@ -162,7 +163,8 @@
                                             <p:inputText    id="veiculoFabricacao"
                                                             onkeypress="mascara(this, formataNumero)"
                                                             rendererType="integer"
-                                                            size="4"
+                                                            size="10"
+                                                            maxlength="4"
                                                             value="#{veiculoManager.veiculo.anoFabricacao}" />
                                             <p:watermark for="veiculoFabricacao" value="#{msg.ano2013}" />
                                             <p:outputLabel  for="veiculoCor"
