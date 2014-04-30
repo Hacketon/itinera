@@ -135,7 +135,7 @@
                                                 </p:cellEditor>
                                             </p:column>
 
-                                            <p:column>
+                                            <p:column style="text-align: center">
                                                 <p:rowEditor />
                                             </p:column>
 
@@ -162,25 +162,29 @@
                                             <p:ajax event="rowEdit" listener="#{empresaManager.onEdit}" update="tabelaEmail" />
                                             <p:ajax event="rowEditCancel" listener="#{empresaManager.onCancel}" update="tabelaEmail" />
 
-                                            <p:column headerText="#{msg.formularioCampoEmailEndereco}">
+                                            <p:column headerText="#{msg.formularioCampoEmailEndereco}" style="text-align: center" >
                                                 <p:cellEditor>
                                                     <f:facet name="output">
                                                         <h:outputText value="#{empEmail.emailEndereco}" />
                                                     </f:facet>
                                                     <f:facet name="input">
-                                                        <h:inputText value="#{empEmail.emailEndereco}" size="70" />
+                                                        <h:inputText value="#{empEmail.emailEndereco}" 
+                                                                     validatorMessage="#{msgSis.erroValidacaoEmail}"
+                                                                     size="70" >
+                                                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                                                        </h:inputText>
                                                     </f:facet>
                                                 </p:cellEditor>
                                             </p:column>
 
-                                            <p:column>
+                                            <p:column style="text-align: center">
                                                 <p:rowEditor />
                                             </p:column>
 
-                                            <p:column headerText="Ações">
-                                                <p:commandButton action="#{empresaManager.excluirEmail(empEmail)}"
-                                                                 icon="ui-icon-circle-close"
-                                                                 update=":cadastro:tabEmpresa:tabelaEmail"/>
+                                            <p:column  style="text-align: center">
+                                                <p:commandLink action="#{empresaManager.excluirEmail(empEmail)}"
+                                                               value="#{msg.acaoExcluir}"
+                                                               update=":cadastro:tabEmpresa:tabelaEmail"/>
                                             </p:column>
                                         </p:dataTable>
                                     </p:tab>
@@ -200,7 +204,7 @@
                                             <p:ajax event="rowEdit" listener="#{empresaManager.onEdit}" update="tabelaResponsavel" />
                                             <p:ajax event="rowEditCancel" listener="#{empresaManager.onCancel}" update="tabelaResponsavel" />
 
-                                            <p:column headerText="#{msg.formularioCampoResponsavelNome}">
+                                            <p:column headerText="#{msg.formularioCampoResponsavelNome}" style="text-align: center">
                                                 <p:cellEditor>
                                                     <f:facet name="output">
                                                         <h:outputText value="#{fornResp.nome}" />
@@ -211,7 +215,7 @@
                                                 </p:cellEditor>
                                             </p:column>
 
-                                            <p:column headerText="#{msg.formularioCampoResponsavelCargo}">
+                                            <p:column headerText="#{msg.formularioCampoResponsavelCargo}" style="text-align: center">
                                                 <p:cellEditor>
                                                     <f:facet name="output">
                                                         <h:outputText value="#{fornResp.cargo}" />
@@ -222,13 +226,13 @@
                                                 </p:cellEditor>
                                             </p:column>
 
-                                            <p:column>
+                                            <p:column style="text-align: center">
                                                 <p:rowEditor />
                                             </p:column>
 
-                                            <p:column headerText="#{msg.acaoExcluir}">
-                                                <p:commandButton action="#{empresaManager.excluirResponsavel(fornResp)}"
-                                                                 icon="ui-icon-circle-close"
+                                            <p:column  style="text-align: center">
+                                                <p:commandLink action="#{empresaManager.excluirResponsavel(fornResp)}"
+                                                               value="#{msg.acaoExcluir}"
                                                                  update=":cadastro:tabEmpresa:tabelaResponsavel"/>
                                             </p:column>
                                         </p:dataTable>
