@@ -12,9 +12,7 @@
     <class>br.com.itinera.modelo.Estado</class>
     <class>br.com.itinera.modelo.Municipio</class>
     <class>br.com.itinera.modelo.Pais</class>
-    <class>br.com.itinera.modelo.Rota</class>
     <class>br.com.itinera.modelo.Telefone</class>
-    <class>br.com.itinera.modelo.TipoRota</class>
     <class>br.com.itinera.modelo.Veiculo</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
