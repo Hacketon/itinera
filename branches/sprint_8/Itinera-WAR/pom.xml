@@ -4,7 +4,7 @@
 
     <groupId>br.com.itinera</groupId>
     <artifactId>Itinera-WAR</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>war</packaging>
 
     <name>Itinera-WAR</name>
@@ -80,7 +80,7 @@
         <dependency>
             <groupId>br.com.itinera</groupId>
             <artifactId>Itinera-EJB</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
         
     </dependencies>
