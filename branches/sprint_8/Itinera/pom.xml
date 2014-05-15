@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>br.com.itinera</groupId>
   <artifactId>Itinera</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <packaging>pom</packaging>
   <name>Itinera</name>
   <modules>
@@ -14,7 +14,7 @@
         <dependency>
             <groupId>br.com.itinera</groupId>
             <artifactId>Itinera-WAR</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
             <type>war</type>
         </dependency>        
     </dependencies>
