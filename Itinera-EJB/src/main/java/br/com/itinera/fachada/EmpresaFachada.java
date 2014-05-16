@@ -70,34 +70,6 @@ public class EmpresaFachada {
         return dao.listarBuscaPorNome(valorDeBusca);
     }
     
-   /* private void salvarPontoColeta(Empresa empresa){
-        boolean jaexiste = false;
-        List<PontoColeta> pontos = pontosColetaDAO.buscaPorEmpresaEOuEndereco(empresa, empresa.getEndereco());
-        if(pontos.size() > 0){
-         
-            //desativar os anteriores.
-            for(PontoColeta p: pontos){
-                if(empresa.getEndereco().getIdEndereco() == p.getIdEndereco().getIdEndereco()){
-                    jaexiste = true;
-                    break;
-                }else{
-                    p.setAtivo(false);
-                    pontosColetaDAO.alterar(p);
-                }
-            }
-        }
-        
-        if(!jaexiste){
-        //ao preencher o endereço, salvar automaticamente um ponto de coleta com o mesmo endereço.
-        PontoColeta ponto = new PontoColeta();
-        ponto.setDescricao(empresa.getNomeFantasia());
-        ponto.setAtivo(true);
-        ponto.setIdEmpresa(empresa);
-        ponto.setIdEndereco(empresa.getEndereco());
-        pontosColetaDAO.inserir(ponto);
-        }
-    }
-   */ 
     private void verificarSeNovaEmpresaJaExisteComMesmoCnpj(String cnpjEmpresa) throws Exception{
         if (dao.verificarSeNovaEmpresaJaExisteComMesmoCnpj(cnpjEmpresa)){
             throw  new Exception("Já existe outra empresa cadastrada com esse CNPJ, verifique!");
