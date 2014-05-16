@@ -14,6 +14,9 @@
     <class>br.com.itinera.modelo.Pais</class>
     <class>br.com.itinera.modelo.Telefone</class>
     <class>br.com.itinera.modelo.Veiculo</class>
+    <class>br.com.itinera.modelo.ContatoMotEmail</class>
+    <class>br.com.itinera.modelo.ContatoMotTel</class>
+    <class>br.com.itinera.modelo.Motorista</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>
