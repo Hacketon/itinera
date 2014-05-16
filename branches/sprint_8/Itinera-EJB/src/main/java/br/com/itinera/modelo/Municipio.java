@@ -40,6 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Municipio.findByNomeMunicipio", query = "SELECT m FROM Municipio m WHERE m.nomeMunicipio = :nomeMunicipio"),
     @NamedQuery(name = "Municipio.findByDddMunicipio", query = "SELECT m FROM Municipio m WHERE m.dddMunicipio = :dddMunicipio")})
 public class Municipio implements Serializable {
+    @OneToMany(mappedBy = "municipio")
+    private List<Motorista> motoristaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMunicipio")
     private List<Empresa> empresaList;
     private static final long serialVersionUID = 1L;
@@ -153,6 +155,15 @@ public class Municipio implements Serializable {
 
     public void setEmpresaList(List<Empresa> empresaList) {
         this.empresaList = empresaList;
+    }
+
+    @XmlTransient
+    public List<Motorista> getMotoristaList() {
+        return motoristaList;
+    }
+
+    public void setMotoristaList(List<Motorista> motoristaList) {
+        this.motoristaList = motoristaList;
     }
     
 }
