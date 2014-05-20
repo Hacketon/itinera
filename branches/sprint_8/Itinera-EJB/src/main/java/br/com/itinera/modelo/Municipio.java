@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Municipio.findByIdMunicipio", query = "SELECT m FROM Municipio m WHERE m.idMunicipio = :idMunicipio"),
     @NamedQuery(name = "Municipio.findByCodigoMunicipio", query = "SELECT m FROM Municipio m WHERE m.codigoMunicipio = :codigoMunicipio"),
     @NamedQuery(name = "Municipio.findByNomeMunicipio", query = "SELECT m FROM Municipio m WHERE m.nomeMunicipio = :nomeMunicipio"),
-    @NamedQuery(name = "Municipio.findByDddMunicipio", query = "SELECT m FROM Municipio m WHERE m.dddMunicipio = :dddMunicipio")})
+    @NamedQuery(name = "Municipio.findByDddMunicipio", query = "SELECT m FROM Municipio m WHERE m.dddMunicipio = :dddMunicipio"),
+    @NamedQuery(name = "Municipio.findByLikeName",query="SELECT m FROM Municipio m WHERE m.nomeMunicipio like :nomeMunicipio or m.codigoEstado.siglaEstado like :nomeMunicipio")})
 public class Municipio implements Serializable {
     @OneToMany(mappedBy = "municipio")
     private List<Motorista> motoristaList;
@@ -70,6 +71,7 @@ public class Municipio implements Serializable {
     private Estado codigoEstado;
 
     public Municipio() {
+        codigoEstado = new Estado();
     }
 
     public Municipio(BigDecimal idMunicipio) {
@@ -145,7 +147,7 @@ public class Municipio implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Municipio[ idMunicipio=" + idMunicipio + " ]";
+        return this.nomeMunicipio + " - " + this.codigoEstado;
     }
 
     @XmlTransient
