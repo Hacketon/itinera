@@ -82,6 +82,14 @@
 
                             <p:panelGrid columns="1" style="width: 100%">
                                 <p:tabView id="tabEmpresa">
+                                    
+                                    <p:tab id="empEndereco" title="#{msg.formularioEmpresaAbaEndereco}">
+                                        <ui:include src="/componentes/reutilizavel/Endereco.xhtml">
+                                            <ui:param name="manager" value="#{empresaManager}"/>
+                                            <ui:param name="entidade" value="#{empresaManager.empresa}"/>
+                                        </ui:include>
+                                    </p:tab>
+                                    
                                     <p:tab id="empTelefone" title="#{msg.formularioEmpresaAbaTelefone}">
                                         <p:commandButton action="#{empresaManager.novoTelefone()}" 
                                                          icon="ui-icon-plus" 

@@ -1,7 +1,9 @@
 package br.com.itinera.manager;
 
 import br.com.itinera.enuns.TipoEmpresa;
+import br.com.itinera.enuns.TipoLogradouro;
 import br.com.itinera.fachada.EmpresaFachada;
+import br.com.itinera.fachada.MunicipioFachada;
 import br.com.itinera.ferramentas.Mensagem;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import br.com.itinera.modelo.Endereco;
 import br.com.itinera.modelo.Empresa;
 import br.com.itinera.modelo.Email;
 import br.com.itinera.modelo.EmpresaResponsavel;
+import br.com.itinera.modelo.Municipio;
 import br.com.itinera.modelo.Telefone;
 import java.math.BigDecimal;
 import javax.persistence.EntityExistsException;
@@ -40,7 +43,9 @@ public class EmpresaManager implements Serializable {
     private List<Empresa> empresas = new ArrayList<Empresa>();
     @EJB
     private EmpresaFachada fachada;
-
+    @EJB
+    private MunicipioFachada municipioFachada;
+    
     public EmpresaManager() {
         telefone = new Telefone();
         empresaResp = new EmpresaResponsavel();
@@ -268,6 +273,23 @@ public class EmpresaManager implements Serializable {
         return !this.mensagemAlteracao.isEmpty();
     }
     
+       public List<SelectItem> getTipoLogradouro() {
+        List<SelectItem> tipoLogrdouro = new ArrayList<SelectItem>();
+        for (TipoLogradouro te : TipoLogradouro.values()) {
+            tipoLogrdouro.add(new SelectItem(te.name(), te.toString()));
+        }
+        return tipoLogrdouro;
+       }
+       
+        public List<Municipio> completeMunicipio(String query){
+        List<Municipio> suggestions = new ArrayList<Municipio>();
+        for(Municipio p : municipioFachada.listMunicipios()) {
+            if(p.getNomeMunicipio().toUpperCase().contains(query.toUpperCase()))
+                suggestions.add(p);
+        }
+         
+        return suggestions;
+    }
     
 
 }
