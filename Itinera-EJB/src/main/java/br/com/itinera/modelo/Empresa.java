@@ -95,6 +95,8 @@ public class Empresa implements Serializable {
     private Endereco endereco;
 
     public Empresa() {
+        endereco = new Endereco();
+        idMunicipio = new Municipio();
     }
 
     public Empresa(BigDecimal idEmpresa) {
