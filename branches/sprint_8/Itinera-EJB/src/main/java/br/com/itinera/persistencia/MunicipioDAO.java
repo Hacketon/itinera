@@ -26,11 +26,11 @@ public class MunicipioDAO {
     }
     
     public Municipio getById(BigDecimal id){
-        return (Municipio) em.createNamedQuery("findByIdMunicipio").setParameter("idMunicipio", id).getSingleResult();
+        return (Municipio) em.createNamedQuery("Municipio.findByIdMunicipio").setParameter("idMunicipio", id).getSingleResult();
     }
     
     public List<Municipio> getByLikeName(String valor){
-        return em.createNamedQuery("findByLikeName").setParameter("nomeMunicipio", valor).getResultList();
+        return em.createNamedQuery("Municipio.findByLikeName").setParameter("nomeMunicipio", valor).getResultList();
     }
 }
 
