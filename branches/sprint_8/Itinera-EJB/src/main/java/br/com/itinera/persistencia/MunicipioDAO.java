@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.itinera.persistencia;
 
 import java.util.List;
@@ -9,6 +5,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import br.com.itinera.modelo.Municipio;
+import java.math.BigDecimal;
 
 /**
  *
@@ -21,10 +18,19 @@ public class MunicipioDAO {
     private EntityManager em;
     
     public List<Municipio> listar(){
-        return em.createNamedQuery("Estado.findAll").getResultList();
+        return em.createNamedQuery("Municipio.findAll").getResultList();
     }
     
     public List<Municipio> buscarPorNome(String valorParaBusca){
         return em.createNamedQuery("Municipio.findByNomeMunicipio").setParameter("nomeMunicipio",valorParaBusca).getResultList();
     }
+    
+    public Municipio getById(BigDecimal id){
+        return (Municipio) em.createNamedQuery("findByIdMunicipio").setParameter("idMunicipio", id).getSingleResult();
+    }
+    
+    public List<Municipio> getByLikeName(String valor){
+        return em.createNamedQuery("findByLikeName").setParameter("nomeMunicipio", valor).getResultList();
+    }
 }
+

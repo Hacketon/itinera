@@ -62,6 +62,7 @@ public class Estado implements Serializable {
     private Collection<Municipio> municipioCollection;
 
     public Estado() {
+        idPais = new Pais();
     }
 
     public Estado(BigDecimal codigoEstado) {
@@ -137,7 +138,7 @@ public class Estado implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Estado[ codigoEstado=" + codigoEstado + " ]";
+        return this.siglaEstado;
     }
     
 }
