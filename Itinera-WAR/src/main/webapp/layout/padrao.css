@@ -199,3 +199,8 @@ fieldset {
     width: 150px !important;
     text-align: center !important;
 }
+
+.inputDesabilitado{
+    color: rgb(46, 110, 158);
+    font-size: 18px;
+}
