@@ -22,14 +22,14 @@
         <dependency>
             <groupId>br.com.itinera</groupId>
             <artifactId>Itinera-WAR</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
             <type>war</type>
         </dependency>
         
         <dependency>
             <groupId>br.com.itinera</groupId>
             <artifactId>Itinera-EJB</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
             <type>jar</type>
         </dependency>
     </dependencies>
