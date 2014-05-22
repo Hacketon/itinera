@@ -6,7 +6,7 @@
 		</comment>
 		
 		<loadUpdateData encoding="UTF-8"
-		            file="C:\svn\itinera\branches\sprint_8\Database\csv\municipiosBrasileiros_v2.csv"
+		            file="municipiosBrasileiros_v2.csv"
 		            primaryKey="id_municipio"
 		            schemaName="public"
 		            tableName="municipio">

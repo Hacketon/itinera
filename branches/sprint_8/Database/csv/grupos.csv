@@ -1,0 +1,5 @@
+grupo_id,grupo_nome,grupo_descricao
+1,Administrador,Realiza a gestão da aplicação.
+2,Gestor,Realiza a gestão da transportadora.
+3,Secretária,Realiza a entrada e manutenção dos dados.
+4,Motorista,Responsável por levar a carga até o destino final de uma rota.
