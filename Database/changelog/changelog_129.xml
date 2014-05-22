@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="129">
+		<comment>
+			Entrada dos grupos do sistema.
+		</comment>
+		
+		<loadData encoding="UTF-8"
+		            file="grupos.csv"
+		            schemaName="public"
+		            tableName="grupo">
+		    <column name="id_grupo" type="numeric" />
+			<column name="grupo_nome" type="string"/>
+			<column name="grupo_descricao" type="string"/>
+		</loadData>
+
+	</changeSet>
+</databaseChangeLog>
