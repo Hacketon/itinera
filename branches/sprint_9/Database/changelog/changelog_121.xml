@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="121">
+		<comment>
+			Remoção das tabelas Tipo de Rota e Rota. 
+		</comment>
+			
+		<dropTable cascadeConstraints="true"
+            schemaName="public"
+            tableName="tipo_rota"/>
+            
+        <dropTable cascadeConstraints="true"
+            schemaName="public"
+            tableName="rota"/>
+	</changeSet>
+</databaseChangeLog>

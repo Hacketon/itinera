@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="bruno" id="100">
+		<comment>
+			1) Refatorando o nome dos campos da tabela contato_emp_tel
+		</comment>
+		
+	<renameColumn columnDataType="numeric"
+	            newColumnName="telefone_id"
+	            oldColumnName="telefone_Id"
+	            schemaName="public"
+            tableName="contato_emp_tel"/>
+            
+	<renameColumn columnDataType="numeric"
+	            newColumnName="empresa_id"
+	            oldColumnName="empresa_Id"
+	            schemaName="public"
+            tableName="contato_emp_tel"/>
+		
+     </changeSet>
+     
+</databaseChangeLog>
