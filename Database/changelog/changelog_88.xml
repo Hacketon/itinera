@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="ivens" id="88">
+		
+		<comment>
+			Remoção da Tabela municipio.
+		</comment>
+		
+		<dropTable schemaName="public" tableName="municipio"/>
+		
+		
+		<comment>
+			Criação da Tabela municipio.
+		</comment>
+
+        <createTable remarks="Tabela de Municipios" tableName="municipio">
+			
+			<column name="id_municipio" remarks="Id Municipio" type="numeric">
+				<constraints nullable="false"/>
+			</column>
+			<column name="codigo_estado" remarks="Código do Estado de acordo com o IBGE" type="numeric">
+				<constraints nullable="false"/>				
+			</column>
+			<column name="codigo_municipio" remarks="Código do Municipio de acordo com o IBGE" type="numeric">
+				<constraints nullable="false"/>
+			</column>
+			<column name="nome_municipio" remarks="Nome do Municipio" type="BPCHAR(40)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="ddd_municipio" remarks="DDD do Municipio" type="BPCHAR(2)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<addPrimaryKey columnNames="id_municipio" constraintName="pk_municipio" tableName="municipio"/>
+		 </changeSet>
+		
+</databaseChangeLog>

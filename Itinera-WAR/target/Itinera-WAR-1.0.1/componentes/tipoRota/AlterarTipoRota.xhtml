@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+        <h:body onload="selecionado($('#btnTipoRota'));">
+        <f:view>
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">
+                    <h:form id="formInserirTipoRota" styleClass="semBorda tr">
+                        <p:messages id="messages" showDetail="true"/>
+                        <p:panel styleClass="semBorda" header="#{bundle.alteraTipoRota}">
+                            <p:panelGrid styleClass="semBorda">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel for="descricaoTipoRota" value="Descrição"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="descricaoTipoRota" size="50" maxlength="150" required="true" value="#{tipoRotaManager.tipoRota.descricao}"/>
+                                        <p:watermark value="Descrição do tipo de rota" for="descricaoTipoRota"/>
+                                           
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="2" style="text-align: right;">
+                                        <p:commandButton 
+                                            id="Btninserir" 
+                                            action="#{tipoRotaManager.alterar()}"
+                                            styleClass="botao"
+                                            value="Salvar"
+                                            update="messages"/>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:panel>
+                    </h:form>
+                </ui:define>
+            </ui:decorate>
+        </f:view>
+        </h:body>
+</html>
+

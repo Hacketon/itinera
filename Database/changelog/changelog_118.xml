@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+	<changeSet author="leticia" id="118">
+		<comment>
+			Adição da tabela referentes à estrutura de motorista - Email especificada em planning.
+		</comment>
+		<createTable schemaName="public" tableName="contato_mot_email" remarks="Tabela dos e-mails de motoristas da transportadora">
+			<column name="email_id" 				type="numeric" 	remarks="identificador automático do email">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="motorista_id"		type="numeric"	remarks="identificador automático do motorista FK"	>
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+		</createTable>
+		
+		<addForeignKeyConstraint baseColumnNames="email_id"
+            baseTableName="contato_mot_email"
+            constraintName="FK_contato_mot_email_email"
+            referencedColumnNames="email_id"
+            referencedTableName="email"/>
+           
+        <addForeignKeyConstraint baseColumnNames="motorista_id"
+            baseTableName="contato_mot_email"
+            constraintName="FK_contato_mot_email_motorista"
+            referencedColumnNames="id"
+            referencedTableName="motorista"/>
+            
+        <addUniqueConstraint 
+            columnNames="email_id, motorista_id"
+            constraintName="unique_contato_motorista_email"
+            schemaName="public"
+            tableName="contato_mot_email"/>
+	</changeSet>
+</databaseChangeLog>
+	

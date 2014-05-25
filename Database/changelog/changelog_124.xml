@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="124">
+		<comment>
+			Recriação da tabelas Motorista Telefone. Estrutura Contato_Mot_Tel{contato_mot_tel_id(PK),telefone_id(FK_U),motorista_id(FK_U)} 
+		</comment>
+		
+		<createTable schemaName="public" tableName="contato_mot_tel" remarks="Tabela dos telefones de motoristas da transportadora">
+			<column name="contato_mot_tel_id"	type="numeric"	remarks="identificador automático do telefone do motorista sequencial">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="telefone_id" 				type="numeric" 	remarks="identificador automático do telefone">
+				<constraints nullable="false" />
+			</column>
+			<column name="motorista_id"		type="numeric"	remarks="identificador automático do motorista FK"	>
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+		
+		<addForeignKeyConstraint baseColumnNames="telefone_id"
+            baseTableName="contato_mot_tel"
+            constraintName="FK_contato_mot_tel_telefone"
+            referencedColumnNames="telefone_id"
+            referencedTableName="telefone"/>
+           
+        <addForeignKeyConstraint baseColumnNames="motorista_id"
+            baseTableName="contato_mot_tel"
+            constraintName="FK_contato_mot_tel_motorista"
+            referencedColumnNames="motorista_id"
+            referencedTableName="motorista"/>
+            
+        <addUniqueConstraint 
+            columnNames="telefone_id, motorista_id"
+            constraintName="unique_contato_motorista_tel"
+            schemaName="public"
+            tableName="contato_mot_tel"/>
+		
+	</changeSet>
+</databaseChangeLog>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+	<changeSet author="leticia" id="120">
+		<comment>
+			Criei a constraint de telefone errada, ligando a municipio e não à telefone. Correção. 
+			Correção do nome da PK de motorista. 
+		</comment>
+		
+		<dropForeignKeyConstraint baseTableName="contato_mot_tel" constraintName="FK_contato_mot_tel_telefone"/>
+		
+		<addForeignKeyConstraint baseColumnNames="telefone_id"
+            baseTableName="contato_mot_tel"
+            constraintName="FK_contato_mot_tel_telefone"
+            referencedColumnNames="telefone_id"
+            referencedTableName="telefone"/>
+            
+         <renameColumn 
+            columnDataType="numeric"
+            newColumnName="motorista_id"
+            oldColumnName="id"
+            schemaName="public"
+            tableName="motorista"/>
+	</changeSet>
+</databaseChangeLog>
+	

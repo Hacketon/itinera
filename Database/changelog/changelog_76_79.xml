@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	
+		 
+	 <changeSet author="ivens" id="76">
+		
+		<comment>
+			Refatoramento da Tabela 'endereco'.
+		</comment>
+
+        <createTable remarks="Nova tabela de endereço" tableName="endereco">
+			<column name="id_endereco" remarks="ID da chave artificial da tabela endereco." type="numeric">
+				<constraints nullable="false"/>
+			</column>
+			<column name="cep" remarks="Informação do CEP dos Correios referente ao logradouro." type="BPCHAR(9)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="tipo_logradouro" remarks="Definição do  tipo do logradouro (Rua, Avenida, etc..)." type="BPCHAR(20)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="nome_logradouro" remarks="Descrição do nome do logradouro." type="BPCHAR(100)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="numero" remarks="Número do logradouro." type="numeric">
+				<constraints nullable="false"/>
+			</column>
+			<column name="complemento" remarks="Complemento referente ao logradouro." type="BPCHAR(50)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="bairro" remarks="Nome do bairro do logradouro." type="BPCHAR(100)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="codigo_municipio" remarks="Código do Municipio (IBGE) referente ao logradouro." type="numeric">
+				<constraints nullable="false"/>
+			</column>
+			<column name="latitude" remarks="Valor da Latitude (WGS84 Padrão HGGMMSS) referente ao logradouro." type="BPCHAR(10)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="longitude" remarks="Valor da Longitude (WGS84 Padrão HGGMMSS) referente ao logradouro." type="BPCHAR(10)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+		<addPrimaryKey columnNames="id_endereco" constraintName="pk_id_endereco" tableName="endereco"/>
+
+		<addForeignKeyConstraint baseColumnNames="codigo_municipio" baseTableName="endereco" constraintName="fk_id_municipio_endereco" 
+		referencedColumnNames="codigo_municipio" referencedTableName="municipio"/>
+        
+     </changeSet>
+	 
+	 
+	 <changeSet author="ivens" id="77">
+       <comment>
+          Adicionado a 'fk_ponto_coleta_id_endereco' que referencia a tabela ponto_coleta na tabela endereco
+       </comment>
+	<addForeignKeyConstraint constraintName="fk_ponto_coleta_endereco" 
+			baseTableName="ponto_coleta" 
+			baseColumnNames="id_endereco" 
+			referencedTableName="endereco" 
+			referencedColumnNames="id_endereco"/>
+     </changeSet>
+	 
+	 <changeSet author="ivens" id="78">
+       <comment>
+          Adicionado a 'fk_empresa_endereco' que referencia a tabela empresa na tabela endereco
+       </comment>
+	<addForeignKeyConstraint constraintName="fk_empresa_endereco" 
+			baseTableName="empresa" 
+			baseColumnNames="endereco" 
+			referencedTableName="endereco" 
+			referencedColumnNames="id_endereco"/>
+     </changeSet>
+	 
+	 <changeSet author="ivens" id="79">
+       <comment>
+          Adicionado a 'fk_id_endereco' que referencia a tabela empresa na tabela endereco
+		  O campo 'id_endereco' não existe na tabela, porém como não tenho informações quanto a poder ou não remover este relacionamento, será deixado,
+		  no futuro se realmente for comprovado a não utilização do mesmo, então será removido
+       </comment>
+	 <addForeignKeyConstraint constraintName="fk_id_endereco" 
+			baseTableName="empresa" 
+			baseColumnNames="endereco" 
+			referencedTableName="endereco" 
+			referencedColumnNames="id_endereco"/>
+     </changeSet>
+	 
+	 
+</databaseChangeLog>

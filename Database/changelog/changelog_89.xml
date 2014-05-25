@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="ivens" id="89">
+		
+		<comment>
+			Removendo a PK da tabela estado.
+		</comment>
+
+		<dropPrimaryKey tableName="estado" constraintName="pk_estado"/>
+
+		<comment>
+			Inclusão da PK na tabela estado.
+		</comment>
+
+		<addPrimaryKey columnNames="codigo_estado" constraintName="pk_codigo_estado" tableName="estado"/>
+
+		<comment>
+			Inclusão de chave natural na tabela estado (sigla_estado)
+		</comment>
+        
+		<addUniqueConstraint tableName="estado" columnNames="sigla_estado" constraintName="uk_sigla_estado"/>
+		
+     </changeSet>
+		
+</databaseChangeLog>
