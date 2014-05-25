@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+            <div style="position: absolute;right:20px;top:10px;">
+                <h:form id='logout'>
+                    <table border="0" style="background-color: whitesmoke   ;border: whitesmoke 2px solid;border-radius: 10px;">
+                        <tr>
+                            <td rowspan="2">
+                                <img src="../../img/profile.png" alt="" />
+                            </td>
+                            <td>
+                                <p:outputLabel style="font-family: Arial;font-weight:bolder;color:darkblue;font-size: 16pt;" value="#{loginManager.usuario.login}" />
+                            </td>
+                            <td rowspan="2">
+                                <p:commandButton value="Sair" 
+                                 icon="ui-icon-close"  
+                                 action="#{loginManager.sair}" 
+                                 ajax='false'
+                                 oncomplete="javascript:location.reload(true)"/>
+                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:outputLabel style="font-family: Arial;font-weight:bolder;color:darkblue;font-size: 12pt;" value="Bem vindo(a) #{loginManager.usuario.nome}!"/>
+                                </td>
+                        </tr>
+                    </table>
+                
+                </h:form>
+            </div>
+</h:body>
+</html>
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+	<changeSet author="leticia" id="115">
+		<comment>
+			Adição das tabelas referentes à estrutura de motorista especificada em planning.
+		</comment>
+		<createTable schemaName="public" tableName="motorista" remarks="Tabela dos motoristas da transportadora">
+			<column name="id" 				type="numeric" 	remarks="identificador automático do motorista">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="cpf" 				type="char(14)"	remarks="cadastro de pessoa físcia (cpf) do motorista, único, não é possível repeti-lo"	>
+				<constraints nullable="false" unique="true" uniqueConstraintName="unique_motorista_CPF"/>
+			</column>
+			<column name="nome" 			type="varchar(100)"	remarks="nome do motorista">
+				<constraints nullable="false"/>
+			</column>
+			<column name="rg" 				type="char(20)"		remarks="registro geral do motorista"/>
+			<column name="rg_orgao_emissor" type="char(10)"		remarks="órgão emissor do rg do motorista"/>
+			<column name="rg_data_emissao" 	type="date"			remarks="data da emissão do rg do motorista"/>
+			<column name="nome_pai" 		type="varchar(100)"	remarks="nome do pai do motorista"/>
+			<column name="nome_mae" 		type="varchar(100)"	remarks="nome da mãe do motorista"/>
+			<column name="estado_civil" 	type="char(1)"		remarks="estado civil do motorista. Valores possíveis: (S)olteiro/(C)asado/(V)iúvo/(A)maziado/(D)ivorciado/(O)utros"/>
+			<column name="data_nascimento" 	type="date"			remarks="data do nascimento do motorista"/>
+			<column name="local_nascimento" type="varchar(40)"	remarks="local do nascimento do motorista"/>
+			<column name="banco" 			type="numeric(3)"	remarks="número do banco do motorista "/>
+			<column name="agencia" 			type="numeric(4)"	remarks="agência do banco do motorista"/>
+			<column name="conta" 			type="varchar(20)"	remarks="conta bancária do motorista"/>
+			<column name="tipo_logradouro" 	type="varchar(20)"	remarks="tipo do logradouro do endereço do motorista"/>
+			<column name="logradouro" 		type="varchar(100)"	remarks="logradouro do endereço do motorista"/>
+			<column name="cep" 				type="char(9)"		remarks="cep do endereço do motorista"/>
+			<column name="numero" 			type="numeric"		remarks="número do endereço do motorista"/>
+			<column name="complemento" 		type="varchar(50)"	remarks="complemento do motorista"/>
+			<column name="bairro" 			type="varchar(100)"	remarks="bairro do motorista"/>
+			<column name="municipio" 		type="numeric"		remarks="município do motorista. Refente à tabela de município."/>
+			<column name="conjuge_nome" 	type="varchar(100)"	remarks="nome do conjuge  do motorista"/>
+			<column name="dependentes" 		type="numeric"		remarks="quantidade de dependentes deste motorista"/>
+		</createTable>
+	</changeSet>
+</databaseChangeLog>
+	

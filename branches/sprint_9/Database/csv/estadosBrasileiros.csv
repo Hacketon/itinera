@@ -1,0 +1,28 @@
+﻿id_pais,codigo_estado,sigla_estado,nome_estado
+31,11,RO,Rondônia
+31,12,AC,Acre
+31,13,AM,Amazonas
+31,14,RR,Roraima
+31,15,PA,Pará
+31,16,AP,Amapá
+31,17,TO,Tocantins
+31,21,MA,Maranhão
+31,22,PI,Piauí
+31,23,CE,Ceará
+31,24,RN,Rio Grande do Norte
+31,25,PB,Paraíba
+31,26,PE,Pernambuco
+31,27,AL,Alagoas
+31,28,SE,Sergipe
+31,29,BA,Bahia
+31,31,MG,Minas Gerais
+31,32,ES,Espírito Santo
+31,33,RJ,Rio de Janeiro
+31,35,SP,São Paulo
+31,41,PR,Paraná
+31,42,SC,Santa Catarina
+31,43,RS,Rio Grande do Sul
+31,50,MS,Mato Grosso do Sul
+31,51,MT,Mato Grosso
+31,52,GO,Goiás
+31,53,DF,Distrito Federal

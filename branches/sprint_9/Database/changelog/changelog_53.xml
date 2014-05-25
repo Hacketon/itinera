@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="53">
+		<comment>
+			-=ATENÇÃO! ESTE CHANGELOG DEVE SER USADO SOMENTE NO CASO DE QUEM CRIOU UM BANCO DE DADOS DO ZERO!=-
+			Para quem aplicou o changelog 1 até 50, está faltando uma constraint de foreign key. 
+			Segue abaixo a solução encontrada. 
+		</comment>
+        
+		<addForeignKeyConstraint baseColumnNames="id_endereco" baseTableName="ponto_coleta" constraintName="fk_ponto_coleta_endereco" referencedColumnNames="id_endereco" referencedTableName="endereco"/>
+		
+     </changeSet>
+</databaseChangeLog>

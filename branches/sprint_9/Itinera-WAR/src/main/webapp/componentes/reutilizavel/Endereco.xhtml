@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+        <p:panelGrid styleClass="semBorda">
+            <p:row>
+                <p:column>
+                    <p:outputLabel for="tipoLogradouro"
+                            value="#{msg.formularioCampoTipoLogradouro}"
+                            styleClass="fontepadrao"/>
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu id="tipoLogradouro"
+                              required="true"
+                              style="width: 300px !important"
+                              requiredMessage="#{msgSis.obrigatorioTipoLogradouro}"
+                              value="#{entidade.endereco.tipoLogradouro}"
+                              >
+                        <f:selectItems value="#{manager.tipoLogradouro}" var="tipoLogradouro"
+                                       itemLabel="#{tipoLogradouro.description}" itemValue="#{tipoLogradouro.value}"/>
+                    </p:selectOneMenu>       
+                </p:column>
+                <p:column>
+                    <p:outputLabel for="cep"
+                            value="#{msg.formularioCampoCEP}"
+                            styleClass="fontepadrao"/>
+                </p:column>
+                <p:column>
+                    <p:inputMask id="cep"
+                          required="true"
+                          mask="99999-999"
+                          value="#{entidade.endereco.cep}"
+                          onkeypress="mascara(this,formatarCep)"
+                          maxlength="9"
+                          validatorMessage="Formato inválido"/>
+                    
+                    <p:watermark value="#{msg.formularioCampoCEPDescricao}" for="cep"/>
+                </p:column>
+                
+            </p:row>
+            
+            <p:row>
+                <p:column>
+                    <p:outputLabel for="logradouro"
+                            value="#{msg.formularioCampologradouro}"
+                            styleClass="fontepadrao"/>
+                </p:column>
+                <p:column>
+                    <p:inputText id="logradouro"
+                          required="true"
+                          value="#{entidade.endereco.nomeLogradouro}"
+                          maxlength="100"
+                          size="70"/>
+                    <p:watermark for="logradouro" value="#{msg.formularioMarcaLogradouro}"/>
+                </p:column>
+                <p:column>
+                    <p:outputLabel for="numero"
+                            value="#{msg.formularioCampoNumero}"
+                            styleClass="fontepadrao"/>
+                </p:column>
+                <p:column>
+                    <p:inputMask id="numero"
+                          required="true"
+                          value="#{entidade.endereco.numero}"
+                          mask="9?9999999"
+                          />
+                    <p:watermark for="numero" value="#{msg.formularioCampoMarcaNumero}"/>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <p:outputLabel for="complemento"
+                            value="#{msg.formularioCampoComplemento}"
+                            styleClass="fontepadrao"/>
+                </p:column>
+                <p:column>
+                    <p:inputText id="complemento"
+                          value="#{entidade.endereco.complemento}"
+                          maxlength="50"
+                          size="70"
+                          />
+             <p:watermark value="#{msg.formularioCampoComplementoDescricao}" for="complemento"/>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <p:outputLabel for="bairro"
+                            value="#{msg.formularioCampoBairro}"
+                            styleClass="fontepadrao"/>
+                </p:column>
+                <p:column >
+                    <p:inputText id="bairro"
+                          required="true"
+                          value="#{entidade.endereco.bairro}" 
+                          maxlength="100"
+                          size="70"
+                          />
+                    <p:watermark for="bairro" value="#{msg.formularioCampoMarcaBairro}"/>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <p:outputLabel  value="#{msg.formularioCampoMunicipio}" for="municipio"/>
+                </p:column>
+                <p:column >
+                    <p:autoComplete value="#{entidade.idMunicipio}" 
+                            id="municipio" 
+                            required="true"
+                            completeMethod="#{manager.completeMunicipio}"
+                            converter="#{mngMunicipioConverter}" 
+                            minQueryLength="3"
+                            size="70">
+                        <p:ajax update="estado pais"  event="itemSelect" />
+                    </p:autoComplete>
+             <p:watermark value="#{msg.formularioCampoMunicipioDescricao}" for="municipio"/>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <p:outputLabel 
+                       value="#{msg.formularioCampoEstado}"
+                       styleClass="fontepadrao"/>
+                </p:column>
+                <p:column>
+                    <p:outputLabel id="estado"
+                                   styleClass="inputDesabilitado"
+                                    value="#{entidade.idMunicipio.codigoEstado.nomeEstado}" 
+                          />
+                </p:column>
+                <p:column>
+                    <p:outputLabel 
+                            value="#{msg.formularioCampoPais}"
+                            styleClass="fontepadrao"/>
+                </p:column>
+                <p:column>
+                    <p:outputLabel id="pais"
+                                   styleClass="inputDesabilitado"
+                                    value="#{entidade.idMunicipio.codigoEstado.idPais.nomePais}" 
+                          />
+                </p:column>
+            </p:row>             
+        </p:panelGrid>
+    </h:body>
+</html>
+

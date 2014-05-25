@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="ItineraPU" transaction-type="JTA">
+    <jta-data-source>ItineraJNDI</jta-data-source>
+    <class>br.com.itinera.modelo.Usuario</class>
+    <class>br.com.itinera.modelo.CategoriaVeiculo</class>
+    <class>br.com.itinera.modelo.Despesa</class>
+    <class>br.com.itinera.modelo.Email</class>
+    <class>br.com.itinera.modelo.Empresa</class>
+    <class>br.com.itinera.modelo.EmpresaResponsavel</class>
+    <class>br.com.itinera.modelo.Endereco</class>
+    <class>br.com.itinera.modelo.Estado</class>
+    <class>br.com.itinera.modelo.Municipio</class>
+    <class>br.com.itinera.modelo.Pais</class>
+    <class>br.com.itinera.modelo.PontoColeta</class>
+    <class>br.com.itinera.modelo.Rota</class>
+    <class>br.com.itinera.modelo.Telefone</class>
+    <class>br.com.itinera.modelo.TipoRota</class>
+    <class>br.com.itinera.modelo.Veiculo</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <validation-mode>NONE</validation-mode>
+    <properties/>
+  </persistence-unit>
+</persistence>

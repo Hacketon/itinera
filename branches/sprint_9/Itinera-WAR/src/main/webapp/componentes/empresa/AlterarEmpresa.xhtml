@@ -1,0 +1,282 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <f:view contentType="text/html">
+        <h:body>
+            <h:outputScript>selecionado($('#btnFornecedor'));</h:outputScript>
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">
+                    <h:form id="cadastro" styleClass="semBorda">                
+                        <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                        <p:panel styleClass="semBorda" header="#{msg.empresa}">
+                            <p:panelGrid columns="3" styleClass="semBorda">
+                                <p:outputLabel for="tipoEmpresa"
+                                               value="#{msg.formularioCampoTipoEmpresa}"
+                                               styleClass="fontepadrao"/>
+                                <p:selectOneMenu id="tipoEmpresa"
+                                                 required="true"
+                                                 style="width: 300px !important"
+                                                 requiredMessage="#{msgSis.obrigatorioTipoEmpresa}"
+                                                 value="#{empresaManager.empresa.tipo}"
+                                                 >
+                                    <f:selectItems value="#{empresaManager.tipoEmpresa}" var="tpEmpresa"
+                                                   itemLabel="#{tpEmpresa.description}" itemValue="#{tpEmpresa.value}"/>
+                                </p:selectOneMenu>
+                                <p:spacer />
+
+                                <p:outputLabel  for="cnpj" 
+                                                styleClass="label"
+                                                value="#{msg.formularioCampoCNPJ}"/>
+                                <p:inputText    id="cnpj"
+                                                maxlength="19"
+                                                onkeypress="mascara(this, formatarCNPJ)"
+                                                required="true" 
+                                                requiredMessage="#{msgSis.obrigatorioEmpresaCNPJ}"
+                                                size="20"
+                                                value="#{empresaManager.empresa.cnpj}" 
+                                                validatorMessage="#{msgSis.formularioCNPJTamanhoMinimo}">
+                                    <f:validateLength minimum="19" maximum="19"/>
+                                </p:inputText>
+                                <p:watermark value="#{msg.formularioCampoCNPJDescricao}" for="cnpj"/>
+
+                                <p:outputLabel  for="nomeFantasia" 
+                                                styleClass="label"
+                                                value="#{msg.formularioCampoNomeFantasia}"/>
+                                <p:inputText    id="nomeFantasia"
+                                                maxlength="100"
+                                                required="true"
+                                                requiredMessage="#{msgSis.obrigatorioEmpresaNomeFantasia}"
+                                                size="100"
+                                                value="#{empresaManager.empresa.nomeFantasia}" />
+                                <p:watermark value="#{msg.formularioCampoNomeFantasiaDescricao}" for="nomeFantasia"/>
+
+                                <p:outputLabel  for="razaoSocial" 
+                                                styleClass="label"
+                                                value="#{msg.formularioCampoRazaoSocial}"/>
+                                <p:inputText    id="razaoSocial"
+                                                maxlength="200"
+                                                required="true"
+                                                requiredMessage="#{msgSis.obrigatorioEmpresaRazaoSocial}"
+                                                size="100"
+                                                value="#{empresaManager.empresa.razaoSocial}" />
+                                <p:watermark value="#{msg.formularioCampoRazaoSocial}" for="razaoSocial"/>
+
+                                <p:outputLabel  for="inscEstadual" 
+                                                styleClass="label"
+                                                value="Inscrição Estadual"/>
+                                <p:inputText
+                                    id="inscEstadual"
+                                    maxlength="20"
+                                    onkeypress="mascara(this, formatarNumero)"
+                                    required="true"
+                                    requiredMessage="#{msgSis.obrigatorioEmpresaInscricaoEstadual}"
+                                    size="25"
+                                    validatorMessage="#{msgSis.somenteNumeroInscricaoEstadual}"
+                                    value="#{empresaManager.empresa.ie}" />
+                                <p:watermark value="#{msg.formularioCampoIEDescricao}" for="inscEstadual"/>
+                            </p:panelGrid>
+
+                            <p:panelGrid columns="1" style="width: 100%">
+                                <p:tabView id="tabEmpresa">
+                                    
+                                    <p:tab id="empEndereco" title="#{msg.formularioEmpresaAbaEndereco}">
+                                        <ui:include src="/componentes/reutilizavel/Endereco.xhtml">
+                                            <ui:param name="manager" value="#{empresaManager}"/>
+                                            <ui:param name="entidade" value="#{empresaManager.empresa}"/>
+                                        </ui:include>
+                                    </p:tab>
+                                    
+                                    <p:tab id="empTelefone" title="#{msg.formularioEmpresaAbaTelefone}">
+                                        <p:commandButton action="#{empresaManager.novoTelefone()}" 
+                                                         icon="ui-icon-plus" 
+                                                         styleClass="fontepadrao" 
+                                                         update=":cadastro:tabEmpresa:tabelaEmpresaTelefone"
+                                                         value="#{msg.acaoNovo}"
+                                                         oncomplete="$('##{component.parent.clientId}'.replace(/:/g,'\\\\:')).find('.ui-datatable .ui-datatable-data .ui-row-editor .ui-icon-pencil').last().trigger('click'); return true;"/>
+                                        <p:dataTable id="tabelaEmpresaTelefone"
+                                                     value="#{empresaManager.empresa.empresaTelefoneList}" 
+                                                     var="empTelefone" 
+                                                     editable="true"
+                                                     emptyMessage="#{msg.gridSemRegistro}"
+                                                     rows="10"
+                                                     >
+                                            <p:ajax event="rowEdit"  update="tabelaEmpresaTelefone" />
+                                            <p:ajax event="rowEditCancel"  update="tabelaEmpresaTelefone" />
+
+                                            <p:column headerText="#{msg.formularioCampoTelefoneNumero}" style="text-align: center">
+                                                <p:cellEditor>
+                                                    <f:facet name="output">
+                                                        <h:outputText value="#{empTelefone.telefoneNumero}" />
+                                                    </f:facet>
+                                                    <f:facet name="input">
+                                                        <h:inputText 
+                                                              onkeypress="mascara(this, formataTelefone)"
+                                                              required="true"
+                                                              requiredMessage="#{msgSis.obrigatorioNumeroTelefone}"
+                                                              value="#{empTelefone.telefoneNumero}" />
+                                                    </f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+
+                                            <p:column headerText="#{msg.formularioCampoTelefoneRamal}"  style="text-align: center">
+                                                <p:cellEditor>
+                                                    <f:facet name="output">
+                                                        <h:outputText value="#{empTelefone.telefoneRamal}"  />
+                                                    </f:facet>
+                                                    <f:facet name="input">
+                                                        <h:inputText value="#{empTelefone.telefoneRamal}" 
+                                                                     onkeypress="mascara(this, formatarNumero)" />
+                                                    </f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+
+                                            <p:column headerText="#{msg.formularioCampoTelefoneDescricao}" style="text-align: center">
+                                                <p:cellEditor>
+                                                    <f:facet name="output">
+                                                        <h:outputText value="#{empTelefone.telefoneDescricao}" />
+                                                    </f:facet>
+                                                    <f:facet name="input">
+                                                        <h:inputText value="#{empTelefone.telefoneDescricao}" />
+                                                    </f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+
+                                            <p:column style="text-align: center">
+                                                <p:rowEditor />
+                                            </p:column>
+
+                                            <p:column style="text-align: center">
+                                                <p:commandLink value="#{msg.acaoExcluir}" action="#{empresaManager.excluirTelefone(empTelefone)}"
+                                                               update=":cadastro:tabEmpresa:tabelaEmpresaTelefone"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+
+                                    <p:tab id="empEmail" title="#{msg.formularioEmpresaAbaEmail}">
+                                        <p:commandButton action="#{empresaManager.novoEmail()}" 
+                                                         icon="ui-icon-plus" 
+                                                         styleClass="fontepadrao" 
+                                                         update=":cadastro:tabEmpresa:tabelaEmail"
+                                                         value="#{msg.acaoNovo}"
+                                                         oncomplete="$('##{component.parent.clientId}'.replace(/:/g,'\\\\:')).find('.ui-datatable .ui-datatable-data .ui-row-editor .ui-icon-pencil').last().trigger('click'); return true;"/>
+                                        <p:dataTable id="tabelaEmail"
+                                                     value="#{empresaManager.empresa.empresaEmailList}" 
+                                                     var="empEmail" 
+                                                     editable="true"
+                                                     emptyMessage="#{msg.gridSemRegistro}"
+                                                     rows="10" >
+                                            <p:ajax event="rowEdit"  update="tabelaEmail" />
+                                            <p:ajax event="rowEditCancel"  update="tabelaEmail" />
+
+                                            <p:column headerText="#{msg.formularioCampoEmailEndereco} " style="text-align: center" >
+                                                <p:cellEditor>
+                                                    <f:facet name="output">
+                                                        <h:outputText value="#{empEmail.emailEndereco}" />
+                                                    </f:facet>
+                                                    <f:facet name="input">
+                                                        <h:inputText value="#{empEmail.emailEndereco}" 
+                                                                     required="true"
+                                                                     requiredMessage="#{msgSis.obrigatorioEnderecoEmail}"
+                                                                     validatorMessage="#{msgSis.erroValidacaoEmail}"
+                                                                     size="70" >
+                                                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                                                        </h:inputText>
+                                                    </f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+
+                                            <p:column style="text-align: center">
+                                                <p:rowEditor />
+                                            </p:column>
+
+                                            <p:column  style="text-align: center">
+                                                <p:commandLink action="#{empresaManager.excluirEmail(empEmail)}"
+                                                               value="#{msg.acaoExcluir}"
+                                                               update=":cadastro:tabEmpresa:tabelaEmail"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab id="empResponsavel" title="#{msg.formularioEmpresaAbaResponsavel}">
+                                        <p:commandButton action="#{empresaManager.novoResponsavel()}" 
+                                                         icon="ui-icon-plus" 
+                                                         styleClass="fontepadrao" 
+                                                         update=":cadastro:tabEmpresa:tabelaResponsavel"
+                                                         value="#{msg.acaoNovo}"
+                                                         oncomplete="$('##{component.parent.clientId}'.replace(/:/g,'\\\\:')).find('.ui-datatable .ui-datatable-data .ui-row-editor .ui-icon-pencil').last().trigger('click'); return true;"/>
+                                        <p:dataTable id="tabelaResponsavel"
+                                                     value="#{empresaManager.empresa.empresaResponsavelList}" 
+                                                     var="fornResp" 
+                                                     editable="true"
+                                                     emptyMessage="#{msg.gridSemRegistro}"
+                                                     rows="10" >
+                                            <p:ajax event="rowEdit" update="tabelaResponsavel" />
+                                            <p:ajax event="rowEditCancel" update="tabelaResponsavel" />
+
+                                            <p:column headerText="#{msg.formularioCampoResponsavelNome}" style="text-align: center">
+                                                <p:cellEditor>
+                                                    <f:facet name="output">
+                                                        <h:outputText value="#{fornResp.nome}" />
+                                                    </f:facet>
+                                                    <f:facet name="input">
+                                                        <h:inputText size="50" 
+                                                                     required="true"
+                                                                     requiredMessage="#{msgSis.obrigatorioResponsavelNome}"
+                                                                     value="#{fornResp.nome}" />
+                                                    </f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+
+                                            <p:column headerText="#{msg.formularioCampoResponsavelCargo}" style="text-align: center">
+                                                <p:cellEditor>
+                                                    <f:facet name="output">
+                                                        <h:outputText value="#{fornResp.cargo}" />
+                                                    </f:facet>
+                                                    <f:facet name="input">
+                                                        <h:inputText  size="50" 
+                                                                      required="true"
+                                                                      requiredMessage="#{msgSis.obrigatorioResponsavelCargo}"
+                                                                      value="#{fornResp.cargo}" />
+                                                    </f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+
+                                            <p:column style="text-align: center">
+                                                <p:rowEditor />
+                                            </p:column>
+
+                                            <p:column  style="text-align: center">
+                                                <p:commandLink action="#{empresaManager.excluirResponsavel(fornResp)}"
+                                                               value="#{msg.acaoExcluir}"
+                                                                 update=":cadastro:tabEmpresa:tabelaResponsavel"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                </p:tabView>
+                            </p:panelGrid>
+                            <p:commandButton id="BtnAlterar" 
+                                             action="#{empresaManager.salvar()}" 
+                                             value="#{msg.acaoOK}" 
+                                             styleClass="botao"
+                                             update="messages mensagem"/>
+                            <p:commandButton id="BtnFechar" 
+                                             action="#{empresaManager.listarEmpresa()}" 
+                                             value="#{msg.acaoFechar}" 
+                                             immediate="true"
+                                             styleClass="botao"/>
+
+                        </p:panel>
+                        <p:confirmDialog header="#{msg.headerAlterar}" message="#{msg.headerConfirmaAlterar}" id="AlterarDlg" widgetVar="altera">
+                            <p:outputLabel id="mensagem" value="#{empresaManager.mensagemAlteracao}" escape="false"/>
+                            <p:commandButton value="#{msg.acaoSim}" action="#{empresaManager.alterar()}"  />
+                            <p:commandButton value="#{msg.acaoNao}" onclick="altera.hide();" />
+                        </p:confirmDialog>
+                    </h:form>
+                </ui:define>
+            </ui:decorate>
+        </h:body>
+    </f:view>
+</html>
