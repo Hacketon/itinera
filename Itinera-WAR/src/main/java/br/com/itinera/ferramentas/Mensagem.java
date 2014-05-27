@@ -10,6 +10,10 @@ import javax.faces.context.FacesContext;
  */
 public class Mensagem {
 
+    public static String duplicidade = "DUPLICIDADE";
+    public static String erro = "ERRO";
+    public static String sucesso = "SUCESSO";
+    public static String erroCritico = "Problema ao finalizar registro. ";
     
     public static void mostrarMensagem(String titulo,String mensagem){
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN,titulo,mensagem);
