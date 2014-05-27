@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <f:view contentType="text/html">
+        <h:body>
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">
+                    <h:form id="cadastro" styleClass="semBorda">                
+                        <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                        <p:panel styleClass="semBorda" header="#{msg.motorista}">
+                            <p:panelGrid columns="3" styleClass="semBorda">
+                                <p:outputLabel for="cpf"
+                                               value="#{msg.cpf}"
+                                               styleClass="fontepadrao"/>
+                                <p:inputText    id="cpf"
+                                                disabled="#{motoristaManager.motorista.motoristaId > 0} "
+                                                maxlength="14"
+                                                onkeypress="mascara(this, formatarCPF)"
+                                                required="true" 
+                                                requiredMessage="#{msgSis.obrigatorioCPF}"
+                                                size="20"
+                                                value="#{motoristaManager.motorista.cpf}" 
+                                                validatorMessage="#{msgSis.formularioCPFTamanhoMinimo}">
+                                    <f:validateLength minimum="14" maximum="14"/>
+                                </p:inputText>
+                                <p:watermark value="#{msg.cpf}" for="cpf"/>
+
+                                <p:outputLabel  for="nome" 
+                                                styleClass="label"
+                                                value="#{msg.nome}"/>
+                                <p:inputText    id="nome"
+                                                maxlength="100"
+                                                required="true" 
+                                                requiredMessage="#{msgSis.campoObrigatorio}"
+                                                size="20"
+                                                value="#{motoristaManager.motorista.nome}" >
+                                </p:inputText>
+                                <p:watermark value="#{msg.nome}" for="nome"/>
+
+                                <p:outputLabel  for="rg" 
+                                                styleClass="label"
+                                                value="#{msg.rg}"/>
+                                <p:inputText    id="rg"
+                                                maxlength="10"
+                                                required="false"
+                                                size="15"
+                                                value="#{motoristaManager.motorista.rg}" />
+                                <p:watermark value="#{msg.rg}" for="rg"/>
+
+                                <p:outputLabel  for="rgOrgaoEmissor" 
+                                                styleClass="label"
+                                                value="#{msg.orgaoEmissor}"/>
+                                <p:inputText    id="rgOrgaoEmissor"
+                                                maxlength="10"
+                                                required="false"
+                                                size="14"
+                                                value="#{motoristaManager.motorista.rgOrgaoEmissor}" />
+                                <p:watermark value="#{msg.orgaoEmissor}" for="rgOrgaoEmissor"/>
+
+                                <p:outputLabel  for="rgDataEmissao" 
+                                                styleClass="label"
+                                                value="#{msg.rgDataEmissao}"/>
+                                <p:calendar id="rgDataEmissao"
+                                             maxlength="10"
+                                             required="false"
+                                             size="14"
+                                             value="#{motoristaManager.motorista.rgDataEmissao}" />
+                                <p:spacer />
+
+                                <p:outputLabel  for="nomePai" 
+                                                styleClass="label"
+                                                value="#{msg.nomePai}"/>
+                                <p:inputText id="nomePai"
+                                             maxlength="100"
+                                             required="false"
+                                             size="100"
+                                             value="#{motoristaManager.motorista.nomePai}" />
+                                <p:watermark value="#{msg.nomePai}" for="nomePai"/>
+
+                                <p:outputLabel  for="nomeMae" 
+                                                styleClass="label"
+                                                value="#{msg.nomeMae}"/>
+                                <p:inputText id="nomeMae"
+                                             maxlength="100"
+                                             required="false"
+                                             size="100"
+                                             value="#{motoristaManager.motorista.nomeMae}" />
+                                <p:watermark value="#{msg.nomeMae}" for="nomeMae"/>
+
+                                <p:outputLabel  for="estadoCivil" 
+                                                styleClass="label"
+                                                value="#{msg.estadoCivil}"/>
+                                <p:selectOneMenu id="estadoCivil"
+                                                 required="false" value="#{motoristaManager.motorista.estadoCivil}" >
+                                    <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                    <f:selectItem itemLabel="Solteiro" itemValue="S" />
+                                    <f:selectItem itemLabel="Casado" itemValue="C" />
+                                    <f:selectItem itemLabel="Divorciado" itemValue="D" />
+                                    <f:selectItem itemLabel="Amaziado" itemValue="A" />
+                                </p:selectOneMenu>
+                                <p:spacer />
+
+                                <p:outputLabel  for="dataNascimento" 
+                                                styleClass="label"
+                                                value="#{msg.dataNascimento}"/>
+                                <p:calendar id="dataNascimento"
+                                             maxlength="14"
+                                             required="false"
+                                             size="14"
+                                             value="#{motoristaManager.motorista.dataNascimento}" />
+                                <p:spacer />
+
+                                <p:outputLabel  for="localNascimento" 
+                                                styleClass="label"
+                                                value="#{msg.localNascimento}"/>
+                                <p:inputText id="localNascimento"
+                                             maxlength="40"
+                                             required="false"
+                                             size="40"
+                                             value="#{motoristaManager.motorista.localNascimento}" />
+                                <p:watermark value="#{msg.localNascimento}" for="localNascimento"/>
+
+<!--                                <p:outputLabel  for="banco" 
+                                                styleClass="label"
+                                                value="#{msg.banco}"/>
+                                <p:inputText id="banco"
+                                             maxlength="3"
+                                             required="false"
+                                             size="3"
+                                             value="#{motoristaManager.motorista.banco}" />
+                                <p:watermark value="#{msg.banco}" for="banco"/>
+
+                                <p:outputLabel  for="agencia" 
+                                                styleClass="label"
+                                                value="#{msg.agencia}"/>
+                                <p:inputText id="agencia"
+                                             maxlength="4"
+                                             required="false"
+                                             size="4"
+                                             value="#{motoristaManager.motorista.agencia}" />
+                                <p:watermark value="#{msg.agencia}" for="agencia"/>
+
+                                <p:outputLabel  for="conta" 
+                                                styleClass="label"
+                                                value="#{msg.conta}"/>
+                                <p:inputText id="conta"
+                                             maxlength="20"
+                                             required="false"
+                                             size="20"
+                                             value="#{motoristaManager.motorista.conta}" />
+                                <p:watermark value="#{msg.conta}" for="conta"/>-->
+                            </p:panelGrid>
+                            
+                            <p:commandButton id="BtnAlterar" 
+                                             action="#{motoristaManager.alterar()}" 
+                                             value="#{msg.acaoOK}" 
+                                             styleClass="botao"
+                                             update="messages"/>
+                            <p:commandButton id="BtnFechar" 
+                                             action="#{motoristaManager.montarPaginaParaListar()}" 
+                                             value="#{msg.acaoFechar}" 
+                                             immediate="true"
+                                             styleClass="botao"/>
+
+                        </p:panel>
+                        <p:confirmDialog header="#{msg.headerAlterar}" message="#{msg.headerConfirmaAlterar}" id="AlterarDlg" widgetVar="altera">
+                            <p:commandButton value="#{msg.acaoSim}" action="#{motoristaManager.alterar()}"  />
+                            <p:commandButton value="#{msg.acaoNao}" onclick="altera.hide();" />
+                        </p:confirmDialog>
+                    </h:form>
+                </ui:define>
+            </ui:decorate>
+        </h:body>
+    </f:view>
+</html>

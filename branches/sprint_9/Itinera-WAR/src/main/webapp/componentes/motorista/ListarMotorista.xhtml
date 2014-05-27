@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>#{msg.headerMotorista}</title>
+    </h:head>
+    <h:body onload="selecionado($('#btnCategoriaVeiculo'));">
+        <h:outputScript>selecionado($('#btnCategoriaVeiculo'));</h:outputScript>
+        <f:view>      
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">
+                    <p:panel styleClass="semBorda" header="#{msg.listaMotorista}">
+                        <h:form>
+                            <p:messages id="messages" showDetail="true"/>
+                            <p:commandButton icon="ui-icon-plus" 
+                                             action="#{motoristaManager.montarPaginaParaCadastro}" 
+                                             styleClass="fontepadrao" value="Novo"/>
+                            <h:panelGrid id="gridCategorias" >
+                                <h:outputText value="#{msg.listagemSemMotorista}" 
+                                              rendered="#{empty motoristaManager.motoristas}" />
+
+                                <p:dataTable emptyMessage="#{msg.listagemSemMotorista}"
+                                             paginator="true" 
+                                             rows="10" 
+                                             rendered="#{not empty motoristaManager.motoristas}"
+                                             value="#{motoristaManager.motoristas}" 
+                                             var="motorista"
+                                             >
+
+                                    <p:column headerText="#{msg.descricaoCategoriaVeiculo}" 
+                                              filterBy="#{motorista.nome}"
+                                              filterMatchMode="contains"
+                                              filterStyle="width: 300px;"
+                                              style="min-width: 510px;"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{motorista.nome}" 
+                                              >
+                                        <h:outputText value="#{motorista.nome}"
+                                                      />
+                                    </p:column>
+
+                                    <p:column sortBy="#{motorista.cpf}" 
+                                              styleClass="fontepadrao"
+                                              style="text-align: center;"
+                                              headerText="#{msg.cpf}"
+                                              filterBy="#{motorista.cpf}"
+                                              >
+
+                                        <h:outputText value="#{motorista.cpf}" />
+                                    </p:column>
+
+                                    <p:column headerText="">
+                                        <h:commandLink styleClass="fontepadrao" 
+                                                       action="#{motoristaManager.montarPaginaParaAlterar}"
+                                                       value="#{msg.acaoAlterar}">
+                                            <f:setPropertyActionListener value="#{motorista}" target="#{motoristaManager.motorista}" />  
+                                        </h:commandLink>
+
+                                    </p:column>
+
+                                    <p:column headerText="">
+                                        <p:commandLink styleClass="fontepadrao" 
+                                                       oncomplete="exclui.show();"
+                                                       value="#{msg.acaoExcluir}">
+                                            <f:setPropertyActionListener value="#{motorista}" 
+                                                                         target="#{motoristaManager.motorista}" />  
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGrid>
+
+                            <!--DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
+                            <p:confirmDialog header="#{msg.headerExcluir}" message="#{msg.perguntaExcluirCategoria}" id="excluiDlg" widgetVar="exclui">
+                                <p:commandButton value="#{msg.acaoSim}" action="#{motoristaManager.excluir}" update="gridCategorias messages" />
+                                <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
+                            </p:confirmDialog>
+                        </h:form>
+                    </p:panel>
+                </ui:define>
+            </ui:decorate>
+        </f:view>
+    </h:body>
+</html>
