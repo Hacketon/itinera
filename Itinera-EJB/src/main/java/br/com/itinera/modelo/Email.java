@@ -42,13 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Email.findByEmailEndereco", query = "SELECT e FROM Email e WHERE e.emailEndereco = :emailEndereco"),
     @NamedQuery(name = "Email.findByEmailDescricao", query = "SELECT e FROM Email e WHERE e.emailDescricao = :emailDescricao")})
 public class Email implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "emailId")
-    private List<ContatoMotEmail> contatoMotEmailList;
-    @JoinTable(name = "contato_mot_email", joinColumns = {
-        @JoinColumn(name = "email_id", referencedColumnName = "email_id")}, inverseJoinColumns = {
-        @JoinColumn(name = "motorista_id", referencedColumnName = "motorista_id")})
-    @ManyToMany
-    private List<Motorista> motoristaList;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -126,24 +120,6 @@ public class Email implements Serializable {
     @Override
     public String toString() {
         return "modelo.Email[ emailId=" + emailId + " ]";
-    }
-
-    @XmlTransient
-    public List<Motorista> getMotoristaList() {
-        return motoristaList;
-    }
-
-    public void setMotoristaList(List<Motorista> motoristaList) {
-        this.motoristaList = motoristaList;
-    }
-
-    @XmlTransient
-    public List<ContatoMotEmail> getContatoMotEmailList() {
-        return contatoMotEmailList;
-    }
-
-    public void setContatoMotEmailList(List<ContatoMotEmail> contatoMotEmailList) {
-        this.contatoMotEmailList = contatoMotEmailList;
     }
     
 }
