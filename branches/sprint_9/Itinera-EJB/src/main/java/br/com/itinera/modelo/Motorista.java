@@ -19,6 +19,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -64,10 +66,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Motorista.findByConjugeNome", query = "SELECT m FROM Motorista m WHERE m.conjugeNome = :conjugeNome"),
     @NamedQuery(name = "Motorista.findByDependentes", query = "SELECT m FROM Motorista m WHERE m.dependentes = :dependentes")})
 public class Motorista implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "motoristaId")
-    private List<ContatoMotTel> contatoMotTelList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "motoristaId")
-    private List<ContatoMotEmail> contatoMotEmailList;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -144,6 +143,16 @@ public class Motorista implements Serializable {
     @JoinColumn(name = "municipio", referencedColumnName = "id_municipio")
     @ManyToOne
     private Municipio municipio;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable( name = "contato_mot_tel", 
+                joinColumns = @JoinColumn(name = "motorista_id"),
+                inverseJoinColumns = @JoinColumn(name = "telefone_id")              )
+    private List<Telefone> telefoneList;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable( name = "contato_mot_email", 
+                joinColumns = @JoinColumn(name = "motorista_id"),
+                inverseJoinColumns = @JoinColumn(name = "email_id")              )
+    private List<Email> emailList;
 
     public Motorista() {
     }
@@ -368,21 +377,21 @@ public class Motorista implements Serializable {
     }
 
     @XmlTransient
-    public List<ContatoMotEmail> getContatoMotEmailList() {
-        return contatoMotEmailList;
+    public List<Email> getEmailList() {
+        return emailList;
     }
 
-    public void setContatoMotEmailList(List<ContatoMotEmail> contatoMotEmailList) {
-        this.contatoMotEmailList = contatoMotEmailList;
+    public void setEmailList(List<Email> emailList) {
+        this.emailList = emailList;
     }
 
     @XmlTransient
-    public List<ContatoMotTel> getContatoMotTelList() {
-        return contatoMotTelList;
+    public List<Telefone> getTelefoneList() {
+        return telefoneList;
     }
 
-    public void setContatoMotTelList(List<ContatoMotTel> contatoMotTelList) {
-        this.contatoMotTelList = contatoMotTelList;
+    public void setTelefoneList(List<Telefone> telefonelList) {
+        this.telefoneList = telefonelList;
     }
     
 }
