@@ -168,6 +168,26 @@
                                          </p:panelGrid>
                                     </p:tab>
                                     <p:tab id="motoristaConjuge" title="#{msg.formularioMotoristaAbaConjuge}">
+                                        <p:panelGrid columns="3" >
+                                            <p:outputLabel  for="nomeConjuge" 
+                                                            styleClass="label"
+                                                            value="#{msg.formularioCampoNomeConjuge}"/>
+                                            <p:inputText id="nomeConjuge"
+                                                         maxlength="100"
+                                                         required="false"
+                                                         size="105"
+                                                         value="#{motoristaManager.motorista.conjugeNome}" />
+                                            <p:watermark value="#{msg.formularioWatermarkNomeConjuge}" for="nomeConjuge"/>
+                                            <p:outputLabel  for="dependentes" 
+                                                            styleClass="label"
+                                                            value="#{msg.formularioCampoQtdeDependentes}"/>
+                                            <p:spinner  id="dependentes"
+                                                         required="false"
+                                                         value="#{motoristaManager.motorista.dependentes}"
+                                                         min="0"
+                                                         max="99"
+                                                         size="5"/>
+                                        </p:panelGrid>
                                     </p:tab>
                                 </p:tabView>
                             </p:panel>
