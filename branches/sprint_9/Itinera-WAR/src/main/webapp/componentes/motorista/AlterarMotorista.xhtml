@@ -124,36 +124,53 @@
                                              value="#{motoristaManager.motorista.localNascimento}" />
                                 <p:watermark value="#{msg.localNascimento}" for="localNascimento"/>
 
-<!--                                <p:outputLabel  for="banco" 
-                                                styleClass="label"
-                                                value="#{msg.banco}"/>
-                                <p:inputText id="banco"
-                                             maxlength="3"
-                                             required="false"
-                                             size="3"
-                                             value="#{motoristaManager.motorista.banco}" />
-                                <p:watermark value="#{msg.banco}" for="banco"/>
-
-                                <p:outputLabel  for="agencia" 
-                                                styleClass="label"
-                                                value="#{msg.agencia}"/>
-                                <p:inputText id="agencia"
-                                             maxlength="4"
-                                             required="false"
-                                             size="4"
-                                             value="#{motoristaManager.motorista.agencia}" />
-                                <p:watermark value="#{msg.agencia}" for="agencia"/>
-
-                                <p:outputLabel  for="conta" 
-                                                styleClass="label"
-                                                value="#{msg.conta}"/>
-                                <p:inputText id="conta"
-                                             maxlength="20"
-                                             required="false"
-                                             size="20"
-                                             value="#{motoristaManager.motorista.conta}" />
-                                <p:watermark value="#{msg.conta}" for="conta"/>-->
+<!--                                -->
                             </p:panelGrid>
+                            <p:panel id="painelDetalhesMotorista" styleClass="semBorda" style="padding-left: 0px !important;margin:0px !important;">
+                                <p:tabView id="tabsDetalheMotorista">
+                                    <p:tab id="motoristaEndereco" title="#{msg.formularioAbaEndereco}">    
+                                    </p:tab>
+                                    <p:tab id="motoristaTelefone" title="#{msg.formularioAbaTelefone}">
+                                    </p:tab>
+                                    <p:tab id="motoristaEmails" title="#{msg.formularioAbaEmail}">
+                                    </p:tab>
+                                    <p:tab id="motoristaDadosBancarios" title="#{msg.formularioMotoristaAbaDadosBancarios}">
+                                        <p:panelGrid columns="3">
+                                            <p:outputLabel  for="banco" 
+                                                            styleClass="label"
+                                                            value="#{msg.banco}"/>
+                                            <p:inputText id="banco"
+                                                         maxlength="3"
+                                                         required="false"
+                                                         size="5"
+                                                         value="#{motoristaManager.motorista.banco}" />
+                                            <p:watermark value="#{msg.banco}" for="banco"/>
+
+                                            <p:outputLabel  for="agencia" 
+                                                            styleClass="label"
+                                                            value="#{msg.agencia}"/>
+                                            <p:inputText id="agencia"
+                                                         maxlength="4"
+                                                         required="false"
+                                                         size="6"
+                                                         value="#{motoristaManager.motorista.agencia}" />
+                                            <p:watermark value="#{msg.agencia}" for="agencia"/>
+
+                                            <p:outputLabel  for="conta" 
+                                                            styleClass="label"
+                                                            value="#{msg.conta}"/>
+                                            <p:inputText id="conta"
+                                                         maxlength="20"
+                                                         required="false"
+                                                         size="20"
+                                                         value="#{motoristaManager.motorista.conta}" />
+                                            <p:watermark value="#{msg.conta}" for="conta"/>
+                                         </p:panelGrid>
+                                    </p:tab>
+                                    <p:tab id="motoristaConjuge" title="#{msg.formularioMotoristaAbaConjuge}">
+                                    </p:tab>
+                                </p:tabView>
+                            </p:panel>
                             
                             <p:commandButton id="BtnAlterar" 
                                              action="#{motoristaManager.alterar()}" 
