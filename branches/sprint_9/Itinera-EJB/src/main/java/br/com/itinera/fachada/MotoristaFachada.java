@@ -43,6 +43,14 @@ public class MotoristaFachada {
         dao.inserir(novo);
     }
     
+    public void salvar (Motorista motorista) throws Exception{
+        this.verificarSeNovoMotoristaJaExisteComMesmoCpf(motorista.getCpf());
+        this.verificarSeEmailInformadoJaExisteTabelaEmail(motorista);
+        this.verificarSeTelefoneInformadoJaExisteTabelaTelefone(motorista);
+        dao.inserir(motorista);
+
+    }
+    
     public void alterar(Motorista alt){
         this.verificarSeEmailInformadoJaExisteTabelaEmail(alt);
         this.verificarSeTelefoneInformadoJaExisteTabelaTelefone(alt);
@@ -51,6 +59,12 @@ public class MotoristaFachada {
     
     public void excluir(Motorista rem){
         dao.equals(rem);
+    }
+    
+    private void verificarSeNovoMotoristaJaExisteComMesmoCpf(String cpf) throws Exception{
+        if (dao.verificarSeNovoMotoristaJaExisteComMesmoCpf(cpf)){
+            throw  new Exception("Já existe outro motorista cadastrado com esse CPF, verifique!");
+        }
     }
     
     private void verificarSeEmailInformadoJaExisteTabelaEmail(Motorista motorista) {
