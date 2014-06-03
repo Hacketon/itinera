@@ -263,7 +263,7 @@
                                             <p:inputText   id="kmAtualVeiculo"
                                                            maxlength="11"
                                                            converter="conversorMoedaVirgula" 
-                                                           onkeypress="mascara(this, formatarKm)"
+                                                           onkeypress="mascara(this, formatarNumeroTresCasas)"
                                                            size="15"
                                                            value="#{veiculoManager.veiculo.kmAtual}" />
                                             <p:watermark for="kmAtualVeiculo" value="#{msg.mascaraKmAtual}" />
@@ -442,7 +442,8 @@
                                             <p:inputText   id="kmAtualVeiculoPSC"
                                                            maxlength="11"
                                                            size="15"
-                                                           onkeypress="mascara(this, formatarKm)"
+                                                           onkeypress="mascara(this, formatarNumeroTresCasas)"
+                                                           converter="conversorMoedaVirgula"
                                                            value="#{veiculoManager.veiculo.kmAtual}"
                                                            />
                                             <p:watermark for="kmAtualVeiculoPSC" value="#{msg.mascaraKmAtual}" />
