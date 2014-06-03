@@ -39,4 +39,12 @@ public class MotoristaDAO {
         em.remove(remover);
     }
     
+    public boolean verificarSeNovoMotoristaJaExisteComMesmoCpf(String cpf){
+        if (!em.createNamedQuery("Motorista.findByCpf").setParameter("cpf", cpf)
+                .getResultList().isEmpty()){
+            return true;
+        }
+        return false;
+    }
+    
 }
