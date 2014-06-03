@@ -8,8 +8,7 @@
     <h:head>
         <title>#{msg.headerMotorista}</title>
     </h:head>
-    <h:body onload="selecionado($('#btnCategoriaVeiculo'));">
-        <h:outputScript>selecionado($('#btnCategoriaVeiculo'));</h:outputScript>
+    <h:body onload="selecionado($('#btnMotorista'));">
         <f:view>      
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
@@ -17,7 +16,7 @@
                         <h:form>
                             <p:messages id="messages" showDetail="true"/>
                             <p:commandButton icon="ui-icon-plus" 
-                                             action="#{motoristaManager.montarPaginaParaCadastro}" 
+                                             action="#{motoristaManager.salvarMotorista(null)}" 
                                              styleClass="fontepadrao" value="Novo"/>
                             <h:panelGrid id="gridCategorias" >
                                 <h:outputText value="#{msg.listagemSemMotorista}" 
@@ -55,7 +54,7 @@
 
                                     <p:column headerText="">
                                         <h:commandLink styleClass="fontepadrao" 
-                                                       action="#{motoristaManager.montarPaginaParaAlterar}"
+                                                       action="#{motoristaManager.salvarMotorista(motorista)}"
                                                        value="#{msg.acaoAlterar}">
                                             <f:setPropertyActionListener value="#{motorista}" target="#{motoristaManager.motorista}" />  
                                         </h:commandLink>
