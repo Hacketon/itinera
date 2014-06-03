@@ -7,6 +7,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <f:view contentType="text/html">
         <h:body>
+            <h:outputScript>selecionado($('#btnMotorista'));</h:outputScript>
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
                     <h:form id="cadastro" styleClass="semBorda">                
@@ -193,10 +194,10 @@
                             </p:panel>
                             
                             <p:commandButton id="BtnAlterar" 
-                                             action="#{motoristaManager.alterar()}" 
+                                             action="#{motoristaManager.inserir()}" 
                                              value="#{msg.acaoOK}" 
                                              styleClass="botao"
-                                             update="messages"/>
+                                             update="messages mensagem"/>
                             <p:commandButton id="BtnFechar" 
                                              action="#{motoristaManager.montarPaginaParaListar()}" 
                                              value="#{msg.acaoFechar}" 
@@ -205,6 +206,7 @@
 
                         </p:panel>
                         <p:confirmDialog header="#{msg.headerAlterar}" message="#{msg.headerConfirmaAlterar}" id="AlterarDlg" widgetVar="altera">
+                            <p:outputLabel id="mensagem" value="#{motoristaManager.mensagemAlteracao}" escape="false"/>
                             <p:commandButton value="#{msg.acaoSim}" action="#{motoristaManager.alterar()}"  />
                             <p:commandButton value="#{msg.acaoNao}" onclick="altera.hide();" />
                         </p:confirmDialog>

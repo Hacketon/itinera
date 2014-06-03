@@ -1,24 +1,16 @@
 
 package br.com.itinera.manager;
 
-import br.com.itinera.enuns.TipoLogradouro;
 import br.com.itinera.fachada.MotoristaFachada;
-import br.com.itinera.fachada.MunicipioFachada;
 import br.com.itinera.ferramentas.Mensagem;
 import br.com.itinera.interfaces.CRUD;
 import br.com.itinera.interfaces.MontarPaginas;
-import br.com.itinera.modelo.Email;
-import br.com.itinera.modelo.Endereco;
 import br.com.itinera.modelo.Motorista;
-import br.com.itinera.modelo.Municipio;
-import br.com.itinera.modelo.Telefone;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.SelectItem;
 import javax.persistence.EntityExistsException;
 import org.primefaces.context.RequestContext;
 
@@ -31,20 +23,16 @@ import org.primefaces.context.RequestContext;
 public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
     
     private Motorista motorista;
-//    private Telefone telefone;
-//    private Endereco endereco;
-//    private Email email;
+    private Motorista motoristaAntigo;
     private List<Motorista> motoristas;
-//    private boolean operacao;
+    private String mensagemAlteracao;
+
+    private boolean inserindo;
     
     @EJB
     private MotoristaFachada fachada;
-//    @EJB
-//    private MunicipioFachada municipioFachada;
     
     public MotoristaManager() {
-//        telefone = new Telefone();
-//        email = new Email();
     }
     
     public Motorista getMotorista() {
@@ -63,16 +51,16 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
         this.motoristas = motoristas;
     }
 
-//    public void setEndereco(Endereco endereco) {
-//        this.endereco = endereco;
-//    }
-//
-//    public Endereco getEndereco() {
-//        return endereco;
-//    }
-
     private void recuperarMotorista() {
         this.setMotoristas(fachada.listarTodos());
+    }
+    
+    public String getMensagemAlteracao() {
+        return this.mensagemAlteracao;
+    }
+
+    public void setMensagemAlteracao(String mensagemAlteracao) {
+        this.mensagemAlteracao = mensagemAlteracao;
     }
 
     public String alterar() {
@@ -87,7 +75,20 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
         } catch (Exception e) {
             Mensagem.mostrarMensagemErro(Mensagem.erro, Mensagem.erroCritico + e.getMessage());
         }
-        return "";
+        return montarPaginaParaListar();
+    }
+    
+    public String salvarMotorista(Motorista motorista) {
+        if (motorista == null) {
+            this.inserindo = true;
+            this.motorista = new Motorista();
+        } else {
+            this.inserindo = false;
+            this.motoristaAntigo = new Motorista();
+            this.motoristaAntigo.setCpf(this.motorista.getCpf());
+            this.motoristaAntigo.setNome(this.motorista.getNome());
+        }
+        return this.montarPaginaParaAlterar();
     }
 
     public void excluir() {
@@ -130,52 +131,36 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
     public String inserir() {
         try {
             if (this.motorista.getMotoristaId()== null) {
-                //fachada.salvar(motorista);
+                fachada.salvar(motorista);
                 Mensagem.mostrarMensagemSucesso(Mensagem.sucesso, "Motorista inserido com sucesso!");
+                return montarPaginaParaListar();
             } else {
-//                if (verificaAlteracao()) {
-//                    RequestContext rc = RequestContext.getCurrentInstance();
-//                    rc.execute("altera.show()");
-//                } else {
-                    alterar();
-//                }
+                if (verificaAlteracao()) {
+                    RequestContext rc = RequestContext.getCurrentInstance();
+                    rc.execute("altera.show()");
+                } else {
+                    return alterar();
+                }
             }
         } catch (EntityExistsException e) {
             Mensagem.mostrarMensagemErro(Mensagem.duplicidade, "Um motorista com este cpf já foi inserido. Por favor, verifique!");
         } catch (Exception e) {
             Mensagem.mostrarMensagemErro(Mensagem.erro, Mensagem.erroCritico + e.getMessage());
         }
-        return "/componentes/motorista/ListarMotorista";
+        return "";
     }
 
-//    private void validarOperacao() {
-//        this.operacao = (this.motorista.getMotoristaId() > null) ? true : false;
-//        System.out.println("op validar " + this.operacao + " id " + this.motorista.getMotoristaId());
-//    }
-//    
-//    public boolean retornaOperacao() {
-//        System.out.println("op retorna " + this.operacao);
-//        return this.operacao;
-//    }
-
-
-//    public List<SelectItem> getTipoLogradouro() {
-//        List<SelectItem> tipoLogrdouro = new ArrayList<SelectItem>();
-//        for (TipoLogradouro te : TipoLogradouro.values()) {
-//            tipoLogrdouro.add(new SelectItem(te.name(), te.toString()));
-//        }
-//        return tipoLogrdouro;
-//    }
-
-//    public List<Municipio> completeMunicipio(String query) {
-//        List<Municipio> suggestions = new ArrayList<Municipio>();
-//        for (Municipio p : municipioFachada.listMunicipios()) {
-//            if (p.getNomeMunicipio().toUpperCase().contains(query.toUpperCase())) {
-//                suggestions.add(p);
-//            }
-//        }
-//
-//        return suggestions;
-//    }    
+    private boolean verificaAlteracao() {
+        setMensagemAlteracao("");
+        if (!this.motoristaAntigo.getCpf().equals(this.motorista.getCpf())) {
+            setMensagemAlteracao(getMensagemAlteracao() + "CPF: " + this.motorista.getCpf() + " (" + this.motoristaAntigo.getCpf() + ")<br>" );
+        }
+        
+        if (!this.motoristaAntigo.getNome().equals(this.motorista.getNome())){
+            setMensagemAlteracao(getMensagemAlteracao() + "NOME: "+this.motorista.getNome() + " (" + this.motoristaAntigo.getNome() + ") <br>" );
+        }
+        
+        return !getMensagemAlteracao().isEmpty();
+    }
     
 }
