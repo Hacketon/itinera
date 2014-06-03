@@ -70,3 +70,18 @@ function formataTelefone(v){
     }
     return r;
 }
+
+
+function formatarCPF(v){
+    v = v.replace(/\D/g, "");
+    v = v.replace(/[0-9]{14}/, "inválido");
+    //v = v.replace(/(\d{1})(\d{9})$/, "$1.$2"); // coloca ponto antes dos  
+    // ultimos 12 digitos  
+    v = v.replace(/(\d{1})(\d{8})$/, "$1.$2"); // coloca ponto antes dos  
+    // ultimos 9 digitos  
+    v = v.replace(/(\d{1})(\d{5})$/, "$1.$2"); // coloca barra antes dos  
+    // ultimos 6 digitos  
+    v = v.replace(/(\d{1})(\d{1,2})$/, "$1-$2"); // coloca traço antes dos  
+    // ultimos 2 digitos  
+    return v;
+}
