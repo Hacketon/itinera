@@ -32,8 +32,7 @@ public class VeiculoManager implements Serializable{
     private Veiculo antigo;
     private Veiculo veiculo;
     private List<Veiculo> veiculos = new ArrayList<Veiculo>();
-    private Boolean tabVisivelComCombustivel;
-    private Boolean tabVisivelSemCombustivel; 
+    private Boolean desabilitaCombustivel;
     private String mensagemAlteracao;
 
     
@@ -64,12 +63,8 @@ public class VeiculoManager implements Serializable{
         this.mensagemAlteracao = mensagemAlteracao;
     }
     
-    public boolean getTabVisivelComCombustivel(){
-        return this.tabVisivelComCombustivel;
-    }
-    
-    public boolean getTabVisivelSemCombustivel(){
-        return this.tabVisivelSemCombustivel;
+    public boolean getDesabilitaCombustivel(){
+        return this.desabilitaCombustivel;
     }
     
     public List<Veiculo> getVeiculos(){
@@ -79,11 +74,9 @@ public class VeiculoManager implements Serializable{
     public void combustivelVisualizar(AjaxBehaviorEvent abe){
        CategoriaVeiculo selected = categoriaFachada.recuperarPorId(veiculo.getIdCategoriaVeiculo().getIdCategoriaVeiculo());
        if(selected.isReboqueSemiReboque()){
-        this.tabVisivelComCombustivel = false;
-        this.tabVisivelSemCombustivel = true;
+        this.desabilitaCombustivel = true;
        }else{
-        this.tabVisivelComCombustivel = true;
-        this.tabVisivelSemCombustivel = false;
+        this.desabilitaCombustivel = false;
        }
                
     }
@@ -141,8 +134,7 @@ public class VeiculoManager implements Serializable{
     
     //Parte 3 - Chamadas de Tela
     public String montarPaginaParaCadastrarVeiculo(){
-        this.tabVisivelComCombustivel = false;
-        this.tabVisivelSemCombustivel = false;
+        this.desabilitaCombustivel = true;
         this.veiculo = new Veiculo();
         Date data = new Date();
         this.veiculo.setAtivo(true);
@@ -158,11 +150,9 @@ public class VeiculoManager implements Serializable{
         antigo.setIdCategoriaVeiculo(veiculo.getIdCategoriaVeiculo());
         
         if(this.veiculo.getIdCategoriaVeiculo().isReboqueSemiReboque()){
-            this.tabVisivelComCombustivel = false;
-            this.tabVisivelSemCombustivel = true;
+            this.desabilitaCombustivel = true;
         }else{
-            this.tabVisivelComCombustivel = true;
-            this.tabVisivelSemCombustivel = false;
+            this.desabilitaCombustivel = false;
         }
         return "/componentes/veiculo/AlterarVeiculo";
     }
