@@ -132,6 +132,10 @@
                                     <p:tab id="motoristaEndereco" title="#{msg.formularioAbaEndereco}">    
                                     </p:tab>
                                     <p:tab id="motoristaTelefone" title="#{msg.formularioAbaTelefone}">
+                                        <ui:include src="/componentes/reutilizavel/Telefone.xhtml">
+                                            <ui:param name="manager" value="#{motoristaManager}"/>
+                                            <ui:param name="entidade" value="#{motoristaManager.motorista}"/>
+                                        </ui:include>
                                     </p:tab>
                                     <p:tab id="motoristaEmails" title="#{msg.formularioAbaEmail}">
                                     </p:tab>
@@ -191,7 +195,7 @@
                                         </p:panelGrid>
                                     </p:tab>
                                 </p:tabView>
-                            </p:panel>
+                            </p:panel> 
                             
                             <p:commandButton id="BtnAlterar" 
                                              action="#{motoristaManager.inserir()}" 
