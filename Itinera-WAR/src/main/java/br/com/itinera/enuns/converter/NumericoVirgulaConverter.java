@@ -25,16 +25,20 @@ public class NumericoVirgulaConverter implements Converter {
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        NumberFormat nf = NumberFormat.getNumberInstance(new Locale("pt","PT"));
-        DecimalFormat df = (DecimalFormat) nf;
-        df.setParseBigDecimal(true);
-        try{
-            BigDecimal decimal = (BigDecimal) df.parse(value);
-            return decimal;
-        }catch(Exception e){
-            System.out.println(e);
-            return null;
+        if ((value != null ) && (!value.equals(""))) {
+            NumberFormat nf = NumberFormat.getNumberInstance(new Locale("pt","PT"));
+            DecimalFormat df = (DecimalFormat) nf;
+            df.setParseBigDecimal(true);
+            try{
+                BigDecimal decimal = (BigDecimal) df.parse(value);
+                return decimal;
+            }catch(Exception e){
+                System.out.println(e);
+                return null;
+            }
         }
+        return null;
+        
     }
 
     @Override
