@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+     <changeSet author="bruno" id="138">
+     		<comment>
+     			Drop da coluna contato_emp_tel.contato_emp_tel_Id pois nao vai precisar da coluna
+     		</comment>
+     		
+     	<dropColumn columnName="contato_emp_tel_id"
+	            schemaName="public"
+            	    tableName="contato_emp_tel"/>
+     		
+     </changeSet>
+</databaseChangeLog>
