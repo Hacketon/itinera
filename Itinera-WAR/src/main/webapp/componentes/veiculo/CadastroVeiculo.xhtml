@@ -153,7 +153,9 @@
                                                             rendererType="integer"
                                                             size="10"
                                                             maxlength="4"
-                                                            value="#{veiculoManager.veiculo.anoModelo}" />
+                                                            value="#{veiculoManager.veiculo.anoModelo}">
+                                                <f:validateLength minimum="4" maximum="4" />
+                                            </p:inputText>
                                             <p:watermark for="veiculoAno" value="#{msg.ano2013}" />
                                             <p:outputLabel  for="veiculoFabricacao"
                                                             value="#{msg.anoFabricacao}"
@@ -163,7 +165,9 @@
                                                             rendererType="integer"
                                                             size="10"
                                                             maxlength="4"
-                                                            value="#{veiculoManager.veiculo.anoFabricacao}" />
+                                                            value="#{veiculoManager.veiculo.anoFabricacao}">
+                                                <f:validateLength minimum="4" maximum="4" />
+                                            </p:inputText>
                                             <p:watermark for="veiculoFabricacao" value="#{msg.ano2013}" />
                                             <p:outputLabel  for="veiculoCor"
                                                             value="#{msg.corPredominate}"
