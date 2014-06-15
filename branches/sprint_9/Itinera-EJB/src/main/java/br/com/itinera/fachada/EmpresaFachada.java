@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import br.com.itinera.modelo.Email;
 import br.com.itinera.modelo.Empresa;
+import br.com.itinera.modelo.EmpresaResponsavel;
 import br.com.itinera.modelo.Telefone;
 import br.com.itinera.persistencia.EmailDAO;
 import br.com.itinera.persistencia.EmpresaDAO;
@@ -28,6 +29,9 @@ public class EmpresaFachada {
     
     public void salvar (Empresa empresa) throws Exception{
         this.verificarSeNovaEmpresaJaExisteComMesmoCnpj(empresa.getCnpj());
+        this.verificarSeExisteResponsavelSemPreenchimento(empresa);
+        this.verificarSeExisteEmailSemPreenchimento(empresa);
+        this.verificarSeExisteTelefoneSemPreenchimento(empresa);
         this.verificarSeEmailInformadoJaExisteTabelaEmail(empresa);
         this.verificarSeTelefoneInformadoJaExisteTabelaTelefone(empresa);
         dao.inserir(empresa);
@@ -39,6 +43,9 @@ public class EmpresaFachada {
     }
     
     public void alterar(Empresa empresa) throws Exception{
+        this.verificarSeExisteResponsavelSemPreenchimento(empresa);
+        this.verificarSeExisteEmailSemPreenchimento(empresa);
+        this.verificarSeExisteTelefoneSemPreenchimento(empresa);
         this.verificarSeEmailInformadoJaExisteTabelaEmail(empresa);
         this.verificarSeTelefoneInformadoJaExisteTabelaTelefone(empresa);
         dao.alterar(empresa);
@@ -77,7 +84,8 @@ public class EmpresaFachada {
     }
 
     private void verificarSeEmailInformadoJaExisteTabelaEmail(Empresa empresa) {
-        List<Email> newListEmail = new ArrayList<Email>();
+        List<Email> newListEmail = new ArrayList<Email>();        
+        
         if (empresa.getEmpresaEmailList() != null && !empresa.getEmpresaEmailList().isEmpty()){
             for (Iterator<Email> it = empresa.getEmpresaEmailList().iterator(); it.hasNext();) {
                 Email newEmail = emailDao.retornaEmailInformadoQueJaExisteTabelaEmail(it.next());
@@ -98,5 +106,48 @@ public class EmpresaFachada {
             }        
             empresa.setEmpresaTelefoneList(newListTelefone);
         }
+    }
+
+    private void verificarSeExisteResponsavelSemPreenchimento(Empresa empresa) {
+        List<EmpresaResponsavel> oldListResponsavel = new ArrayList<EmpresaResponsavel>();
+        oldListResponsavel = empresa.getEmpresaResponsavelList();
+        
+        for (Iterator<EmpresaResponsavel> it = oldListResponsavel.iterator(); it.hasNext();){
+            EmpresaResponsavel newResponsavel = it.next();
+            
+            if ( (newResponsavel.getNome() == null || newResponsavel.getNome().equals("") )
+                     && (newResponsavel.getCargo() == null || newResponsavel.getCargo().equals(""))) {
+                it.remove();
+            }
+        }
+        empresa.setEmpresaResponsavelList(oldListResponsavel);
+    }
+
+    private void verificarSeExisteEmailSemPreenchimento(Empresa empresa) {
+        List<Email> oldListEmail = new ArrayList<Email>();
+        oldListEmail = empresa.getEmpresaEmailList();
+        
+        for (Iterator<Email> it = oldListEmail.iterator(); it.hasNext();){
+            Email newEmail = it.next();
+            
+            if (newEmail.getEmailEndereco() == null || newEmail.getEmailEndereco().equals("") ) {
+                it.remove();
+            }
+        }
+        empresa.setEmpresaEmailList(oldListEmail);
+    }
+
+    private void verificarSeExisteTelefoneSemPreenchimento(Empresa empresa) {
+        List<Telefone> oldListTelefone = new ArrayList<Telefone>();
+        oldListTelefone = empresa.getEmpresaTelefoneList();
+        
+        for (Iterator<Telefone> it = oldListTelefone.iterator(); it.hasNext();){
+            Telefone newTelefone = it.next();
+            
+            if (newTelefone.getTelefoneNumero() == null || newTelefone.getTelefoneNumero().equals("") ) {
+                it.remove();
+            }
+        }
+        empresa.setEmpresaTelefoneList(oldListTelefone);
     }
 }
