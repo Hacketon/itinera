@@ -72,17 +72,18 @@ public class EmpresaManager implements Serializable {
         return fachada.contagem();
     }
 
-    public void salvar() {
+    public String salvar() {
         try {
             if (this.empresa.getIdEmpresa() == null) {
                 fachada.salvar(empresa);
                 Mensagem.mostrarMensagemSucesso("Sucesso!", "Empresa inserida com sucesso!");
+                return montarPaginaListarEmpresa();
             } else {
                 if (verificaAlteracao()) {
                     RequestContext rc = RequestContext.getCurrentInstance();
                     rc.execute("altera.show()");
                 } else {
-                    alterar();
+                    return alterar();
                 }
             }
         } catch (EntityExistsException e) {
@@ -90,6 +91,7 @@ public class EmpresaManager implements Serializable {
         } catch (Exception e) {
             Mensagem.mostrarMensagemErro("Problema ao finalizar registro. " + e.getMessage(), "Problema ao finalizar registro. " + e.getMessage());
         }
+        return "";
     }
 
     public String alterar() {
@@ -98,7 +100,7 @@ public class EmpresaManager implements Serializable {
             rc.execute("altera.hide()");
             fachada.alterar(empresa);
             Mensagem.mostrarMensagemSucesso("Sucesso!", "Empresa alterada com sucesso!");
-            return "componentes/empresa/ListarEmpresa";
+            return montarPaginaListarEmpresa();
         } catch (EntityExistsException e) {
             Mensagem.mostrarMensagemErro("Uma empresa com este cnpj já foi inserida. Por favor, verifique!", "Uma empresa com este cnpj já foi inserida. Por favor, verifique!");
         } catch (Exception e) {
@@ -289,6 +291,11 @@ public class EmpresaManager implements Serializable {
         }
          
         return suggestions;
+    }
+
+    private String montarPaginaListarEmpresa() {
+        this.recuperarEmpresas();
+        return "/componentes/empresa/ListarEmpresa";
     }
     
 
