@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
@@ -19,10 +18,8 @@ import br.com.itinera.modelo.Email;
 import br.com.itinera.modelo.EmpresaResponsavel;
 import br.com.itinera.modelo.Municipio;
 import br.com.itinera.modelo.Telefone;
-import java.math.BigDecimal;
 import javax.persistence.EntityExistsException;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.RowEditEvent;
 
 /**
  *
