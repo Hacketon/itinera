@@ -58,7 +58,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Motorista.findByAgencia", query = "SELECT m FROM Motorista m WHERE m.agencia = :agencia"),
     @NamedQuery(name = "Motorista.findByConta", query = "SELECT m FROM Motorista m WHERE m.conta = :conta"),
     @NamedQuery(name = "Motorista.findByTipoLogradouro", query = "SELECT m FROM Motorista m WHERE m.tipoLogradouro = :tipoLogradouro"),
-    @NamedQuery(name = "Motorista.findByLogradouro", query = "SELECT m FROM Motorista m WHERE m.logradouro = :logradouro"),
+    @NamedQuery(name = "Motorista.findByLogradouro", query = "SELECT m FROM Motorista m WHERE m.nomeLogradouro = :nomeLogradouro"),
     @NamedQuery(name = "Motorista.findByCep", query = "SELECT m FROM Motorista m WHERE m.cep = :cep"),
     @NamedQuery(name = "Motorista.findByNumero", query = "SELECT m FROM Motorista m WHERE m.numero = :numero"),
     @NamedQuery(name = "Motorista.findByComplemento", query = "SELECT m FROM Motorista m WHERE m.complemento = :complemento"),
@@ -122,8 +122,8 @@ public class Motorista implements Serializable {
     @Column(name = "tipo_logradouro")
     private String tipoLogradouro;
     @Size(max = 100)
-    @Column(name = "logradouro")
-    private String logradouro;
+    @Column(name = "nome_logradouro")
+    private String nomeLogradouro;
     @Size(max = 9)
     @Column(name = "cep")
     private String cep;
@@ -148,6 +148,7 @@ public class Motorista implements Serializable {
                 joinColumns = @JoinColumn(name = "motorista_id"),
                 inverseJoinColumns = @JoinColumn(name = "telefone_id")              )
     private List<Telefone> telefoneList;
+    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable( name = "contato_mot_email", 
                 joinColumns = @JoinColumn(name = "motorista_id"),
@@ -288,11 +289,11 @@ public class Motorista implements Serializable {
     }
 
     public String getLogradouro() {
-        return logradouro;
+        return nomeLogradouro;
     }
 
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
+    public void setLogradouro(String nomeLogradouro) {
+        this.nomeLogradouro = nomeLogradouro;
     }
 
     public String getCep() {

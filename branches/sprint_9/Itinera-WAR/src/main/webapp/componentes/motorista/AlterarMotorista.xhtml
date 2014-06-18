@@ -37,7 +37,7 @@
                                                 maxlength="100"
                                                 required="true" 
                                                 requiredMessage="#{msgSis.campoObrigatorio}"
-                                                size="20"
+                                                size="100"
                                                 value="#{motoristaManager.motorista.nome}" >
                                 </p:inputText>
                                 <p:watermark value="#{msg.nome}" for="nome"/>
@@ -138,6 +138,10 @@
                                         </ui:include>
                                     </p:tab>
                                     <p:tab id="motoristaEmails" title="#{msg.formularioAbaEmail}">
+                                        <ui:include src="/componentes/reutilizavel/Email.xhtml">
+                                            <ui:param name="manager" value="#{motoristaManager}"/>
+                                            <ui:param name="entidade" value="#{motoristaManager.motorista}"/>
+                                        </ui:include>
                                     </p:tab>
                                     <p:tab id="motoristaDadosBancarios" title="#{msg.formularioMotoristaAbaDadosBancarios}">
                                         <p:panelGrid columns="3">
