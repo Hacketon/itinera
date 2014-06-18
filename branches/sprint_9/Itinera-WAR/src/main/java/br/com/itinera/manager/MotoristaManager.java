@@ -5,6 +5,7 @@ import br.com.itinera.fachada.MotoristaFachada;
 import br.com.itinera.ferramentas.Mensagem;
 import br.com.itinera.interfaces.CRUD;
 import br.com.itinera.interfaces.MontarPaginas;
+import br.com.itinera.modelo.Email;
 import br.com.itinera.modelo.Motorista;
 import br.com.itinera.modelo.Telefone;
 import java.io.Serializable;
@@ -31,6 +32,7 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
 
     private boolean inserindo;
     private Telefone telefone;
+    private Email email;
     
     @EJB
     private MotoristaFachada fachada;
@@ -124,6 +126,23 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
     
     public void excluirTelefone(Telefone tel) {
         motorista.getTelefoneList().remove(tel);
+    }
+    
+    public void novoEmail() {
+        try {
+            email = new Email();
+            if (motorista.getEmailList() == null) {
+                List<Email> lstEmail = new ArrayList<Email>();
+                motorista.setEmailList(lstEmail);
+            }
+            motorista.getEmailList().add(email);
+        } catch (Exception e) {
+            Mensagem.mostrarMensagemErro(Mensagem.erro, "Problema ao adicionar telefone. " + e.getMessage());
+        }
+    }
+    
+    public void excluirEmail(Email email) {
+        motorista.getEmailList().remove(email);
     }
 
     @Override

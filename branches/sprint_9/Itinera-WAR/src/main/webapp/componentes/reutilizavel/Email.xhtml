@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+        <p:commandButton action="#{manager.novoEmail()}" 
+                icon="ui-icon-plus" 
+                styleClass="fontepadrao" 
+                value="#{msg.acaoNovo}"
+                update="tabelaEmail"
+                oncomplete="$('##{component.parent.clientId}'.replace(/:/g,'\\\\:')).find('.ui-datatable .ui-datatable-data .ui-row-editor .ui-icon-pencil').last().trigger('click'); return true;"
+                />
+        <p:dataTable id="tabelaEmail"
+            value="#{entidade.emailList}" 
+            var="email" 
+            editable="true"
+            emptyMessage="#{msg.gridSemRegistro}"
+            rows="10"
+            >
+        <p:ajax event="rowEdit"  update="tabelaEmail" />
+        <p:ajax event="rowEditCancel"  update="tabelaEmail" />
+
+        <p:column headerText="#{msg.formularioCampoEmailEndereco}" style="text-align: center">
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{email.emailEndereco}" />
+                </f:facet>
+                <f:facet name="input">
+                    <h:inputText 
+                          required="true"
+                          requiredMessage="#{msgSis.campoObrigatorio}"
+                          value="#{email.emailEndereco}" />
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+
+        <p:column headerText="#{msg.descricaoDoEmail}"  style="text-align: center">
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{email.emailDescricao}"  />
+                </f:facet>
+                <f:facet name="input">
+                    <h:inputText value="#{email.emailDescricao}" />
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+
+        <p:column style="text-align: center">
+            <p:rowEditor />
+        </p:column>
+
+        <p:column style="text-align: center">
+            <p:commandLink value="#{msg.acaoExcluir}" action="#{manager.excluirEmail(email)}"
+                           update="tabelaEmail"/>
+        </p:column>
+    </p:dataTable> 
+        
+    </h:body>
+</html>
+
