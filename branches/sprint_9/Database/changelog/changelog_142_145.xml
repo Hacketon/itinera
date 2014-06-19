@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+   <changeSet author="marcelo" id="142">
+      <comment>
+         Criação da tabela plano_contas
+      </comment>
+        <createTable tableName="plano_contas">
+            <column name="plano_contas_id" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao" type="BPCHAR(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="tipo_combustivel" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+   </changeSet>
+   <changeSet author="marcelo" id="143">
+      <comment>
+         Criação da PK de plano contas
+      </comment>
+      <addPrimaryKey columnNames="plano_contas_id" constraintName="pk_plano_contas" tableName="plano_contas"/>
+   </changeSet>
+   <changeSet author="marcelo" id="144">
+      <comment>
+         Criação da unique de plano contas
+      </comment>
+      <addUniqueConstraint columnNames="descricao" constraintName="un_plano_contas" deferrable="false" disabled="false" initiallyDeferred="false" tableName="plano_contas"/>
+   </changeSet>
+   <changeSet author="marcelo" id="145">
+      <comment>
+         Criação da sequence de plano contas
+      </comment>
+      <createSequence sequenceName="seq_plano_contas"/>
+    </changeSet>
+</databaseChangeLog>
