@@ -28,33 +28,33 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean(name = "veiculoManager")
 @SessionScoped
-public class VeiculoManager implements Serializable{
+public class VeiculoManager implements Serializable {
+
     private Veiculo antigo;
     private Veiculo veiculo;
     private List<Veiculo> veiculos = new ArrayList<Veiculo>();
     private Boolean desabilitaCombustivel;
     private String mensagemAlteracao;
 
-    
     @EJB
     private VeiculoFachada fachada;
-    
-    @EJB 
+
+    @EJB
     private CategoriaVeiculoFachada categoriaFachada;
-    
+
     //Parte 1 - GETs e SETs
-    public VeiculoManager(){
+    public VeiculoManager() {
         antigo = new Veiculo();
     }
-    
-    public void setVeiculo(Veiculo veiculo){
+
+    public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
     }
-    
-    public Veiculo getVeiculo(){
+
+    public Veiculo getVeiculo() {
         return this.veiculo;
     }
-    
+
     public String getMensagemAlteracao() {
         return mensagemAlteracao;
     }
@@ -62,78 +62,75 @@ public class VeiculoManager implements Serializable{
     public void setMensagemAlteracao(String mensagemAlteracao) {
         this.mensagemAlteracao = mensagemAlteracao;
     }
-    
-    public boolean getDesabilitaCombustivel(){
+
+    public boolean getDesabilitaCombustivel() {
         return this.desabilitaCombustivel;
     }
-    
-    public List<Veiculo> getVeiculos(){
+
+    public List<Veiculo> getVeiculos() {
         return this.veiculos;
     }
-    
-    public void combustivelVisualizar(AjaxBehaviorEvent abe){
-       CategoriaVeiculo selected = categoriaFachada.recuperarPorId(veiculo.getIdCategoriaVeiculo().getIdCategoriaVeiculo());
-       if(selected.isReboqueSemiReboque()){
-        this.desabilitaCombustivel = true;
-       }else{
-        this.desabilitaCombustivel = false;
-       }
-               
+
+    public void combustivelVisualizar(AjaxBehaviorEvent abe) {
+        CategoriaVeiculo selected = categoriaFachada.recuperarPorId(veiculo.getIdCategoriaVeiculo().getIdCategoriaVeiculo());
+        if (selected.isReboqueSemiReboque()) {
+            this.desabilitaCombustivel = true;
+        } else {
+            this.desabilitaCombustivel = false;
+        }
+
     }
-    
-    public Integer contagem(){
+
+    public Integer contagem() {
         return fachada.contagem();
     }
+
     //Parte 2 - CRUD
-    public String inserir(){
-        
+    public String inserir() {
+
         fachada.inserir(this.veiculo);
-        Mensagem.mostrarMensagemSucesso("Sucesso!","Veiculo inserido com sucesso!");
+        Mensagem.mostrarMensagemSucesso("Sucesso!", "Veiculo inserido com sucesso!");
         recuperarVeiculos();
         return montarPaginaParaListarVeiculo();
     }
-    
-    public String alterar(){
-         if(verificaAlteracao()){
+
+    public String alterar() {
+        if (verificaAlteracao()) {
             RequestContext rc = RequestContext.getCurrentInstance();
             rc.execute("altera.show()");
             return "";
-        }
-        else{
+        } else {
             return realizarAlteracao();
         }
-        
+
     }
-    
-    public String realizarAlteracao(){
+
+    public String realizarAlteracao() {
         fachada.alterar(this.getVeiculo());
         recuperarVeiculos();
-        Mensagem.mostrarMensagemSucesso("Sucesso!","Veiculo alterado com sucesso!");
+        Mensagem.mostrarMensagemSucesso("Sucesso!", "Veiculo alterado com sucesso!");
         return montarPaginaParaListarVeiculo();
     }
-    
-    public void excluir(){
+
+    public void excluir() {
         fachada.remover(this.veiculo);
         RequestContext rc = RequestContext.getCurrentInstance();
         rc.execute("exclui.hide()");
-        Mensagem.mostrarMensagemSucesso("Sucesso!","Veiculo excluído com sucesso!");
+        Mensagem.mostrarMensagemSucesso("Sucesso!", "Veiculo excluído com sucesso!");
         montarPaginaParaListarVeiculo();
     }
-    
-    
-    public void recuperarVeiculos(){
+
+    public void recuperarVeiculos() {
         this.veiculos = fachada.listar();
     }
-  
-    
-    public String formataData(Date data){
+
+    public String formataData(Date data) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(data);
     }
-   
-    
+
     //Parte 3 - Chamadas de Tela
-    public String montarPaginaParaCadastrarVeiculo(){
+    public String montarPaginaParaCadastrarVeiculo() {
         this.desabilitaCombustivel = true;
         this.veiculo = new Veiculo();
         Date data = new Date();
@@ -141,82 +138,80 @@ public class VeiculoManager implements Serializable{
         this.veiculo.setDataInclusao(data);
         return "/componentes/veiculo/CadastroVeiculo";
     }
-    
-    public String montarPaginaParaAlterarVeiculo(){
+
+    public String montarPaginaParaAlterarVeiculo() {
         antigo = new Veiculo();
         antigo.setPlacaVeiculo(veiculo.getPlacaVeiculo());
         antigo.setMarcaVeiculo(veiculo.getMarcaVeiculo());
         antigo.setModeloVeiculo(veiculo.getModeloVeiculo());
         antigo.setIdCategoriaVeiculo(veiculo.getIdCategoriaVeiculo());
-        
-        if(this.veiculo.getIdCategoriaVeiculo().isReboqueSemiReboque()){
+
+        if (this.veiculo.getIdCategoriaVeiculo().isReboqueSemiReboque()) {
             this.desabilitaCombustivel = true;
-        }else{
+        } else {
             this.desabilitaCombustivel = false;
         }
         return "/componentes/veiculo/AlterarVeiculo";
     }
-    
-    public String montarPaginaParaListarVeiculo(){
+
+    public String montarPaginaParaListarVeiculo() {
         this.recuperarVeiculos();
         return "/componentes/veiculo/ListarVeiculo";
     }
-    
-    
+
     public List<SelectItem> getTipoCombustiveis() {
         List<SelectItem> tiposCombustiveis = new ArrayList<SelectItem>();
         for (TipoCombustivel tc : TipoCombustivel.values()) {
-            tiposCombustiveis.add(new SelectItem(tc.name(),tc.toString()));
+            tiposCombustiveis.add(new SelectItem(tc.name(), tc.toString()));
         }
         return tiposCombustiveis;
     }
-    
+
     public List<SelectItem> getCategoriasVeiculos() {
         List<SelectItem> categoriasVeiculos = new ArrayList<SelectItem>();
         List<CategoriaVeiculo> categorias = categoriaFachada.listar();
-        
+
         for (CategoriaVeiculo cv : categorias) {
-            categoriasVeiculos.add(new SelectItem(cv,cv.getDescricaoCategoria()));
+            categoriasVeiculos.add(new SelectItem(cv, cv.getDescricaoCategoria()));
         }
         return categoriasVeiculos;
     }
-   
-   public String converterBooleanTexto(Boolean ativo){
-       return ativo?"Ativo":"Inativo";
-       
-   }
-   
-   public String converterNumerico(String valor){
-       valor = valor.replace(",", ".");
-       return valor;
-   }
-  
-    
-   public SelectItem[] getListaOpcoesAtivoInativo(){
-       SelectItem[] opcoes = new SelectItem[3];
-       opcoes[0] = new SelectItem("","Selecione");
-       opcoes[1] = new SelectItem("True","Ativo");
-       opcoes[2] = new SelectItem("False","Inativo");
-       return opcoes;
-   }
+
+    public String converterBooleanTexto(Boolean ativo) {
+        return ativo ? "Ativo" : "Inativo";
+
+    }
+
+    public String converterNumerico(String valor) {
+        valor = valor.replace(",", ".");
+        return valor;
+    }
+
+    public SelectItem[] getListaOpcoesAtivoInativo() {
+        SelectItem[] opcoes = new SelectItem[3];
+        opcoes[0] = new SelectItem("", "Selecione");
+        opcoes[1] = new SelectItem("True", "Ativo");
+        opcoes[2] = new SelectItem("False", "Inativo");
+        return opcoes;
+    }
 
     private boolean verificaAlteracao() {
         veiculo.setIdCategoriaVeiculo(this.categoriaFachada.recuperarPorId(veiculo.getIdCategoriaVeiculo().getIdCategoriaVeiculo()));
         this.mensagemAlteracao = "";
-        if(!antigo.getPlacaVeiculo().equals(veiculo.getPlacaVeiculo())){
-            this.mensagemAlteracao += "Placa: "+ veiculo.getPlacaVeiculo() + " ("+antigo.getPlacaVeiculo()+")<br>";
+        if (!antigo.getPlacaVeiculo().equals(veiculo.getPlacaVeiculo())) {
+            this.mensagemAlteracao += "Placa: " + veiculo.getPlacaVeiculo() + " (" + antigo.getPlacaVeiculo() + ")<br>";
         }
-        if(!antigo.getMarcaVeiculo().equals(veiculo.getMarcaVeiculo())){
-            this.mensagemAlteracao += "Marca: "+ veiculo.getMarcaVeiculo() + " ("+antigo.getMarcaVeiculo()+")<br>";
+        if (!antigo.getMarcaVeiculo().equals(veiculo.getMarcaVeiculo())) {
+            this.mensagemAlteracao += "Marca: " + veiculo.getMarcaVeiculo() + " (" + antigo.getMarcaVeiculo() + ")<br>";
         }
-        if(!antigo.getModeloVeiculo().equals(veiculo.getModeloVeiculo())){
-            this.mensagemAlteracao += "Modelo: "+ veiculo.getModeloVeiculo() + " ("+antigo.getModeloVeiculo()+")<br>";
+        if (!antigo.getModeloVeiculo().equals(veiculo.getModeloVeiculo())) {
+            this.mensagemAlteracao += "Modelo: " + veiculo.getModeloVeiculo() + " (" + antigo.getModeloVeiculo() + ")<br>";
         }
-        if(!(antigo.getIdCategoriaVeiculo().getIdCategoriaVeiculo() == veiculo.getIdCategoriaVeiculo().getIdCategoriaVeiculo())){
-            
-            this.mensagemAlteracao += "Categoria: "+ veiculo.getIdCategoriaVeiculo() + " ("+antigo.getIdCategoriaVeiculo()+")<br>";
+        if (!(antigo.getIdCategoriaVeiculo().getIdCategoriaVeiculo() == veiculo.getIdCategoriaVeiculo().getIdCategoriaVeiculo())) {
+
+            this.mensagemAlteracao += "Categoria: " + veiculo.getIdCategoriaVeiculo() + " (" + antigo.getIdCategoriaVeiculo() + ")<br>";
         }
-        
+
         return !this.mensagemAlteracao.isEmpty();
     }
 }

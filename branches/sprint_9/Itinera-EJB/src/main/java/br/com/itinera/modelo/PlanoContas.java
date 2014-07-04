@@ -15,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -22,6 +23,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "plano_contas")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PlanoContas.findAll", query = "SELECT p FROM PlanoContas p"),
     @NamedQuery(name = "PlanoContas.findByPlanoContasId", query = "SELECT p FROM PlanoContas p WHERE p.planoContasId = :planoContasId"),
