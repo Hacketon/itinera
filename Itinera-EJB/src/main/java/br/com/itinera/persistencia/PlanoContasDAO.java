@@ -1,12 +1,12 @@
 package br.com.itinera.persistencia;
 
-import java.util.List;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import br.com.itinera.modelo.PlanoContas;
 import java.math.BigDecimal;
+import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *

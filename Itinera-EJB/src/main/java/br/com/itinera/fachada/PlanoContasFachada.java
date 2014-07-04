@@ -16,29 +16,29 @@ import java.math.BigDecimal;
 public class PlanoContasFachada {
     
     @EJB
-    private PlanoContasDAO categoriaVeiculoDAO;
+    private PlanoContasDAO dao;
     
-    public void inserir(PlanoContas categoria) throws EntityExistsException, Exception{
-        categoriaVeiculoDAO.inserir(categoria);
+    public void inserir(PlanoContas planoContas) throws EntityExistsException, Exception{
+        dao.inserir(planoContas);
     }
     
-    public void alterar(PlanoContas categoria) throws EntityExistsException, Exception{
-        categoriaVeiculoDAO.alterar(categoria);
+    public void alterar(PlanoContas planoContas) throws EntityExistsException, Exception{
+        dao.alterar(planoContas);
     }
     
-    public void remover(PlanoContas categoria){
-        categoriaVeiculoDAO.remover(categoria);
+    public void remover(PlanoContas planoContas){
+        dao.remover(planoContas);
     }
     
     public List<PlanoContas> listar(){
-        return categoriaVeiculoDAO.listar();
+        return dao.listar();
     }
     
     public Integer contagem(){
-        return categoriaVeiculoDAO.listar().size();            
+        return dao.listar().size();            
     }
     
     public PlanoContas recuperarPorId(BigDecimal id){
-        return categoriaVeiculoDAO.recuperarPorId(id);
+        return dao.recuperarPorId(id);
     }
 }
