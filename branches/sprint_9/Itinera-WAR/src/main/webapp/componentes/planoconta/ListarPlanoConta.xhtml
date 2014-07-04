@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>#{msg.headerPlanoConta}</title>
+    </h:head>
+    <h:body onload="selecionado($('#btnPlanoContas'));">
+        <f:view>      
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">
+                    <p:panel styleClass="semBorda" header="#{msg.listaPlanoContas}">
+                        <h:form>
+                            <p:messages id="messages" showDetail="true"/>
+                            <p:commandButton icon="ui-icon-plus" 
+                                             action="#{planoContasManager.montarPaginaParaCadastro()}" 
+                                             styleClass="fontepadrao" value="Novo"/>
+                            <h:panelGrid id="gridPlanoContas" >
+                                <h:outputText value="#{msg.listagemSemPlanoContas}" 
+                                              rendered="#{empty planoContasManager.lstPlanoContas}" />
+
+                                <p:dataTable emptyMessage="#{msg.listagemSemPlanoContas}"
+                                             paginator="true" 
+                                             rows="10" 
+                                             rendered="#{not empty planoContasManager.lstPlanoContas}"
+                                             value="#{planoContasManager.lstPlanoContas}" 
+                                             var="planoConta"
+                                             >
+
+                                    <p:column headerText="#{msg.descricaoPlanoConta}" 
+                                              filterBy="#{planoConta.descricao}"
+                                              filterMatchMode="contains"
+                                              filterStyle="width: 300px;"
+                                              style="min-width: 510px;"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{planoConta.descricao}" 
+                                              >
+                                        <h:outputText value="#{planoConta.descricao}"
+                                                      />
+                                    </p:column>
+
+                                    <p:column sortBy="#{planoConta.tipoCombustivel}" 
+                                              styleClass="fontepadrao"
+                                              style="text-align: center;">
+                                        <h:outputText value="#{planoConta.tipoCombustivel}" />
+                                    </p:column>
+
+                                    <p:column headerText="">
+                                        <h:commandLink styleClass="fontepadrao" 
+                                                       action="#{planoContasManager.montarPaginaParaAlterar}"
+                                                       value="#{msg.acaoAlterar}">
+                                            <f:setPropertyActionListener value="#{planoConta}" target="#{planoContasManager.planoContas}" />  
+                                        </h:commandLink>
+
+                                    </p:column>
+
+                                    <p:column headerText="">
+                                        <p:commandLink styleClass="fontepadrao" 
+                                                       oncomplete="exclui.show();"
+                                                       value="#{msg.acaoExcluir}">
+                                                <f:setPropertyActionListener value="#{planoConta}" 
+                                                                             target="#{planoContasManager.planoContas}" />  
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGrid>
+
+                            <p:confirmDialog header="#{msg.headerExcluir}" message="#{msg.mensagemExcluir}" id="excluiDlg" widgetVar="exclui">
+                                <p:commandButton value="#{msg.acaoSim}" action="#{planoContasManager.excluir()}" update="gridPlanoContas messages" onclick="exclui.hide();" />
+                                <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
+                            </p:confirmDialog>
+                        </h:form>
+                    </p:panel>
+                </ui:define>
+            </ui:decorate>
+        </f:view>
+    </h:body>
+</html>

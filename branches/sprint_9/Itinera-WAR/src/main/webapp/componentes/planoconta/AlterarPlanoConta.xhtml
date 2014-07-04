@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <f:view contentType="text/html">
+        <h:body onload="selecionado($('#btnPlanoContas'));">
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">
+                    <h:form id="displayMessages">
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                    </h:form>
+                    <h:form id="cadastro" styleClass="semBorda">                
+                        <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                        <p:panel styleClass="semBorda" header="#{msg.planoContas}">
+                            <p:panelGrid id="painelcadastro" columns="3" styleClass="semBorda">
+                                <p:outputLabel 
+                                    value="#{msg.descricaoPlanoContas}"  
+                                    for="descricao"
+                                    styleClass="fontepadrao"/>
+                                <p:inputText    id="descricao" 
+                                                required="true"
+                                                size="100"
+                                                maxlength="150"
+                                                requiredMessage="#{msgSis.campoObrigatorio}"
+                                                value="#{planoContasManager.planoContas.descricao}" />
+                                <p:watermark for="descricao" value="Descrição do plano de contas" />
+                                <h:outputLabel  value="#{msg.tipoDeCombustivel}"
+                                                for="tipoCombustivel"
+                                                styleClass="fontepadrao"/>
+                                <p:selectBooleanCheckbox 
+                                    id="tipoCombustivel"
+                                    value="#{planoContasManager.planoContas.tipoCombustivel}"
+                                    rendererType="boolean"/> 
+                                <p:watermark for="tipoCombustivel" value="É tipo de combustível?" />
+                            </p:panelGrid>
+                        </p:panel>
+                        <p:commandButton 
+                            id="BtnAlterar" 
+                            action="#{planoContasManager.alterar()}" 
+                            value="#{msg.acaoOK}" 
+                            update="mensagem"
+                            styleClass="botao"/>
+
+                        <p:commandButton id="BtnFechar"
+                                         action="#{planoContasManager.montarPaginaParaListar()}"
+                                         value="#{msg.acaoFechar}" 
+                                         immediate="true"
+                                         styleClass="botao"/>
+                        <p:confirmDialog header="#{msg.headerAlterar}" message="#{msg.headerConfirmaAlterar}" id="AlterarDlg" widgetVar="altera">
+                            <p:outputLabel id="mensagem" value="#{msg.confirmaAlteracao}" escape="false"/>
+                            <p:commandButton value="#{msg.acaoSim}" action="#{planoContasManager.inserir()}"  />
+                            <p:commandButton value="#{msg.acaoNao}" onclick="altera.hide();" />
+                        </p:confirmDialog>
+                    </h:form>
+                </ui:define>
+            </ui:decorate>
+        </h:body>
+    </f:view>
+</html>
