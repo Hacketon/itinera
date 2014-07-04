@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="marcelo" id="146">
+		<comment>
+			Refatorando o nome dos campos da tabela despesa
+		</comment>
+		
+		<renameColumn newColumnName="despesa_id"
+		            oldColumnName="id_despesa"
+		            schemaName="public"
+	            	tableName="despesa"/>
+
+		<renameColumn newColumnName="hodometro"
+		            oldColumnName="km"
+		            schemaName="public"
+	            	tableName="despesa"/>
+	            
+		<addColumn schemaName="public"
+ 		    	   tableName="despesa">
+			<column name="fornecedor" type="numeric" />
+		</addColumn>
+
+		<addForeignKeyConstraint baseColumnNames="fornecedor" baseTableName="despesa" constraintName="fk_despesa_fornecedor" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id_empresa" referencedTableName="empresa"/>
+			
+	 </changeSet>
+     
+</databaseChangeLog>
