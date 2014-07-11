@@ -5,7 +5,6 @@
 package br.com.itinera.manager;
 
 import br.com.itinera.fachada.UsuarioFachada;
-import br.com.itinera.ferramentas.Encrypt;
 import br.com.itinera.ferramentas.Mensagem;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -68,7 +67,7 @@ public class UsuarioManager implements Serializable{
     //Parte 2 - CRUD
     
     public String inserir(){
-        if (validarSenha() && criptografar()) {
+        if (validarSenha()) {
             usuario.setLogin(usuario.getLogin().toUpperCase());
             fachada.inserir(usuario);
             recarregarUsuarios();
@@ -97,7 +96,7 @@ public class UsuarioManager implements Serializable{
     }
     
     public String alterarSenha(){ 
-         if (validarSenha() && criptografar()) {
+         if (validarSenha()) {
              elemento = null;
              fachada.alterar(usuario);
              Mensagem.mostrarMensagemSucesso("Sucesso!", "A senha do usuário foi alterada com sucesso!");
@@ -149,17 +148,5 @@ public class UsuarioManager implements Serializable{
         return senhaValida;
     }
 
-    private boolean criptografar() {
-        Encrypt encriptador = new Encrypt(primeiraSenha,"MD5","UTF-8");
-        boolean deuCerto = false;
-        if(encriptador.hasError()){
-            Mensagem.mostrarMensagemErro("Erro:","Erro ao encriptar senha:"+encriptador.getErrorMsg());
-        }
-        else{
-            usuario.setSenha(encriptador.getResult());
-            deuCerto = true;
-        }
-        return deuCerto;
-    }
             
 }
