@@ -10,7 +10,7 @@
        <f:view>
     <ui:decorate template="/layout/logado/template.xhtml">
         <ui:define name="conteudo">    
-                <p:panel styleClass="semBorda" header="#{bundle.usuario}">
+            <p:panel styleClass="semBorda" header="#{msg.usuario}">
                     <h:form id="formInserirUsuario">       
                     <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                     <p:panelGrid styleClass="semBorda">
@@ -63,10 +63,10 @@
                                                 requiredMessage="Por favor, insira a senha para acesso ao sistema."
                                                 feedback="true" 
                                                 value="#{usuariosManager.primeiraSenha}"
-                                                goodLabel="#{bundle.mensagemSenhaBoa}"
-                                                strongLabel="#{bundle.mensagemSenhaForte}"
-                                                weakLabel="#{bundle.mensagemSenhaFraca}"
-                                                promptLabel="#{bundle.mensagemSenha}"
+                                                goodLabel="#{msgSis.mensagemSenhaBoa}"
+                                                strongLabel="#{msgSis.mensagemSenhaForte}"
+                                                weakLabel="#{msgSis.mensagemSenhaFraca}"
+                                                promptLabel="#{msgSis.mensagemSenha}"
                                                 >
                                     <p:watermark for="usuarioSenha" value="Senha" />
                                     <f:validateLength minimum="6" for="usuarioSenha"/>

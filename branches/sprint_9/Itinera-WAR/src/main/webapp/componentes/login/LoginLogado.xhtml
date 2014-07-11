@@ -13,12 +13,12 @@
                                 <img src="#{facesContext.externalContext.requestContextPath}/img/profile.png" alt="" />
                             </td>
                             <td>
-                                <p:outputLabel style="font-family: Arial;font-weight:bolder;color:darkblue;font-size: 16pt;" value="#{loginManager.usuario.login}" />
+                                <p:outputLabel style="font-family: Arial;font-weight:bolder;color:darkblue;font-size: 16pt;" value="#{loginManager.usuario.login}" />   
                             </td>
                             <td rowspan="2">
                                 <p:commandButton value="Sair" 
                                  icon="ui-icon-close"  
-                                 action="#{loginManager.sair}" 
+                                 action="#{loginManager.fazerLogout()}" 
                                  ajax='false'
                                  oncomplete="javascript:location.reload(true)"/>
                 
