@@ -13,109 +13,126 @@
             <p:panel styleClass="semBorda" header="#{msg.usuario}">
                     <h:form id="formInserirUsuario">       
                     <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-                    <p:panelGrid styleClass="semBorda">
+                    <p:panelGrid style="width: 100%">
                         <p:row>
                             <p:column>
-                                <p:outputLabel  for="usuarioLogin" 
-                                                value="Login"   
-                                                styleClass="fontepadrao"/>
+                            <p:panelGrid styleClass="semBorda">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel  for="usuarioLogin" 
+                                                        value="Login"   
+                                                        styleClass="fontepadrao"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText    id="usuarioLogin"
+                                                        maxlength="30"
+                                                        value="#{usuariosManager.usuario.login}" 
+                                                        style="text-transform: uppercase;"
+                                                        required="true"
+                                                        size="30"
+                                                        requiredMessage="Por favor, insira um login para o usuário" />                                            
+
+                                                        <p:watermark for="usuarioLogin" value="Login" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel  for="usuarioNome"
+                                                        value="Nome"
+                                                        styleClass="fontepadrao"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText    id="usuarioNome" 
+                                                        required="true"
+                                                        size="50"
+                                                        
+                                                        requiredMessage="Por favor, insira um nome para o usuário."
+                                                        value="#{usuariosManager.usuario.nome}" >
+                                        <p:watermark    for="usuarioNome" value="Nome do usuário" />
+                                        </p:inputText>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel  for="usuarioSenha"
+                                                        value="Senha"  
+                                                        styleClass="fontepadrao"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:password     id="usuarioSenha"
+                                                        required="true"
+                                                        size="30"
+                                                        match="usuarioSenha"
+                                                        validatorMessage="As senhas não são correspondentes."
+                                                        requiredMessage="Por favor, insira a senha para acesso ao sistema."
+                                                        feedback="true" 
+                                                        value="#{usuariosManager.primeiraSenha}"
+                                                        goodLabel="#{msgSis.mensagemSenhaBoa}"
+                                                        strongLabel="#{msgSis.mensagemSenhaForte}"
+                                                        weakLabel="#{msgSis.mensagemSenhaFraca}"
+                                                        promptLabel="#{msgSis.mensagemSenha}"
+                                                        >
+                                            <p:watermark for="usuarioSenha" value="Senha" />
+                                            <f:validateLength minimum="6" for="usuarioSenha"/>
+                                            <p:ajax event="blur" immediate="true"/>
+                                        </p:password>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel  for="usuarioSenhaRepetir"
+                                                        value="Repetir Senha"  
+                                                        styleClass="fontepadrao"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:password     id="usuarioSenhaRepetir"
+                                                        required="true"
+                                                        size="30"
+                                                        requiredMessage="Por favor, insira a senha de confirmação para acesso ao sistema."
+                                                        value="#{usuariosManager.segundaSenha}">
+                                            <p:watermark for="usuarioSenhaRepetir" value="Repetir senha" />
+                                            <f:validateLength minimum="6" for="usuarioSenhaRepetir" />
+                                            <p:ajax event="blur" immediate="true"/>
+                                        </p:password>
+
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <h:outputLabel  for="usuarioAtivo"
+                                                        value="Ativo?"
+                                                        styleClass="fontepadrao"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectBooleanCheckbox 
+                                                id="usuarioAtivo"
+                                                value="#{usuariosManager.usuario.ativo}"
+                                                rendererType="boolean"/> 
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                    </p:column>
+                    <p:column style="width:50%;text-align: center;">            
+                        <p:dataTable id="gruposUsuario" var="grupo" value="#{grupoManager.grupos}" selection="#{usuariosManager.grupoSelecionado}" rowKey="#{grupo.grupoId}" style="margin-bottom:0;text-align: center;">
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:column headerText="Grupo">
+                                <h:outputText value="#{grupo.grupoNome}" />
                             </p:column>
-                            <p:column>
-                                <p:inputText    id="usuarioLogin"
-                                                maxlength="30"
-                                                value="#{usuariosManager.usuario.login}" 
-                                                style="text-transform: uppercase;"
-                                                required="true"
-                                                size="30"
-                                                requiredMessage="Por favor, insira um login para o usuário" />                                            
-                                
-                                                <p:watermark for="usuarioLogin" value="Login" />
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <p:outputLabel  for="usuarioNome"
-                                                value="Nome"
-                                                styleClass="fontepadrao"/>
-                            </p:column>
-                            <p:column>
-                                <p:inputText    id="usuarioNome" 
-                                                required="true"
-                                                size="30"
-                                                requiredMessage="Por favor, insira um nome para o usuário."
-                                                value="#{usuariosManager.usuario.nome}" >
-                                <p:watermark    for="usuarioNome" value="Nome do usuário" />
-                                </p:inputText>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <p:outputLabel  for="usuarioSenha"
-                                                value="Senha"  
-                                                styleClass="fontepadrao"/>
-                            </p:column>
-                            <p:column>
-                                <p:password     id="usuarioSenha"
-                                                required="true"
-                                                size="30"
-                                                match="usuarioSenha"
-                                                validatorMessage="As senhas não são correspondentes."
-                                                requiredMessage="Por favor, insira a senha para acesso ao sistema."
-                                                feedback="true" 
-                                                value="#{usuariosManager.primeiraSenha}"
-                                                goodLabel="#{msgSis.mensagemSenhaBoa}"
-                                                strongLabel="#{msgSis.mensagemSenhaForte}"
-                                                weakLabel="#{msgSis.mensagemSenhaFraca}"
-                                                promptLabel="#{msgSis.mensagemSenha}"
-                                                >
-                                    <p:watermark for="usuarioSenha" value="Senha" />
-                                    <f:validateLength minimum="6" for="usuarioSenha"/>
-                                    <p:ajax event="blur" immediate="true"/>
-                                </p:password>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <p:outputLabel  for="usuarioSenhaRepetir"
-                                                value="Repetir Senha"  
-                                                styleClass="fontepadrao"/>
-                            </p:column>
-                            <p:column>
-                                <p:password     id="usuarioSenhaRepetir"
-                                                required="true"
-                                                size="30"
-                                                requiredMessage="Por favor, insira a senha de confirmação para acesso ao sistema."
-                                                value="#{usuariosManager.segundaSenha}">
-                                    <p:watermark for="usuarioSenhaRepetir" value="Repetir senha" />
-                                    <f:validateLength minimum="6" for="usuarioSenhaRepetir" />
-                                    <p:ajax event="blur" immediate="true"/>
-                                </p:password>
-                                
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <h:outputLabel  for="usuarioAtivo"
-                                                value="Ativo?"
-                                                styleClass="fontepadrao"/>
-                            </p:column>
-                            <p:column>
-                                <p:selectBooleanCheckbox 
-                                        id="usuarioAtivo"
-                                        value="#{usuariosManager.usuario.ativo}"
-                                        rendererType="boolean"/> 
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column colspan="2" style="text-align: right;">
-                                <p:commandButton 
-                                         id="Btninserir" 
-                                         action="#{usuariosManager.inserir()}" 
-                                         value="Confirmar" 
-                                         styleClass="botao"/>
-                            </p:column>
-                        </p:row>
-                    </p:panelGrid>
+                        </p:dataTable>
+                    </p:column>
+                </p:row>
+                </p:panelGrid>
+                    <br/>
+                    <p:commandButton 
+                        id="Btninserir" 
+                        action="#{usuariosManager.inserir()}" 
+                        value="Confirmar" 
+                        styleClass="botao"/>
+                    <p:commandButton id="BtnFechar" 
+                                     action="#{usuariosManager.montarPaginaParaListarUsuarios()}" 
+                                    value="#{msg.acaoFechar}" 
+                                    immediate="true"
+                                    styleClass="botao"/>
                 </h:form>
                </p:panel>
         </ui:define>

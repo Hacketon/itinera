@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui">
     <p:button  id="btnUsuario"              rendered="#{loginManager.grupoAdministrador}"   outcome="#{usuariosManager.montarPaginaParaListarUsuarios()}"                 value="Usuários"           style="background: none;" styleClass="botaomenu"/>
+    <p:button  id="btnGrupo"                rendered="#{loginManager.grupoAdministrador}"   outcome="#{grupoManager.montarPaginaParaListarGrupos()}"                      value="Grupos"             style="background: none;" styleClass="botaomenu"/>
     <p:button  id="btnCategoriaVeiculo"     rendered="#{loginManager.grupoSecretaria}"      outcome="#{categoriaVeiculoManager.montarPaginaParaListarCategoriaVeiculo()}" value="Categoria Veículos" style="background: none;" styleClass="botaomenu"/>
     <p:button  id="btnVeiculo"              rendered="#{loginManager.grupoSecretaria}"      outcome="#{veiculoManager.montarPaginaParaListarVeiculo()}"                   value="Veículos"           style="background: none;" styleClass="botaomenu"/>
     <p:button  id="btnEmpresa"              rendered="#{loginManager.grupoSecretaria}"      outcome="#{empresaManager.listarEmpresa()}"                                   value="Empresas"           style="background: none;" styleClass="botaomenu"/>
