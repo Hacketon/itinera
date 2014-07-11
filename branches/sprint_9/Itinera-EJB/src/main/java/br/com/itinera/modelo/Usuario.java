@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author bruno-note
+ * @author lesena
  */
 @Entity
 @Table(name = "usuario")
@@ -42,9 +42,9 @@ public class Usuario implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @SequenceGenerator(name="Usuario_Generator", sequenceName="seq_usuario", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="Usuario_Generator")
     @Column(name = "id_usuario")
+    @SequenceGenerator(name = "Usuario_Generator", schema = "public", sequenceName = "seq_usuario", allocationSize=1 )
+    @GeneratedValue(generator = "Usuario_Generator", strategy = GenerationType.SEQUENCE )
     private BigDecimal idUsuario;
     @Basic(optional = false)
     @NotNull
@@ -53,7 +53,7 @@ public class Usuario implements Serializable {
     private String login;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 100)
     @Column(name = "senha")
     private String senha;
     @Basic(optional = false)
