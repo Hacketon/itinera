@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="150">
+		<comment>
+			Criando view para localização do grupo/usuario
+		</comment>
+		 <createView 
+            replaceIfExists="true"
+            schemaName="public"
+            viewName="v_grupo_usuario">
+            select a.login,a.senha,b.grupo_nome from usuario as a, grupo as b,	grupo_usuario as c where a.id_usuario = c.usuario_id and b.grupo_id = c.grupo_id
+            </createView>
+		
+	</changeSet>
+</databaseChangeLog>

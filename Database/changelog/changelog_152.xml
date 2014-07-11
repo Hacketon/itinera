@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="152">
+		<comment>
+			Inserindo usuário Secretaria 
+		</comment>
+		<insert schemaName="public" tableName="usuario">
+			<column name="id_usuario">2</column>
+			<column name="login">secretaria</column>
+			<column name="senha">ee63c6506c68d4613b9553820393f22db66a1dbc9ba6dc5640df9fce741e6258</column>
+			<column name="nome">Secretária</column>
+			<column name="ativo">true</column>
+		</insert>
+		 <insert schemaName="public" tableName="grupo_usuario">
+			<column name="usuario_id">2</column>
+			<column name="grupo_id">3</column>
+		</insert>
+	</changeSet>
+</databaseChangeLog>
