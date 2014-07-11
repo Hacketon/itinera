@@ -4,8 +4,10 @@
  */
 package br.com.itinera.manager;
 
+import br.com.itinera.fachada.GrupoFachada;
 import br.com.itinera.fachada.UsuarioFachada;
 import br.com.itinera.ferramentas.Mensagem;
+import br.com.itinera.modelo.Grupo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import br.com.itinera.modelo.Usuario;
+import javax.faces.model.SelectItem;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -25,12 +28,12 @@ public class UsuarioManager implements Serializable{
     private Usuario usuario;
     private String primeiraSenha;
     private String segundaSenha;
-    private String elemento = null;
+    private List<Grupo> grupoSelecionado;
     private List<Usuario> usuarios = new ArrayList<Usuario>();
     @EJB
     private UsuarioFachada fachada;
-    
-    
+    @EJB
+    private GrupoFachada fachadaGrupo;
     
     //Parte 1 - GETs e SETs
     public String getPrimeiraSenha() {
@@ -64,26 +67,60 @@ public class UsuarioManager implements Serializable{
     public Integer contagem(){
         return fachada.contagem();
     }
-    //Parte 2 - CRUD
+
+    public List<Grupo> getGrupoSelecionado() {
+        return grupoSelecionado;
+    }
+
+    public void setGrupoSelecionado(List<Grupo> grupoSelecionado) {
+        this.grupoSelecionado = grupoSelecionado;
+    }
     
+    //Parte 2 - CRUD
     public String inserir(){
-        if (validarSenha()) {
+        try{
             usuario.setLogin(usuario.getLogin().toUpperCase());
-            fachada.inserir(usuario);
+            fachada.inserir(usuario,primeiraSenha,segundaSenha);    
+            for(Grupo g:grupoSelecionado){
+                fachadaGrupo.adicionaUsuarioGrupo(usuario, g);
+            }
             recarregarUsuarios();
             Mensagem.mostrarMensagemSucesso("Sucesso!", "Usuário inserido com sucesso.");
             return montarPaginaParaListarUsuarios();
+        }catch(Exception e){
+            Mensagem.mostrarMensagemErro("Erro!", e.getMessage());
         }
-        else
-            return "";
-        
+        return null;
     }
     
     public String alterar(){
-            fachada.alterar(usuario);
-            Mensagem.mostrarMensagemSucesso("Sucesso!", "Usuário alterado com sucesso!");
-            recarregarUsuarios();
-            return montarPaginaParaListarUsuarios();
+        fachada.alterar(usuario);
+        //verifique se teve alteração de permissão
+        boolean igual = true;
+        for(Grupo g:usuario.getGrupoList()){
+            igual = false;
+            for(Grupo h:grupoSelecionado){
+                if(g.getGrupoId() == h.getGrupoId()){
+                    igual = true;
+                }
+            }
+            if(!igual){
+                break;
+            }
+        }
+        if(!igual || (usuario.getGrupoList().size() == 0 && grupoSelecionado.size() > 0)){
+            //remova todas as permissões de grupo já dada
+            for(Grupo g:usuario.getGrupoList()){
+                fachadaGrupo.removeUsuarioGrupo(usuario, g);
+            }
+            //adicione todas as permissões selecionadas
+            for(Grupo g:grupoSelecionado){
+                fachadaGrupo.adicionaUsuarioGrupo(usuario, g);
+            }
+        }
+        Mensagem.mostrarMensagemSucesso("Sucesso!", "Usuário alterado com sucesso!");
+        recarregarUsuarios();
+        return montarPaginaParaListarUsuarios();
     }
     
     public void excluir(){
@@ -92,33 +129,38 @@ public class UsuarioManager implements Serializable{
         rc.execute("exclui.hide()");
         Mensagem.mostrarMensagemSucesso("Sucesso!", "Usuário excluído com sucesso!");
         usuario = new Usuario();
+        this.grupoSelecionado.clear();
         this.recarregarUsuarios();
     }
     
     public String alterarSenha(){ 
-         if (validarSenha()) {
-             elemento = null;
-             fachada.alterar(usuario);
-             Mensagem.mostrarMensagemSucesso("Sucesso!", "A senha do usuário foi alterada com sucesso!");
-             return montarPaginaParaListarUsuarios();
-         }
-         else
-             return "";
+        try{
+            fachada.alterar(usuario,this.primeiraSenha,this.segundaSenha);
+            Mensagem.mostrarMensagemSucesso("Sucesso!", "A senha do usuário foi alterada com sucesso!");
+            this.grupoSelecionado.clear();
+            return montarPaginaParaListarUsuarios();
+        }catch(Exception e){
+            Mensagem.mostrarMensagemErro("Erro!", e.getLocalizedMessage());
+        }
+        return null;
     }
     
     //Parte 3 - Chamadas de Tela
     public String montarPaginaParaListarUsuarios(){
+        
         recarregarUsuarios();
         return "/componentes/usuario/ListarUsuarios";
     }
     
     public String montarPaginaParaCadastrarUsuarios(){
+        this.grupoSelecionado = new ArrayList<Grupo>();      
         this.usuario = new Usuario();
         this.usuario.setAtivo(true);
         return "/componentes/usuario/CadastrarUsuario";
     }
     
     public String montarPaginaParaAlterarUsuarios(){ 
+        this.grupoSelecionado = this.usuario.getGrupoList();
         return "/componentes/usuario/AlterarUsuario";
     }
     
@@ -131,22 +173,11 @@ public class UsuarioManager implements Serializable{
         this.usuarios = fachada.listar();
     }
     
-
-    private boolean validarSenha() {
-        boolean senhaValida = false;
-        if(this.primeiraSenha.compareTo(segundaSenha) == 0){
-            if(this.primeiraSenha.length() >=6){
-                senhaValida = true;
-            }
-            else
-                Mensagem.mostrarMensagemErro("Erro!","A senha inserida tem um tamanho menor que 6 caracteres.");
-        }
-        else{
-            
-            Mensagem.mostrarMensagemErro("Erro!","A senha de confirmação não confere com a senha inserida.");
-        }
-        return senhaValida;
+    public SelectItem[] getAtivoOpcoes(){
+        SelectItem[] opcoes = new SelectItem[3];
+        opcoes[0] = new SelectItem("","Selecione");
+        opcoes[1] = new SelectItem("true","Sim");
+        opcoes[2] = new SelectItem("false","Não");
+        return opcoes;
     }
-
-            
 }
