@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <display-name>Itinera Gestão de Transportes</display-name>
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
@@ -25,4 +26,85 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/seguranca/Erro404.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/seguranca/Erro403.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/seguranca/Erro500.xhtml</location>
+    </error-page>
+    <security-constraint>
+        <display-name>Administrador</display-name>
+        <web-resource-collection>
+            <web-resource-name>Usuário</web-resource-name>
+            <description/>
+            <url-pattern>/faces/componentes/usuario/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Administrador</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Secretaria</display-name>
+        <web-resource-collection>
+            <web-resource-name>Categoria Veiculo</web-resource-name>
+            <description/>
+            <url-pattern>/faces/componentes/categoriaVeiculo/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Veículos</web-resource-name>
+            <description/>
+            <url-pattern>/faces/componentes/veiculo/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Empresa</web-resource-name>
+            <description/>
+            <url-pattern>/faces/componentes/empresa/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Motorista</web-resource-name>
+            <description/>
+            <url-pattern>/faces/componentes/motorista/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Plano de Conta</web-resource-name>
+            <description/>
+            <url-pattern>/faces/componentes/planoconta/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Secretaria</role-name>
+            <role-name>Administrador</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>itineraRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/index.xhtml</form-login-page>
+            <form-error-page>/index.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description/>
+        <role-name>Administrador</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Gestor</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Secretaria</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Motorista</role-name>
+    </security-role>
 </web-app>
