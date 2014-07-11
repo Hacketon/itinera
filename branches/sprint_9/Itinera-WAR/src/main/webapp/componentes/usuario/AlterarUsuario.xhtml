@@ -11,6 +11,9 @@
             <p:panel styleClass="semBorda" header="#{msg.alteraUsuario}">
             <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
                 <h:form id="formInserirUsuario">
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                    <p:column>
                     <p:panelGrid styleClass="semBorda">
                         <p:row>
                             <p:column>
@@ -19,11 +22,9 @@
                                                 styleClass="fontepadrao"/>
                             </p:column>
                             <p:column>
-                                <p:inputText    id="usuarioLogin"
-                                                readonly="true"
+                                <p:outputLabel  id="usuarioLogin"
                                                 value="#{usuariosManager.usuario.login}" 
-                                                style="text-transform: uppercase;background-color:#EEEEEE;"
-                                                />
+                                                styleClass="inputDesabilitado"/>
                             </p:column>
                         </p:row>
                         <p:row>
@@ -56,16 +57,29 @@
                                         rendererType="boolean"/> 
                             </p:column>
                         </p:row>
-                        <p:row>
-                            <p:column colspan="2" style="text-align: right;">
-                                <p:commandButton 
-                                         id="Btninserir" 
-                                         action="#{usuariosManager.alterar()}" 
-                                         value="Confirmar" 
-                                         styleClass="botao"/>
-                            </p:column>
-                        </p:row>
                     </p:panelGrid>
+                    </p:column>
+                    <p:column style="width:50%;text-align: center;">            
+                        <p:dataTable id="gruposUsuario" var="grupo" value="#{grupoManager.grupos}" selection="#{usuariosManager.grupoSelecionado}" rowKey="#{grupo.grupoId}" style="margin-bottom:0;text-align: center;">
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:column headerText="Grupo">
+                                <h:outputText value="#{grupo.grupoNome}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:column>
+                </p:row>
+                </p:panelGrid>
+                    <br/>
+                    <p:commandButton 
+                        id="Btninserir" 
+                        action="#{usuariosManager.alterar()}" 
+                        value="Confirmar" 
+                        styleClass="botao"/>
+                    <p:commandButton id="BtnFechar" 
+                                     action="#{usuariosManager.montarPaginaParaListarUsuarios()}" 
+                                    value="#{msg.acaoFechar}" 
+                                    immediate="true"
+                                    styleClass="botao"/>
                 </h:form>
                 </p:panel>
         </ui:define>

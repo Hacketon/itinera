@@ -32,20 +32,11 @@ and open the template in the editor.
                                      rows="10" 
                                      rendered="#{not empty usuariosManager.usuarios}">
                             
-                            <p:column headerText="Código" 
-                                      styleClass="fontepadrao"
-                                      style="text-align:center"
-                                      sortBy="#{usuario.idUsuario}" 
-                                      filterBy="#{usuario.idUsuario}">
-                                
-                                <h:outputText value="#{usuario.idUsuario}" />
-                                
-                            </p:column>
-                            
                             <p:column headerText="Login" 
                                       styleClass="fontepadrao"
                                       sortBy="#{usuario.login}" 
-                                      filterBy="#{usuario.login}">
+                                      filterBy="#{usuario.login}"
+                                      filterStyle="min-width:150px">
                                 
                                 <h:outputText value="#{usuario.login}" />
                                 
@@ -54,8 +45,9 @@ and open the template in the editor.
                             <p:column headerText="Nome" 
                                       styleClass="fontepadrao"
                                       sortBy="#{usuario.nome}" 
-                                      filterBy="#{usuario.nome}">
-                                
+                                      filterBy="#{usuario.nome}"
+                                      filterStyle="min-width:400px"
+                                      style="min-width:400px">
                                 <h:outputText value="#{usuario.nome}" />
                                 
                             </p:column>
@@ -64,12 +56,10 @@ and open the template in the editor.
                                       styleClass="fontepadrao"
                                       style="text-align: center;"
                                       headerText="Ativo"
-                                      filterBy="#{usuario.ativo}">
+                                      filterBy="#{usuario.ativo}" 
+                                      filterOptions="#{usuariosManager.ativoOpcoes}">
                                 
-                                <h:selectBooleanCheckbox readonly="true" 
-                                                         disabled="true" 
-                                                         
-                                                         value="#{usuario.ativo}" />
+                                <h:outputLabel value="#{usuario.ativo?'Sim':'Não'}" />
                             </p:column>
                             
                             <p:column headerText="">

@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body onload="selecionado($('#btnGrupo'));">
+        <h:outputScript>selecionado($('#btnGrupo'));</h:outputScript>
+        <f:view>      
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">
+                    <p:panel styleClass="semBorda" header="#{msg.listaGrupo}">
+                        <h:form>
+                            <p:messages id="messages" showDetail="true" closable="true"/>
+                            <h:panelGrid id="gridGrupo" >
+                                <p:dataTable 
+                                             paginator="true" 
+                                             rows="10" 
+                                             rendered="#{not empty grupoManager.grupos}"
+                                             value="#{grupoManager.grupos}" 
+                                             var="grupo"
+                                             >
+                                    <p:column>
+                                        <p:rowToggler/>
+                                    </p:column>
+                                    <p:column headerText="#{msg.nomeGrupo}"                                              
+                                              style="max-width: 150px;"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{grupo.grupoNome}" 
+                                              >
+                                        <h:outputText value="#{grupo.grupoNome}"/>                             
+                                    </p:column>
+
+                                    <p:column headerText="#{msg.descricaoGrupo}"                                              
+                                              styleClass="fontepadrao"
+                                              sortBy="#{grupo.grupoDescricao}" 
+                                              >
+                                        <h:outputText value="#{grupo.grupoDescricao}"/>                                  
+                                    </p:column>
+                                    <p:column headerText="">
+                                        <h:commandLink styleClass="fontepadrao" 
+                                                       action="#{grupoManager.montarPaginaParaAdicionarUsuarioAoGrupo()}" 
+                                               value="Adicionar Usuários">
+                                            <f:setPropertyActionListener value="#{grupo}" target="#{grupoManager.grupo}" />  
+                                        </h:commandLink>
+                                    </p:column>    
+                                    <p:rowExpansion>
+                                        <p:dataTable var="usuario" value="#{grupo.usuarioList}" emptyMessage="Não existem usuários neste grupo.">
+                                            <p:column headerText="Login">
+                                                <p:outputLabel value="#{usuario.login}"/>
+                                            </p:column>
+                                            <p:column headerText="Nome">
+                                                <p:outputLabel value="#{usuario.nome}"/>
+                                            </p:column>
+                                            <p:column headerText="Ativo">
+                                                <p:outputLabel value="#{(usuario.ativo)?'Sim':'Não'}" />
+                                            </p:column>
+                                            <p:column headerText="">
+                                                <p:commandLink styleClass="fontepadrao" 
+                                                               oncomplete="exclui.show();"
+                                                               value="Remover">
+                                                    <f:setPropertyActionListener value="#{grupo}" target="#{grupoManager.grupo}"/>
+                                                    <f:setPropertyActionListener value="#{usuario}" target="#{grupoManager.usuario}" />  s
+                                                </p:commandLink>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:rowExpansion> 
+                                   
+                                </p:dataTable>
+                                <!--DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
+                                <p:confirmDialog header="Remover?" message="Você confirma a remoção deste usuário do grupo?" id="excluiDlg" widgetVar="exclui">
+                                    <p:commandButton value="Sim" action="#{grupoManager.removeDoGrupo()}" update="gridGrupo messages" />
+                                    <p:commandButton value="Não" onclick="exclui.hide();" />
+                                </p:confirmDialog>
+                            </h:panelGrid>
+                        </h:form>
+                    </p:panel>
+                </ui:define>
+            </ui:decorate>
+        </f:view>
+    </h:body>
+</html>
+
