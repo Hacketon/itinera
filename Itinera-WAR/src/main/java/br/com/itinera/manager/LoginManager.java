@@ -127,6 +127,7 @@ public class LoginManager implements Serializable{
                 FacesContext contexto = FacesContext.getCurrentInstance();
                 HttpServletRequest request = (HttpServletRequest)contexto.getExternalContext().getRequest();
                 try{
+                    login = login.toUpperCase();
                     request.login(login, senha);
                     this.usuario = fachada.buscarPorLogin(login);
                     this.logado = true;
