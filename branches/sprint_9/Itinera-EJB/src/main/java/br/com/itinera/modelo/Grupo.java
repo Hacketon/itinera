@@ -8,15 +8,17 @@ package br.com.itinera.modelo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -53,10 +55,14 @@ public class Grupo implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "grupo_descricao")
     private String grupoDescricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grupoId")
-    private List<GrupoUsuario> grupoUsuarioList;
+    @JoinTable(name = "grupo_usuario", joinColumns = {
+        @JoinColumn(name = "grupo_id", referencedColumnName = "grupo_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "usuario_id", referencedColumnName = "id_usuario")})
+    @ManyToMany
+    private List<Usuario> usuarioList;
 
     public Grupo() {
+        usuarioList = new ArrayList<Usuario>();
     }
 
     public Grupo(BigDecimal grupoId) {
@@ -94,12 +100,12 @@ public class Grupo implements Serializable {
     }
 
     @XmlTransient
-    public List<GrupoUsuario> getGrupoUsuarioList() {
-        return grupoUsuarioList;
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
     }
 
-    public void setGrupoUsuarioList(List<GrupoUsuario> grupoUsuarioList) {
-        this.grupoUsuarioList = grupoUsuarioList;
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @Override
