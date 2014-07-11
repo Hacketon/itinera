@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="153">
+		<comment>
+			Consertando o nome do grupo secretária que estava escrito incorreto
+		</comment>
+		<update schemaName="public" tableName="grupo">
+			<column name="grupo_nome">Secretaria</column>
+			<where>grupo_id=3</where>
+		</update>
+	</changeSet>
+</databaseChangeLog>
