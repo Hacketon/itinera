@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="149">
+		<comment>
+			recriando tabela de grupo_usuario (havia criado de forma errada)
+		</comment>
+		
+			<dropTable cascadeConstraints="true" tableName="grupo_usuario"/>
+			
+			<createTable schemaName="public" tableName="grupo_usuario" remarks="Tabela que relaciona um ou vários grupos à usuários do sistema">
+				<column name="grupo_id" 				type="numeric" 	remarks="identificador do grupo">
+					<constraints nullable="false" primaryKey="true" />
+				</column>
+				<column name="usuario_id"		type="numeric"	remarks="identificador do usuário"	>
+					<constraints nullable="false" primaryKey="true" />
+				</column>
+			</createTable>
+		
+			<addForeignKeyConstraint baseColumnNames="grupo_id"
+				baseTableName="grupo_usuario"
+				constraintName="FK_grupo_usuario_grupo"
+				referencedColumnNames="grupo_id"
+				referencedTableName="grupo"/>
+				
+			<addForeignKeyConstraint baseColumnNames="usuario_id"
+				baseTableName="grupo_usuario"
+				constraintName="FK_grupo_usuario_usuario"
+				referencedColumnNames="id_usuario"
+				referencedTableName="usuario"/>
+				
+			<addUniqueConstraint 
+				columnNames="usuario_id, grupo_id"
+				constraintName="unique_usuario_grupo"
+				schemaName="public"
+				tableName="grupo_usuario"/>
+	</changeSet>
+</databaseChangeLog>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="147">
+		<comment>
+			Refatoração tabela de usuários para que os campos de login  seja do tipo varchar
+			Refatoração tabela de usuários para que o campo de senha abrigue senhas SHA-256 de 100 caracteres ou mais. 
+		</comment>
+		<modifyDataType columnName="login" newDataType="varchar(30)" tableName="usuario"/>
+		<modifyDataType columnName="senha" newDataType="varchar(100)" tableName="usuario"/>
+		
+	 </changeSet>
+     
+</databaseChangeLog>
