@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+        <h:body onload="selecionado($('#btnGrupo'));">
+        <h:outputScript>selecionado($('#btnGrupo'));</h:outputScript>
+        <f:view>      
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">
+                    <p:panel styleClass="semBorda" header="#{msg.listaUsuarioGrupo}">
+                        <h:form>
+                            <p:messages id="messages" showDetail="true" closable="true"/>
+                            <h:panelGrid  styleClass="semBorda">
+                                <p:row>
+                                    <p:column >
+                                        <p:outputLabel value="Grupo   "/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{grupoManager.grupo.grupoNome}" styleClass="inputDesabilitado"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="2">
+                                        <p:dataTable id="usuarioGrid" var="usuario" value="#{grupoManager.usuariosDoGrupo}" selection="#{grupoManager.usuariosSelecionados}" rowKey="#{usuario.idUsuario}" style="margin-bottom:0" emptyMessage="Não existem usuários para esta seleção">    
+                                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                            <p:column headerText="Login" filterBy="#{usuario.login}" sortBy="#{usuario.login}">
+                                                <h:outputText value="#{usuario.login}" />
+                                            </p:column>
+                                            <p:column headerText="Nome" filterBy="#{usuario.nome}" sortBy="#{usuario.nome}" filterStyle="min-width:400px;">
+                                                <h:outputText value="#{usuario.nome}" />
+                                            </p:column>
+                                            <p:column headerText="Ativo" filterBy="#{usuario.ativo}" sortBy="#{usuario.ativo}" filterOptions="#{usuariosManager.ativoOpcoes}" filterStyle="width:200px;">
+                                                <h:outputText value="#{usuario.ativo?'Sim':'Não'}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:column>
+                                </p:row>
+                                                     
+                            </h:panelGrid>
+                            <br/>
+                             <p:commandButton 
+                                    id="Btninserir" 
+                                    action="#{grupoManager.adicionarAoGrupo()}"
+                                    styleClass="botao"
+                                    value="#{msg.acaoOK}"
+                                    update="messages"/>
+                             
+                              <p:commandButton id="BtnFechar" 
+                                               action="#{grupoManager.montarPaginaParaListarGrupos()}" 
+                                         value="#{msg.acaoFechar}" 
+                                         immediate="true"
+                                         styleClass="botao"/>
+                        </h:form>
+                    </p:panel>
+                </ui:define>
+            </ui:decorate>
+        </f:view>
+    </h:body>
+</html>
+
