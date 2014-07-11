@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="leticia" id="155">
+		<comment>
+			Criação da estrutura da tabela de Ordem de Coleta
+		</comment>
+        <createTable tableName="ordem_coleta" remarks="Tabela que armazena as ordens de coleta para viagens.">
+            <column name="ordem_coleta_id" type="numeric" remarks="Número da Ordem de Coleta">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="data_ordem_coleta" type="Date" remarks="Data que foi gerada a ordem de coleta">
+                <constraints nullable="false"/>
+            </column>
+            <column name="motorista_id" type="numeric" remarks="Motorista responsável pela entrega">
+                <constraints nullable="false"/>
+            </column>
+            <column name="veiculo_id" type="numeric" remarks="Veículo utilizado na entrega">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remetente_id" type="numeric" remarks="Remetente do transporte">
+                <constraints nullable="false"/>
+            </column>
+            <column name="destinatario_id" type="numeric" remarks="Destinatário do Transporte">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valor_unitario" type="numeric(9,2)" remarks="Valor unitário da carga">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantidade" type="numeric" remarks="Quantidade do produto transportado">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valor_total" type="numeric(9,2)" remarks="Valor total para transporte">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numero_nota" type="numeric" remarks="Nota fiscal gerada para a entrega">
+                <constraints nullable="true"/>
+            </column>
+            <column name="data_emissao_nf" type="Date" remarks="Data da emissão da nota fiscal gerada para a entrega">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+	</changeSet>
+	<changeSet author="Leticia" id="156">
+		<comment>
+			Adição das constraints de Foreign Key 
+		</comment>
+		<addForeignKeyConstraint 
+			baseColumnNames="motorista_id"
+            baseTableName="ordem_coleta"
+            constraintName="fk_motorista_ordem_coleta"
+            referencedColumnNames="motorista_id"
+            referencedTableName="motorista"/>
+        <addForeignKeyConstraint 
+			baseColumnNames="veiculo_id"
+            baseTableName="ordem_coleta"
+            constraintName="fk_veiculo_ordem_coleta"
+            referencedColumnNames="id_veiculo"
+            referencedTableName="veiculo"/>
+        <addForeignKeyConstraint 
+			baseColumnNames="remetente_id"
+            baseTableName="ordem_coleta"
+            constraintName="fk_empresa_remetente_ordem_coleta"
+            referencedColumnNames="id_empresa"
+            referencedTableName="empresa"/>
+        <addForeignKeyConstraint 
+			baseColumnNames="destinatario_id"
+            baseTableName="ordem_coleta"
+            constraintName="fk_empresa_destinatario_ordem_coleta"
+            referencedColumnNames="id_empresa"
+            referencedTableName="empresa"/>
+	</changeSet>
+	<changeSet author="Leticia" id="157">
+		<comment>
+			Adição da constraint unique 
+		</comment>
+		<addUniqueConstraint 
+            columnNames="ordem_coleta_id,veiculo_id,remetente_id,destinatario_id,data_ordem_coleta"
+            constraintName="unique_ordem_coleta"
+            schemaName="public"
+            tableName="ordem_coleta"/>
+	</changeSet>
+	<changeSet author="Leticia" id="158">
+		<comment>
+			Adiçãod a sequence de ordem de coleta
+		</comment>
+		<createSequence sequenceName="seq_ordem_coleta"/>
+	</changeSet>
+</databaseChangeLog>
