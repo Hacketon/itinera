@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -21,6 +24,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -166,6 +170,9 @@ public class Veiculo implements Serializable {
     @ManyToOne(optional = false)
     private CategoriaVeiculo idCategoriaVeiculo;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "veiculoId")
+    private List<OrdemColeta> ordemColetaList;
+    
     public Veiculo() {
     }
 
@@ -380,6 +387,15 @@ public class Veiculo implements Serializable {
     public void setIdCategoriaVeiculo(CategoriaVeiculo idCategoriaVeiculo) {
         this.idCategoriaVeiculo = idCategoriaVeiculo;
     }
+    
+    @XmlTransient 
+    public List<OrdemColeta> getOrdemColetaList() {
+        return ordemColetaList;
+    }
+    
+    public void setOrdemColetaList(List<OrdemColeta> ordemColetaList) {
+        this.ordemColetaList = ordemColetaList;
+    }
 
     @Override
     public int hashCode() {
@@ -390,7 +406,6 @@ public class Veiculo implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Veiculo)) {
             return false;
         }
@@ -413,5 +428,6 @@ public class Veiculo implements Serializable {
     public void setDataInclusao(Date dataInclusao) {
         this.dataInclusao = dataInclusao;
     }
+
     
 }
