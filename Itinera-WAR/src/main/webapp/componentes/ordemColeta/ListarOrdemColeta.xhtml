@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:body onload="selecionado($('#btnOrdemColeta'));">
+        <h:outputScript>selecionado($('#btnsOrdemColeta'));</h:outputScript>
+        <f:view>      
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">
+                    <p:panel styleClass="semBorda" header="#{msg.listaOrdemColeta}">
+                        <h:form>
+                            <p:messages id="messages" showDetail="true"/>
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{msg.filtroPeriodoDaOC}" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="filtroOCDataInicio" 
+                                                    value="#{ordemColetaManager.filtroDataInicio}" 
+                                                    locale="pt"
+                                                    selectOtherMonths="true"
+                                                    pattern="dd/MM/yyyy" 
+                                                    onkeypress="mascara(this, formatarData)"
+                                                    />
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{msg.filtroPeriodoSeparador}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="filtroOCDataFim" 
+                                                    locale="pt"
+                                                    value="#{ordemColetaManager.filtroDataFim}" 
+                                                    pattern="dd/MM/yyyy" 
+                                                    onkeypress="mascara(this, formatarData)"/>
+                                    </p:column> 
+                                    <p:column>
+                                        <p:outputLabel value="#{msg.filtroNotaFiscal}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText value="#{ordemColetaManager.filtroNotaFiscal}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:commandButton value="#{msg.buscar}" action="#{ordemColetaManager.filtrar()}"/>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                            <p:commandButton icon="ui-icon-plus" 
+                                             action="#{ordemColetaManager.montarPaginaCadastro()}" 
+                                             styleClass="fontepadrao" value="Novo"/>
+                            <h:panelGrid id="gridOrdemColeta" >
+                                <h:outputText value="#{msg.listagemVazioOrdemColeta}" 
+                                              rendered="#{empty ordemColetaManager.ordensColeta}" />
+
+                                <p:dataTable emptyMessage="#{msg.listagemVazioOrdemColeta}"
+                                             paginator="true" 
+                                             rows="10" 
+                                             rendered="#{not empty ordemColetaManager.ordensColeta}"
+                                             value="#{ordemColetaManager.ordensColeta}" 
+                                             var="ordemColeta"
+                                             >
+                                    <p:column headerText="#{msg.OCData}" 
+                                              filterBy="#{ordemColeta.dataOrdemColeta}"
+                                              filterMatchMode="equals"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{ordemColeta.dataOrdemColeta}" >
+                                        <h:outputText value="#{ordemColeta.dataOrdemColeta}"/>
+                                    </p:column>
+                                    <p:column headerText="#{msg.OCNumero}" 
+                                              filterBy="#{ordemColeta.ordemColetaId}"
+                                              filterMatchMode="equals"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{ordemColeta.ordemColetaId}" >
+                                        <h:outputText value="#{ordemColeta.ordemColetaId}"/>
+                                    </p:column>
+                                    <p:column headerText="#{msg.OCRota}" 
+                                              filterBy="#{ordemColeta.rota}"
+                                              filterMatchMode="contains"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{ordemColeta.rota}" >
+                                        <h:outputText value="#{ordemColeta.rota}"/>
+                                    </p:column>
+                                    <p:column headerText="#{msg.OCRemetente}" 
+                                              filterBy="#{ordemColeta.remetenteId.nomeFantasia}"
+                                              filterMatchMode="contains"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{ordemColeta.remetenteId.nomeFantasia}" >
+                                        <h:outputText value="#{ordemColeta.remetenteId.nomeFantasia}"/>
+                                    </p:column>
+                                    <p:column headerText="#{msg.OCDestinatario}" 
+                                              filterBy="#{ordemColeta.destinatarioId.nomeFantasia}"
+                                              filterMatchMode="contains"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{ordemColeta.destinatarioId.nomeFantasia}" >
+                                        <h:outputText value="#{ordemColeta.destinatarioId.nomeFantasia}"/>
+                                    </p:column>
+                                    <p:column headerText="#{msg.OCVeiculo}" 
+                                              filterBy="#{ordemColeta.veiculoId.placaVeiculo}"
+                                              filterMatchMode="contains"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{ordemColeta.veiculoId.placaVeiculo}" >
+                                        <h:outputText value="#{ordemColeta.veiculoId.placaVeiculo}"/>
+                                    </p:column>
+                                    <p:column headerText="#{msg.OCMotorista}" 
+                                              filterBy="#{ordemColeta.motoristaId.nome}"
+                                              filterMatchMode="contains"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{ordemColeta.motoristaId.nome}" >
+                                        <h:outputText value="#{ordemColeta.motoristaId.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="#{msg.OCValor}" 
+                                              styleClass="fontepadrao"
+                                              sortBy="#{ordemColeta.valorTotal}" >
+                                        <h:outputText value="#{ordemColeta.valorTotal}"/>
+                                    </p:column>
+                                    <p:column headerText="">
+                                        <h:commandLink styleClass="fontepadrao" 
+                                                       action="#{ordemColetaManager.montarPaginaAlterar()}"
+                                                       value="#{msg.acaoAlterar}">
+                                            <f:setPropertyActionListener value="#{ordemColeta}" target="#{ordemColetaManager.ordemColeta}" />  
+                                        </h:commandLink>
+
+                                    </p:column>
+                                    <p:column headerText="">
+                                        <p:commandLink styleClass="fontepadrao" 
+                                                       oncomplete="exclui.show();"
+                                                       value="#{msg.acaoExcluir}">
+                                            <f:setPropertyActionListener value="#{ordemColeta}" target="#{ordemColetaManager.ordemColeta}" />  
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGrid>
+
+
+                            <!--DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
+                            <p:confirmDialog header="#{msg.headerExcluir}" message="#{msg.perguntaExcluirOrdemColeta}" id="excluiDlg" widgetVar="exclui">
+                                <p:commandButton value="#{msg.acaoSim}" action="#{ordemColetaManager.excluir()}" update="gridOrdemColeta messages" />
+                                <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
+                            </p:confirmDialog>
+                        </h:form>
+                    </p:panel>
+                </ui:define>
+            </ui:decorate>
+        </f:view>
+    </h:body>
+</html>
+
