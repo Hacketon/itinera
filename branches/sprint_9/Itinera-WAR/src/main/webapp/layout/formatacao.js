@@ -85,3 +85,12 @@ function formatarCPF(v){
     // ultimos 2 digitos  
     return v;
 }
+
+function formatarData(v){
+    v=v.replace(/\D/g,"");                    //Remove tudo o que não é dígito
+    v=v.replace(/(\d{2})(\d)/,"$1/$2");
+    v=v.replace(/(\d{2})(\d)/,"$1/$2");
+    v=v.replace(/(\d{1,2})(\d{2})$/,"$2");
+    return v;
+
+}
