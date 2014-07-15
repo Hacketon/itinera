@@ -87,18 +87,26 @@ public class OrdemColeta implements Serializable {
     private String Rota;
 
     public OrdemColeta() {
+        this.dataOrdemColeta = new Date();
+        this.remetenteId = new Empresa();
+        this.destinatarioId = new Empresa();
     }
 
     public OrdemColeta(BigDecimal ordemColetaId) {
         this.ordemColetaId = ordemColetaId;
+        this.dataOrdemColeta = new Date();
+        this.remetenteId = new Empresa();
+        this.destinatarioId = new Empresa();
     }
 
     public OrdemColeta(BigDecimal ordemColetaId, Date dataOrdemColeta, BigDecimal valorUnitario, BigInteger quantidade, BigDecimal valorTotal) {
         this.ordemColetaId = ordemColetaId;
-        this.dataOrdemColeta = dataOrdemColeta;
         this.valorUnitario = valorUnitario;
         this.quantidade = quantidade;
         this.valorTotal = valorTotal;
+        this.dataOrdemColeta = new Date();
+        this.remetenteId = new Empresa();
+        this.destinatarioId = new Empresa();
     }
 
     public BigDecimal getOrdemColetaId() {
@@ -122,6 +130,7 @@ public class OrdemColeta implements Serializable {
     }
 
     public void setValorUnitario(BigDecimal valorUnitario) {
+        this.valorTotal = new BigDecimal(quantidade.doubleValue() * valorUnitario.doubleValue());
         this.valorUnitario = valorUnitario;
     }
 
@@ -130,6 +139,7 @@ public class OrdemColeta implements Serializable {
     }
 
     public void setQuantidade(BigInteger quantidade) {
+        this.valorTotal = new BigDecimal(quantidade.doubleValue() * valorUnitario.doubleValue());
         this.quantidade = quantidade;
     }
 
@@ -138,7 +148,7 @@ public class OrdemColeta implements Serializable {
     }
 
     public void setValorTotal(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
+        this.valorTotal = new BigDecimal(quantidade.doubleValue() * valorUnitario.doubleValue());
     }
 
     public BigInteger getNumeroNota() {
@@ -215,7 +225,10 @@ public class OrdemColeta implements Serializable {
     }
     
     public String getRota(){
-        return this.remetenteId.getIdMunicipio().getNomeMunicipio() + " - " + this.getDestinatarioId().getIdMunicipio().getNomeMunicipio();
+        String rota = "";
+        rota += (this.remetenteId.toString() == null)?"":this.remetenteId.getIdMunicipio().getNomeMunicipio() + " - ";
+        rota += (this.destinatarioId.toString() == null)?"":this.destinatarioId.getIdMunicipio().getNomeMunicipio();            
+        return rota;
     }
     
     
