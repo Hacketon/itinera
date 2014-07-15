@@ -45,6 +45,11 @@
             <description/>
             <url-pattern>/faces/componentes/usuario/*</url-pattern>
         </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Grupos</web-resource-name>
+            <description/>
+            <url-pattern>/faces/componentes/grupo/*</url-pattern>
+        </web-resource-collection>
         <auth-constraint>
             <description/>
             <role-name>Administrador</role-name>
@@ -76,6 +81,11 @@
             <web-resource-name>Plano de Conta</web-resource-name>
             <description/>
             <url-pattern>/faces/componentes/planoconta/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Ordem de Coleta</web-resource-name>
+            <description/>
+            <url-pattern>/faces/componentes/ordemColeta/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
