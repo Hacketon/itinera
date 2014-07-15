@@ -150,4 +150,8 @@ public class EmpresaFachada {
         }
         empresa.setEmpresaTelefoneList(oldListTelefone);
     }
+    
+    public List<Empresa> buscarPorTipo(Character tipoEmpresa){
+       return dao.listarBuscaPorTipo(tipoEmpresa);
+    }
 }

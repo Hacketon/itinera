@@ -10,8 +10,6 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 /**
  *
@@ -129,7 +127,8 @@ public class Endereco implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Endereco[ cep=" + cep + " ]";
+        return this.tipoLogradouro + " " + this.nomeLogradouro + ", " + this.getNumero() + " - " +
+               ((this.complemento.isEmpty())?"":this.complemento + " - ") + this.bairro;
     }
     
 }
