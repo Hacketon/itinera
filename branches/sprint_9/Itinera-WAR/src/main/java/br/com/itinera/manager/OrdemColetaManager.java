@@ -7,6 +7,7 @@
 package br.com.itinera.manager;
 
 import br.com.itinera.fachada.OrdemColetaFachada;
+import br.com.itinera.modelo.Empresa;
 import br.com.itinera.modelo.OrdemColeta;
 import java.io.Serializable;
 import java.util.Date;
@@ -78,12 +79,16 @@ public class OrdemColetaManager implements Serializable{
     
     public String montarPaginaCadastro(){
         //TODO Realizar metodo para preparar a página para cadastro e redirecionar à outra página
-        return "";
+        return "/componentes/ordemColeta/CadastroOrdemColeta";
     }
     
     public String montarPaginaAlterar(){
         //TODO Realizar metodo para preparar a página para alteração e redirecionar à outra página
-        return "";
+        return "/componentes/ordemColeta/CadastroOrdemColeta";
+    }
+    
+    public void salvar(){
+        //TODO realizar método para salvar a ordem de coleta e exibir mensagem de sucesso.
     }
     
     public void excluir(){
@@ -92,5 +97,26 @@ public class OrdemColetaManager implements Serializable{
     
     public void filtrar(){
         //TODO Realizar o filtro sobre os itens da lista referentes à busca dos itens selecionados. 
+    }
+    
+    public void completeMotorista(){
+        //TODO Realizar aqui o método para autocomplete
+    }
+    
+    public void completeVeiculo(){
+        //TODO Realizar aqui o método para autocomplete
+    }
+    
+    public void completeRemetente(){
+        //TODO Realizar aqui o método para autocomplete
+    }
+    
+    public void completeDestinatario(){
+        //TODO Realizar aqui o método para autocomplete
+    }
+    
+    public String formatarEndereco(Empresa emp){
+        //TODO retornar endereço setado em enderecoID para a empresa passada por parâmetro
+        return "";
     }
 }
