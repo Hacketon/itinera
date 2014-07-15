@@ -3,7 +3,7 @@ package br.com.itinera.modelo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -43,37 +43,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empresa.findByRazaoSocial", query = "SELECT e FROM Empresa e WHERE e.razaoSocial = :razaoSocial"),
     @NamedQuery(name = "Empresa.findByTipo", query = "SELECT e FROM Empresa e WHERE e.tipo = :tipo")})
 public class Empresa implements Serializable {
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 9)
-    @Column(name = "cep")
-    private String cep;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "tipo_logradouro")
-    private String tipoLogradouro;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nome_logradouro")
-    private String nomeLogradouro;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "numero")
-    private BigInteger numero;
-    @Size(max = 50)
-    @Column(name = "complemento")
-    private String complemento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "bairro")
-    private String bairro;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "destinatarioId")
-    private List<OrdemColeta> ordemColetaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "remetenteId")
-    private List<OrdemColeta> ordemColetaList1;
     @ManyToMany( cascade = CascadeType.ALL )
     @JoinTable( name = "contato_emp_email", 
                 joinColumns = @JoinColumn(name = "empresa_id"),
@@ -129,6 +98,9 @@ public class Empresa implements Serializable {
     public Empresa() {
         endereco = new Endereco();
         idMunicipio = new Municipio();
+        this.empresaResponsavelList = new ArrayList<EmpresaResponsavel>();
+        this.telefoneList = new ArrayList<Telefone>();
+        this.emailList = new ArrayList<Email>();
     }
 
     public Empresa(BigDecimal idEmpresa) {
@@ -230,26 +202,7 @@ public class Empresa implements Serializable {
 
     @Override
     public String toString() {
-        String empresaDetails;
-        empresaDetails =    "ID:" + idEmpresa + "\n" + 
-                            "Tipo:" + tipo + "\n" +
-                            "CNPJ:" + cnpj + "\n" + 
-                            "Nome Fantasia:" + nomeFantasia +  "\n" + 
-                            "Razão Social:"  + razaoSocial + "\n" + 
-                            "Inscrição Estadual:" + ie + "\n";
-        empresaDetails+= "Emails{\n";
-        for(Email email:this.emailList){
-            empresaDetails += "Email: " + email.toString();
-        }
-        empresaDetails += "} \n Telefones{\n";
-        for(Telefone telefone:this.telefoneList){
-            empresaDetails += "Telefone:" + telefone.toString();
-        }
-        empresaDetails += "} \n Responsáveis{\n";
-        for(EmpresaResponsavel responsa: this.empresaResponsavelList){
-            empresaDetails += "Responsável: " + responsa.toString();
-        }
-        return empresaDetails;
+        return this.nomeFantasia;
     }
 
     @XmlTransient
@@ -277,72 +230,6 @@ public class Empresa implements Serializable {
 
     public void setEmpresaTelefoneList(List<Telefone> telefoneList) {
         this.telefoneList = telefoneList;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getTipoLogradouro() {
-        return tipoLogradouro;
-    }
-
-    public void setTipoLogradouro(String tipoLogradouro) {
-        this.tipoLogradouro = tipoLogradouro;
-    }
-
-    public String getNomeLogradouro() {
-        return nomeLogradouro;
-    }
-
-    public void setNomeLogradouro(String nomeLogradouro) {
-        this.nomeLogradouro = nomeLogradouro;
-    }
-
-    public BigInteger getNumero() {
-        return numero;
-    }
-
-    public void setNumero(BigInteger numero) {
-        this.numero = numero;
-    }
-
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    @XmlTransient
-    public List<OrdemColeta> getOrdemColetaList() {
-        return ordemColetaList;
-    }
-
-    public void setOrdemColetaList(List<OrdemColeta> ordemColetaList) {
-        this.ordemColetaList = ordemColetaList;
-    }
-
-    @XmlTransient
-    public List<OrdemColeta> getOrdemColetaList1() {
-        return ordemColetaList1;
-    }
-
-    public void setOrdemColetaList1(List<OrdemColeta> ordemColetaList1) {
-        this.ordemColetaList1 = ordemColetaList1;
     }
     
 }

@@ -138,4 +138,7 @@ public class EmpresaDAO {
         }
     }
     
+    public List<Empresa> listarBuscaPorTipo(Character tipo){
+        return em.createNamedQuery("Empresa.findByTipo").setParameter("tipo", tipo).getResultList();
+    }
 }
