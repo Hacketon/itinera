@@ -8,7 +8,7 @@ package br.com.itinera.enuns.converter;
 
 import br.com.itinera.fachada.MunicipioFachada;
 import br.com.itinera.modelo.Municipio;
-import java.util.List;
+import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -24,7 +24,7 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter(value="conversorMunicipio")
 @SessionScoped
 @ManagedBean(name = "mngMunicipioConverter")
-public class MunicipioConverter  implements Converter{
+public class MunicipioConverter  implements Converter, Serializable{
     @EJB
     private MunicipioFachada fachada;
    
