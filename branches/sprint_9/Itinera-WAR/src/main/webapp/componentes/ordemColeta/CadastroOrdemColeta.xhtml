@@ -27,8 +27,8 @@
                                         <p:outputLabel value="#{msg.OCData}"/>
                                     </p:column>
                                     <p:column>    
-                                        <p:outputLabel value="#{ordemColetaManager.ordemColeta.dataOrdemColeta}"
-                                                       style="inputDesabilitado"/>
+                                        <p:outputLabel value="#{ordemColetaManager.formatarData(ordemColetaManager.ordemColeta.dataOrdemColeta)}"
+                                                       styleClass="inputDesabilitado"/>
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -43,6 +43,7 @@
                                                         converter="#{mngMotoristaConverter}"
                                                         value="#{ordemColetaManager.ordemColeta.motoristaId}"
                                                         size="80" />
+                                        <p:watermark for="OCMotorista" value="#{msg.OCMMotorista}"/>
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -57,6 +58,7 @@
                                                         converter="#{mngVeiculoConverter}"
                                                         value="#{ordemColetaManager.ordemColeta.veiculoId}"
                                                         size="80" />
+                                        <p:watermark for="OCVeiculo" value="#{msg.OCMVeiculo}"/>
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -73,6 +75,7 @@
                                                         size="80" >
                                             <p:ajax update="RemetenteCNPJ RemetenteEndereco OCRota" event="itemSelect"/>
                                         </p:autoComplete>
+                                        <p:watermark for="OCRemetente" value="#{msg.OCMRemetente}"/>
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -110,6 +113,7 @@
                                                         size="80" >
                                                     <p:ajax update="DestinatarioCNPJ DestinatarioEndereco OCRota" event="itemSelect"/>
                                         </p:autoComplete>
+                                        <p:watermark for="OCDestinatario" value="#{msg.OCMDestinatario}"/>
                                     </p:column>
                                 </p:row>
                                  <p:row>
@@ -141,23 +145,30 @@
                                         <p:outputLabel value="#{msg.OCValorUnitario}" for="OCValorUnitario"/>
                                     </p:column>
                                     <p:column>
-                                        <p:inputMask value="#{ordemColetaManager.ordemColeta.valorUnitario}" mask="99999?" id="OCValorUnitario" required="true" requiredMessage="#{msgSis.obrigatorioOCValorUnitario}">
-                                            <p:ajax update="OCTotal" event="blur"/>
-                                        </p:inputMask>
+                                        <p:inputText value="#{ordemColetaManager.valorUnitario}" 
+                                                     onkeypress="mascara(this, formatarNumeroDuasCasas)"
+                                                     converter="conversorMoedaVirgula" 
+                                                     id="OCValorUnitario" 
+                                                     required="true" requiredMessage="#{msgSis.obrigatorioOCValorUnitario}" >
+                                            <p:ajax event="blur" update="OCTotal" listener="#{ordemColetaManager.calcular()}"/>
+                                        </p:inputText>
+                                        <p:watermark for="OCValorUnitario" value="#{msg.OCMValorUnitario}"/>
                                     </p:column>
                                     <p:column>
                                         <p:outputLabel value="#{msg.OCQuantidade}" for="OCQuantidade"/>
                                     </p:column>
                                     <p:column>
-                                        <p:inputMask value="#{ordemColetaManager.ordemColeta.quantidade}" mask="?99999999" id="OCQuantidade" required="true" requiredMessage="#{msgSis.obrigatorioOCQuantidade}">
-                                            <p:ajax update="OCTotal" event="blur"/>
+                                        <p:inputMask value="#{ordemColetaManager.quantidade}" mask="?99999999" id="OCQuantidade" required="true" requiredMessage="#{msgSis.obrigatorioOCQuantidade}">
+                                            <p:ajax event="blur" update="OCTotal" listener="#{ordemColetaManager.calcular()}"/>
                                         </p:inputMask>
+                                        <p:watermark for="OCQuantidade" value="#{msg.OCQuantidade}"/>
                                     </p:column>
                                     <p:column>
                                         <p:outputLabel value="#{msg.OCValorTotal}" for="OCTotal"/>
                                     </p:column>
                                     <p:column>
-                                        <p:outputLabel id="OCTotal" value="#{ordemColetaManager.ordemColeta.valorTotal}" styleClass="inputDesabilitado"/>
+                                        <p:outputLabel id="OCTotal" value="#{ordemColetaManager.valorTotal}" styleClass="inputDesabilitado" />
+                                        
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -166,6 +177,7 @@
                                     </p:column>
                                     <p:column>
                                         <p:inputText value="#{ordemColetaManager.ordemColeta.numeroNota}" id="OCNotaFiscal" />
+                                        <p:watermark for="OCNotaFiscal" value="#{msg.OCMNF}"/>
                                     </p:column>
                                     <p:column>
                                         <p:outputLabel value="#{msg.OCDataNotaFisca}" for="OCDataNotaFiscal"/>
@@ -178,6 +190,7 @@
                                                     pattern="dd/MM/yyyy" 
                                                     onkeypress="mascara(this, formatarData)"
                                                     />
+                                         <p:watermark for="OCDataNotaFiscal" value="#{msg.OCMDataNF}"/>
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
