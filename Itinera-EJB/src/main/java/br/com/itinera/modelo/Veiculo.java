@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Veiculo.findAll", query = "SELECT v FROM Veiculo v Order by v.idVeiculo DESC"),
     @NamedQuery(name = "Veiculo.findByIdVeiculo", query = "SELECT v FROM Veiculo v WHERE v.idVeiculo = :idVeiculo"),
-    @NamedQuery(name = "Veiculo.findByPlacaVeiculo", query = "SELECT v FROM Veiculo v WHERE v.placaVeiculo = :placaVeiculo"),
+    @NamedQuery(name = "Veiculo.findByPlacaVeiculo", query = "SELECT v FROM Veiculo v WHERE v.placaVeiculo like :placaVeiculo"),
     @NamedQuery(name = "Veiculo.findByNumeroVeiculo", query = "SELECT v FROM Veiculo v WHERE v.numeroVeiculo = :numeroVeiculo"),
     @NamedQuery(name = "Veiculo.findByMarcaVeiculo", query = "SELECT v FROM Veiculo v WHERE v.marcaVeiculo = :marcaVeiculo"),
     @NamedQuery(name = "Veiculo.findByModeloVeiculo", query = "SELECT v FROM Veiculo v WHERE v.modeloVeiculo = :modeloVeiculo"),
@@ -418,7 +418,7 @@ public class Veiculo implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Veiculo[ idVeiculo=" + idVeiculo + " ]";
+        return this.getPlacaVeiculo() + " - " + this.getMarcaVeiculo() + "/" + this.getModeloVeiculo();
     }
 
     public Date getDataInclusao() {

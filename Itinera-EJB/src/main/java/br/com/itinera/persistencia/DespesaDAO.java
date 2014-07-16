@@ -13,7 +13,7 @@ import br.com.itinera.modelo.Despesa;
  * @author marcelo
  */
 @Stateless
-public class DespesaDAO {    
+public class DespesaDAO extends GenericDAO {
    
     @PersistenceContext
     private EntityManager em;

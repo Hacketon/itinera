@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>#{msg.headerDespesa}</title>
+    </h:head>
+    <h:body onload="selecionado($('#btnDespesa'));">
+        <f:view>      
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">
+                    <p:panel styleClass="semBorda" header="#{msg.listaDespesa}">
+                        <h:form>
+                            <p:messages id="messages" showDetail="true"/>
+                            <p:commandButton icon="ui-icon-plus" 
+                                             action="#{despesaManager.montarPaginaParaCadastro()}" 
+                                             styleClass="fontepadrao" value="Novo"/>
+                            <h:panelGrid id="gridDespesas" >
+                                <h:outputText value="#{msg.listaSemRegistro}" 
+                                              rendered="#{empty despesaManager.despesas}" />
+
+                                <p:dataTable emptyMessage="#{msg.listaSemRegistro}"
+                                             paginator="true" 
+                                             rows="10" 
+                                             rendered="#{not empty despesaManager.despesas}"
+                                             value="#{despesaManager.despesas}" 
+                                             var="despesa"
+                                             >
+
+                                    <p:column headerText="#{msg.data}" 
+                                              filterBy="#{despesa.data}"
+                                              filterMatchMode="starsWith"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{despesa.data}" 
+                                              >
+                                        <h:outputText value="#{despesa.data}" />
+                                    </p:column>
+
+                                    <p:column headerText="#{msg.fornecedor}" 
+                                              filterBy="#{despesa.fornecedor.nomeFantasia}"
+                                              filterMatchMode="contais"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{despesa.fornecedor.nomeFantasia}" 
+                                              >
+                                        <h:outputText value="#{despesa.fornecedor.nomeFantasia}" />
+                                    </p:column>
+
+                                    <p:column headerText="#{msg.veiculo}" 
+                                              filterBy="#{despesa.veiculo.placaVeiculo}"
+                                              filterMatchMode="starsWith"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{despesa.veiculo.placaVeiculo}" 
+                                              >
+                                        <h:outputText value="#{despesa.veiculo.placaVeiculo}" />
+                                    </p:column>
+
+                                    <p:column headerText="#{msg.motorista}" 
+                                              filterBy="#{despesa.motorista.nome}"
+                                              filterMatchMode="starsWith"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{despesa.motorista.nome}" 
+                                              >
+                                        <h:outputText value="#{despesa.motorista.nome}" />
+                                    </p:column>
+
+                                    <p:column headerText="#{msg.descricaoDespesa}" 
+                                              filterBy="#{despesa.numDocto}"
+                                              filterMatchMode="contains"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{despesa.numDocto}" 
+                                              >
+                                        <h:outputText value="#{despesa.numDocto}" />
+                                    </p:column>
+
+                                    <p:column headerText="#{msg.valor}" 
+                                              filterBy="#{despesa.valor}"
+                                              filterMatchMode="equals"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{despesa.valor}" 
+                                              >
+                                        <h:outputText value="#{despesa.valor}" />
+                                    </p:column>
+
+                                    <p:column headerText="">
+                                        <h:commandLink styleClass="fontepadrao" 
+                                                       action="#{despesaManager.montarPaginaParaAlterar}"
+                                                       value="#{msg.acaoAlterar}">
+                                            <f:setPropertyActionListener value="#{despesa}" target="#{despesaManager.despesa}" />  
+                                        </h:commandLink>
+                                    </p:column>
+
+                                    <p:column headerText="">
+                                        <p:commandLink styleClass="fontepadrao" 
+                                                       oncomplete="exclui.show();"
+                                                       value="#{msg.acaoExcluir}">
+                                                <f:setPropertyActionListener value="#{despesa}" 
+                                                                             target="#{despesaManager.despesa}" />  
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGrid>
+
+                            <p:confirmDialog header="#{msg.headerExcluir}" message="#{msg.mensagemExcluir}" id="excluiDlg" widgetVar="exclui">
+                                <p:commandButton value="#{msg.acaoSim}" action="#{despesaManager.excluir()}" update="gridDespesas messages" onclick="exclui.hide();" />
+                                <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
+                            </p:confirmDialog>
+                        </h:form>
+                    </p:panel>
+                </ui:define>
+            </ui:decorate>
+        </f:view>
+    </h:body>
+</html>

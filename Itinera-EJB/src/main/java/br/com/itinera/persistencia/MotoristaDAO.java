@@ -39,6 +39,14 @@ public class MotoristaDAO {
         em.remove(remover);
     }
     
+    public List<Motorista> listarMotoristaAtivo() {
+        return em.createQuery("Select m from Motorista m where m.ativo = true").getResultList();
+    }
+    
+    public List<Motorista> buscarPorNOme(String nome) {
+        return em.createNamedQuery("Motorista.findByNome").setParameter("nome", "%"+nome+"%").getResultList();
+    }
+    
     public boolean verificarSeNovoMotoristaJaExisteComMesmoCpf(String cpf){
         if (!em.createNamedQuery("Motorista.findByCpf").setParameter("cpf", cpf)
                 .getResultList().isEmpty()){

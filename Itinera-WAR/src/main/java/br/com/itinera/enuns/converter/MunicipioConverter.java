@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package br.com.itinera.enuns.converter;
 
 import br.com.itinera.fachada.MunicipioFachada;
@@ -21,37 +15,37 @@ import javax.faces.convert.FacesConverter;
  *
  * @author lesena
  */
-@FacesConverter(value="conversorMunicipio")
+@FacesConverter(value = "conversorMunicipio")
 @SessionScoped
 @ManagedBean(name = "mngMunicipioConverter")
 public class MunicipioConverter  implements Converter, Serializable{
     @EJB
     private MunicipioFachada fachada;
-   
+
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        if(value.equals(""))
+        if (value.equals("")) {
             return null;
-        else{
-           for(Municipio m:fachada.listMunicipios()){
-               if(m.toString().equals(value))
-                   return m;
-           }     
+        } else {
+            for (Municipio m : fachada.listMunicipios()) {
+                if (m.toString().equals(value)) {
+                    return m;
+                }
+            }
         }
         return null;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-         if(value != null && value instanceof Municipio){
-             if(((Municipio)value).getNomeMunicipio() != null){
-                return ((Municipio)value).toString();
-             }
-             else{
-                 return "";
-             }
+        if (value != null && value instanceof Municipio) {
+            if (((Municipio) value).getNomeMunicipio() != null) {
+                return ((Municipio) value).toString();
+            } else {
+                return "";
+            }
         }
         return "";
     }
-    
+
 }

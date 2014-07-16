@@ -40,7 +40,7 @@ public class Despesa implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_despesa")
+    @Column(name = "despesa_id")
     private BigDecimal idDespesa;
 
     @Basic(optional = false)
@@ -54,11 +54,6 @@ public class Despesa implements Serializable {
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
     private Date data;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "motorista")
-    private BigInteger motorista;
 
     @Basic(optional = false)
     @NotNull
@@ -81,8 +76,8 @@ public class Despesa implements Serializable {
     @Column(name = "quantidade")
     private BigInteger quantidade;
 
-    @Column(name = "km")
-    private BigInteger km;
+    @Column(name = "hodometro")
+    private BigInteger hodometro;
 
     @Basic(optional = false)
     @NotNull
@@ -93,9 +88,17 @@ public class Despesa implements Serializable {
     @Column(name = "observacao")
     private String observacao;
 
+    @JoinColumn(name = "motorista", referencedColumnName = "motorista_id")
+    @ManyToOne(optional = false)
+    private Motorista motorista;
+
     @JoinColumn(name = "veiculo", referencedColumnName = "id_veiculo")
     @ManyToOne(optional = false)
     private Veiculo veiculo;
+    
+    @JoinColumn(name = "fornecedor", referencedColumnName = "id_empresa")
+    @ManyToOne(optional = false)
+    private Empresa fornecedor;
 
     public Despesa() {
     }
@@ -104,7 +107,7 @@ public class Despesa implements Serializable {
         this.idDespesa = idDespesa;
     }
 
-    public Despesa(BigDecimal idDespesa, String numDocto, Date data, BigInteger motorista, char planoContas, String local, BigInteger valor, BigInteger quantidade, char status) {
+    public Despesa(BigDecimal idDespesa, String numDocto, Date data, Motorista motorista, char planoContas, String local, BigInteger valor, BigInteger quantidade, char status) {
         this.idDespesa = idDespesa;
         this.numDocto = numDocto;
         this.data = data;
@@ -140,11 +143,11 @@ public class Despesa implements Serializable {
         this.data = data;
     }
 
-    public BigInteger getMotorista() {
+    public Motorista getMotorista() {
         return motorista;
     }
 
-    public void setMotorista(BigInteger motorista) {
+    public void setMotorista(Motorista motorista) {
         this.motorista = motorista;
     }
 
@@ -180,12 +183,12 @@ public class Despesa implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public BigInteger getKm() {
-        return km;
+    public BigInteger getHodometro() {
+        return hodometro;
     }
 
-    public void setKm(BigInteger km) {
-        this.km = km;
+    public void setHodometro(BigInteger hodometro) {
+        this.hodometro = hodometro;
     }
 
     public char getStatus() {
@@ -210,6 +213,14 @@ public class Despesa implements Serializable {
 
     public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
+    }
+
+    public Empresa getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Empresa fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
     @Override
