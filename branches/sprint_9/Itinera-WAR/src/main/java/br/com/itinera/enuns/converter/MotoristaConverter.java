@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package br.com.itinera.enuns.converter;
 
+import br.com.itinera.fachada.MotoristaFachada;
+import br.com.itinera.modelo.Motorista;
+import javax.ejb.EJB;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -16,21 +14,40 @@ import javax.faces.convert.FacesConverter;
 
 /**
  *
- * @author lesena
+ * @author marcelo
  */
-@FacesConverter(value="conversorMotorista")
+@FacesConverter(value = "conversorMotorista")
 @SessionScoped
 @ManagedBean(name = "mngMotoristaConverter")
 public class MotoristaConverter implements Converter,Serializable{
-    //TODO Implementar Converter
+
+    @EJB
+    MotoristaFachada fachada;
+    
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (value.equals("")) {
+            return null;
+        } else {
+            for (Motorista m: fachada.listarMotoristaAtivo()) {
+                if (m.toString().equals(value)) {
+                    return m;
+                }
+            }
+            return null;
+        }
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (value != null && value instanceof Motorista) {
+            if (((Motorista)value).getNome() != null) {
+                return (value.toString());
+            } else {
+                return "";
+            }
+        }
+        return "";
     }
     
 }

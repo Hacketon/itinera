@@ -42,7 +42,7 @@ public class EmpresaManager implements Serializable {
     private EmpresaFachada fachada;
     @EJB
     private MunicipioFachada municipioFachada;
-    
+
     public EmpresaManager() {
         telefone = new Telefone();
         empresaResp = new EmpresaResponsavel();
@@ -271,22 +271,23 @@ public class EmpresaManager implements Serializable {
         }
         return !this.mensagemAlteracao.isEmpty();
     }
-    
-       public List<SelectItem> getTipoLogradouro() {
+
+    public List<SelectItem> getTipoLogradouro() {
         List<SelectItem> tipoLogrdouro = new ArrayList<SelectItem>();
         for (TipoLogradouro te : TipoLogradouro.values()) {
             tipoLogrdouro.add(new SelectItem(te.name(), te.toString()));
         }
         return tipoLogrdouro;
-       }
-       
-        public List<Municipio> completeMunicipio(String query){
+    }
+
+    public List<Municipio> completeMunicipio(String query) {
         List<Municipio> suggestions = new ArrayList<Municipio>();
-        for(Municipio p : municipioFachada.listMunicipios()) {
-            if(p.getNomeMunicipio().toUpperCase().contains(query.toUpperCase()))
+        for (Municipio p : municipioFachada.listMunicipios()) {
+            if (p.getNomeMunicipio().toUpperCase().contains(query.toUpperCase())) {
                 suggestions.add(p);
+            }
         }
-         
+
         return suggestions;
     }
 
@@ -294,6 +295,5 @@ public class EmpresaManager implements Serializable {
         this.recuperarEmpresas();
         return "/componentes/empresa/ListarEmpresa";
     }
-    
 
 }
