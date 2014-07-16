@@ -39,4 +39,8 @@ public class VeiculoFachada {
     public Integer contagem(){
         return veiculoDAO.listar().size();
     }
+    
+    public List<Veiculo> buscarPorPlaca(String placa) {
+        return veiculoDAO.buscarPorPlaca(placa);
+    }
 }

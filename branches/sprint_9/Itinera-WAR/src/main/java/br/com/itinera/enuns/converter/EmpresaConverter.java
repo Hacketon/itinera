@@ -1,9 +1,10 @@
+
 package br.com.itinera.enuns.converter;
 
-import br.com.itinera.fachada.VeiculoFachada;
-import br.com.itinera.modelo.Veiculo;
-import javax.ejb.EJB;
+import br.com.itinera.fachada.EmpresaFachada;
+import br.com.itinera.modelo.Empresa;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -15,20 +16,20 @@ import javax.faces.convert.FacesConverter;
  *
  * @author marcelo
  */
-@FacesConverter(value = "conversorVeiculo")
+@FacesConverter(value = "conversorEmpresa")
 @SessionScoped
-@ManagedBean(name = "mngVeiculoConverter")
-public class VeiculoConverter implements Converter, Serializable {
-
-    @EJB
-    private VeiculoFachada fachada;
+@ManagedBean(name = "mngEmpresaConverter")
+public class EmpresaConverter implements Converter, Serializable {
     
+    @EJB
+    private EmpresaFachada fachada;
+
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if(value.equals("")) {
             return null;
         } else {
-            for (Veiculo e:fachada.listar()) {
+            for (Empresa e:fachada.buscarPorFornecedor(value)) {
                 if (e.toString().equals(value)) {
                     return e;
                 }
@@ -39,9 +40,9 @@ public class VeiculoConverter implements Converter, Serializable {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if (value != null && value instanceof Veiculo) {
-            if (((Veiculo)value).getPlacaVeiculo() != null) {
-                return ((Veiculo)value).toString();
+        if (value != null && value instanceof Empresa) {
+            if (((Empresa)value).getNomeFantasia() != null) {
+                return ((Empresa)value).toString();
             } else {
                 return "";
             }

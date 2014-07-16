@@ -29,9 +29,9 @@ public class EmpresaFachada {
     
     public void salvar (Empresa empresa) throws Exception{
         this.verificarSeNovaEmpresaJaExisteComMesmoCnpj(empresa.getCnpj());
-        this.verificarSeExisteResponsavelSemPreenchimento(empresa);
-        this.verificarSeExisteEmailSemPreenchimento(empresa);
-        this.verificarSeExisteTelefoneSemPreenchimento(empresa);
+//        this.verificarSeExisteResponsavelSemPreenchimento(empresa);
+//        this.verificarSeExisteEmailSemPreenchimento(empresa);
+//        this.verificarSeExisteTelefoneSemPreenchimento(empresa);
         this.verificarSeEmailInformadoJaExisteTabelaEmail(empresa);
         this.verificarSeTelefoneInformadoJaExisteTabelaTelefone(empresa);
         dao.inserir(empresa);
@@ -75,6 +75,10 @@ public class EmpresaFachada {
     
     public List<Empresa> buscarPorNome(String valorDeBusca){
         return dao.listarBuscaPorNome(valorDeBusca);
+    }
+    
+    public List<Empresa> buscarPorFornecedor(String nomeFantasia) {
+        return dao.buscarFornecedores(nomeFantasia);
     }
     
     private void verificarSeNovaEmpresaJaExisteComMesmoCnpj(String cnpjEmpresa) throws Exception{

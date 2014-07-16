@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Motorista.findAll", query = "SELECT m FROM Motorista m"),
     @NamedQuery(name = "Motorista.findByMotoristaId", query = "SELECT m FROM Motorista m WHERE m.motoristaId = :motoristaId"),
     @NamedQuery(name = "Motorista.findByCpf", query = "SELECT m FROM Motorista m WHERE m.cpf = :cpf"),
-    @NamedQuery(name = "Motorista.findByNome", query = "SELECT m FROM Motorista m WHERE m.nome = :nome"),
+    @NamedQuery(name = "Motorista.findByNome", query = "SELECT m FROM Motorista m WHERE m.nome like :nome"),
     @NamedQuery(name = "Motorista.findByRg", query = "SELECT m FROM Motorista m WHERE m.rg = :rg"),
     @NamedQuery(name = "Motorista.findByRgOrgaoEmissor", query = "SELECT m FROM Motorista m WHERE m.rgOrgaoEmissor = :rgOrgaoEmissor"),
     @NamedQuery(name = "Motorista.findByRgDataEmissao", query = "SELECT m FROM Motorista m WHERE m.rgDataEmissao = :rgDataEmissao"),
@@ -66,8 +66,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Motorista.findByConjugeNome", query = "SELECT m FROM Motorista m WHERE m.conjugeNome = :conjugeNome"),
     @NamedQuery(name = "Motorista.findByDependentes", query = "SELECT m FROM Motorista m WHERE m.dependentes = :dependentes")})
 public class Motorista implements Serializable {
-    @Column(name = "ativo")
-    private Boolean ativo;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "motoristaId")
     private List<OrdemColeta> ordemColetaList;
 
@@ -82,6 +81,10 @@ public class Motorista implements Serializable {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="Motorista_Generator")
     //fim anotations Sequence
     private BigDecimal motoristaId;
+    
+    @Column(name = "ativo")
+    private Boolean ativo;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 14)
@@ -356,6 +359,14 @@ public class Motorista implements Serializable {
         this.municipio = municipio;
     }
 
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -378,7 +389,7 @@ public class Motorista implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.itinera.modelo.Motorista[ motoristaId=" + motoristaId + " ]";
+        return this.getNome();
     }
 
     @XmlTransient
@@ -397,14 +408,6 @@ public class Motorista implements Serializable {
 
     public void setTelefoneList(List<Telefone> telefonelList) {
         this.telefoneList = telefonelList;
-    }
-
-    public Boolean getAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
     }
 
     @XmlTransient
