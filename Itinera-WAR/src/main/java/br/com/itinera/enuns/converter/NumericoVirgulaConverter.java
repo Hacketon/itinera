@@ -6,7 +6,6 @@
 
 package br.com.itinera.enuns.converter;
 
-import br.com.itinera.modelo.CategoriaVeiculo;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

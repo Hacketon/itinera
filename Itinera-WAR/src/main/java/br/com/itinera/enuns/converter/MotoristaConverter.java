@@ -6,6 +6,7 @@
 
 package br.com.itinera.enuns.converter;
 
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -20,7 +21,7 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter(value="conversorMotorista")
 @SessionScoped
 @ManagedBean(name = "mngMotoristaConverter")
-public class MotoristaConverter implements Converter{
+public class MotoristaConverter implements Converter,Serializable{
     //TODO Implementar Converter
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
