@@ -1,12 +1,17 @@
 
 package br.com.itinera.manager;
 
+import br.com.itinera.enuns.EstadoCivil;
+import br.com.itinera.enuns.TipoLogradouro;
 import br.com.itinera.fachada.MotoristaFachada;
+import br.com.itinera.fachada.MunicipioFachada;
 import br.com.itinera.ferramentas.Mensagem;
 import br.com.itinera.interfaces.CRUD;
 import br.com.itinera.interfaces.MontarPaginas;
 import br.com.itinera.modelo.Email;
+import br.com.itinera.modelo.Endereco;
 import br.com.itinera.modelo.Motorista;
+import br.com.itinera.modelo.Municipio;
 import br.com.itinera.modelo.Telefone;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,6 +19,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
 import javax.persistence.EntityExistsException;
 import org.primefaces.context.RequestContext;
 
@@ -26,18 +32,28 @@ import org.primefaces.context.RequestContext;
 public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
     
     private Motorista motorista;
+    private Endereco endereco;
     private Motorista motoristaAntigo;
     private List<Motorista> motoristas;
     private String mensagemAlteracao;
-
     private boolean inserindo;
     private Telefone telefone;
     private Email email;
     
     @EJB
     private MotoristaFachada fachada;
+    @EJB 
+    private MunicipioFachada municipioFachada;
     
     public MotoristaManager() {
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
     
     public Motorista getMotorista() {
@@ -62,6 +78,10 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
     
     public String getMensagemAlteracao() {
         return this.mensagemAlteracao;
+    }
+    
+     public boolean getEnderecoObrigatorio(){
+        return false;
     }
 
     public void setMensagemAlteracao(String mensagemAlteracao) {
@@ -97,6 +117,7 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
     }
 
     public void excluir() {
+        System.out.println("Excluindo");
         fachada.excluir(this.getMotorista());
         RequestContext rc = RequestContext.getCurrentInstance();
         rc.execute("exclui.hide()");
@@ -154,12 +175,11 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
     @Override
     public String montarPaginaParaCadastro() {
         this.motorista = new Motorista();
-        return montarPaginaParaAlterar();
+        return "/componentes/motorista/AlterarMotorista";
     }
 
     @Override
     public String montarPaginaParaAlterar() {
-//        validarOperacao();
         return "/componentes/motorista/AlterarMotorista";
     }
 
@@ -202,6 +222,34 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
         }
         
         return !getMensagemAlteracao().isEmpty();
+    }
+    
+     public List<SelectItem> getTipoLogradouro() {
+        List<SelectItem> tipoLogrdouro = new ArrayList<SelectItem>();
+        for (TipoLogradouro te : TipoLogradouro.values()) {
+            tipoLogrdouro.add(new SelectItem(te.name(),te.toString()));
+        }
+        return tipoLogrdouro;
+    }
+     
+      public List<SelectItem> getEstadoCivil() {
+        List<SelectItem> estadoCivil = new ArrayList<SelectItem>();
+        estadoCivil.add(new SelectItem(null,"Selecione..."));
+        for (EstadoCivil e : EstadoCivil.values()) {
+            estadoCivil.add(new SelectItem(e.name(),e.toString()));
+            }
+        return estadoCivil;
+        }
+     
+      public List<Municipio> completeMunicipio(String query) {
+        List<Municipio> suggestions = new ArrayList<Municipio>();
+        for (Municipio p : municipioFachada.listMunicipios()) {
+            if (p.getNomeMunicipio().toUpperCase().contains(query.toUpperCase())) {
+                suggestions.add(p);
+            }
+        }
+
+        return suggestions;
     }
     
 }

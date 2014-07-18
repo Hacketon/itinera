@@ -7,9 +7,14 @@
 package br.com.itinera.manager;
 
 import br.com.itinera.fachada.EmpresaFachada;
+import br.com.itinera.fachada.MotoristaFachada;
 import br.com.itinera.fachada.OrdemColetaFachada;
+import br.com.itinera.fachada.VeiculoFachada;
+import br.com.itinera.ferramentas.Mensagem;
 import br.com.itinera.modelo.Empresa;
+import br.com.itinera.modelo.Motorista;
 import br.com.itinera.modelo.OrdemColeta;
+import br.com.itinera.modelo.Veiculo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -32,15 +37,19 @@ public class OrdemColetaManager implements Serializable{
    private OrdemColetaFachada fachada;
    @EJB
    private EmpresaFachada empresaFachada;
+   @EJB 
+   private MotoristaFachada motoristaFachada;
+   @EJB 
+   private VeiculoFachada veiculoFachada;
    private OrdemColeta ordemColeta;
    private List<OrdemColeta> ordensColeta;
    private Date filtroDataInicio;
    private Date filtroDataFim;
-   private String filtroNotaFiscal;
+   private Integer filtroNotaFiscal;
    private BigDecimal valorTotal;
    private BigDecimal valorUnitario;
    private Integer quantidade;
-   
+   private boolean inserindo;
 
     public OrdemColeta getOrdemColeta() {
         return ordemColeta;
@@ -61,7 +70,14 @@ public class OrdemColetaManager implements Serializable{
     public Date getFiltroDataInicio() {
         return filtroDataInicio;
     }
-    
+
+    public boolean isInserindo() {
+        return inserindo;
+    }
+
+    public void setInserindo(boolean inserindo) {
+        this.inserindo = inserindo;
+    }    
 
     public void setFiltroDataInicio(Date filtroDataInicio) {
         this.filtroDataInicio = filtroDataInicio;
@@ -79,11 +95,11 @@ public class OrdemColetaManager implements Serializable{
         this.filtroDataFim = filtroDataFim;
     }
 
-    public String getFiltroNotaFiscal() {
+    public Integer getFiltroNotaFiscal() {
         return filtroNotaFiscal;
     }
 
-    public void setFiltroNotaFiscal(String filtroNotaFiscal) {
+    public void setFiltroNotaFiscal(Integer filtroNotaFiscal) {
         this.filtroNotaFiscal = filtroNotaFiscal;
     }
 
@@ -105,28 +121,61 @@ public class OrdemColetaManager implements Serializable{
     
    
     public String montarPaginaListagem(){
+        this.inserindo = false;
+        filtroDataFim = null;
+        filtroDataInicio = null;
+        filtroNotaFiscal  = null;
         this.ordensColeta = fachada.listar();
         return "/componentes/ordemColeta/ListarOrdemColeta";
     }
     
     public String montarPaginaCadastro(){
+        System.out.println("PÁGINA DE CADASTRO");
+        this.setInserindo(true);
         this.ordemColeta = new OrdemColeta();
         this.valorTotal = null;
-        this.valorUnitario = null;
-        this.quantidade = null;
+        this.valorUnitario = BigDecimal.valueOf(0);
+        this.quantidade = 0;
         return "/componentes/ordemColeta/CadastroOrdemColeta";
     }
     
     public String montarPaginaAlterar(){
-        //TODO Realizar metodo para preparar a página para alteração e redirecionar à outra página
+        System.out.println("PÁGINA DE ALTERAÇÃO");
+        this.inserindo = false;
+        this.valorTotal = this.ordemColeta.getValorTotal();
+        this.valorUnitario = this.ordemColeta.getValorUnitario();
+        this.quantidade = this.ordemColeta.getQuantidade().intValue();
         return "/componentes/ordemColeta/CadastroOrdemColeta";
     }
     
-    public void salvar(){
+    public String inserir(){
+        System.out.println("ENTRANDO");
         this.ordemColeta.setValorUnitario(this.valorUnitario);
         this.ordemColeta.setQuantidade(BigInteger.valueOf(this.quantidade.longValue()));
         this.ordemColeta.setValorTotal(valorTotal);
-        //TODO realizar método para salvar 
+        System.out.println("INSERT");
+//        ordemColeta.setDestinatarioId(empresaFachada.listar().get(1));
+//        ordemColeta.setMotoristaId(motoristaFachada.listarMotoristaAtivo().get(0));
+//        ordemColeta.setQuantidade(BigInteger.TEN);
+//        ordemColeta.setValorUnitario(BigDecimal.valueOf(155));
+//        ordemColeta.setRemetenteId(empresaFachada.listar().get(0));
+//        ordemColeta.setValorTotal(BigDecimal.valueOf(this.ordemColeta.getQuantidade().doubleValue() * this.ordemColeta.getValorUnitario().doubleValue()));
+//        ordemColeta.setVeiculoId(veiculoFachada.listar().get(1));
+        fachada.inserir(ordemColeta);
+        Mensagem.mostrarMensagemSucesso("Sucesso!", "Ordem de Coleta inserida com sucesso!");
+        return montarPaginaListagem();
+    }
+    
+    public String alterar(){
+        System.out.println("ENTRANDO");
+        System.out.println(inserindo);
+//        this.ordemColeta.setValorUnitario(this.valorUnitario);
+//        this.ordemColeta.setQuantidade(BigInteger.valueOf(this.quantidade.longValue()));
+//        this.ordemColeta.setValorTotal(valorTotal);
+        System.out.println("ALTERAR");
+        fachada.alterar(ordemColeta);
+        return montarPaginaListagem();
+                
     }
     
     public void excluir(){
@@ -134,15 +183,28 @@ public class OrdemColetaManager implements Serializable{
     }
     
     public void filtrar(){
-        //TODO Realizar o filtro sobre os itens da lista referentes à busca dos itens selecionados. 
+       this.ordensColeta = fachada.buscarPorPeriodoNotaFiscal(filtroDataInicio, filtroDataFim, filtroNotaFiscal);
     }
     
-    public void completeMotorista(){
-        //TODO Realizar aqui o método para autocomplete
+    public List<Motorista> completeMotorista(String nome) {
+        List<Motorista> lstMotorista = new ArrayList<Motorista>();
+        for (Motorista m : motoristaFachada.buscarPorNomeSomenteAtivo(nome)) {
+            if (m.getNome().toUpperCase().contains(nome.toUpperCase())) {
+                lstMotorista.add(m);
+            }
+        }
+        return lstMotorista;
     }
     
-    public void completeVeiculo(){
-        //TODO Realizar aqui o método para autocomplete
+        public List<Veiculo> completeVeiculo(String placa) {
+        List<Veiculo> lstVeiculo = new ArrayList<Veiculo>();
+        for (Veiculo v : veiculoFachada.buscarPorPlaca(placa.toUpperCase())) {
+            if (v.getPlacaVeiculo().toUpperCase().contains(placa.toUpperCase())) {
+                lstVeiculo.add(v);
+            }
+        }
+
+        return lstVeiculo;
     }
     
     public List<Empresa> completeRemetente(String query){
@@ -181,11 +243,22 @@ public class OrdemColetaManager implements Serializable{
         return sdf.format(data);
     }
     
-    public void calcular(){
-        if(this.valorUnitario.doubleValue() > 0 && this.quantidade > 0){
-            this.valorTotal = this.valorUnitario.multiply(BigDecimal.valueOf(quantidade));
-        }   
+    public void calcular(){   
+        if(!(this.valorUnitario == null && this.quantidade == null)){
+            if(this.valorUnitario.doubleValue() > 0 && this.quantidade > 0){
+                this.valorTotal = this.valorUnitario.multiply(BigDecimal.valueOf(quantidade));
+            }   
+        }
+    }
+    
+    public String formataTextoLongo(String textoLongo){
+        if(textoLongo.length() > 20)
+            return textoLongo.substring(0, 17) + "...";
         else
-            this.valorTotal = null;
+            return textoLongo;
+    }
+    
+    public String formataMoeda(String numero){
+        return numero.replace('.',',');
     }
 }

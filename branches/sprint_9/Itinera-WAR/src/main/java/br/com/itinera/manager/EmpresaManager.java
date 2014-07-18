@@ -64,6 +64,10 @@ public class EmpresaManager implements Serializable {
     public List<Empresa> getEmpresas() {
         return this.empresas;
     }
+    
+    public boolean getEnderecoObrigatorio(){
+        return true;
+    }
 
     public Integer contagem() {
         return fachada.contagem();
