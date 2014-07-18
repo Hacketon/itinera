@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Municipio.findByDddMunicipio", query = "SELECT m FROM Municipio m WHERE m.dddMunicipio = :dddMunicipio"),
     @NamedQuery(name = "Municipio.findByLikeName",query="SELECT m FROM Municipio m WHERE m.nomeMunicipio like :nomeMunicipio or m.codigoEstado.siglaEstado like :nomeMunicipio")})
 public class Municipio implements Serializable {
-    @OneToMany(mappedBy = "municipio")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMunicipio")
     private List<Motorista> motoristaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMunicipio")
     private List<Empresa> empresaList;

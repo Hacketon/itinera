@@ -418,7 +418,7 @@ public class Veiculo implements Serializable {
 
     @Override
     public String toString() {
-        return this.getPlacaVeiculo() + " - " + this.getMarcaVeiculo() + "/" + this.getModeloVeiculo();
+        return this.getPlacaVeiculo();
     }
 
     public Date getDataInclusao() {

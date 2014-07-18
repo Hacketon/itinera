@@ -38,6 +38,7 @@ public class Endereco implements Serializable {
     private String bairro;
     
     public Endereco() {
+        this.tipoLogradouro = "Avenida";
     }
 
     public Endereco(String cep, String tipoLogradouro, String nomeLogradouro, BigInteger numero, String complemento, String bairro) {
