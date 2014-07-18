@@ -40,6 +40,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "OrdemColeta.findByQuantidade", query = "SELECT o FROM OrdemColeta o WHERE o.quantidade = :quantidade"),
     @NamedQuery(name = "OrdemColeta.findByValorTotal", query = "SELECT o FROM OrdemColeta o WHERE o.valorTotal = :valorTotal"),
     @NamedQuery(name = "OrdemColeta.findByNumeroNota", query = "SELECT o FROM OrdemColeta o WHERE o.numeroNota = :numeroNota"),
+    @NamedQuery(name = "OrdemColeta.findByPeriodoInicioFimNF", query = "SELECT o FROM OrdemColeta o WHERE o.numeroNota = :numeroNota and o.dataOrdemColeta >= :inicio and o.dataOrdemColeta <= :fim"),
+    @NamedQuery(name = "OrdemColeta.findByPeriodoInicioNF", query = "SELECT o FROM OrdemColeta o WHERE o.numeroNota = :numeroNota and o.dataOrdemColeta >= :inicio"),
+    @NamedQuery(name = "OrdemColeta.findByPeriodoFimNF", query = "SELECT o FROM OrdemColeta o WHERE o.numeroNota = :numeroNota and o.dataOrdemColeta <= :fim"),
+    @NamedQuery(name = "OrdemColeta.findByPeriodoInicio", query = "SELECT o FROM OrdemColeta o WHERE o.dataOrdemColeta >= :inicio"),
+    @NamedQuery(name = "OrdemColeta.findByPeriodoFim", query = "SELECT o FROM OrdemColeta o WHERE o.dataOrdemColeta <= :fim"),
+    @NamedQuery(name = "OrdemColeta.findByPeriodo", query = "SELECT o FROM OrdemColeta o WHERE o.dataOrdemColeta >= :inicio and o.dataOrdemColeta <= :fim"),
     @NamedQuery(name = "OrdemColeta.findByDataEmissaoNf", query = "SELECT o FROM OrdemColeta o WHERE o.dataEmissaoNf = :dataEmissaoNf")})
 public class OrdemColeta implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -130,8 +136,8 @@ public class OrdemColeta implements Serializable {
     }
 
     public void setValorUnitario(BigDecimal valorUnitario) {
-        this.valorTotal = new BigDecimal(quantidade.doubleValue() * valorUnitario.doubleValue());
-        this.valorUnitario = valorUnitario;
+        this.valorUnitario = BigDecimal.valueOf(100f);
+        //this.valorUnitario = valorUnitario;
     }
 
     public BigInteger getQuantidade() {
@@ -139,8 +145,8 @@ public class OrdemColeta implements Serializable {
     }
 
     public void setQuantidade(BigInteger quantidade) {
-        this.valorTotal = new BigDecimal(quantidade.doubleValue() * valorUnitario.doubleValue());
-        this.quantidade = quantidade;
+        this.quantidade = BigInteger.TEN;
+        //this.quantidade = quantidade;
     }
 
     public BigDecimal getValorTotal() {

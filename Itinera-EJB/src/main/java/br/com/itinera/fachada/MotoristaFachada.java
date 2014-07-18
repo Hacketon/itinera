@@ -52,7 +52,7 @@ public class MotoristaFachada {
     }
 
     public void excluir(Motorista rem) {
-        dao.equals(rem);
+        dao.excluir(rem);
     }
 
     public List<Motorista> listarMotoristaAtivo() {
@@ -60,8 +60,13 @@ public class MotoristaFachada {
     }
 
     public List<Motorista> buscarPorNome(String nome) {
-        return dao.buscarPorNOme(nome);
+        return dao.buscarPorNome(nome);
     }
+    
+    public List<Motorista> buscarPorNomeSomenteAtivo(String nome){
+        return dao.buscarPorNomeAtivo(nome);
+    }
+    
     
     private void verificarSeNovoMotoristaJaExisteComMesmoCpf(String cpf) throws Exception {
         if (dao.verificarSeNovoMotoristaJaExisteComMesmoCpf(cpf)) {
