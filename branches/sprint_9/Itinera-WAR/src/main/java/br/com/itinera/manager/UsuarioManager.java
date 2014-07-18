@@ -147,7 +147,6 @@ public class UsuarioManager implements Serializable{
     
     //Parte 3 - Chamadas de Tela
     public String montarPaginaParaListarUsuarios(){
-        
         recarregarUsuarios();
         return "/componentes/usuario/ListarUsuarios";
     }
