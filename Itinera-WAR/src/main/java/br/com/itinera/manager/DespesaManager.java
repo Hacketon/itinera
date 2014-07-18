@@ -43,14 +43,14 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
     
     @Override
     public void recuperar() {
-        setDespesas(fachada.listar());
+//        setDespesas(fachada.listar());
     }
 
     @Override
     public String inserir() {
         try {
             if (getDespesa().getIdDespesa() == null) {
-                fachada.inserir(despesa);
+//                fachada.inserir(despesa);
                 Mensagem.mostrarMensagemSucesso(Mensagem.sucesso, "Registro inserido com sucessso.");
                 return montarPaginaParaListar();
             } else {
@@ -67,7 +67,7 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
     @Override
     public String alterar() {
         try {
-            fachada.alterar(this.getDespesa());
+//            fachada.alterar(this.getDespesa());
             Mensagem.mostrarMensagemSucesso(Mensagem.sucesso, "Registro alterado com sucessso.");
             return montarPaginaParaListar();
         } catch (EntityExistsException en) {
@@ -81,7 +81,7 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
     @Override
     public void excluir() {
         try {
-            fachada.remover(this.getDespesa());
+//            fachada.remover(this.getDespesa());
             Mensagem.mostrarMensagemSucesso(Mensagem.sucesso, "Registro excluído com sucesso.");
             this.montarPaginaParaListar();
         } catch (Exception e) {

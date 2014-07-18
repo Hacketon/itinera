@@ -27,6 +27,7 @@ public class LoginManager implements Serializable{
     private boolean grupoAdministrador;
     private boolean grupoSecretaria;
     private boolean grupoGestor;
+    private String  telaSelecionada;
     
     @EJB
     private UsuarioFachada fachada;
@@ -53,6 +54,14 @@ public class LoginManager implements Serializable{
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getTelaSelecionada() {
+        return telaSelecionada;
+    }
+
+    public void setTelaSelecionada(String telaSelecionada) {
+        this.telaSelecionada = telaSelecionada;
     }
 
     public String getSenha() {
@@ -129,23 +138,24 @@ public class LoginManager implements Serializable{
                     this.logado = true;
                     this.dataHoraEntrou = new Date();
                     this.mensagem = "";
-                    System.out.println("LOGOU");
+                    
                     if(request.isUserInRole("Administrador")){
-                        System.out.println("Administrador");
+                    
                         grupoAdministrador=true;
                         grupoGestor = true;
                         grupoSecretaria = true;
                     }
                     else if(request.isUserInRole("Gestor")){
                         grupoGestor=true;
-                        System.out.println("Gestor");
+                    
                     }
                     else if(request.isUserInRole("Secretaria")){
-                        System.out.println("Secretária");
+                    
                         grupoSecretaria=true;
                     }
                     else if(request.isUserInRole("Motorista"))System.out.println("Pertence à regra Motorista");
                     
+                    this.telaSelecionada = "nenhuma";
                     return "/layout/logado/index.xhtml";
                 }catch(Exception e){
                     mensagem = "Usuário ou Senha inválida.";
@@ -171,7 +181,14 @@ public class LoginManager implements Serializable{
         return "/index.xhtml?faces-redirect=true";
     }
     
+    public void setarTela(String tela){
+        this.telaSelecionada = tela;
+    }
     
+    public String getClasse(String nome){
+        String classe = (this.telaSelecionada.equals(nome))?"botaomenuselecionado":"botaomenu";
+        return classe;
+    }
 
  
 }
