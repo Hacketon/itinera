@@ -5,19 +5,25 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-    <f:view contentType="text/html">
-        <h:body>
-            <h:outputScript>selecionado($('#btnMotorista'));</h:outputScript>
+    <h:head>
+        <title>#{msg.headerMotorista}</title>
+    </h:head>
+    <h:body>
+        <f:view>
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
                     <h:form id="cadastro" styleClass="semBorda">                
                         <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
                         <p:panel styleClass="semBorda" header="#{msg.motorista}">
-                            <p:panelGrid columns="3" styleClass="semBorda">
-                                <p:outputLabel for="cpf"
+                            <p:panelGrid styleClass="semBorda">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel for="cpf"
                                                value="#{msg.cpf}"
                                                styleClass="fontepadrao"/>
-                                <p:inputText    id="cpf"
+                                    </p:column>
+                                    <p:column colspan="5">
+                                        <p:inputText    id="cpf"
                                                 disabled="#{motoristaManager.motorista.motoristaId > 0} "
                                                 maxlength="14"
                                                 onkeypress="mascara(this, formatarCPF)"
@@ -26,110 +32,164 @@
                                                 size="20"
                                                 value="#{motoristaManager.motorista.cpf}" 
                                                 validatorMessage="#{msgSis.formularioCPFTamanhoMinimo}">
-                                    <f:validateLength minimum="14" maximum="14"/>
-                                </p:inputText>
-                                <p:watermark value="#{msg.cpf}" for="cpf"/>
-
-                                <p:outputLabel  for="nome" 
-                                                styleClass="label"
-                                                value="#{msg.nome}"/>
-                                <p:inputText    id="nome"
-                                                maxlength="100"
-                                                required="true" 
-                                                requiredMessage="#{msgSis.campoObrigatorio}"
-                                                size="100"
-                                                value="#{motoristaManager.motorista.nome}" >
-                                </p:inputText>
-                                <p:watermark value="#{msg.nome}" for="nome"/>
-
-                                <p:outputLabel  for="rg" 
+                                            <f:validateLength minimum="14" maximum="14"/>
+                                        </p:inputText>
+                                        <p:watermark value="#{msg.cpf}" for="cpf"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel  for="nome" 
+                                                        styleClass="label"
+                                                        value="#{msg.nome}"/>
+                                    </p:column>
+                                    <p:column colspan="5">
+                                         <p:inputText   id="nome"
+                                                        maxlength="100"
+                                                        required="true" 
+                                                        requiredMessage="#{msgSis.campoObrigatorio}"
+                                                        size="100"
+                                                        value="#{motoristaManager.motorista.nome}" >
+                                        </p:inputText>
+                                        <p:watermark value="#{msg.nome}" for="nome"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel  for="rg" 
                                                 styleClass="label"
                                                 value="#{msg.rg}"/>
-                                <p:inputText    id="rg"
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText    id="rg"
                                                 maxlength="10"
                                                 required="false"
                                                 size="15"
                                                 value="#{motoristaManager.motorista.rg}" />
-                                <p:watermark value="#{msg.rg}" for="rg"/>
-
-                                <p:outputLabel  for="rgOrgaoEmissor" 
+                                        <p:watermark value="#{msg.rg}" for="rg"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel  for="rgOrgaoEmissor" 
                                                 styleClass="label"
                                                 value="#{msg.orgaoEmissor}"/>
-                                <p:inputText    id="rgOrgaoEmissor"
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText    id="rgOrgaoEmissor"
                                                 maxlength="10"
                                                 required="false"
                                                 size="14"
                                                 value="#{motoristaManager.motorista.rgOrgaoEmissor}" />
-                                <p:watermark value="#{msg.orgaoEmissor}" for="rgOrgaoEmissor"/>
-
-                                <p:outputLabel  for="rgDataEmissao" 
+                                         <p:watermark value="#{msg.orgaoEmissor}" for="rgOrgaoEmissor"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel  for="rgDataEmissao" 
                                                 styleClass="label"
                                                 value="#{msg.rgDataEmissao}"/>
-                                <p:calendar id="rgDataEmissao"
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="rgDataEmissao"
                                              maxlength="10"
                                              required="false"
+                                             locale="pt"
+                                             selectOtherMonths="true"
+                                             pattern="dd/MM/yy" 
+                                             onkeypress="mascara(this, formatarData)"
                                              size="14"
                                              value="#{motoristaManager.motorista.rgDataEmissao}" />
-                                <p:spacer />
-
-                                <p:outputLabel  for="nomePai" 
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel  for="nomePai" 
                                                 styleClass="label"
                                                 value="#{msg.nomePai}"/>
-                                <p:inputText id="nomePai"
+                                    </p:column>
+                                    <p:column colspan="5">
+                                        <p:inputText id="nomePai"
                                              maxlength="100"
                                              required="false"
                                              size="100"
                                              value="#{motoristaManager.motorista.nomePai}" />
-                                <p:watermark value="#{msg.nomePai}" for="nomePai"/>
-
-                                <p:outputLabel  for="nomeMae" 
+                                        <p:watermark value="#{msg.nomePai}" for="nomePai"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel  for="nomeMae" 
                                                 styleClass="label"
                                                 value="#{msg.nomeMae}"/>
-                                <p:inputText id="nomeMae"
+                                    </p:column>
+                                    <p:column colspan="5">
+                                        <p:inputText id="nomeMae"
                                              maxlength="100"
                                              required="false"
                                              size="100"
                                              value="#{motoristaManager.motorista.nomeMae}" />
                                 <p:watermark value="#{msg.nomeMae}" for="nomeMae"/>
-
-                                <p:outputLabel  for="estadoCivil" 
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel  for="estadoCivil" 
                                                 styleClass="label"
                                                 value="#{msg.estadoCivil}"/>
-                                <p:selectOneMenu id="estadoCivil"
-                                                 required="false" value="#{motoristaManager.motorista.estadoCivil}" >
-                                    <f:selectItem itemLabel="Selecione..." itemValue="" />
-                                    <f:selectItem itemLabel="Solteiro" itemValue="S" />
-                                    <f:selectItem itemLabel="Casado" itemValue="C" />
-                                    <f:selectItem itemLabel="Divorciado" itemValue="D" />
-                                    <f:selectItem itemLabel="Amaziado" itemValue="A" />
-                                </p:selectOneMenu>
-                                <p:spacer />
-
-                                <p:outputLabel  for="dataNascimento" 
+                                    </p:column>
+                                    <p:column colspan="5">
+                                         <p:selectOneMenu   id="estadoCivil"
+                                                            style="width: 300px !important"
+                                                            value="#{motoristaManager.motorista.estadoCivil}">
+                                             <f:selectItems value="#{motoristaManager.estadoCivil}" var="estadoCivil"
+                                                              itemLabel="#{estadoCivil.description}" itemValue="#{estadoCivil.value}"/>
+                                         </p:selectOneMenu>       
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                         <p:outputLabel  for="dataNascimento" 
                                                 styleClass="label"
                                                 value="#{msg.dataNascimento}"/>
-                                <p:calendar id="dataNascimento"
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="dataNascimento"
                                              maxlength="14"
                                              required="false"
+                                             locale="pt"
+                                             selectOtherMonths="true"
+                                             pattern="dd/MM/yy" 
+                                             onkeypress="mascara(this, formatarData)"
                                              size="14"
                                              value="#{motoristaManager.motorista.dataNascimento}" />
-                                <p:spacer />
-
-                                <p:outputLabel  for="localNascimento" 
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel  for="localNascimento" 
                                                 styleClass="label"
                                                 value="#{msg.localNascimento}"/>
-                                <p:inputText id="localNascimento"
+                                    </p:column>
+                                    <p:column colspan="3">
+                                        <p:inputText id="localNascimento"
                                              maxlength="40"
                                              required="false"
                                              size="40"
                                              value="#{motoristaManager.motorista.localNascimento}" />
-                                <p:watermark value="#{msg.localNascimento}" for="localNascimento"/>
-
-<!--                                -->
+                                        <p:watermark value="#{msg.localNascimento}" for="localNascimento"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel for="motoristaAtivo" value="#{msg.motoristaAtivo}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectBooleanCheckbox rendererType="boolean" id="motoristaAtivo" value="#{motoristaManager.motorista.ativo}"/>
+                                    </p:column>
+                                </p:row>
                             </p:panelGrid>
                             <p:panel id="painelDetalhesMotorista" styleClass="semBorda" style="padding-left: 0px !important;margin:0px !important;">
                                 <p:tabView id="tabsDetalheMotorista">
                                     <p:tab id="motoristaEndereco" title="#{msg.formularioAbaEndereco}">    
+                                        <ui:include src="/componentes/reutilizavel/Endereco.xhtml">
+                                            <ui:param name="manager" value="#{motoristaManager}"/>
+                                            <ui:param name="entidade" value="#{motoristaManager.motorista}"/>
+                                        </ui:include>
                                     </p:tab>
                                     <p:tab id="motoristaTelefone" title="#{msg.formularioAbaTelefone}">
                                         <ui:include src="/componentes/reutilizavel/Telefone.xhtml">
@@ -220,6 +280,6 @@
                     </h:form>
                 </ui:define>
             </ui:decorate>
+            </f:view>
         </h:body>
-    </f:view>
 </html>

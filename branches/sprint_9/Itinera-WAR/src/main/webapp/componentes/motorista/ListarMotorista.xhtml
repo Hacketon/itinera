@@ -8,7 +8,7 @@
     <h:head>
         <title>#{msg.headerMotorista}</title>
     </h:head>
-    <h:body onload="selecionado($('#btnMotorista'));">
+    <h:body>
         <f:view>      
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
@@ -27,29 +27,32 @@
                                              rows="10" 
                                              rendered="#{not empty motoristaManager.motoristas}"
                                              value="#{motoristaManager.motoristas}" 
-                                             var="motorista"
-                                             >
-
-                                    <p:column headerText="#{msg.descricaoCategoriaVeiculo}" 
-                                              filterBy="#{motorista.nome}"
-                                              filterMatchMode="contains"
-                                              filterStyle="width: 300px;"
-                                              style="min-width: 510px;"
-                                              styleClass="fontepadrao"
-                                              sortBy="#{motorista.nome}" 
-                                              >
-                                        <h:outputText value="#{motorista.nome}"
-                                                      />
-                                    </p:column>
-
+                                             var="motorista">
+                                <p:column headerText="#{msg.nome}" 
+                                         filterBy="#{motorista.nome}"
+                                         filterMatchMode="contains"
+                                         filterStyle="width: 400px;"
+                                         style="min-width: 400px;"
+                                         styleClass="fontepadrao"
+                                         sortBy="#{motorista.nome}" >
+                                       <h:outputText value="#{motorista.nome}"/>
+                                   </p:column>
                                     <p:column sortBy="#{motorista.cpf}" 
                                               styleClass="fontepadrao"
-                                              style="text-align: center;"
+                                              filterStyle="width:150px;"
+                                              style="text-align: center;width:150px;"
                                               headerText="#{msg.cpf}"
-                                              filterBy="#{motorista.cpf}"
-                                              >
-
+                                              filterBy="#{motorista.cpf}">
                                         <h:outputText value="#{motorista.cpf}" />
+                                    </p:column>
+                                    <p:column sortBy="#{motorista.idMunicipio}" 
+                                              styleClass="fontepadrao"
+                                              filterStyle="width:200px;"
+                                              style="text-align: center; width:200px;"
+                                              headerText="#{msg.formularioCampoMunicipio}"
+                                              filterBy="#{motorista.idMunicipio}">
+
+                                        <h:outputText value="#{motorista.idMunicipio}" />
                                     </p:column>
 
                                     <p:column headerText="">
@@ -58,7 +61,6 @@
                                                        value="#{msg.acaoAlterar}">
                                             <f:setPropertyActionListener value="#{motorista}" target="#{motoristaManager.motorista}" />  
                                         </h:commandLink>
-
                                     </p:column>
 
                                     <p:column headerText="">
@@ -73,10 +75,12 @@
                             </h:panelGrid>
 
                             <!--DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
-                            <p:confirmDialog header="#{msg.headerExcluir}" message="#{msg.perguntaExcluirCategoria}" id="excluiDlg" widgetVar="exclui">
-                                <p:commandButton value="#{msg.acaoSim}" action="#{motoristaManager.excluir}" update="gridCategorias messages" />
+                            <p:confirmDialog header="#{msg.headerExcluir}" message="#{msg.perguntaExcluirMotorista}" id="excluiDlg" widgetVar="exclui">
+                                <p:commandButton value="#{msg.acaoSim}" action="#{motoristaManager.excluir()}" update="gridCategorias messages" />
                                 <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
                             </p:confirmDialog>
+                            
+                            <ui:include src="/componentes/reutilizavel/AjaxLoading.xhtml" />
                         </h:form>
                     </p:panel>
                 </ui:define>

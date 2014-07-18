@@ -5,8 +5,10 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-  <h:body onload="selecionado($('#btnOrdemColeta'));">
-        <h:outputScript>selecionado($('#btnOrdemColeta'));</h:outputScript>
+    <h:head>
+        <title>#{msg.headerOrdemColeta}</title>
+    </h:head>
+    <h:body >
         <f:view>      
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
@@ -23,7 +25,7 @@
                                                     value="#{ordemColetaManager.filtroDataInicio}" 
                                                     locale="pt"
                                                     selectOtherMonths="true"
-                                                    pattern="dd/MM/yyyy" 
+                                                    pattern="dd/MM/yy" 
                                                     onkeypress="mascara(this, formatarData)"
                                                     />
                                     </p:column>
@@ -34,7 +36,7 @@
                                         <p:calendar id="filtroOCDataFim" 
                                                     locale="pt"
                                                     value="#{ordemColetaManager.filtroDataFim}" 
-                                                    pattern="dd/MM/yyyy" 
+                                                    pattern="dd/MM/yy" 
                                                     onkeypress="mascara(this, formatarData)"/>
                                     </p:column> 
                                     <p:column>
@@ -44,7 +46,9 @@
                                         <p:inputText value="#{ordemColetaManager.filtroNotaFiscal}"/>
                                     </p:column>
                                     <p:column>
-                                        <p:commandButton value="#{msg.buscar}" action="#{ordemColetaManager.filtrar()}"/>
+                                        <p:commandButton value="#{msg.buscar}" 
+                                                         action="#{ordemColetaManager.filtrar()}" 
+                                                         update="gridOrdemColeta"/>
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -65,56 +69,70 @@
                                     <p:column headerText="#{msg.OCData}" 
                                               filterBy="#{ordemColeta.dataOrdemColeta}"
                                               filterMatchMode="equals"
+                                              style="text-align: center;"
                                               styleClass="fontepadrao"
                                               sortBy="#{ordemColeta.dataOrdemColeta}" >
-                                        <h:outputText value="#{ordemColeta.dataOrdemColeta}"/>
+                                        <h:outputText value="#{ordemColetaManager.formatarData(ordemColeta.dataOrdemColeta)}"/>
                                     </p:column>
                                     <p:column headerText="#{msg.OCNumero}" 
                                               filterBy="#{ordemColeta.ordemColetaId}"
                                               filterMatchMode="equals"
+                                              filterStyle="width:70px"
                                               styleClass="fontepadrao"
+                                              style="text-align: center;"
                                               sortBy="#{ordemColeta.ordemColetaId}" >
                                         <h:outputText value="#{ordemColeta.ordemColetaId}"/>
                                     </p:column>
                                     <p:column headerText="#{msg.OCRota}" 
                                               filterBy="#{ordemColeta.rota}"
                                               filterMatchMode="contains"
+                                              filterStyle="width:200px"
                                               styleClass="fontepadrao"
                                               sortBy="#{ordemColeta.rota}" >
-                                        <h:outputText value="#{ordemColeta.rota}"/>
+                                        <p:outputLabel value="#{ordemColeta.rota}" />
                                     </p:column>
                                     <p:column headerText="#{msg.OCRemetente}" 
                                               filterBy="#{ordemColeta.remetenteId.nomeFantasia}"
                                               filterMatchMode="contains"
+                                              filterStyle="width:150px;"
+                                              style="max-width:150px"
                                               styleClass="fontepadrao"
                                               sortBy="#{ordemColeta.remetenteId.nomeFantasia}" >
-                                        <h:outputText value="#{ordemColeta.remetenteId.nomeFantasia}"/>
+                                        <p:outputLabel value="#{ordemColetaManager.formataTextoLongo(ordemColeta.remetenteId.nomeFantasia)}" title="#{ordemColeta.remetenteId.nomeFantasia}"/>
                                     </p:column>
                                     <p:column headerText="#{msg.OCDestinatario}" 
                                               filterBy="#{ordemColeta.destinatarioId.nomeFantasia}"
                                               filterMatchMode="contains"
+                                              filterStyle="width:150px;"
+                                              style="max-width:150px"
                                               styleClass="fontepadrao"
                                               sortBy="#{ordemColeta.destinatarioId.nomeFantasia}" >
-                                        <h:outputText value="#{ordemColeta.destinatarioId.nomeFantasia}"/>
+                                        <p:outputLabel value="#{ordemColetaManager.formataTextoLongo(ordemColeta.destinatarioId.nomeFantasia)}"
+                                                       title="#{ordemColeta.destinatarioId.nomeFantasia}"/>
                                     </p:column>
                                     <p:column headerText="#{msg.OCVeiculo}" 
                                               filterBy="#{ordemColeta.veiculoId.placaVeiculo}"
                                               filterMatchMode="contains"
                                               styleClass="fontepadrao"
+                                              style="text-align: center;"
                                               sortBy="#{ordemColeta.veiculoId.placaVeiculo}" >
                                         <h:outputText value="#{ordemColeta.veiculoId.placaVeiculo}"/>
                                     </p:column>
                                     <p:column headerText="#{msg.OCMotorista}" 
                                               filterBy="#{ordemColeta.motoristaId.nome}"
                                               filterMatchMode="contains"
+                                              filterStyle="width:150px;"
+                                              style="max-width:150px"
                                               styleClass="fontepadrao"
                                               sortBy="#{ordemColeta.motoristaId.nome}" >
-                                        <h:outputText value="#{ordemColeta.motoristaId.nome}"/>
+                                        <p:outputLabel value="#{ordemColetaManager.formataTextoLongo(ordemColeta.motoristaId.nome)}"
+                                                       title="#{ordemColeta.motoristaId.nome}"/>
                                     </p:column>
                                     <p:column headerText="#{msg.OCValor}" 
                                               styleClass="fontepadrao"
+                                              style="text-align: right;"
                                               sortBy="#{ordemColeta.valorTotal}" >
-                                        <h:outputText value="#{ordemColeta.valorTotal}"/>
+                                        <h:outputText value="#{ordemColetaManager.formataMoeda(ordemColeta.valorTotal)}"/>
                                     </p:column>
                                     <p:column headerText="">
                                         <h:commandLink styleClass="fontepadrao" 
@@ -140,6 +158,8 @@
                                 <p:commandButton value="#{msg.acaoSim}" action="#{ordemColetaManager.excluir()}" update="gridOrdemColeta messages" />
                                 <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
                             </p:confirmDialog>
+
+                            <ui:include src="/componentes/reutilizavel/AjaxLoading.xhtml" />
                         </h:form>
                     </p:panel>
                 </ui:define>

@@ -5,8 +5,10 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-        <h:body onload="selecionado($('#btnGrupo'));">
-        <h:outputScript>selecionado($('#btnGrupo'));</h:outputScript>
+    <h:head>
+        <title>#{msg.headerGrupo}</title>
+    </h:head>
+        <h:body >
         <f:view>      
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">

@@ -12,7 +12,7 @@ and open the template in the editor.
     <h:head>
         <title>#{msg.headerUsuario}</title>
     </h:head>
-    <h:body onload="selecionado($('#btnUsuario'));">
+    <h:body>
       <f:view>
         <ui:decorate template="/layout/logado/template.xhtml">       
         <ui:define name="conteudo">
@@ -95,6 +95,8 @@ and open the template in the editor.
                 <p:commandButton value="Sim" action="#{usuariosManager.excluir()}" update="gridUsuarios messages" />
                 <p:commandButton value="Não" onclick="exclui.hide();" />
             </p:confirmDialog>
+
+            <ui:include src="/componentes/reutilizavel/AjaxLoading.xhtml" />
             </p:panel>
             </h:form>               
         </ui:define>

@@ -8,7 +8,7 @@
     <h:head>
         <title>#{msg.headerVeiculo}</title>
     </h:head>
-    <body onload="selecionado($('#btnVeiculo'));">
+    <h:body>
     <ui:decorate template="/layout/logado/template.xhtml">
         <ui:define name="titulo">Veículos: Listagem</ui:define>
         <ui:define name="conteudo">
@@ -97,10 +97,11 @@
                 <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
             </p:confirmDialog>
             
+            <ui:include src="/componentes/reutilizavel/AjaxLoading.xhtml" />s
             </h:form>
             </p:panel>
         </ui:define>
     </ui:decorate>
-    </body>
+    </h:body>
 </html>
 
