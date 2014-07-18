@@ -14,6 +14,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,7 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Motorista.findAll", query = "SELECT m FROM Motorista m"),
     @NamedQuery(name = "Motorista.findByMotoristaId", query = "SELECT m FROM Motorista m WHERE m.motoristaId = :motoristaId"),
     @NamedQuery(name = "Motorista.findByCpf", query = "SELECT m FROM Motorista m WHERE m.cpf = :cpf"),
-    @NamedQuery(name = "Motorista.findByNome", query = "SELECT m FROM Motorista m WHERE m.nome like :nome"),
+    @NamedQuery(name = "Motorista.findByNome", query = "SELECT m FROM Motorista m WHERE LOWER(m.nome) like LOWER(:nome)"),
+    @NamedQuery(name = "Motorista.findByNomeAtivo", query = "SELECT m FROM Motorista m WHERE LOWER(m.nome) like LOWER(:nome) and m.ativo=true"),
     @NamedQuery(name = "Motorista.findByRg", query = "SELECT m FROM Motorista m WHERE m.rg = :rg"),
     @NamedQuery(name = "Motorista.findByRgOrgaoEmissor", query = "SELECT m FROM Motorista m WHERE m.rgOrgaoEmissor = :rgOrgaoEmissor"),
     @NamedQuery(name = "Motorista.findByRgDataEmissao", query = "SELECT m FROM Motorista m WHERE m.rgDataEmissao = :rgDataEmissao"),
@@ -57,12 +59,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Motorista.findByBanco", query = "SELECT m FROM Motorista m WHERE m.banco = :banco"),
     @NamedQuery(name = "Motorista.findByAgencia", query = "SELECT m FROM Motorista m WHERE m.agencia = :agencia"),
     @NamedQuery(name = "Motorista.findByConta", query = "SELECT m FROM Motorista m WHERE m.conta = :conta"),
-    @NamedQuery(name = "Motorista.findByTipoLogradouro", query = "SELECT m FROM Motorista m WHERE m.tipoLogradouro = :tipoLogradouro"),
-    @NamedQuery(name = "Motorista.findByLogradouro", query = "SELECT m FROM Motorista m WHERE m.nomeLogradouro = :nomeLogradouro"),
-    @NamedQuery(name = "Motorista.findByCep", query = "SELECT m FROM Motorista m WHERE m.cep = :cep"),
-    @NamedQuery(name = "Motorista.findByNumero", query = "SELECT m FROM Motorista m WHERE m.numero = :numero"),
-    @NamedQuery(name = "Motorista.findByComplemento", query = "SELECT m FROM Motorista m WHERE m.complemento = :complemento"),
-    @NamedQuery(name = "Motorista.findByBairro", query = "SELECT m FROM Motorista m WHERE m.bairro = :bairro"),
+    @NamedQuery(name = "Motorista.findByTipoLogradouro", query = "SELECT m FROM Motorista m WHERE m.endereco.tipoLogradouro = :tipoLogradouro"),
+    @NamedQuery(name = "Motorista.findByLogradouro", query = "SELECT m FROM Motorista m WHERE m.endereco.nomeLogradouro = :nomeLogradouro"),
+    @NamedQuery(name = "Motorista.findByCep", query = "SELECT m FROM Motorista m WHERE m.endereco.cep = :cep"),
+    @NamedQuery(name = "Motorista.findByNumero", query = "SELECT m FROM Motorista m WHERE m.endereco.numero = :numero"),
+    @NamedQuery(name = "Motorista.findByComplemento", query = "SELECT m FROM Motorista m WHERE m.endereco.complemento = :complemento"),
+    @NamedQuery(name = "Motorista.findByBairro", query = "SELECT m FROM Motorista m WHERE m.endereco.bairro = :bairro"),
     @NamedQuery(name = "Motorista.findByConjugeNome", query = "SELECT m FROM Motorista m WHERE m.conjugeNome = :conjugeNome"),
     @NamedQuery(name = "Motorista.findByDependentes", query = "SELECT m FROM Motorista m WHERE m.dependentes = :dependentes")})
 public class Motorista implements Serializable {
@@ -125,23 +127,8 @@ public class Motorista implements Serializable {
     @Size(max = 20)
     @Column(name = "conta")
     private String conta;
-    @Size(max = 20)
-    @Column(name = "tipo_logradouro")
-    private String tipoLogradouro;
-    @Size(max = 100)
-    @Column(name = "nome_logradouro")
-    private String nomeLogradouro;
-    @Size(max = 9)
-    @Column(name = "cep")
-    private String cep;
-    @Column(name = "numero")
-    private BigInteger numero;
-    @Size(max = 50)
-    @Column(name = "complemento")
-    private String complemento;
-    @Size(max = 100)
-    @Column(name = "bairro")
-    private String bairro;
+    @Embedded
+    private Endereco endereco;
     @Size(max = 100)
     @Column(name = "conjuge_nome")
     private String conjugeNome;
@@ -149,7 +136,7 @@ public class Motorista implements Serializable {
     private BigInteger dependentes;
     @JoinColumn(name = "municipio", referencedColumnName = "id_municipio")
     @ManyToOne
-    private Municipio municipio;
+    private Municipio idMunicipio;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable( name = "contato_mot_tel", 
                 joinColumns = @JoinColumn(name = "motorista_id"),
@@ -163,16 +150,23 @@ public class Motorista implements Serializable {
     private List<Email> emailList;
 
     public Motorista() {
+         endereco = new Endereco();
+         idMunicipio = new Municipio();
+         this.ativo = true;
     }
 
     public Motorista(BigDecimal motoristaId) {
+        endereco = new Endereco();
         this.motoristaId = motoristaId;
+        this.ativo = true;
     }
 
     public Motorista(BigDecimal motoristaId, String cpf, String nome) {
+        endereco = new Endereco();
         this.motoristaId = motoristaId;
         this.cpf = cpf;
         this.nome = nome;
+        this.ativo = true;
     }
 
     public BigDecimal getMotoristaId() {
@@ -287,52 +281,12 @@ public class Motorista implements Serializable {
         this.conta = conta;
     }
 
-    public String getTipoLogradouro() {
-        return tipoLogradouro;
+    public Endereco getEndereco() {
+        return endereco;
     }
 
-    public void setTipoLogradouro(String tipoLogradouro) {
-        this.tipoLogradouro = tipoLogradouro;
-    }
-
-    public String getLogradouro() {
-        return nomeLogradouro;
-    }
-
-    public void setLogradouro(String nomeLogradouro) {
-        this.nomeLogradouro = nomeLogradouro;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public BigInteger getNumero() {
-        return numero;
-    }
-
-    public void setNumero(BigInteger numero) {
-        this.numero = numero;
-    }
-
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public String getConjugeNome() {
@@ -351,12 +305,12 @@ public class Motorista implements Serializable {
         this.dependentes = dependentes;
     }
 
-    public Municipio getMunicipio() {
-        return municipio;
+    public Municipio getIdMunicipio() {
+        return idMunicipio;
     }
 
-    public void setMunicipio(Municipio municipio) {
-        this.municipio = municipio;
+    public void setIdMunicipio(Municipio municipio) {
+        this.idMunicipio = municipio;
     }
 
     public Boolean getAtivo() {

@@ -43,8 +43,12 @@ public class MotoristaDAO {
         return em.createQuery("Select m from Motorista m where m.ativo = true").getResultList();
     }
     
-    public List<Motorista> buscarPorNOme(String nome) {
+    public List<Motorista> buscarPorNome(String nome) {
         return em.createNamedQuery("Motorista.findByNome").setParameter("nome", "%"+nome+"%").getResultList();
+    }
+    
+    public List<Motorista> buscarPorNomeAtivo(String nome) {
+        return em.createNamedQuery("Motorista.findByNomeAtivo").setParameter("nome", "%"+nome+"%").getResultList();
     }
     
     public boolean verificarSeNovoMotoristaJaExisteComMesmoCpf(String cpf){
