@@ -5,7 +5,10 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-    <h:body onload="selecionado($('#btnVeiculo'));">
+    <h:head>
+        <title>#{msg.headerVeiculo}</title>
+    </h:head>
+    <h:body>
         <ui:decorate template="/layout/logado/template.xhtml">
             <ui:define name="conteudo">    
                 <h:form id="displayMessages">
