@@ -5,32 +5,36 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{msg.headerOrdemColeta}</title>
+    </h:head>
       <h:body>
-        <h:outputScript>selecionado($('#btnOrdemColeta'));</h:outputScript>
         <f:view>      
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
                     <p:panel styleClass="semBorda" header="#{msg.ordemColeta}">
                         <h:form>
                             <p:messages id="messages" showDetail="true"/>
-                            <p:panelGrid>
-                                <p:row>
-                                    <p:column> 
-                                        <p:outputLabel value="#{msg.OCNumero}"/>
-                                    </p:column>
-                                    <p:column colspan="3">    
-                                        <p:outputLabel value="#{ordemColetaManager.ordemColeta.ordemColetaId}"
-                                                       styleClass="inputDesabilitado" 
-                                                       style="font-size: 12pt;font-weight: bold"/>
-                                    </p:column>
-                                    <p:column> 
-                                        <p:outputLabel value="#{msg.OCData}"/>
-                                    </p:column>
-                                    <p:column>    
-                                        <p:outputLabel value="#{ordemColetaManager.formatarData(ordemColetaManager.ordemColeta.dataOrdemColeta)}"
-                                                       styleClass="inputDesabilitado"/>
-                                    </p:column>
-                                </p:row>
+                            
+                                <p:panelGrid>
+                                    <p:row>
+                                        <p:column> 
+                                            <p:outputLabel value="#{msg.OCNumero}"/>
+                                        </p:column>
+                                        <p:column colspan="3">    
+                                            <p:outputLabel value="#{ordemColetaManager.ordemColeta.ordemColetaId}"
+                                                           styleClass="inputDesabilitado" 
+                                                           style="font-size: 18pt;font-weight: bold"/>
+                                        </p:column>
+                                        <p:column> 
+                                            <p:outputLabel value="#{msg.OCData}"/>
+                                        </p:column>
+                                        <p:column>    
+                                            <p:outputLabel value="#{ordemColetaManager.formatarData(ordemColetaManager.ordemColeta.dataOrdemColeta)}"
+                                                           styleClass="inputDesabilitado"/>
+                                        </p:column>
+                                    </p:row>
+                                                                    
                                 <p:row>
                                     <p:column>
                                         <p:outputLabel value="#{msg.OCMotorista}" for="OCMotorista"/>
@@ -40,7 +44,7 @@
                                                         required="true"
                                                         requiredMessage="#{msgSis.obrigatorioOCMotorista}"
                                                         completeMethod="#{ordemColetaManager.completeMotorista}"
-                                                        converter="#{mngMotoristaConverter}"
+                                                        converter="conversorMotorista"
                                                         value="#{ordemColetaManager.ordemColeta.motoristaId}"
                                                         size="80" />
                                         <p:watermark for="OCMotorista" value="#{msg.OCMMotorista}"/>
@@ -188,23 +192,29 @@
                                                     locale="pt"
                                                     selectOtherMonths="true"
                                                     pattern="dd/MM/yyyy" 
-                                                    onkeypress="mascara(this, formatarData)"
-                                                    />
+                                                    onkeypress="mascara(this, formatarData)"/>
                                          <p:watermark for="OCDataNotaFiscal" value="#{msg.OCMDataNF}"/>
                                     </p:column>
                                 </p:row>
-                            </p:panelGrid>
-                            <br/>
-                            <p:commandButton id="btnConfirma" 
-                                             action="#{ordemColetaManager.salvar()}" 
-                                             value="#{msg.acaoOK}" 
-                                             styleClass="botao"
-                                             update="messages"/>
-                            <p:commandButton id="BtnFechar" 
-                                             action="#{ordemColetaManager.montarPaginaListagem()}" 
-                                             value="#{msg.acaoFechar}" 
-                                             immediate="true"
-                                             styleClass="botao"/>
+                                </p:panelGrid>
+                                <br/>
+                                <p:commandButton id="btnConfirmaInsercao" 
+                                                 action="#{ordemColetaManager.inserir()}" 
+                                                 value="#{msg.acaoOK}" 
+                                                 rendered="#{(ordemColetaManager.ordemColeta.ordemColetaId.intValue()== null)}"
+                                                 styleClass="botao"
+                                                 update="messages"/>
+                                <p:commandButton id="btnConfirmaAlteracao" 
+                                                 action="#{ordemColetaManager.alterar()}" 
+                                                 value="#{msg.acaoOK}" 
+                                                 rendered="#{!(ordemColetaManager.ordemColeta.ordemColetaId.intValue()== null)}"
+                                                 styleClass="botao"
+                                                 update="messages"/>
+                                <p:commandButton id="BtnFechar" 
+                                                 action="#{ordemColetaManager.montarPaginaListagem()}" 
+                                                 value="#{msg.acaoFechar}" 
+                                                 immediate="true"
+                                                 styleClass="botao"/>
                         </h:form>
                     </p:panel>
                 </ui:define>

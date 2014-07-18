@@ -5,8 +5,10 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-
-    <h:body onload="selecionado($('#btnEmpresa'));">
+    <h:head>
+        <title>#{msg.headerEmpresa}</title>
+    </h:head>
+    <h:body>
         <ui:decorate template="/layout/logado/template.xhtml">
             <ui:define name="conteudo">
                 <p:panel styleClass="semBorda" header="#{msg.listaEmpresa}">
@@ -88,6 +90,8 @@
                             <p:commandButton value="Sim" action="#{empresaManager.excluir}" update="gridEmpresas messages" />
                             <p:commandButton value="Não" onclick="exclui.hide();" />
                         </p:confirmDialog>
+                        
+                        <ui:include src="/componentes/reutilizavel/AjaxLoading.xhtml" />
                     </h:form>
                 </p:panel>
             </ui:define>

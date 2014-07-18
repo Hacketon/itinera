@@ -14,7 +14,7 @@
                 </p:column>
                 <p:column>
                     <p:selectOneMenu id="tipoLogradouro"
-                                     required="true"
+                                     required="#{manager.enderecoObrigatorio}"
                                      style="width: 300px !important"
                                      requiredMessage="#{msgSis.obrigatorioTipoLogradouro}"
                                      value="#{entidade.endereco.tipoLogradouro}"
@@ -30,7 +30,7 @@
                 </p:column>
                 <p:column>
                     <p:inputMask id="cep"
-                                 required="true"
+                                 required="#{manager.enderecoObrigatorio}"
                                  mask="99999-999"
                                  value="#{entidade.endereco.cep}"
                                  onkeypress="mascara(this, formatarCep)"
@@ -50,7 +50,7 @@
                 </p:column>
                 <p:column>
                     <p:inputText id="logradouro"
-                                 required="true"
+                                 required="#{manager.enderecoObrigatorio}"
                                  value="#{entidade.endereco.nomeLogradouro}"
                                  maxlength="100"
                                  size="70"/>
@@ -63,7 +63,7 @@
                 </p:column>
                 <p:column>
                     <p:inputMask id="numero"
-                                 required="true"
+                                 required="#{manager.enderecoObrigatorio}"
                                  value="#{entidade.endereco.numero}"
                                  mask="9?9999999"
                                  />
@@ -93,7 +93,7 @@
                 </p:column>
                 <p:column >
                     <p:inputText id="bairro"
-                                 required="true"
+                                 required="#{manager.enderecoObrigatorio}"
                                  value="#{entidade.endereco.bairro}" 
                                  maxlength="100"
                                  size="70"
@@ -108,7 +108,7 @@
                 <p:column >
                     <p:autoComplete value="#{entidade.idMunicipio}" 
                                     id="municipio" 
-                                    required="true"
+                                    required="#{manager.enderecoObrigatorio}"
                                     completeMethod="#{manager.completeMunicipio}"
                                     converter="#{mngMunicipioConverter}" 
                                     minQueryLength="3"

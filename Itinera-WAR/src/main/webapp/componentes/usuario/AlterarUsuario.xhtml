@@ -3,9 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-   <h:body onload="selecionado($('#btnUsuario'));">
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{msg.headerUsuario}</title>
+    </h:head>
+   <h:body>
     <ui:decorate template="/layout/logado/template.xhtml">
         <ui:define name="conteudo">    
             <p:panel styleClass="semBorda" header="#{msg.alteraUsuario}">
@@ -61,8 +63,8 @@
                     </p:column>
                     <p:column style="width:50%;text-align: center;">            
                         <p:dataTable id="gruposUsuario" var="grupo" value="#{grupoManager.grupos}" selection="#{usuariosManager.grupoSelecionado}" rowKey="#{grupo.grupoId}" style="margin-bottom:0;text-align: center;">
-                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                            <p:column headerText="Grupo">
+                            <p:column disabledSelection="true" selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:column headerText="#{msg.tituloGrupoUsuario}">
                                 <h:outputText value="#{grupo.grupoNome}" />
                             </p:column>
                         </p:dataTable>

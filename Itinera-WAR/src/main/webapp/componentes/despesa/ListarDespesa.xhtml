@@ -8,7 +8,7 @@
     <h:head>
         <title>#{msg.headerDespesa}</title>
     </h:head>
-    <h:body onload="selecionado($('#btnDespesa'));">
+    <h:body>
         <f:view>      
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
@@ -107,6 +107,8 @@
                                 <p:commandButton value="#{msg.acaoSim}" action="#{despesaManager.excluir()}" update="gridDespesas messages" onclick="exclui.hide();" />
                                 <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
                             </p:confirmDialog>
+                            
+                            <ui:include src="/componentes/reutilizavel/AjaxLoading.xhtml" />
                         </h:form>
                     </p:panel>
                 </ui:define>

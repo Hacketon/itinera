@@ -5,27 +5,27 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:body>
-        <p:commandButton action="#{manager.novoTelefone()}" 
+       <p:commandButton action="#{manager.novoTelefone()}" 
                 icon="ui-icon-plus" 
                 styleClass="fontepadrao" 
                 value="#{msg.acaoNovo}"
                 update="tabelaTelefone"
                 oncomplete="$('##{component.parent.clientId}'.replace(/:/g,'\\\\:')).find('.ui-datatable .ui-datatable-data .ui-row-editor .ui-icon-pencil').last().trigger('click'); return true;"
                 />
-        <p:dataTable id="tabelaTelefone"
+       <p:dataTable id="tabelaTelefone"
             value="#{entidade.telefoneList}" 
             var="telefone" 
             editable="true"
             emptyMessage="#{msg.gridSemRegistro}"
             rows="10"
             >
-        <p:ajax event="rowEdit"  update="tabelaTelefone" />
-        <p:ajax event="rowEditCancel"  update="tabelaTelefone" />
+       <p:ajax event="rowEdit"  update="tabelaTelefone" />
+       <p:ajax event="rowEditCancel"  update="tabelaTelefone" />
 
-        <p:column headerText="#{msg.formularioCampoTelefoneNumero}" style="text-align: center">
-            <p:cellEditor>
-                <f:facet name="output">
-                    <h:outputText value="#{telefone.telefoneNumero}" />
+       <p:column headerText="#{msg.formularioCampoTelefoneNumero}" style="text-align: center">
+           <p:cellEditor>
+               <f:facet name="output">
+                   <h:outputText value="#{telefone.telefoneNumero}" />
                 </f:facet>
                 <f:facet name="input">
                     <h:inputText 
@@ -35,9 +35,9 @@
                           value="#{telefone.telefoneNumero}" />
                 </f:facet>
             </p:cellEditor>
-        </p:column>
+       </p:column>
 
-        <p:column headerText="#{msg.formularioCampoTelefoneRamal}"  style="text-align: center">
+       <p:column headerText="#{msg.formularioCampoTelefoneRamal}"  style="text-align: center">
             <p:cellEditor>
                 <f:facet name="output">
                     <h:outputText value="#{telefone.telefoneRamal}"  />
@@ -47,9 +47,9 @@
                                  onkeypress="mascara(this, formatarNumero)" />
                 </f:facet>
             </p:cellEditor>
-        </p:column>
+       </p:column>
 
-        <p:column headerText="#{msg.formularioCampoTelefoneDescricao}" style="text-align: center">
+       <p:column headerText="#{msg.formularioCampoTelefoneDescricao}" style="text-align: center">
             <p:cellEditor>
                 <f:facet name="output">
                     <h:outputText value="#{telefone.telefoneDescricao}" />
@@ -58,18 +58,17 @@
                     <h:inputText value="#{telefone.telefoneDescricao}" />
                 </f:facet>
             </p:cellEditor>
-        </p:column>
+       </p:column>
 
-        <p:column style="text-align: center">
+       <p:column style="text-align: center">
             <p:rowEditor />
-        </p:column>
+       </p:column>
 
-        <p:column style="text-align: center">
+       <p:column style="text-align: center">
             <p:commandLink value="#{msg.acaoExcluir}" action="#{manager.excluirTelefone(telefone)}"
                            update="tabelaTelefone"/>
-        </p:column>
+       </p:column>
     </p:dataTable> 
-        
     </h:body>
 </html>
 
