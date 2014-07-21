@@ -16,7 +16,7 @@
                     <p:panel styleClass="semBorda" header="#{msg.listaOrdemColeta}">
                         <h:form>
                             <p:messages id="messages" showDetail="true"/>
-                            <p:panelGrid>
+                            <p:panelGrid id="gridFiltroOrdemColeta">
                                 <p:row>
                                     <p:column>
                                         <p:outputLabel value="#{msg.filtroPeriodoDaOC}" />
@@ -157,7 +157,7 @@
 
                             <!--DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
                             <p:confirmDialog header="#{msg.headerExcluir}" message="#{msg.perguntaExcluirOrdemColeta}" id="excluiDlg" widgetVar="exclui">
-                                <p:commandButton value="#{msg.acaoSim}" action="#{ordemColetaManager.excluir()}" update="gridOrdemColeta messages" />
+                                <p:commandButton value="#{msg.acaoSim}" action="#{ordemColetaManager.excluir()}" ajax="true" update="gridOrdemColeta messages" />
                                 <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
                             </p:confirmDialog>
 
