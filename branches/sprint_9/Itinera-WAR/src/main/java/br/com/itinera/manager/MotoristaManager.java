@@ -46,6 +46,8 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
     private MunicipioFachada municipioFachada;
     
     public MotoristaManager() {
+        telefone = new Telefone();
+        email = new Email();
     }
 
     public Endereco getEndereco() {
@@ -205,7 +207,7 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
         } catch (EntityExistsException e) {
             Mensagem.mostrarMensagemErro(Mensagem.duplicidade, "Um motorista com este cpf já foi inserido. Por favor, verifique!");
         } catch (Exception e) {
-            Mensagem.mostrarMensagemErro(Mensagem.erro, Mensagem.erroCritico + e.getMessage());
+            Mensagem.mostrarMensagemErro("Problema ao finalizar registro. " + e.getMessage(), "Problema ao finalizar registro. " + e.getMessage());
         }
         return "";
     }
