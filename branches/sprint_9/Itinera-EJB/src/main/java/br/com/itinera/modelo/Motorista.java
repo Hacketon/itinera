@@ -69,7 +69,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Motorista.findByDependentes", query = "SELECT m FROM Motorista m WHERE m.dependentes = :dependentes")})
 public class Motorista implements Serializable {
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "motoristaId")
+    @OneToMany(mappedBy = "motoristaId")
     private List<OrdemColeta> ordemColetaList;
 
     private static final long serialVersionUID = 1L;

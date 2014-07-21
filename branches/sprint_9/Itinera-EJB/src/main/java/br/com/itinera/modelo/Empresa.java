@@ -43,7 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empresa.findByRazaoSocial", query = "SELECT e FROM Empresa e WHERE e.razaoSocial = :razaoSocial"),
     @NamedQuery(name = "Empresa.findByTipo", query = "SELECT e FROM Empresa e WHERE e.tipo = :tipo")})
 public class Empresa implements Serializable {
-    @ManyToMany( cascade = CascadeType.ALL )
+    @ManyToMany( cascade = CascadeType.ALL)
     @JoinTable( name = "contato_emp_email", 
                 joinColumns = @JoinColumn(name = "empresa_id"),
                 inverseJoinColumns = @JoinColumn(name = "email_id")              )

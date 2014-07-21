@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -41,9 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Municipio.findByDddMunicipio", query = "SELECT m FROM Municipio m WHERE m.dddMunicipio = :dddMunicipio"),
     @NamedQuery(name = "Municipio.findByLikeName",query="SELECT m FROM Municipio m WHERE m.nomeMunicipio like :nomeMunicipio or m.codigoEstado.siglaEstado like :nomeMunicipio")})
 public class Municipio implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMunicipio")
+    @OneToMany(mappedBy = "idMunicipio")
     private List<Motorista> motoristaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMunicipio")
+    @OneToMany(mappedBy = "idMunicipio")
     private List<Empresa> empresaList;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

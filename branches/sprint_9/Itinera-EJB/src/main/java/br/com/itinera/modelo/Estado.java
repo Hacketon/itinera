@@ -58,7 +58,7 @@ public class Estado implements Serializable {
     @JoinColumn(name = "id_pais", referencedColumnName = "id_pais")
     @ManyToOne
     private Pais idPais;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEstado")
+    @OneToMany(mappedBy = "codigoEstado")
     private Collection<Municipio> municipioCollection;
 
     public Estado() {
