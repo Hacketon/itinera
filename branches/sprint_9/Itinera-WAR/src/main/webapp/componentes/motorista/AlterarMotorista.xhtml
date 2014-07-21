@@ -48,7 +48,7 @@
                                          <p:inputText   id="nome"
                                                         maxlength="100"
                                                         required="true" 
-                                                        requiredMessage="#{msgSis.campoObrigatorio}"
+                                                        requiredMessage="#{msgSis.obrigatorioNome}"
                                                         size="100"
                                                         value="#{motoristaManager.motorista.nome}" >
                                         </p:inputText>
@@ -254,9 +254,12 @@
                                             <p:spinner  id="dependentes"
                                                          required="false"
                                                          value="#{motoristaManager.motorista.dependentes}"
+                                                         maxlength="2"
+                                                         onkeyup="mascara(this, formatarNumero)"
                                                          min="0"
                                                          max="99"
                                                          size="5"/>
+                                                
                                         </p:panelGrid>
                                     </p:tab>
                                 </p:tabView>
