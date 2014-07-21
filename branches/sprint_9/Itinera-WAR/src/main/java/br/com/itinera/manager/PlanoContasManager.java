@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityExistsException;
+import org.primefaces.context.RequestContext;
 
 
 /**
@@ -24,6 +25,8 @@ import javax.persistence.EntityExistsException;
 public class PlanoContasManager implements Serializable, CRUD, MontarPaginas {
 
     private PlanoContas planoContas;
+    private PlanoContas planoContasAnterior;
+    private String mensagem;
     private List<PlanoContas> lstPlanoContas = new ArrayList<PlanoContas>();
 
     public PlanoContasManager() {
@@ -36,6 +39,16 @@ public class PlanoContasManager implements Serializable, CRUD, MontarPaginas {
     public void recuperar() {
         this.setLstPlanoContas(fachada.listar());
     }
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
+    
+    
 
     @Override
     public String inserir() {
@@ -57,6 +70,28 @@ public class PlanoContasManager implements Serializable, CRUD, MontarPaginas {
 
     @Override
     public String alterar() {
+        validaAlteracao();
+        if(mensagem.isEmpty()){
+            return realizarAlteracao();
+        }
+        else{
+            RequestContext rc = RequestContext.getCurrentInstance();
+            rc.execute("altera.show()");
+        }
+        return "";
+    }
+    
+    private void validaAlteracao(){
+        mensagem = "";
+        if(!this.planoContas.equals(this.planoContasAnterior.getDescricao())){
+            mensagem += "DESCRIÇÃO: " + this.planoContas.getDescricao() + "(" + this.planoContasAnterior.getDescricao() + ")<br>";
+        }
+        if(this.planoContas.getTipoCombustivel() != this.planoContasAnterior.getTipoCombustivel()){
+            mensagem += "TIPO COMBUSTÍVEL: "+ (this.planoContas.getTipoCombustivel()?"Sim":"Não") + "(" + (this.planoContasAnterior.getTipoCombustivel()?"Sim":"Não") + ")<br>";
+        }
+    }
+    
+    public String realizarAlteracao(){
         try {
             fachada.alterar(this.getPlanoContas());
             Mensagem.mostrarMensagemSucesso(Mensagem.sucesso, "Plano de Contas alterado com sucessso.");
@@ -94,6 +129,9 @@ public class PlanoContasManager implements Serializable, CRUD, MontarPaginas {
 
     @Override
     public String montarPaginaParaAlterar() {
+        planoContasAnterior = new PlanoContas();
+        planoContasAnterior.setDescricao(this.planoContas.getDescricao());
+        planoContasAnterior.setTipoCombustivel(this.planoContas.getTipoCombustivel());
         return "/componentes/planoconta/AlterarPlanoConta";
     }
 
