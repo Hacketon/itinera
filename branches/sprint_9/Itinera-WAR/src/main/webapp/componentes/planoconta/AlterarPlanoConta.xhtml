@@ -54,8 +54,8 @@
                                          immediate="true"
                                          styleClass="botao"/>
                         <p:confirmDialog header="#{msg.headerAlterar}" message="#{msg.headerConfirmaAlterar}" id="AlterarDlg" widgetVar="altera">
-                            <p:outputLabel id="mensagem" value="#{msg.confirmaAlteracao}" escape="false"/>
-                            <p:commandButton value="#{msg.acaoSim}" action="#{planoContasManager.inserir()}"  />
+                            <p:outputLabel id="mensagem" value="#{planoContasManager.mensagem}" escape="false"/>
+                            <p:commandButton value="#{msg.acaoSim}" action="#{planoContasManager.realizarAlteracao()}"  />
                             <p:commandButton value="#{msg.acaoNao}" onclick="altera.hide();" />
                         </p:confirmDialog>
                     </h:form>
