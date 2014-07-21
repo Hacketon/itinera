@@ -10,6 +10,7 @@
    <h:body>
     <ui:decorate template="/layout/logado/template.xhtml">
         <ui:define name="conteudo">    
+            <h:outputScript>selecionado($('#btnUsuario'));</h:outputScript>
             <p:panel styleClass="semBorda" header="#{msg.alteraUsuario}">
             <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
                 <h:form id="formInserirUsuario">
