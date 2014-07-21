@@ -4,17 +4,17 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://java.sun.com/jsf/html">
     <h:body>
-        <h:form id="actionMenu">
-        <p:commandButton  id="btnUsuario"          rendered="#{loginManager.grupoAdministrador}"    action="#{usuariosManager.montarPaginaParaListarUsuarios()}"                   value="Usuários"           style="background: none;" styleClass="#{loginManager.getClasse('usuario')}"               actionListener="#{loginManager.setarTela('usuario')}"/>
-        <p:commandButton  id="btnGrupo"            rendered="#{loginManager.grupoAdministrador}"    action="#{grupoManager.montarPaginaParaListarGrupos()}"                        value="Grupos"             style="background: none;" styleClass="#{loginManager.getClasse('grupo')}"                 actionListener="#{loginManager.setarTela('grupo')}"/>
-        <p:commandButton  id="btnCategoriaVeiculo" rendered="#{loginManager.grupoSecretaria}"       action="#{categoriaVeiculoManager.montarPaginaParaListarCategoriaVeiculo()}"   value="Categoria Veículos" style="background: none;" styleClass="#{loginManager.getClasse('categoriaVeiculo')}"      actionListener="#{loginManager.setarTela('categoriaVeiculo')}"/>
-        <p:commandButton  id="btnVeiculo"          rendered="#{loginManager.grupoSecretaria}"       action="#{veiculoManager.montarPaginaParaListarVeiculo()}"                     value="Veículos"           style="background: none;" styleClass="#{loginManager.getClasse('veiculo')}"               actionListener="#{loginManager.setarTela('veiculo')}"/>
-        <p:commandButton  id="btnEmpresa"          rendered="#{loginManager.grupoSecretaria}"       action="#{empresaManager.listarEmpresa()}"                                     value="Empresas"           style="background: none;" styleClass="#{loginManager.getClasse('empresa')}"               actionListener="#{loginManager.setarTela('empresa')}"/>
-        <p:commandButton  id="btnMotorista"        rendered="#{loginManager.grupoSecretaria}"       action="#{motoristaManager.montarPaginaParaListar()}"                          value="Motorista"          style="background: none;" styleClass="#{loginManager.getClasse('motorista')}"             actionListener="#{loginManager.setarTela('motorista')}"/>
-        <p:commandButton  id="btnPlanoContas"      rendered="#{loginManager.grupoSecretaria}"       action="#{planoContasManager.montarPaginaParaListar()}"                        value="Plano de Contas"    style="background: none;" styleClass="#{loginManager.getClasse('planoConta')}"            actionListener="#{loginManager.setarTela('planoConta')}"/>
-        <p:commandButton  id="btnDespesa"          rendered="#{loginManager.grupoSecretaria}"       action="#{despesaManager.montarPaginaParaListar()}"                            value="Despesas"           style="background: none;" styleClass="#{loginManager.getClasse('despesa')}"               actionListener="#{loginManager.setarTela('despesa')}"/>
-        <p:commandButton  id="btnOrdemColeta"      rendered="#{loginManager.grupoSecretaria}"       action="#{ordemColetaManager.montarPaginaListagem()}"                          value="Ordem de Coleta"    style="background: none;" styleClass="#{loginManager.getClasse('ordemColeta')}"           actionListener="#{loginManager.setarTela('ordemColeta')}"/>
-        </h:form>
+        
+        <p:button  id="btnUsuario"          rendered="#{loginManager.grupoAdministrador}"    outcome="#{usuariosManager.montarPaginaParaListarUsuarios()}"                   value="Usuários"           style="background: none;" styleClass="botaomenu"/>
+        <p:button  id="btnGrupo"            rendered="#{loginManager.grupoAdministrador}"    outcome="#{grupoManager.montarPaginaParaListarGrupos()}"                        value="Grupos"             style="background: none;" styleClass="botaomenu"/>
+        <p:button  id="btnCategoriaVeiculo" rendered="#{loginManager.grupoSecretaria}"       outcome="#{categoriaVeiculoManager.montarPaginaParaListarCategoriaVeiculo()}"   value="Categoria Veículos" style="background: none;" styleClass="botaomenu"/>
+        <p:button  id="btnVeiculo"          rendered="#{loginManager.grupoSecretaria}"       outcome="#{veiculoManager.montarPaginaParaListarVeiculo()}"                     value="Veículos"           style="background: none;" styleClass="botaomenu"/>
+        <p:button  id="btnEmpresa"          rendered="#{loginManager.grupoSecretaria}"       outcome="#{empresaManager.listarEmpresa()}"                                     value="Empresas"           style="background: none;" styleClass="botaomenu"/>
+        <p:button  id="btnMotorista"        rendered="#{loginManager.grupoSecretaria}"       outcome="#{motoristaManager.montarPaginaParaListar()}"                          value="Motorista"          style="background: none;" styleClass="botaomenu"/>
+        <p:button  id="btnPlanoContas"      rendered="#{loginManager.grupoSecretaria}"       outcome="#{planoContasManager.montarPaginaParaListar()}"                        value="Plano de Contas"    style="background: none;" styleClass="botaomenu"/>
+        <p:button  id="btnDespesa"          rendered="#{loginManager.grupoSecretaria}"       outcome="#{despesaManager.montarPaginaParaListar()}"                            value="Despesas"           style="background: none;" styleClass="botaomenu"/>
+        <p:button  id="btnOrdemColeta"      rendered="#{loginManager.grupoSecretaria}"       outcome="#{ordemColetaManager.montarPaginaListagem()}"                          value="Ordem de Coleta"    style="background: none;" styleClass="botaomenu"/>
+        
    </h:body>
 </html>
 

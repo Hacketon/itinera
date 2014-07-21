@@ -12,6 +12,7 @@
         <f:view>      
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
+                    <h:outputScript>selecionado($('#btnOrdemColeta'));</h:outputScript>
                     <p:panel styleClass="semBorda" header="#{msg.listaOrdemColeta}">
                         <h:form>
                             <p:messages id="messages" showDetail="true"/>
@@ -149,6 +150,7 @@
                                             <f:setPropertyActionListener value="#{ordemColeta}" target="#{ordemColetaManager.ordemColeta}" />  
                                         </p:commandLink>
                                     </p:column>
+                                    
                                 </p:dataTable>
                             </h:panelGrid>
 

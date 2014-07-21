@@ -10,6 +10,7 @@
     <h:body>  
         <ui:decorate template="/layout/logado/template.xhtml">
             <ui:define name="conteudo">
+            <h:outputScript>selecionado($('#btnCategoriaVeiculo'));</h:outputScript>
             <h:form id="formAlterarCategoria" styleClass="semBorda">
                 <p:panel styleClass="semBorda" header="#{msg.alteraCategoriaVeiculo}">
                 

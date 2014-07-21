@@ -16,7 +16,7 @@ and open the template in the editor.
       <f:view>
         <ui:decorate template="/layout/logado/template.xhtml">       
         <ui:define name="conteudo">
-            
+            <h:outputScript>selecionado($('#btnUsuario'));</h:outputScript>
             <h:form styleClass="semBorda">
                 <p:panel styleClass="semBorda" header="#{msg.listaUsuario}">
                     <p:messages id="messages" showDetail="true" closable="true"/>

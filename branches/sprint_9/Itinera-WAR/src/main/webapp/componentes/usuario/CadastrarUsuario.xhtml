@@ -12,6 +12,7 @@
        <f:view>
     <ui:decorate template="/layout/logado/template.xhtml">
         <ui:define name="conteudo">    
+            <h:outputScript>selecionado($('#btnUsuario'));</h:outputScript>
             <p:panel styleClass="semBorda" header="#{msg.usuario}">
                     <h:form id="formInserirUsuario">       
                     <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />

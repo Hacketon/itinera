@@ -12,6 +12,7 @@
         <f:view>      
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
+                    <h:outputScript>selecionado($('#btnGrupo'));</h:outputScript>
                     <p:panel styleClass="semBorda" header="#{msg.listaGrupo}">
                         <h:form>
                             <p:messages id="messages" showDetail="true" closable="true"/>

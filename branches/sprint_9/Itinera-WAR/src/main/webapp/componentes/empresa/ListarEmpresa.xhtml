@@ -11,6 +11,7 @@
     <h:body>
         <ui:decorate template="/layout/logado/template.xhtml">
             <ui:define name="conteudo">
+                <h:outputScript>selecionado($('#btnEmpresa'));</h:outputScript>
                 <p:panel styleClass="semBorda" header="#{msg.listaEmpresa}">
                     <h:form styleClass="semBorda">
                         <p:messages id="messages" showDetail="true"/>
