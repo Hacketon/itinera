@@ -12,6 +12,7 @@
         <f:view>      
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
+                    <h:outputScript>selecionado($('#btnPlanoContas'));</h:outputScript>
                     <p:panel styleClass="semBorda" header="#{msg.listaPlanoContas}">
                         <h:form>
                             <p:messages id="messages" showDetail="true"/>

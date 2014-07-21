@@ -12,6 +12,7 @@
         <h:body>
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
+                    <h:outputScript>selecionado($('#btnPlanoContas'));</h:outputScript>
                     <h:form id="displayMessages">
                         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                     </h:form>

@@ -12,6 +12,7 @@
         <f:view>
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
+                    <h:outputScript>selecionado($('#btnMotorista'));</h:outputScript>
                     <h:form id="cadastro" styleClass="semBorda">                
                         <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
                         <p:panel styleClass="semBorda" header="#{msg.motorista}">

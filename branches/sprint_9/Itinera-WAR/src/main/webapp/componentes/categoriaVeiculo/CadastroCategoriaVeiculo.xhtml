@@ -12,6 +12,7 @@
         <f:view>
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
+                    <h:outputScript>selecionado($('#btnCategoriaVeiculo'));</h:outputScript>
                     <h:form id="formInserirCategoria" styleClass="semBorda tr">
                         <p:messages id="messages" showDetail="true"/>
                         <p:panel styleClass="semBorda" header="#{msg.categoriaVeiculo}" >

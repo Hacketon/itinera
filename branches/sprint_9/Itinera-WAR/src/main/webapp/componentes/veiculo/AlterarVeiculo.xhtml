@@ -11,10 +11,11 @@
     <h:body>
         <ui:decorate template="/layout/logado/template.xhtml">
             <ui:define name="conteudo">    
+                <h:outputScript>selecionado($('#btnVeiculo'));</h:outputScript>
                 <h:form id="displayMessages">
                     <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                 </h:form>
-                <h:form id="alterarVeiculo" styleClass="semBorda">                
+                <h:form id="alterarVeiculo" styleClass="semBorda" >                
                     <p:panel styleClass="semBorda" header="#{msg.alteraVeiculo}">
                         <p:panelGrid id="painelcadastro" styleClass="semBorda" columns="3"> 
                             <p:outputLabel for="veiculoPlaca"
