@@ -37,7 +37,7 @@ public class VeiculoDAO {
     }
     
     public List<Veiculo> buscarPorPlaca(String placa) {
-        return em.createNamedQuery("Veiculo.findByPlacaVeiculo").setParameter("placaVeiculo", "%"+placa+"%").getResultList();
+       return em.createNamedQuery("Veiculo.findByPlacaVeiculo").setParameter("placaVeiculo", "%"+placa+"%").getResultList();
     }
     
 }
