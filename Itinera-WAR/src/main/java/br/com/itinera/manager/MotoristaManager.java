@@ -117,7 +117,6 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
     }
 
     public void excluir() {
-        System.out.println("Excluindo");
         fachada.excluir(this.getMotorista());
         RequestContext rc = RequestContext.getCurrentInstance();
         rc.execute("exclui.hide()");
