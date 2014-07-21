@@ -25,6 +25,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -48,8 +49,18 @@ public class OrdemColetaManager implements Serializable{
    private Integer filtroNotaFiscal;
    private BigDecimal valorTotal;
    private BigDecimal valorUnitario;
-   private Integer quantidade;
+   private BigInteger quantidade;
    private boolean inserindo;
+   private OrdemColeta ordemColetaAnterior;
+   private String mensagem;
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
 
     public OrdemColeta getOrdemColeta() {
         return ordemColeta;
@@ -111,11 +122,11 @@ public class OrdemColetaManager implements Serializable{
         this.valorUnitario = valorUnitario;
     }
 
-    public Integer getQuantidade() {
+    public BigInteger getQuantidade() {
         return this.quantidade;
     }
 
-    public void setQuantidade(Integer quantidade) {
+    public void setQuantidade(BigInteger quantidade) {
         this.quantidade = quantidade;
     }
     
@@ -130,56 +141,103 @@ public class OrdemColetaManager implements Serializable{
     }
     
     public String montarPaginaCadastro(){
-        System.out.println("PÁGINA DE CADASTRO");
         this.setInserindo(true);
         this.ordemColeta = new OrdemColeta();
         this.valorTotal = null;
-        this.valorUnitario = BigDecimal.valueOf(0);
-        this.quantidade = 0;
+        this.valorUnitario = BigDecimal.ZERO;
+        this.quantidade = BigInteger.ZERO;
         return "/componentes/ordemColeta/CadastroOrdemColeta";
     }
     
     public String montarPaginaAlterar(){
-        System.out.println("PÁGINA DE ALTERAÇÃO");
+        this.ordemColetaAnterior = new OrdemColeta();
+        this.ordemColetaAnterior.setMotoristaId(this.ordemColeta.getMotoristaId());
+        this.ordemColetaAnterior.setVeiculoId(this.ordemColeta.getVeiculoId());
+        this.ordemColetaAnterior.setRemetenteId(this.ordemColeta.getRemetenteId());
+        this.ordemColetaAnterior.setDestinatarioId(this.ordemColeta.getDestinatarioId());
+        this.ordemColetaAnterior.setQuantidade(this.ordemColeta.getQuantidade());
+        this.ordemColetaAnterior.setValorUnitario(this.ordemColeta.getValorUnitario());
         this.inserindo = false;
         this.valorTotal = this.ordemColeta.getValorTotal();
         this.valorUnitario = this.ordemColeta.getValorUnitario();
-        this.quantidade = this.ordemColeta.getQuantidade().intValue();
+        this.quantidade = this.ordemColeta.getQuantidade();
         return "/componentes/ordemColeta/CadastroOrdemColeta";
     }
     
     public String inserir(){
-        System.out.println("ENTRANDO");
-        this.ordemColeta.setValorUnitario(this.valorUnitario);
-        this.ordemColeta.setQuantidade(BigInteger.valueOf(this.quantidade.longValue()));
-        this.ordemColeta.setValorTotal(valorTotal);
-        System.out.println("INSERT");
-//        ordemColeta.setDestinatarioId(empresaFachada.listar().get(1));
-//        ordemColeta.setMotoristaId(motoristaFachada.listarMotoristaAtivo().get(0));
-//        ordemColeta.setQuantidade(BigInteger.TEN);
-//        ordemColeta.setValorUnitario(BigDecimal.valueOf(155));
-//        ordemColeta.setRemetenteId(empresaFachada.listar().get(0));
-//        ordemColeta.setValorTotal(BigDecimal.valueOf(this.ordemColeta.getQuantidade().doubleValue() * this.ordemColeta.getValorUnitario().doubleValue()));
-//        ordemColeta.setVeiculoId(veiculoFachada.listar().get(1));
-        fachada.inserir(ordemColeta);
-        Mensagem.mostrarMensagemSucesso("Sucesso!", "Ordem de Coleta inserida com sucesso!");
-        return montarPaginaListagem();
+        try{
+            this.ordemColeta.setValorUnitario(this.valorUnitario);
+            this.ordemColeta.setQuantidade(BigInteger.valueOf(this.quantidade.longValue()));
+            this.ordemColeta.setValorTotal(valorTotal);
+            fachada.inserir(ordemColeta);
+            Mensagem.mostrarMensagemSucesso("Sucesso!", "Ordem de Coleta inserida com sucesso!");
+            return montarPaginaListagem();
+        }catch(Exception e){
+            Mensagem.mostrarMensagemErro("Erro!",e.getLocalizedMessage());
+            return "";
+        }
+    }
+    
+    public void verificarAlteracao(){
+        mensagem = "";
+        //Verifica se realmente deve alterar a página
+        if(this.ordemColeta.getMotoristaId().getMotoristaId().intValue() != this.ordemColetaAnterior.getMotoristaId().getMotoristaId().intValue()){
+            mensagem += "MOTORISTA: " + this.ordemColeta.getMotoristaId() + "(" + this.ordemColetaAnterior.getMotoristaId() + ")<br>";
+        }
+        if(this.ordemColeta.getVeiculoId().getIdVeiculo().intValue() != this.ordemColetaAnterior.getVeiculoId().getIdVeiculo().intValue()){
+            mensagem += "VEÍCULO: "+ this.ordemColeta.getVeiculoId() + "(" + this.ordemColetaAnterior.getVeiculoId() + ")<br>";
+        }
+        if(this.ordemColeta.getRemetenteId().getIdEmpresa().intValue() != this.ordemColetaAnterior.getRemetenteId().getIdEmpresa().intValue()){
+            mensagem += "REMETENTE: " + this.ordemColeta.getRemetenteId() + "(" + this.ordemColetaAnterior.getRemetenteId() + ")<br>";
+        }
+        if(this.ordemColeta.getDestinatarioId().getIdEmpresa().intValue() != this.ordemColetaAnterior.getDestinatarioId().getIdEmpresa().intValue()){
+            mensagem += "DESTINATÁRIO: " + this.ordemColeta.getDestinatarioId() + "(" + this.ordemColetaAnterior.getDestinatarioId() + ")<br>";
+        }
+        if(this.ordemColeta.getValorUnitario().doubleValue() != this.ordemColetaAnterior.getValorUnitario().doubleValue()){
+            mensagem += "VALOR UNITÁRIO: " + formataMoeda(this.ordemColeta.getValorUnitario().toString()) + "(" + formataMoeda(this.ordemColetaAnterior.getValorUnitario().toString()) + ")<br>";            
+        }
+        if(this.ordemColeta.getQuantidade().intValue() != this.ordemColetaAnterior.getQuantidade().intValue()){
+            mensagem += "QUANTIDADE: " + this.ordemColeta.getQuantidade() + "(" + this.ordemColetaAnterior + ")<br>";
+        }
     }
     
     public String alterar(){
-        System.out.println("ENTRANDO");
-        System.out.println(inserindo);
-//        this.ordemColeta.setValorUnitario(this.valorUnitario);
-//        this.ordemColeta.setQuantidade(BigInteger.valueOf(this.quantidade.longValue()));
-//        this.ordemColeta.setValorTotal(valorTotal);
-        System.out.println("ALTERAR");
-        fachada.alterar(ordemColeta);
-        return montarPaginaListagem();
-                
+        this.ordemColeta.setValorUnitario(this.valorUnitario);
+        this.ordemColeta.setQuantidade(BigInteger.valueOf(this.quantidade.longValue()));
+        this.ordemColeta.setValorTotal(valorTotal);
+        verificarAlteracao();
+        if(mensagem.isEmpty()){
+            return concluirAlteracao();
+        }
+        else{
+            RequestContext rc = RequestContext.getCurrentInstance();
+            rc.execute("altera.show()");
+            return "";
+        }
     }
     
-    public void excluir(){
-        //TODO Realizar método para excluir a ordem de coleta e exibir mensagem de sucesso. 
+    public String concluirAlteracao(){
+        try{
+            fachada.alterar(ordemColeta);
+            Mensagem.mostrarMensagemSucesso("Sucesso!", "Ordem de Coleta alterada com sucesso!");
+            return montarPaginaListagem();
+        }catch(Exception e){
+            Mensagem.mostrarMensagemErro("Erro!",e.getLocalizedMessage());
+            return "";
+        }
+    }
+    
+    public String excluir(){
+        try{
+            fachada.excluir(ordemColeta);
+            RequestContext rc = RequestContext.getCurrentInstance();
+            rc.execute("exclui.hide()");
+            Mensagem.mostrarMensagemSucesso("Sucesso!", "Ordem de Coleta excluída com sucesso!");
+            return this.montarPaginaListagem();
+        }catch(Exception e){
+            Mensagem.mostrarMensagemErro("Erro!", "Um erro ocorreu: "+ e.getLocalizedMessage());
+            return "";
+        }
     }
     
     public void filtrar(){
@@ -196,14 +254,13 @@ public class OrdemColetaManager implements Serializable{
         return lstMotorista;
     }
     
-        public List<Veiculo> completeVeiculo(String placa) {
+    public List<Veiculo> completeVeiculo(String placa) {
         List<Veiculo> lstVeiculo = new ArrayList<Veiculo>();
         for (Veiculo v : veiculoFachada.buscarPorPlaca(placa.toUpperCase())) {
             if (v.getPlacaVeiculo().toUpperCase().contains(placa.toUpperCase())) {
                 lstVeiculo.add(v);
             }
         }
-
         return lstVeiculo;
     }
     
@@ -245,8 +302,8 @@ public class OrdemColetaManager implements Serializable{
     
     public void calcular(){   
         if(!(this.valorUnitario == null && this.quantidade == null)){
-            if(this.valorUnitario.doubleValue() > 0 && this.quantidade > 0){
-                this.valorTotal = this.valorUnitario.multiply(BigDecimal.valueOf(quantidade));
+            if(this.valorUnitario.doubleValue() > 0 && this.quantidade.doubleValue() > 0){
+                this.valorTotal = BigDecimal.valueOf(this.valorUnitario.doubleValue() * this.quantidade.doubleValue());
             }   
         }
     }
@@ -260,5 +317,23 @@ public class OrdemColetaManager implements Serializable{
     
     public String formataMoeda(String numero){
         return numero.replace('.',',');
+    }
+    
+    private void imprimirOrdem(){
+        System.out.println("IMPRIMIR ORDEM");
+        String value = "";
+        //value += "ID:" + this.ordemColeta.getOrdemColetaId() + "\n";
+        value += "Data: "+ this.ordemColeta.getDataOrdemColeta() + "\n";
+        value += "Motorista: " + this.ordemColeta.getMotoristaId()+ "\n";
+        value += "Veículo: " + this.ordemColeta.getVeiculoId()+ "\n";
+        value += "Remetente: " + this.ordemColeta.getRemetenteId()+ "\n";
+        value += "Destinatário: " + this.ordemColeta.getDestinatarioId()+ "\n";
+        value += "Rota: " + this.ordemColeta.getRota()+ "\n";
+        value += "Quantidade: " + this.ordemColeta.getQuantidade()+ "\n";
+        value += "Valor Unitário: "+ this.ordemColeta.getValorUnitario()+ "\n";
+        value += "Valor Total: " + this.ordemColeta.getValorTotal()+ "\n";
+        value += "Emissão NF: "+ this.ordemColeta.getDataEmissaoNf()+ "\n";
+        value += "NF: " + this.ordemColeta.getNumeroNota()+ "\n";
+        System.out.println(value);
     }
 }
