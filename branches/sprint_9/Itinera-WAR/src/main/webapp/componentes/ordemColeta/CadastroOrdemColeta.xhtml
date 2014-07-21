@@ -213,6 +213,11 @@
                                                  value="#{msg.acaoFechar}" 
                                                  immediate="true"
                                                  styleClass="botao"/>
+                                 <p:confirmDialog header="#{msg.headerAlterar}" message="#{msg.headerConfirmaAlterar}" id="AlterarDlg" widgetVar="altera">
+                                     <p:outputLabel id="mensagem" value="#{ordemColetaManager.mensagem}" escape="false"/>
+                                     <p:commandButton value="#{msg.acaoSim}" action="#{ordemColetaManager.concluirAlteracao()}"  />
+                                    <p:commandButton value="#{msg.acaoNao}" onclick="altera.hide();" />
+                                 </p:confirmDialog>
                         </h:form>
                     </p:panel>
                 </ui:define>
