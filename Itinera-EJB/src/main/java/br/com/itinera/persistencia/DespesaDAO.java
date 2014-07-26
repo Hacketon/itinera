@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import br.com.itinera.modelo.Despesa;
+import javax.persistence.EntityExistsException;
 
 /**
  *

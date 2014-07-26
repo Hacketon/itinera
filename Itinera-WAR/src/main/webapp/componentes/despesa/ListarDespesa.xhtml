@@ -33,16 +33,18 @@
 
                                     <p:column headerText="#{msg.data}" 
                                               filterBy="#{despesa.data}"
-                                              filterMatchMode="starsWith"
+                                              filterMatchMode="contains"
                                               styleClass="fontepadrao"
-                                              sortBy="#{despesa.data}" 
+                                              sortBy="#{despesa.data}"
                                               >
-                                        <h:outputText value="#{despesa.data}" />
+                                        <h:outputText value="#{despesa.data}" >
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
                                     </p:column>
 
                                     <p:column headerText="#{msg.fornecedor}" 
                                               filterBy="#{despesa.fornecedor.nomeFantasia}"
-                                              filterMatchMode="contais"
+                                              filterMatchMode="contains"
                                               styleClass="fontepadrao"
                                               sortBy="#{despesa.fornecedor.nomeFantasia}" 
                                               >
@@ -51,7 +53,7 @@
 
                                     <p:column headerText="#{msg.veiculo}" 
                                               filterBy="#{despesa.veiculo.placaVeiculo}"
-                                              filterMatchMode="starsWith"
+                                              filterMatchMode="startsWith"
                                               styleClass="fontepadrao"
                                               sortBy="#{despesa.veiculo.placaVeiculo}" 
                                               >
@@ -60,7 +62,7 @@
 
                                     <p:column headerText="#{msg.motorista}" 
                                               filterBy="#{despesa.motorista.nome}"
-                                              filterMatchMode="starsWith"
+                                              filterMatchMode="startsWith"
                                               styleClass="fontepadrao"
                                               sortBy="#{despesa.motorista.nome}" 
                                               >
@@ -77,8 +79,6 @@
                                     </p:column>
 
                                     <p:column headerText="#{msg.valor}" 
-                                              filterBy="#{despesa.valor}"
-                                              filterMatchMode="equals"
                                               styleClass="fontepadrao"
                                               sortBy="#{despesa.valor}" 
                                               >

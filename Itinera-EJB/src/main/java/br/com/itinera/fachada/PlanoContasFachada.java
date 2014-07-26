@@ -34,6 +34,10 @@ public class PlanoContasFachada {
         return dao.listar();
     }
     
+    public List<PlanoContas> buscarPorDescricao(String descricao) {
+        return dao.buscarPorDescricao(descricao);
+    }
+    
     public Integer contagem(){
         return dao.listar().size();            
     }
