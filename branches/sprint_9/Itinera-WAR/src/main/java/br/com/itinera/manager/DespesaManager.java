@@ -1,8 +1,10 @@
 package br.com.itinera.manager;
 
+import br.com.itinera.enuns.StatusDespesa;
 import br.com.itinera.fachada.DespesaFachada;
 import br.com.itinera.fachada.EmpresaFachada;
 import br.com.itinera.fachada.MotoristaFachada;
+import br.com.itinera.fachada.PlanoContasFachada;
 import br.com.itinera.fachada.VeiculoFachada;
 import br.com.itinera.ferramentas.Mensagem;
 import br.com.itinera.interfaces.CRUD;
@@ -10,13 +12,16 @@ import br.com.itinera.interfaces.MontarPaginas;
 import br.com.itinera.modelo.Despesa;
 import br.com.itinera.modelo.Empresa;
 import br.com.itinera.modelo.Motorista;
+import br.com.itinera.modelo.PlanoContas;
 import br.com.itinera.modelo.Veiculo;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
 import javax.persistence.EntityExistsException;
 
 /**
@@ -32,6 +37,9 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
     private List<Empresa> lstEmpresa;
     private List<Veiculo> lstVeiculo;
     private List<Motorista> lstMotorista;
+    private List<PlanoContas> lstPlanoContas;
+    private String total;
+
     @EJB
     private DespesaFachada fachada;
     @EJB
@@ -40,17 +48,20 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
     private VeiculoFachada veiculoFachada;
     @EJB
     private MotoristaFachada motoristaFachada;
-    
+    @EJB
+    private PlanoContasFachada planoContasFachada;
+
     @Override
     public void recuperar() {
-//        setDespesas(fachada.listar());
+        setDespesas(fachada.listar());
     }
 
     @Override
     public String inserir() {
         try {
             if (getDespesa().getIdDespesa() == null) {
-//                fachada.inserir(despesa);
+                despesa.setStatus("C");
+                fachada.inserir(despesa);
                 Mensagem.mostrarMensagemSucesso(Mensagem.sucesso, "Registro inserido com sucessso.");
                 return montarPaginaParaListar();
             } else {
@@ -67,7 +78,12 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
     @Override
     public String alterar() {
         try {
-//            fachada.alterar(this.getDespesa());
+            if (getDespesa().getIdDespesa() == null) {
+                despesa.setStatus("C");
+                fachada.inserir(despesa);
+            } else {
+                fachada.alterar(despesa);
+            }
             Mensagem.mostrarMensagemSucesso(Mensagem.sucesso, "Registro alterado com sucessso.");
             return montarPaginaParaListar();
         } catch (EntityExistsException en) {
@@ -81,7 +97,7 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
     @Override
     public void excluir() {
         try {
-//            fachada.remover(this.getDespesa());
+            fachada.remover(this.getDespesa());
             Mensagem.mostrarMensagemSucesso(Mensagem.sucesso, "Registro excluído com sucesso.");
             this.montarPaginaParaListar();
         } catch (Exception e) {
@@ -130,13 +146,29 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
 
     public List<Motorista> completeMotorista(String nome) {
         lstMotorista = new ArrayList<Motorista>();
-        for (Motorista m : motoristaFachada.buscarPorNome(nome)) {
+        for (Motorista m : motoristaFachada.buscarPorNomeSomenteAtivo(nome)) {
             if (m.getNome().toUpperCase().contains(nome.toUpperCase())) {
                 lstMotorista.add(m);
             }
         }
-
         return lstMotorista;
+    }
+
+    public List<PlanoContas> completePlanoContas(String descricao) {
+        lstPlanoContas = new ArrayList<PlanoContas>();
+        for (PlanoContas p : planoContasFachada.buscarPorDescricao(descricao)) {
+            if (p.getDescricao().toUpperCase().contains(descricao.toUpperCase())) {
+                lstPlanoContas.add(p);
+            }
+        }
+
+        return lstPlanoContas;
+    }
+
+    public void calcularTotal() {
+        if (this.despesa.getQuantidade() != null && this.despesa.getValor() != null) {
+            this.setTotal(new DecimalFormat("#.##").format(this.despesa.getQuantidade().doubleValue() * this.despesa.getValor().doubleValue()));
+        }
     }
 
     public Despesa getDespesa() {
@@ -167,8 +199,42 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
         return lstVeiculo;
     }
 
+    public List<Motorista> getLstMotorista() {
+        return lstMotorista;
+    }
+
+    public void setLstMotorista(List<Motorista> lstMotorista) {
+        this.lstMotorista = lstMotorista;
+    }
+
+    public List<PlanoContas> getLstPlanoContas() {
+        return lstPlanoContas;
+    }
+
+    public void setLstPlanoContas(List<PlanoContas> lstPlanoContas) {
+        this.lstPlanoContas = lstPlanoContas;
+    }
+
     public void setLstVeiculo(List<Veiculo> lstVeiculo) {
         this.lstVeiculo = lstVeiculo;
     }
-    
+
+    public List<SelectItem> getStatus() {
+        List<SelectItem> status = new ArrayList<SelectItem>();
+        status.add(new SelectItem(null, "Selecione..."));
+        for (StatusDespesa e : StatusDespesa.values()) {
+            status.add(new SelectItem(e.name(), e.toString()));
+        }
+        return status;
+    }
+
+    public String getTotal() {
+        this.calcularTotal();
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
 }

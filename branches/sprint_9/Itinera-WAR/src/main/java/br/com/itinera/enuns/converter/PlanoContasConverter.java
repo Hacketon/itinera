@@ -1,10 +1,10 @@
 
 package br.com.itinera.enuns.converter;
 
-import br.com.itinera.fachada.MotoristaFachada;
-import br.com.itinera.modelo.Motorista;
-import javax.ejb.EJB;
+import br.com.itinera.fachada.PlanoContasFachada;
+import br.com.itinera.modelo.PlanoContas;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -16,22 +16,22 @@ import javax.faces.convert.FacesConverter;
  *
  * @author marcelo
  */
-@FacesConverter(value = "conversorMotorista")
+@FacesConverter(value = "conversorPlanoContas")
 @SessionScoped
-@ManagedBean(name = "mngMotoristaConverter")
-public class MotoristaConverter implements Converter,Serializable{
+@ManagedBean(name = "mngPlanoContasConverter")
+public class PlanoContasConverter implements Converter, Serializable {
 
     @EJB
-    private MotoristaFachada fachada;
+    private PlanoContasFachada fachada;
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        if (value.equals("")) {
+        if(value.equals("")) {
             return null;
         } else {
-            for (Motorista m: fachada.listarMotoristaAtivo()) {
-                if (m.toString().equals(value)) {
-                    return m;
+            for (PlanoContas e:fachada.buscarPorDescricao(value)) {
+                if (e.toString().equals(value)) {
+                    return e;
                 }
             }
             return null;
@@ -40,8 +40,8 @@ public class MotoristaConverter implements Converter,Serializable{
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if (value != null && value instanceof Motorista) {
-            if (((Motorista)value).getNome() != null) {
+        if (value != null && value instanceof PlanoContas) {
+            if (((PlanoContas)value).getDescricao() != null) {
                 return (value.toString());
             } else {
                 return "";
