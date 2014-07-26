@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "PlanoContas.findAll", query = "SELECT p FROM PlanoContas p"),
     @NamedQuery(name = "PlanoContas.findByPlanoContasId", query = "SELECT p FROM PlanoContas p WHERE p.planoContasId = :planoContasId"),
-    @NamedQuery(name = "PlanoContas.findByDescricao", query = "SELECT p FROM PlanoContas p WHERE p.descricao = :descricao"),
+    @NamedQuery(name = "PlanoContas.findByDescricao", query = "SELECT p FROM PlanoContas p WHERE p.descricao like :descricao"),
     @NamedQuery(name = "PlanoContas.findByTipoCombustivel", query = "SELECT p FROM PlanoContas p WHERE p.tipoCombustivel = :tipoCombustivel")})
 public class PlanoContas implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -102,7 +102,7 @@ public class PlanoContas implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.itinera.modelo.PlanoContas[ planoContasId=" + planoContasId + " ]";
+        return this.getDescricao();
     }
     
 }

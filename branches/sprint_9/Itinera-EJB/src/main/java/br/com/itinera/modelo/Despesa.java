@@ -4,23 +4,24 @@ package br.com.itinera.modelo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,12 +36,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Despesa.findByStatus", query = "SELECT d FROM Despesa d WHERE d.status = :status")})
 public class Despesa implements Serializable {
     private static final long serialVersionUID = 1L;
-    private Collection<Despesa> despesaCollection;
+//    private Collection<Despesa> despesaCollection;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "despesa_id")
+    @SequenceGenerator(name = "Despesa_Generator",sequenceName = "seq_despesa", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Despesa_Generator")
     private BigDecimal idDespesa;
 
     @Basic(optional = false)
@@ -57,11 +60,6 @@ public class Despesa implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "plano_contas")
-    private char planoContas;
-
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "local")
     private String local;
@@ -69,20 +67,19 @@ public class Despesa implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "valor")
-    private BigInteger valor;
+    private BigDecimal valor;
 
     @Basic(optional = false)
     @NotNull
     @Column(name = "quantidade")
-    private BigInteger quantidade;
+    private BigDecimal quantidade;
 
     @Column(name = "hodometro")
     private BigInteger hodometro;
 
     @Basic(optional = false)
-    @NotNull
     @Column(name = "status")
-    private char status;
+    private String status;
 
     @Size(max = 250)
     @Column(name = "observacao")
@@ -100,6 +97,10 @@ public class Despesa implements Serializable {
     @ManyToOne(optional = false)
     private Empresa fornecedor;
 
+    @JoinColumn(name = "plano_contas", referencedColumnName = "plano_contas_id")
+    @ManyToOne(optional = false)
+    private PlanoContas planoContas;
+
     public Despesa() {
     }
 
@@ -107,7 +108,7 @@ public class Despesa implements Serializable {
         this.idDespesa = idDespesa;
     }
 
-    public Despesa(BigDecimal idDespesa, String numDocto, Date data, Motorista motorista, char planoContas, String local, BigInteger valor, BigInteger quantidade, char status) {
+    public Despesa(BigDecimal idDespesa, String numDocto, Date data, Motorista motorista, PlanoContas planoContas, String local, BigDecimal valor, BigDecimal quantidade, String status) {
         this.idDespesa = idDespesa;
         this.numDocto = numDocto;
         this.data = data;
@@ -151,11 +152,11 @@ public class Despesa implements Serializable {
         this.motorista = motorista;
     }
 
-    public char getPlanoContas() {
+    public PlanoContas getPlanoContas() {
         return planoContas;
     }
 
-    public void setPlanoContas(char planoContas) {
+    public void setPlanoContas(PlanoContas planoContas) {
         this.planoContas = planoContas;
     }
 
@@ -167,19 +168,19 @@ public class Despesa implements Serializable {
         this.local = local;
     }
 
-    public BigInteger getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(BigInteger valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
-    public BigInteger getQuantidade() {
+    public BigDecimal getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(BigInteger quantidade) {
+    public void setQuantidade(BigDecimal quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -191,11 +192,11 @@ public class Despesa implements Serializable {
         this.hodometro = hodometro;
     }
 
-    public char getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(char status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -248,13 +249,13 @@ public class Despesa implements Serializable {
         return "modelo.Despesa[ idDespesa=" + idDespesa + " ]";
     }
     
-    @XmlTransient
-    public Collection<Despesa> getVeiculoCollection() {
-        return despesaCollection;
-    }
-
-    public void setVeiculoCollection(Collection<Despesa> despesaCollection) {
-        this.despesaCollection = despesaCollection;
-    }
+//    @XmlTransient
+//    public Collection<Despesa> getVeiculoCollection() {
+//        return despesaCollection;
+//    }
+//
+//    public void setVeiculoCollection(Collection<Despesa> despesaCollection) {
+//        this.despesaCollection = despesaCollection;
+//    }
     
 }

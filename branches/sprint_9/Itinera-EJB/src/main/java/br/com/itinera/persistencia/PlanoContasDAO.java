@@ -39,4 +39,8 @@ public class PlanoContasDAO {
         PlanoContas cv = (PlanoContas) em.createNamedQuery("PlanoContas.findByIdPlanoContas").setParameter("idPlanoContas", id).getSingleResult();
         return cv;
     }
+
+    public List<PlanoContas> buscarPorDescricao(String descricao) {
+        return em.createNamedQuery("PlanoContas.findByDescricao").setParameter("descricao", "%"+descricao+"%").getResultList();
+    }
 }

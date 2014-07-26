@@ -1,4 +1,3 @@
-
 package br.com.itinera.manager;
 
 import br.com.itinera.enuns.EstadoCivil;
@@ -27,10 +26,10 @@ import org.primefaces.context.RequestContext;
  *
  * @author marcelo
  */
-@ManagedBean(name="motoristaManager")
+@ManagedBean(name = "motoristaManager")
 @SessionScoped
 public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
-    
+
     private Motorista motorista;
     private Endereco endereco;
     private Motorista motoristaAntigo;
@@ -39,12 +38,12 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
     private boolean inserindo;
     private Telefone telefone;
     private Email email;
-    
+
     @EJB
     private MotoristaFachada fachada;
-    @EJB 
+    @EJB
     private MunicipioFachada municipioFachada;
-    
+
     public MotoristaManager() {
         telefone = new Telefone();
         email = new Email();
@@ -57,7 +56,7 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
-    
+
     public Motorista getMotorista() {
         return motorista;
     }
@@ -77,12 +76,12 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
     private void recuperarMotorista() {
         this.setMotoristas(fachada.listarTodos());
     }
-    
+
     public String getMensagemAlteracao() {
         return this.mensagemAlteracao;
     }
-    
-     public boolean getEnderecoObrigatorio(){
+
+    public boolean getEnderecoObrigatorio() {
         return false;
     }
 
@@ -104,7 +103,7 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
         }
         return montarPaginaParaListar();
     }
-    
+
     public String salvarMotorista(Motorista motorista) {
         if (motorista == null) {
             this.inserindo = true;
@@ -126,11 +125,11 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
         this.motorista = new Motorista();
         this.recuperarMotorista();
     }
-    
+
     public void listar() {
         montarPaginaParaListar();
     }
-    
+
     public void novoTelefone() {
         try {
             telefone = new Telefone();
@@ -145,11 +144,11 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
         }
 
     }
-    
+
     public void excluirTelefone(Telefone tel) {
         motorista.getTelefoneList().remove(tel);
     }
-    
+
     public void novoEmail() {
         try {
             email = new Email();
@@ -162,7 +161,7 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
             Mensagem.mostrarMensagemErro(Mensagem.erro, "Problema ao adicionar telefone. " + e.getMessage());
         }
     }
-    
+
     public void excluirEmail(Email email) {
         motorista.getEmailList().remove(email);
     }
@@ -186,13 +185,13 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
 
     @Override
     public void recuperar() {
-        
+
     }
 
     @Override
     public String inserir() {
         try {
-            if (this.motorista.getMotoristaId()== null) {
+            if (this.motorista.getMotoristaId() == null) {
                 fachada.salvar(motorista);
                 Mensagem.mostrarMensagemSucesso(Mensagem.sucesso, "Motorista inserido com sucesso!");
                 return montarPaginaParaListar();
@@ -215,34 +214,34 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
     private boolean verificaAlteracao() {
         setMensagemAlteracao("");
         if (!this.motoristaAntigo.getCpf().equals(this.motorista.getCpf())) {
-            setMensagemAlteracao(getMensagemAlteracao() + "CPF: " + this.motorista.getCpf() + " (" + this.motoristaAntigo.getCpf() + ")<br>" );
+            setMensagemAlteracao(getMensagemAlteracao() + "CPF: " + this.motorista.getCpf() + " (" + this.motoristaAntigo.getCpf() + ")<br>");
         }
-        
-        if (!this.motoristaAntigo.getNome().equals(this.motorista.getNome())){
-            setMensagemAlteracao(getMensagemAlteracao() + "NOME: "+this.motorista.getNome() + " (" + this.motoristaAntigo.getNome() + ") <br>" );
+
+        if (!this.motoristaAntigo.getNome().equals(this.motorista.getNome())) {
+            setMensagemAlteracao(getMensagemAlteracao() + "NOME: " + this.motorista.getNome() + " (" + this.motoristaAntigo.getNome() + ") <br>");
         }
-        
+
         return !getMensagemAlteracao().isEmpty();
     }
-    
-     public List<SelectItem> getTipoLogradouro() {
+
+    public List<SelectItem> getTipoLogradouro() {
         List<SelectItem> tipoLogrdouro = new ArrayList<SelectItem>();
         for (TipoLogradouro te : TipoLogradouro.values()) {
-            tipoLogrdouro.add(new SelectItem(te.name(),te.toString()));
+            tipoLogrdouro.add(new SelectItem(te.name(), te.toString()));
         }
         return tipoLogrdouro;
     }
-     
-      public List<SelectItem> getEstadoCivil() {
+
+    public List<SelectItem> getEstadoCivil() {
         List<SelectItem> estadoCivil = new ArrayList<SelectItem>();
-        estadoCivil.add(new SelectItem(null,"Selecione..."));
+        estadoCivil.add(new SelectItem(null, "Selecione..."));
         for (EstadoCivil e : EstadoCivil.values()) {
-            estadoCivil.add(new SelectItem(e.name(),e.toString()));
-            }
-        return estadoCivil;
+            estadoCivil.add(new SelectItem(e.name(), e.toString()));
         }
-     
-      public List<Municipio> completeMunicipio(String query) {
+        return estadoCivil;
+    }
+
+    public List<Municipio> completeMunicipio(String query) {
         List<Municipio> suggestions = new ArrayList<Municipio>();
         for (Municipio p : municipioFachada.listMunicipios()) {
             if (p.getNomeMunicipio().toUpperCase().contains(query.toUpperCase())) {
@@ -252,5 +251,5 @@ public class MotoristaManager implements Serializable, CRUD, MontarPaginas {
 
         return suggestions;
     }
-    
+
 }
