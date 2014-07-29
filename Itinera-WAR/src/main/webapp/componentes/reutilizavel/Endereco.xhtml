@@ -19,8 +19,12 @@
                                      requiredMessage="#{msgSis.obrigatorioTipoLogradouro}"
                                      value="#{entidade.endereco.tipoLogradouro}"
                                      >
-                        <f:selectItems value="#{manager.tipoLogradouro}" var="tipoLogradouro"
-                                       itemLabel="#{tipoLogradouro.description}" itemValue="#{tipoLogradouro.value}"/>
+                        <f:selectItems 
+                            itemLabel="#{tipoLogradouro.description}" 
+                            itemValue="#{tipoLogradouro.value}"
+                            value="#{manager.tipoLogradouro}" 
+                            var="tipoLogradouro"
+                            />
                     </p:selectOneMenu>       
                 </p:column>
                 <p:column>

@@ -17,6 +17,7 @@ import br.com.itinera.modelo.Veiculo;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -39,6 +40,9 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
     private List<Motorista> lstMotorista;
     private List<PlanoContas> lstPlanoContas;
     private String total;
+    private Date dtInicioFiltro;
+    private Date dtFimFiltro;
+    private boolean alterarStatus;
 
     @EJB
     private DespesaFachada fachada;
@@ -60,7 +64,6 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
     public String inserir() {
         try {
             if (getDespesa().getIdDespesa() == null) {
-                despesa.setStatus("C");
                 fachada.inserir(despesa);
                 Mensagem.mostrarMensagemSucesso(Mensagem.sucesso, "Registro inserido com sucessso.");
                 return montarPaginaParaListar();
@@ -79,7 +82,6 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
     public String alterar() {
         try {
             if (getDespesa().getIdDespesa() == null) {
-                despesa.setStatus("C");
                 fachada.inserir(despesa);
             } else {
                 fachada.alterar(despesa);
@@ -96,12 +98,16 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
 
     @Override
     public void excluir() {
-        try {
-            fachada.remover(this.getDespesa());
-            Mensagem.mostrarMensagemSucesso(Mensagem.sucesso, "Registro excluído com sucesso.");
-            this.montarPaginaParaListar();
-        } catch (Exception e) {
-            Mensagem.mostrarMensagemSucesso(Mensagem.erroCritico, "Erro ao excluir plano de contas. " + e.getMessage());
+        if (mesEmAberto()) {
+            if (confirmaExclusao()) {
+                try {
+                    fachada.remover(this.getDespesa());
+                    Mensagem.mostrarMensagemSucesso(Mensagem.sucesso, "Registro excluído com sucesso.");
+                    this.montarPaginaParaListar();
+                } catch (Exception e) {
+                    Mensagem.mostrarMensagemSucesso(Mensagem.erroCritico, "Erro ao excluir plano de contas. " + e.getMessage());
+                }
+            }
         }
     }
 
@@ -114,11 +120,14 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
     @Override
     public String montarPaginaParaCadastro() {
         this.despesa = new Despesa();
+        this.despesa.setStatus("C");
+        this.alterarStatus = false;
         return "/componentes/despesa/AlterarDespesa";
     }
 
     @Override
     public String montarPaginaParaAlterar() {
+        this.alterarStatus = true;
         return "/componentes/despesa/AlterarDespesa";
     }
 
@@ -165,9 +174,15 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
         return lstPlanoContas;
     }
 
-    public void calcularTotal() {
+    public void calcularTotalDaDespesa() {
         if (this.despesa.getQuantidade() != null && this.despesa.getValor() != null) {
             this.setTotal(new DecimalFormat("#.##").format(this.despesa.getQuantidade().doubleValue() * this.despesa.getValor().doubleValue()));
+        }
+    }
+
+    public void filtrarDespesa() {
+        if (this.getDtInicioFiltro() != null && this.getDtFimFiltro() != null) {
+            setDespesas(fachada.filtrarDespesasPorData(this.getDtInicioFiltro(), this.getDtFimFiltro()));
         }
     }
 
@@ -222,19 +237,63 @@ public class DespesaManager implements Serializable, CRUD, MontarPaginas {
     public List<SelectItem> getStatus() {
         List<SelectItem> status = new ArrayList<SelectItem>();
         status.add(new SelectItem(null, "Selecione..."));
-        for (StatusDespesa e : StatusDespesa.values()) {
-            status.add(new SelectItem(e.name(), e.toString()));
-        }
+        status.add(new SelectItem("C", "Confirmado"));
+        status.add(new SelectItem("E", "Enviado"));
+        status.add(new SelectItem("R", "Erro"));
+        status.add(new SelectItem("N", "Não Enviado"));
+//        for (StatusDespesa e : StatusDespesa.values()) {
+//            status.add(new SelectItem(e.name(), e.toString()));
+//        }
         return status;
     }
 
+    public Double getTotalDeDespesas() {
+        Double t = Double.valueOf(0);
+        for (Despesa d : despesas) {
+            t += d.getValor().doubleValue();
+        }
+        return t;
+    }
+
     public String getTotal() {
-        this.calcularTotal();
+        this.calcularTotalDaDespesa();
         return total;
     }
 
     public void setTotal(String total) {
         this.total = total;
+    }
+
+    public Date getDtInicioFiltro() {
+        return dtInicioFiltro;
+    }
+
+    public void setDtInicioFiltro(Date dtInicioFiltro) {
+        this.dtInicioFiltro = dtInicioFiltro;
+    }
+
+    public Date getDtFimFiltro() {
+        return dtFimFiltro;
+    }
+
+    public void setDtFimFiltro(Date dtFimFiltro) {
+        this.dtFimFiltro = dtFimFiltro;
+    }
+
+    public boolean isAlterarStatus() {
+        return alterarStatus;
+    }
+
+    public void setAlterarStatus(boolean alterarStatus) {
+        this.alterarStatus = alterarStatus;
+    }
+
+    private boolean mesEmAberto() {
+        return true;
+    }
+    
+    private boolean confirmaExclusao() {
+        return true;
     }
 
 }
