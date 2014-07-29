@@ -15,6 +15,18 @@
                     <h:outputScript>selecionado($('#btnDespesa'));</h:outputScript>
                     <p:panel styleClass="semBorda" header="#{msg.listaDespesa}">
                         <h:form>
+                            <h:panelGrid id="filtroGrid" columns="5">
+                                <h:outputText value="#{msg.periodoDeEmissao}" />
+                                <p:calendar id="dtInicioFiltro"
+                                            value="#{despesaManager.dtInicioFiltro}" />
+                                <h:outputText value="à" />
+                                <p:calendar id="dtFimFiltro"
+                                            value="#{despesaManager.dtFimFiltro}" />
+                                <p:commandButton icon="ui-icon-search"
+                                                 action="#{despesaManager.filtrarDespesa()}"
+                                                 update="tabelaDespesa totalDeDespesas"
+                                                 value="Buscar" />
+                            </h:panelGrid>
                             <p:messages id="messages" showDetail="true"/>
                             <p:commandButton icon="ui-icon-plus" 
                                              action="#{despesaManager.montarPaginaParaCadastro()}" 
@@ -23,7 +35,8 @@
                                 <h:outputText value="#{msg.listaSemRegistro}" 
                                               rendered="#{empty despesaManager.despesas}" />
 
-                                <p:dataTable emptyMessage="#{msg.listaSemRegistro}"
+                                <p:dataTable id="tabelaDespesa"
+                                             emptyMessage="#{msg.listaSemRegistro}"
                                              paginator="true" 
                                              rows="10" 
                                              rendered="#{not empty despesaManager.despesas}"
@@ -51,7 +64,7 @@
                                         <h:outputText value="#{despesa.fornecedor.nomeFantasia}" />
                                     </p:column>
 
-                                    <p:column headerText="#{msg.veiculo}" 
+                                    <p:column headerText="#{msg.placa}" 
                                               filterBy="#{despesa.veiculo.placaVeiculo}"
                                               filterMatchMode="startsWith"
                                               styleClass="fontepadrao"
@@ -60,7 +73,7 @@
                                         <h:outputText value="#{despesa.veiculo.placaVeiculo}" />
                                     </p:column>
 
-                                    <p:column headerText="#{msg.motorista}" 
+                                    <p:column headerText="#{msg.nome}" 
                                               filterBy="#{despesa.motorista.nome}"
                                               filterMatchMode="startsWith"
                                               styleClass="fontepadrao"
@@ -69,7 +82,7 @@
                                         <h:outputText value="#{despesa.motorista.nome}" />
                                     </p:column>
 
-                                    <p:column headerText="#{msg.descricaoDespesa}" 
+                                    <p:column headerText="#{msg.numDocto}" 
                                               filterBy="#{despesa.numDocto}"
                                               filterMatchMode="contains"
                                               styleClass="fontepadrao"
@@ -97,18 +110,27 @@
                                         <p:commandLink styleClass="fontepadrao" 
                                                        oncomplete="exclui.show();"
                                                        value="#{msg.acaoExcluir}">
-                                                <f:setPropertyActionListener value="#{despesa}" 
-                                                                             target="#{despesaManager.despesa}" />  
+                                            <f:setPropertyActionListener value="#{despesa}" 
+                                                                         target="#{despesaManager.despesa}" />  
                                         </p:commandLink>
                                     </p:column>
                                 </p:dataTable>
+                                <p:summaryRow>
+                                    <p:column style="text-align: right">
+                                        <h:outputText value="#{msg.total}:" />
+                                        <p:spacer />
+                                        <h:outputText id="totalDeDespesas" value="#{despesaManager.totalDeDespesas}" >
+                                            <f:convertNumber maxFractionDigits="2" currencySymbol="R$" />
+                                        </h:outputText>
+                                    </p:column>
+                                </p:summaryRow>
                             </h:panelGrid>
 
                             <p:confirmDialog header="#{msg.headerExcluir}" message="#{msg.mensagemExcluir}" id="excluiDlg" widgetVar="exclui">
                                 <p:commandButton value="#{msg.acaoSim}" action="#{despesaManager.excluir()}" update="gridDespesas messages" onclick="exclui.hide();" />
                                 <p:commandButton value="#{msg.acaoNao}" onclick="exclui.hide();" />
                             </p:confirmDialog>
-                            
+
                             <ui:include src="/componentes/reutilizavel/AjaxLoading.xhtml" />
                         </h:form>
                     </p:panel>

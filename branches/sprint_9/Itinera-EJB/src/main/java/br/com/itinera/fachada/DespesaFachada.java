@@ -5,6 +5,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import br.com.itinera.modelo.Despesa;
 import br.com.itinera.persistencia.DespesaDAO;
+import java.util.Date;
 import javax.persistence.EntityExistsException;
 
 /**
@@ -34,6 +35,10 @@ public class DespesaFachada {
     
     public Despesa buscarPorId(int id) {
         return dao.buscarPorId(id);
+    }
+
+    public List<Despesa> filtrarDespesasPorData(Date dtInicioFiltro, Date dtFimFiltro) {
+        return dao.buscarPorData(dtInicioFiltro, dtFimFiltro);
     }
     
 }
