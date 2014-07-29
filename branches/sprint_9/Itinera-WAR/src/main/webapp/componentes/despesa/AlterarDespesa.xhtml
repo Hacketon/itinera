@@ -13,12 +13,12 @@
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
                     <h:outputScript>selecionado($('#btnDespesa'));</h:outputScript>
-                    <h:form id="cadastro" styleClass="semBorda">                
+                    <h:form id="cadastro" styleClass="semBorda">
                         <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
                         <p:panel styleClass="semBorda" header="#{msg.despesa}">
                             <p:panelGrid id="painelcadastro" columns="3" styleClass="semBorda">
                                 <p:outputLabel 
-                                    value="#{msg.numDocto}"  
+                                    value="#{msg.numDocto}"
                                     for="numDocto"
                                     styleClass="fontepadrao"/>
                                 <p:inputText    id="numDocto" 
@@ -152,10 +152,12 @@
                                                 styleClass="label"
                                                 value="#{msg.status}"/>
                                 <p:selectOneMenu   id="status"
-                                                   disabled="true"
+                                                   disabled="#{!despesaManager.alterarStatus}"
                                                    value="#{despesaManager.despesa.status}">
-                                    <f:selectItems value="#{despesaManager.status}" var="estadoCivil"
-                                                   itemLabel="#{status.description}" itemValue="#{status.value}"/>
+                                    <f:selectItems itemLabel="#{status.description}" 
+                                                   itemValue="#{status.value}"
+                                                   value="#{despesaManager.status}" 
+                                                   var="status" />
                                 </p:selectOneMenu>
                                 <p:spacer /> 
 

@@ -148,11 +148,12 @@
                                             <p:outputLabel value="#{msg.OCValorUnitario}" for="OCValorUnitario"/>
                                         </p:column>
                                         <p:column>
-                                            <p:inputText value="#{ordemColetaManager.valorUnitario}" 
-                                                         onkeypress="mascara(this, formatarNumeroDuasCasas)"
+                                            <p:inputText id="OCValorUnitario" 
                                                          converter="conversorMoedaVirgula" 
-                                                         id="OCValorUnitario" 
-                                                         required="true" requiredMessage="#{msgSis.obrigatorioOCValorUnitario}" >
+                                                         onkeypress="mascara(this, formatarNumeroDuasCasas)"
+                                                         required="true" 
+                                                         requiredMessage="#{msgSis.obrigatorioOCValorUnitario}" 
+                                                         value="#{ordemColetaManager.valorUnitario}" >
                                                 <p:ajax event="blur" update="OCTotal" listener="#{ordemColetaManager.calcular()}"/>
                                             </p:inputText>
                                             <p:watermark for="OCValorUnitario" value="#{msg.OCMValorUnitario}"/>
@@ -161,13 +162,19 @@
                                             <p:outputLabel value="#{msg.OCQuantidade}" for="OCQuantidade"/>
                                         </p:column>
                                         <p:column>
-                                            <p:inputMask value="#{ordemColetaManager.quantidade}" mask="?99999999" id="OCQuantidade" required="true" requiredMessage="#{msgSis.obrigatorioOCQuantidade}">
+                                            <p:inputText id="OCQuantidade" 
+                                                         onkeypress="mascara(this, formatarNumero)"
+                                                         required="true" 
+                                                         requiredMessage="#{msgSis.obrigatorioOCQuantidade}"
+                                                         value="#{ordemColetaManager.quantidade}" >
                                                 <p:ajax event="blur" update="OCTotal" listener="#{ordemColetaManager.calcular()}"/>
-                                            </p:inputMask>
+                                            </p:inputText>
                                             <p:watermark for="OCQuantidade" value="#{msg.OCQuantidade}"/>
                                         </p:column>
                                         <p:column>
-                                            <p:outputLabel value="#{msg.OCValorTotal}" for="OCTotal"/>
+                                            <p:outputLabel value="#{msg.OCValorTotal}" for="OCTotal" >
+                                                <f:convertNumber currencyCode="R$" maxFractionDigits="2" />
+                                            </p:outputLabel>
                                         </p:column>
                                         <p:column>
                                             <p:outputLabel id="OCTotal" value="#{ordemColetaManager.valorTotal}" styleClass="inputDesabilitado" />

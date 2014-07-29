@@ -1,4 +1,3 @@
-
 package br.com.itinera.persistencia;
 
 import java.util.List;
@@ -7,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import br.com.itinera.modelo.Despesa;
-import javax.persistence.EntityExistsException;
+import java.util.Date;
 
 /**
  *
@@ -15,14 +14,14 @@ import javax.persistence.EntityExistsException;
  */
 @Stateless
 public class DespesaDAO extends GenericDAO {
-   
+
     @PersistenceContext
     private EntityManager em;
-    
-    public List<Despesa> listar(){
+
+    public List<Despesa> listar() {
         return em.createNamedQuery("Despesa.findAll").getResultList();
     }
-    
+
     public Despesa buscarPorId(int id) {
         try {
             return (Despesa) em.createNamedQuery("Despesa.findByIdDespesa").setParameter("idDespesa", id).getSingleResult();
@@ -32,5 +31,12 @@ public class DespesaDAO extends GenericDAO {
             return null;
         }
     }
-    
+
+    public List<Despesa> buscarPorData(Date dtInicioFiltro, Date dtFimFiltro) {
+        return (List<Despesa>) em.createQuery("SELECT d FROM Despesa d WHERE d.data BETWEEN :dtInicio AND :dtFim")
+                .setParameter("dtInicio", dtInicioFiltro)
+                .setParameter("dtFim", dtFimFiltro)
+                .getResultList();
+    }
+
 }
