@@ -8,7 +8,7 @@
     <h:head>
         <title>#{msg.headerOrdemColeta}</title>
     </h:head>
-      <h:body>
+    <h:body>
         <f:view>      
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
@@ -18,213 +18,224 @@
                             <p:messages id="messages" showDetail="true"/>
                             <p:panelGrid>
                                 <p:row>
-                                        <p:column> 
-                                            <p:outputLabel value="#{msg.OCNumero}"/>
-                                        </p:column>
-                                        <p:column colspan="3">    
-                                            <p:outputLabel value="#{ordemColetaManager.ordemColeta.ordemColetaId}"
-                                                           styleClass="inputDesabilitado" 
-                                                           style="font-size: 18pt;font-weight: bold"/>
-                                        </p:column>
-                                        <p:column> 
-                                            <p:outputLabel value="#{msg.OCData}"/>
-                                        </p:column>
-                                        <p:column>    
-                                            <p:outputLabel value="#{ordemColetaManager.formatarData(ordemColetaManager.ordemColeta.dataOrdemColeta)}"
-                                                           styleClass="inputDesabilitado"/>
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>
-                                            <p:outputLabel value="#{msg.OCMotorista}" for="OCMotorista"/>
-                                        </p:column> 
-                                        <p:column colspan="5">
-                                            <p:autoComplete id="OCMotorista"
-                                                            required="true"
-                                                            requiredMessage="#{msgSis.obrigatorioOCMotorista}"
-                                                            completeMethod="#{ordemColetaManager.completeMotorista}"
-                                                            converter="#{mngMotoristaConverter}"
-                                                            value="#{ordemColetaManager.ordemColeta.motoristaId}"
-                                                            size="80" />
-                                            <p:watermark for="OCMotorista" value="#{msg.OCMMotorista}"/>
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>
-                                            <p:outputLabel value="#{msg.OCVeiculo}" for="OCVeiculo"/>
-                                        </p:column> 
-                                        <p:column colspan="5">
-                                            <p:autoComplete id="OCVeiculo"
-                                                            required="true"
-                                                            requiredMessage="#{msgSis.obrigatorioOCVeicculo}"
-                                                            completeMethod="#{ordemColetaManager.completeVeiculo}"
-                                                            converter="#{mngVeiculoConverter}"
-                                                            value="#{ordemColetaManager.ordemColeta.veiculoId}"
-                                                            size="80" />
-                                            <p:watermark for="OCVeiculo" value="#{msg.OCMVeiculo}"/>
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column style="background-color: #B7CEEC;border-top: 1px solid #1D63A0 !important; border-left: 1px solid #1D63A0 !important;">
-                                            <p:outputLabel value="#{msg.OCRemetente}" for="OCRemetente"/>
-                                        </p:column> 
-                                        <p:column colspan="5" style="background-color: #B7CEEC;border-top: 1px solid #1D63A0 !important; border-right: 1px solid #1D63A0 !important">
-                                            <p:autoComplete id="OCRemetente"
-                                                            required="true"
-                                                            requiredMessage="#{msgSis.obrigatorioOCRemetente}"
-                                                            completeMethod="#{ordemColetaManager.completeRemetente}"
-                                                            converter="#{mngRemetenteConverter}"
-                                                            value="#{ordemColetaManager.ordemColeta.remetenteId}"
-                                                            size="80" >
-                                                <p:ajax update="RemetenteCNPJ RemetenteEndereco OCRota" event="itemSelect"/>
-                                            </p:autoComplete>
-                                            <p:watermark for="OCRemetente" value="#{msg.OCMRemetente}"/>
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column style="background-color: #B7CEEC;border-left: 1px solid #1D63A0 !important">
-                                            <p:outputLabel value="#{msg.OCEmpresaCNPJ}" />
-                                        </p:column>
-                                        <p:column colspan="5" style="background-color: #B7CEEC;border-right: 1px solid #1D63A0 !important">
-                                            <p:outputLabel id="RemetenteCNPJ" value="#{ordemColetaManager.ordemColeta.remetenteId.cnpj}" styleClass="inputDesabilitado"/>
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column style="background-color: #B7CEEC;border-left: 1px solid #1D63A0 !important;border-bottom: 1px solid #1D63A0 !important;">
-                                            <p:outputLabel value="#{msg.OCEMpresaEndereco}" />
-                                        </p:column>
-                                        <p:column colspan="5" style="background-color: #B7CEEC;border-right: 1px solid #1D63A0 !important;border-bottom: 1px solid #1D63A0 !important;">
-                                            <p:outputLabel id="RemetenteEndereco" value="#{ordemColetaManager.formatarEndereco(ordemColetaManager.ordemColeta.remetenteId)}" styleClass="inputDesabilitado"/>
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column colspan="6">
-                                            <p:spacer/>
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column style="background-color: #B7CEEC;border-top: 1px solid #1D63A0 !important; border-left: 1px solid #1D63A0 !important;">
-                                            <p:outputLabel value="#{msg.OCDestinatario}" for="OCDestinatario"/>
-                                        </p:column> 
-                                        <p:column colspan="5" style="background-color: #B7CEEC;border-top: 1px solid #1D63A0 !important; border-right: 1px solid #1D63A0 !important">
-                                            <p:autoComplete id="OCDestinatario"
-                                                            required="true"
-                                                            requiredMessage="#{msgSis.obrigatorioOCDestinatario}"
-                                                            completeMethod="#{ordemColetaManager.completeDestinatario}"
-                                                            converter="#{mngDestinatarioConverter}"
-                                                            value="#{ordemColetaManager.ordemColeta.destinatarioId}"
-                                                            size="80" >
-                                                        <p:ajax update="DestinatarioCNPJ DestinatarioEndereco OCRota" event="itemSelect"/>
-                                            </p:autoComplete>
-                                            <p:watermark for="OCDestinatario" value="#{msg.OCMDestinatario}"/>
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                       <p:column style="background-color: #B7CEEC;border-left: 1px solid #1D63A0 !important">
-                                           <p:outputLabel value="#{msg.OCEmpresaCNPJ}" />
-                                       </p:column>
-                                       <p:column colspan="5" style="background-color: #B7CEEC;border-right: 1px solid #1D63A0 !important">
-                                           <p:outputLabel id="DestinatarioCNPJ" value="#{ordemColetaManager.ordemColeta.destinatarioId.cnpj}" styleClass="inputDesabilitado"/>
-                                       </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column style="background-color: #B7CEEC;border-left: 1px solid #1D63A0 !important;border-bottom: 1px solid #1D63A0 !important;">
-                                            <p:outputLabel value="#{msg.OCEMpresaEndereco}" />
-                                        </p:column>
-                                        <p:column colspan="5" style="background-color: #B7CEEC;border-right: 1px solid #1D63A0 !important;border-bottom: 1px solid #1D63A0 !important;">
-                                            <p:outputLabel id="DestinatarioEndereco" value="#{ordemColetaManager.formatarEndereco(ordemColetaManager.ordemColeta.destinatarioId)}" styleClass="inputDesabilitado"/>
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>
-                                            <p:outputLabel value="#{msg.OCRota}"/>
-                                        </p:column>
-                                        <p:column colspan="5">
-                                            <p:outputLabel id="OCRota" value="#{ordemColetaManager.ordemColeta.rota}" styleClass="inputDesabilitado"/>
-                                        </p:column>    
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>
-                                            <p:outputLabel value="#{msg.OCValorUnitario}" for="OCValorUnitario"/>
-                                        </p:column>
-                                        <p:column>
-                                            <p:inputText id="OCValorUnitario" 
-                                                         converter="conversorMoedaVirgula" 
-                                                         onkeypress="mascara(this, formatarNumeroDuasCasas)"
-                                                         required="true" 
-                                                         requiredMessage="#{msgSis.obrigatorioOCValorUnitario}" 
-                                                         value="#{ordemColetaManager.valorUnitario}" >
-                                                <p:ajax event="blur" update="OCTotal" listener="#{ordemColetaManager.calcular()}"/>
-                                            </p:inputText>
-                                            <p:watermark for="OCValorUnitario" value="#{msg.OCMValorUnitario}"/>
-                                        </p:column>
-                                        <p:column>
-                                            <p:outputLabel value="#{msg.OCQuantidade}" for="OCQuantidade"/>
-                                        </p:column>
-                                        <p:column>
-                                            <p:inputText id="OCQuantidade" 
-                                                         onkeypress="mascara(this, formatarNumero)"
-                                                         required="true" 
-                                                         requiredMessage="#{msgSis.obrigatorioOCQuantidade}"
-                                                         value="#{ordemColetaManager.quantidade}" >
-                                                <p:ajax event="blur" update="OCTotal" listener="#{ordemColetaManager.calcular()}"/>
-                                            </p:inputText>
-                                            <p:watermark for="OCQuantidade" value="#{msg.OCQuantidade}"/>
-                                        </p:column>
-                                        <p:column>
-                                            <p:outputLabel value="#{msg.OCValorTotal}" for="OCTotal" >
-                                                <f:convertNumber currencyCode="R$" maxFractionDigits="2" />
-                                            </p:outputLabel>
-                                        </p:column>
-                                        <p:column>
-                                            <p:outputLabel id="OCTotal" value="#{ordemColetaManager.valorTotal}" styleClass="inputDesabilitado" />
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>
-                                            <p:outputLabel value="#{msg.OCNumeroNotaFiscal}" for="OCNotaFiscal"/>
-                                        </p:column>
-                                        <p:column>
-                                            <p:inputText value="#{ordemColetaManager.ordemColeta.numeroNota}" id="OCNotaFiscal" />
-                                            <p:watermark for="OCNotaFiscal" value="#{msg.OCMNF}"/>
-                                        </p:column>
-                                        <p:column>
-                                            <p:outputLabel value="#{msg.OCDataNotaFisca}" for="OCDataNotaFiscal"/>
-                                        </p:column>
-                                        <p:column>
-                                             <p:calendar id="OCDataNotaFiscal" 
-                                                         value="#{ordemColetaManager.ordemColeta.dataEmissaoNf}" 
-                                                        locale="pt"
-                                                        selectOtherMonths="true"
-                                                        pattern="dd/MM/yyyy" 
-                                                        onkeypress="mascara(this, formatarData)"/>
-                                             <p:watermark for="OCDataNotaFiscal" value="#{msg.OCMDataNF}"/>
-                                        </p:column>
-                                    </p:row>
+                                    <p:column> 
+                                        <p:outputLabel value="#{msg.OCNumero}"/>
+                                    </p:column>
+                                    <p:column colspan="3">    
+                                        <p:outputLabel value="#{ordemColetaManager.ordemColeta.ordemColetaId}"
+                                                       styleClass="inputDesabilitado" 
+                                                       style="font-size: 18pt;font-weight: bold"/>
+                                    </p:column>
+                                    <p:column> 
+                                        <p:outputLabel value="#{msg.OCData}"/>
+                                    </p:column>
+                                    <p:column>    
+                                        <p:outputLabel value="#{ordemColetaManager.formatarData(ordemColetaManager.ordemColeta.dataOrdemColeta)}"
+                                                       styleClass="inputDesabilitado"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{msg.OCMotorista}" for="OCMotorista"/>
+                                    </p:column> 
+                                    <p:column colspan="5">
+                                        <p:autoComplete id="OCMotorista"
+                                                        required="true"
+                                                        requiredMessage="#{msgSis.obrigatorioOCMotorista}"
+                                                        completeMethod="#{ordemColetaManager.completeMotorista}"
+                                                        converter="#{mngMotoristaConverter}"
+                                                        value="#{ordemColetaManager.ordemColeta.motoristaId}"
+                                                        size="80" />
+                                        <p:watermark for="OCMotorista" value="#{msg.OCMMotorista}"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{msg.OCVeiculo}" for="OCVeiculo"/>
+                                    </p:column> 
+                                    <p:column colspan="5">
+                                        <p:autoComplete id="OCVeiculo"
+                                                        required="true"
+                                                        requiredMessage="#{msgSis.obrigatorioOCVeicculo}"
+                                                        completeMethod="#{ordemColetaManager.completeVeiculo}"
+                                                        converter="#{mngVeiculoConverter}"
+                                                        value="#{ordemColetaManager.ordemColeta.veiculoId}"
+                                                        size="80" />
+                                        <p:watermark for="OCVeiculo" value="#{msg.OCMVeiculo}"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="background-color: #B7CEEC;border-top: 1px solid #1D63A0 !important; border-left: 1px solid #1D63A0 !important;">
+                                        <p:outputLabel value="#{msg.OCRemetente}" for="OCRemetente"/>
+                                    </p:column> 
+                                    <p:column colspan="5" style="background-color: #B7CEEC;border-top: 1px solid #1D63A0 !important; border-right: 1px solid #1D63A0 !important">
+                                        <p:autoComplete id="OCRemetente"
+                                                        required="true"
+                                                        requiredMessage="#{msgSis.obrigatorioOCRemetente}"
+                                                        completeMethod="#{ordemColetaManager.completeRemetente}"
+                                                        converter="#{mngRemetenteConverter}"
+                                                        value="#{ordemColetaManager.ordemColeta.remetenteId}"
+                                                        size="80" >
+                                            <p:ajax update="RemetenteCNPJ RemetenteEndereco OCRota" event="itemSelect"/>
+                                        </p:autoComplete>
+                                        <p:watermark for="OCRemetente" value="#{msg.OCMRemetente}"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="background-color: #B7CEEC;border-left: 1px solid #1D63A0 !important">
+                                        <p:outputLabel value="#{msg.OCEmpresaCNPJ}" />
+                                    </p:column>
+                                    <p:column colspan="5" style="background-color: #B7CEEC;border-right: 1px solid #1D63A0 !important">
+                                        <p:outputLabel id="RemetenteCNPJ" value="#{ordemColetaManager.ordemColeta.remetenteId.cnpj}" styleClass="inputDesabilitado"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="background-color: #B7CEEC;border-left: 1px solid #1D63A0 !important;border-bottom: 1px solid #1D63A0 !important;">
+                                        <p:outputLabel value="#{msg.OCEMpresaEndereco}" />
+                                    </p:column>
+                                    <p:column colspan="5" style="background-color: #B7CEEC;border-right: 1px solid #1D63A0 !important;border-bottom: 1px solid #1D63A0 !important;">
+                                        <p:outputLabel id="RemetenteEndereco" value="#{ordemColetaManager.formatarEndereco(ordemColetaManager.ordemColeta.remetenteId)}" styleClass="inputDesabilitado"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:spacer />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="background-color: #B7CEEC;border-top: 1px solid #1D63A0 !important; border-left: 1px solid #1D63A0 !important;">
+                                        <p:outputLabel value="#{msg.OCDestinatario}" for="OCDestinatario"/>
+                                    </p:column> 
+                                    <p:column colspan="5" style="background-color: #B7CEEC;border-top: 1px solid #1D63A0 !important; border-right: 1px solid #1D63A0 !important">
+                                        <p:autoComplete id="OCDestinatario"
+                                                        required="true"
+                                                        requiredMessage="#{msgSis.obrigatorioOCDestinatario}"
+                                                        completeMethod="#{ordemColetaManager.completeDestinatario}"
+                                                        converter="#{mngDestinatarioConverter}"
+                                                        value="#{ordemColetaManager.ordemColeta.destinatarioId}"
+                                                        size="80" >
+                                            <p:ajax update="DestinatarioCNPJ DestinatarioEndereco OCRota" event="itemSelect"/>
+                                        </p:autoComplete>
+                                        <p:watermark for="OCDestinatario" value="#{msg.OCMDestinatario}"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="background-color: #B7CEEC;border-left: 1px solid #1D63A0 !important">
+                                        <p:outputLabel value="#{msg.OCEmpresaCNPJ}" />
+                                    </p:column>
+                                    <p:column colspan="5" style="background-color: #B7CEEC;border-right: 1px solid #1D63A0 !important">
+                                        <p:outputLabel id="DestinatarioCNPJ" value="#{ordemColetaManager.ordemColeta.destinatarioId.cnpj}" styleClass="inputDesabilitado"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="background-color: #B7CEEC;border-left: 1px solid #1D63A0 !important;border-bottom: 1px solid #1D63A0 !important;">
+                                        <p:outputLabel value="#{msg.OCEMpresaEndereco}" />
+                                    </p:column>
+                                    <p:column colspan="5" style="background-color: #B7CEEC;border-right: 1px solid #1D63A0 !important;border-bottom: 1px solid #1D63A0 !important;">
+                                        <p:outputLabel id="DestinatarioEndereco" value="#{ordemColetaManager.formatarEndereco(ordemColetaManager.ordemColeta.destinatarioId)}" styleClass="inputDesabilitado"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{msg.OCRota}"/>
+                                    </p:column>
+                                    <p:column colspan="5">
+                                        <p:outputLabel id="OCRota" value="#{ordemColetaManager.ordemColeta.rota}" styleClass="inputDesabilitado"/>
+                                    </p:column>    
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{msg.OCValorUnitario}" for="OCValorUnitario"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="OCValorUnitario" 
+                                                     converter="conversorMoedaVirgula" 
+                                                     onkeypress="mascara(this, formatarNumeroDuasCasas)"
+                                                     required="true" 
+                                                     requiredMessage="#{msgSis.obrigatorioOCValorUnitario}" 
+                                                     value="#{ordemColetaManager.valorUnitario}" >
+                                            <p:ajax event="blur" update="OCTotal" listener="#{ordemColetaManager.calcular()}"/>
+                                        </p:inputText>
+                                        <p:watermark for="OCValorUnitario" value="#{msg.OCMValorUnitario}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{msg.OCQuantidade}" for="OCQuantidade"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="OCQuantidade" 
+                                                     onkeypress="mascara(this, formatarNumero)"
+                                                     required="true" 
+                                                     requiredMessage="#{msgSis.obrigatorioOCQuantidade}"
+                                                     value="#{ordemColetaManager.quantidade}" >
+                                            <p:ajax event="blur" update="OCTotal" listener="#{ordemColetaManager.calcular()}"/>
+                                        </p:inputText>
+                                        <p:watermark for="OCQuantidade" value="#{msg.OCQuantidade}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{msg.OCValorTotal}" for="OCTotal" >
+                                            <f:convertNumber currencyCode="R$" maxFractionDigits="2" />
+                                        </p:outputLabel>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel id="OCTotal" value="#{ordemColetaManager.valorTotal}" styleClass="inputDesabilitado" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{msg.OCNumeroNotaFiscal}" for="OCNotaFiscal"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText value="#{ordemColetaManager.ordemColeta.numeroNota}" id="OCNotaFiscal" />
+                                        <p:watermark for="OCNotaFiscal" value="#{msg.OCMNF}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{msg.OCDataNotaFisca}" for="OCDataNotaFiscal"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="OCDataNotaFiscal" 
+                                                    value="#{ordemColetaManager.ordemColeta.dataEmissaoNf}" 
+                                                    locale="pt"
+                                                    selectOtherMonths="true"
+                                                    pattern="dd/MM/yyyy" 
+                                                    onkeypress="mascara(this, formatarData)"/>
+                                        <p:watermark for="OCDataNotaFiscal" value="#{msg.OCMDataNF}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{msg.OCDistancia}" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="distancia" 
+                                                     onkeypress="mascara(this, formatarNumero)"
+                                                     required="true" 
+                                                     requiredMessage="#{msgSis.obrigatorioOCDistancia}"
+                                                     value="#{ordemColetaManager.ordemColeta.distancia}" />
+                                        <p:watermark for="distancia" value="#{msg.OCDistancia}" />
+                                    </p:column>
+                                </p:row>
                             </p:panelGrid>
-                                <br/>
-                                <p:commandButton id="btnConfirmaInsercao" 
-                                                 action="#{ordemColetaManager.inserir()}" 
-                                                 value="#{msg.acaoOK}" 
-                                                 rendered="#{(ordemColetaManager.ordemColeta.ordemColetaId.intValue()== null)}"
-                                                 styleClass="botao"
-                                                 update="messages"/>
-                                <p:commandButton id="btnConfirmaAlteracao" 
-                                                 action="#{ordemColetaManager.alterar()}" 
-                                                 value="#{msg.acaoOK}" 
-                                                 rendered="#{!(ordemColetaManager.ordemColeta.ordemColetaId.intValue()== null)}"
-                                                 styleClass="botao"
-                                                 update="messages"/>
-                                <p:commandButton id="BtnFechar" 
-                                                 action="#{ordemColetaManager.montarPaginaListagem()}" 
-                                                 value="#{msg.acaoFechar}" 
-                                                 immediate="true"
-                                                 styleClass="botao"/>
-                                 <p:confirmDialog header="#{msg.headerAlterar}" message="#{msg.headerConfirmaAlterar}" id="AlterarDlg" widgetVar="altera">
-                                     <p:outputLabel id="mensagem" value="#{ordemColetaManager.mensagem}" escape="false"/>
-                                     <p:commandButton value="#{msg.acaoSim}" action="#{ordemColetaManager.concluirAlteracao()}"  />
-                                    <p:commandButton value="#{msg.acaoNao}" onclick="altera.hide();" />
-                                 </p:confirmDialog>
+                            <br/>
+                            <p:commandButton id="btnConfirmaInsercao" 
+                                             action="#{ordemColetaManager.inserir()}" 
+                                             value="#{msg.acaoOK}" 
+                                             rendered="#{(ordemColetaManager.ordemColeta.ordemColetaId.intValue()== null)}"
+                                             styleClass="botao"
+                                             update="messages"/>
+                            <p:commandButton id="btnConfirmaAlteracao" 
+                                             action="#{ordemColetaManager.alterar()}" 
+                                             value="#{msg.acaoOK}" 
+                                             rendered="#{!(ordemColetaManager.ordemColeta.ordemColetaId.intValue()== null)}"
+                                             styleClass="botao"
+                                             update="messages"/>
+                            <p:commandButton id="BtnFechar" 
+                                             action="#{ordemColetaManager.montarPaginaListagem()}" 
+                                             value="#{msg.acaoFechar}" 
+                                             immediate="true"
+                                             styleClass="botao"/>
+                            <p:confirmDialog header="#{msg.headerAlterar}" message="#{msg.headerConfirmaAlterar}" id="AlterarDlg" widgetVar="altera">
+                                <p:outputLabel id="mensagem" value="#{ordemColetaManager.mensagem}" escape="false"/>
+                                <p:commandButton value="#{msg.acaoSim}" action="#{ordemColetaManager.concluirAlteracao()}"  />
+                                <p:commandButton value="#{msg.acaoNao}" onclick="altera.hide();" />
+                            </p:confirmDialog>
                         </h:form>
                     </p:panel>
                 </ui:define>
