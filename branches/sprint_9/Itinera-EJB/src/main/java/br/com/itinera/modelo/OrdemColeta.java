@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package br.com.itinera.modelo;
 
@@ -79,23 +74,35 @@ public class OrdemColeta implements Serializable {
     @NotNull
     @Column(name = "valor_total")
     private BigDecimal valorTotal;
+    
+    @NotNull
+    @Column(name = "distancia")
+    private BigDecimal distancia;
+    
     @Column(name = "numero_nota")
     private BigInteger numeroNota;
+    
     @Column(name = "data_emissao_nf")
     @Temporal(TemporalType.DATE)
     private Date dataEmissaoNf;
+    
     @JoinColumn(name = "veiculo_id", referencedColumnName = "id_veiculo")
     @ManyToOne(optional = false)
     private Veiculo veiculoId;
+    
     @JoinColumn(name = "motorista_id", referencedColumnName = "motorista_id")
     @ManyToOne(optional = false)
     private Motorista motoristaId;
+    
     @JoinColumn(name = "destinatario_id", referencedColumnName = "id_empresa")
     @ManyToOne(optional = false)
     private Empresa destinatarioId;
+    
     @JoinColumn(name = "remetente_id", referencedColumnName = "id_empresa")
     @ManyToOne(optional = false)
+    
     private Empresa remetenteId;
+    
     @Transient
     private String Rota;
 
@@ -162,6 +169,14 @@ public class OrdemColeta implements Serializable {
         this.valorTotal = valorTotal;
     }
 
+    public BigDecimal getDistancia() {
+        return distancia;
+    }
+
+    public void setDistancia(BigDecimal distancia) {
+        this.distancia = distancia;
+    }
+    
     public BigInteger getNumeroNota() {
         return numeroNota;
     }
