@@ -61,7 +61,7 @@
                                 </p:autoComplete>
                                 <p:watermark value="#{msg.placa}" for="veiculoPlaca"/>
 
-                                <p:outputLabel  value="#{msg.nome}" for="fornecedor"/>
+                                <p:outputLabel  value="#{msg.nome}" for="motorista"/>
                                 <p:autoComplete id="motorista" 
                                                 completeMethod="#{despesaManager.completeMotorista}"
                                                 converter="#{mngMotoristaConverter}"
@@ -70,7 +70,7 @@
                                                 size="100"
                                                 value="#{despesaManager.despesa.motorista}">
                                 </p:autoComplete>
-                                <p:watermark value="#{msg.formularioCampoNomeFantasia}" for="fornecedor"/>
+                                <p:watermark value="#{msg.formularioCampoNomeFantasia}" for="motorista"/>
 
                                 <p:outputLabel  value="#{msg.descricaoPlanoConta}" for="planoContas"/>
                                 <p:autoComplete id="planoContas" 

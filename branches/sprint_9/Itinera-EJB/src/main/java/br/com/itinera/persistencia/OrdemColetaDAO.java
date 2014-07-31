@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package br.com.itinera.persistencia;
 
+import br.com.itinera.modelo.Motorista;
 import br.com.itinera.modelo.OrdemColeta;
 import java.util.Date;
 import java.util.List;
@@ -72,6 +68,14 @@ public class OrdemColetaDAO {
                .setParameter("fim", fim)
                .setParameter("numeroNota", nota)
                .getResultList();
+    }
+
+    public List<OrdemColeta> buscarPorMotorista(Motorista motorista, Date dtInicioFiltro, Date dtFimFiltro) {
+        return em.createQuery("SELECT o FROM OrdemColeta o WHERE o.motoristaId = :motorista AND o.dataEmissaoNf BETWEEN :dtInicio AND :dtFim")
+                .setParameter("motorista", motorista)
+                .setParameter("dtInicio", dtInicioFiltro)
+                .setParameter("dtFim", dtFimFiltro)
+                .getResultList();
     }
     
     public void inserir(OrdemColeta ordem){

@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import br.com.itinera.modelo.Despesa;
+import br.com.itinera.modelo.Motorista;
 import br.com.itinera.persistencia.DespesaDAO;
 import java.util.Date;
 import javax.persistence.EntityExistsException;
@@ -39,6 +40,10 @@ public class DespesaFachada {
 
     public List<Despesa> filtrarDespesasPorData(Date dtInicioFiltro, Date dtFimFiltro) {
         return dao.buscarPorData(dtInicioFiltro, dtFimFiltro);
+    }
+    
+    public List<Despesa> filtrarDespesaPorMotorista(Motorista motorista, Date dtInicioFiltro, Date dtFimFiltro) {
+        return dao.buscarPorMotorista(motorista, dtInicioFiltro, dtFimFiltro);
     }
     
 }

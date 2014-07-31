@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package br.com.itinera.fachada;
 
+import br.com.itinera.modelo.Motorista;
 import br.com.itinera.modelo.OrdemColeta;
 import br.com.itinera.persistencia.OrdemColetaDAO;
 import java.util.Date;
@@ -40,6 +36,10 @@ public class OrdemColetaFachada {
         else if(!bNota && !bFim && !bInicio) return dao.buscarPorPeriodoENotaFiscal(inicio, fim, nota);
         
         return listar();
+    }
+    
+    public List<OrdemColeta> buscarPorMotorista(Motorista motorista, Date dtInicio, Date dtFim) {
+        return dao.buscarPorMotorista(motorista, dtInicio, dtFim);
     }
     
     public void inserir(OrdemColeta ordem){

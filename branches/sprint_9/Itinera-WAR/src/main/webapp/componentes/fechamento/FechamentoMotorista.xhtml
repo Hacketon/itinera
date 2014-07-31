@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>#{msg.headerFechamentoMotorista}</title>
+    </h:head>
+    <h:body>
+        <f:view>
+            <ui:decorate template="/layout/logado/template.xhtml">
+                <ui:define name="conteudo">
+                    <h:outputScript>selecionado($('#btnFechamento'));</h:outputScript>
+                    <p:panel styleClass="semBorda" header="#{msg.fechamento}">
+                        <h:form>
+                            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                            <p:panelGrid id="filtroGrid" columns="4">
+                                <h:outputText value="#{msg.periodoDeEmissao}" />
+                                <p:calendar id="dtInicioFiltro"
+                                            value="#{fechamentoManager.dtInicioFiltro}" />
+                                <h:outputText value="à" />
+                                <p:calendar id="dtFimFiltro"
+                                            value="#{fechamentoManager.dtFimFiltro}" />
+
+                                <p:outputLabel  value="#{msg.nome}" for="motorista"/>
+                                <p:autoComplete id="motorista" 
+                                                completeMethod="#{despesaManager.completeMotorista}"
+                                                converter="#{mngMotoristaConverter}"
+                                                minQueryLength="3"
+                                                required="true"
+                                                size="50"
+                                                value="#{fechamentoManager.motorista}">
+                                </p:autoComplete>
+                                <p:watermark value="#{msg.nome}" for="motorista"/>
+                                <p:commandButton icon="ui-icon-search"
+                                                 action="#{fechamentoManager.filtrar()}"
+                                                 update="gridDespesa gridOrdemColeta textoGridOC textoGridDespesa"
+                                                 value="Buscar" />
+                            </p:panelGrid>
+                            <h:outputLabel id="textoGridDespesa" value="Relação de despesas extras" rendered="#{not empty fechamentoManager.despesas}" />
+                            <h:panelGrid id="gridDespesa">
+                                <h:outputText value="Preehca os parâmetros para filtrar os dados" 
+                                              rendered="#{empty fechamentoManager.despesas}" />
+                                <p:dataTable id="tabelaDespesa"
+                                             emptyMessage="#{msg.listaSemRegistro}"
+                                             paginator="true" 
+                                             rows="10" 
+                                             rendered="#{not empty fechamentoManager.despesas}"
+                                             value="#{fechamentoManager.despesas}" 
+                                             var="despesa" >
+
+                                    <p:column headerText="#{msg.OCData}" 
+                                              styleClass="fontepadrao"
+                                              sortBy="#{despesa.data}" >
+                                        <h:outputText value="#{despesa.data}" >
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="#{msg.fornecedor}"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{despesa.fornecedor.nomeFantasia}" >
+                                        <h:outputText value="#{despesa.fornecedor.nomeFantasia}" />
+                                    </p:column>
+
+                                    <p:column headerText="#{msg.OCVeiculo}"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{despesa.veiculo.placaVeiculo}" >
+                                        <h:outputText value="#{despesa.veiculo.placaVeiculo}" />
+                                    </p:column>
+
+                                    <p:column headerText="#{msg.numDocto}" 
+                                              filterBy="#{despesa.numDocto}"
+                                              filterMatchMode="contains"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{despesa.numDocto}" >
+                                        <h:outputText value="#{despesa.numDocto}" />
+                                    </p:column>
+
+                                    <p:column headerText="#{msg.valor}" 
+                                              styleClass="fontepadrao"
+                                              sortBy="#{despesa.valor}" >
+                                        <h:outputText value="#{despesa.valor}" />
+                                    </p:column>
+                                </p:dataTable>
+                                <p:summaryRow rendered="#{!empty fechamentoManager.despesas}">
+                                    <p:column style="text-align: right">
+                                        <h:outputText value="#{msg.total}:" />
+                                        <p:spacer />
+                                        <h:outputText id="totalDeDespesas" value="#{fechamentoManager.totalDespesa}" >
+                                            <f:convertNumber maxFractionDigits="2" currencySymbol="R$" />
+                                        </h:outputText>
+                                    </p:column>
+                                </p:summaryRow>                                
+                            </h:panelGrid>
+                            
+                            <h:outputLabel id="textoGridOC" value="Relação de ordens de coleta" rendered="#{not empty fechamentoManager.ordemColetas}" />
+                            <h:panelGrid id="gridOrdemColeta">
+                                <p:dataTable id="tabelaOrdemColeta"
+                                             emptyMessage="#{msg.listagemVazioOrdemColeta}"
+                                             paginator="true" 
+                                             rows="10" 
+                                             rendered="#{not empty fechamentoManager.ordemColetas}"
+                                             value="#{fechamentoManager.ordemColetas}" 
+                                             var="fechamento" >
+                                    <p:column headerText="#{msg.OCData}" 
+                                              filterBy="#{fechamento.dataOrdemColeta}"
+                                              filterMatchMode="equals"
+                                              style="text-align: center;"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{fechamento.dataOrdemColeta}" >
+                                        <h:outputText value="#{fechamento.dataOrdemColeta}" >
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="#{msg.OCRota}" 
+                                              filterBy="#{fechamento.rota}"
+                                              filterMatchMode="contains"
+                                              filterStyle="width:200px"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{fechamento.rota}" >
+                                        <p:outputLabel value="#{fechamento.rota}" />
+                                    </p:column>
+                                    <p:column headerText="#{msg.OCRemetente}" 
+                                              filterBy="#{fechamento.remetenteId.nomeFantasia}"
+                                              filterMatchMode="contains"
+                                              filterStyle="width:150px;"
+                                              style="max-width:150px"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{fechamento.remetenteId.nomeFantasia}" >
+                                        <p:outputLabel value="#{fechamento.remetenteId.nomeFantasia}" title="#{fechamento.remetenteId.nomeFantasia}"/>
+                                    </p:column>
+                                    <p:column headerText="#{msg.OCDestinatario}" 
+                                              filterBy="#{fechamento.destinatarioId.nomeFantasia}"
+                                              filterMatchMode="contains"
+                                              filterStyle="width:150px;"
+                                              style="max-width:150px"
+                                              styleClass="fontepadrao"
+                                              sortBy="#{fechamento.destinatarioId.nomeFantasia}" >
+                                        <p:outputLabel value="#{fechamento.destinatarioId.nomeFantasia}"
+                                                       title="#{fechamento.destinatarioId.nomeFantasia}"/>
+                                    </p:column>
+                                    <p:column headerText="#{msg.OCVeiculo}" 
+                                              filterBy="#{fechamento.veiculoId.placaVeiculo}"
+                                              filterMatchMode="contains"
+                                              styleClass="fontepadrao"
+                                              style="text-align: center;"
+                                              sortBy="#{fechamento.veiculoId.placaVeiculo}" >
+                                        <h:outputText value="#{fechamento.veiculoId.placaVeiculo}"/>
+                                    </p:column>
+                                    <p:column headerText="#{msg.OCNumero}" 
+                                              filterBy="#{fechamento.ordemColetaId}"
+                                              filterMatchMode="equals"
+                                              filterStyle="width:70px"
+                                              styleClass="fontepadrao"
+                                              style="text-align: center;"
+                                              sortBy="#{fechamento.ordemColetaId}" >
+                                        <h:outputText value="#{fechamento.ordemColetaId}"/>
+                                    </p:column>
+                                    <p:column headerText="#{msg.OCValor}" 
+                                              styleClass="fontepadrao"
+                                              style="text-align: right;"
+                                              sortBy="#{fechamento.valorTotal}" >
+                                        <h:outputText value="#{fechamento.valorTotal}"/>
+                                    </p:column>
+                                    
+                                </p:dataTable>
+                                <p:summaryRow rendered="#{!empty fechamentoManager.ordemColetas}">
+                                    <p:column style="text-align: right">
+                                        <h:outputText value="#{msg.total}:" />
+                                        <p:spacer />
+                                        <h:outputText id="totalDeOrdemColeta" value="#{fechamentoManager.totalOrdemColeta}" >
+                                            <f:convertNumber maxFractionDigits="2" currencySymbol="R$" />
+                                        </h:outputText>
+                                    </p:column>
+                                </p:summaryRow>
+                            </h:panelGrid>
+                        </h:form>
+                    </p:panel>
+                </ui:define>
+            </ui:decorate>
+        </f:view>                        
+    </h:body>
+</html>
+
