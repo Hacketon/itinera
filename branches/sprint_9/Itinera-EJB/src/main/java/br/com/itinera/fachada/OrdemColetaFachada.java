@@ -42,6 +42,10 @@ public class OrdemColetaFachada {
         return dao.buscarPorMotorista(motorista, dtInicio, dtFim);
     }
     
+    public List<OrdemColeta> buscarPorPeriodo(Date dtInicio, Date dtFim) {
+        return dao.buscarPorPeriodo(dtInicio, dtFim);
+    }
+    
     public void inserir(OrdemColeta ordem){
         dao.inserir(ordem);
     }

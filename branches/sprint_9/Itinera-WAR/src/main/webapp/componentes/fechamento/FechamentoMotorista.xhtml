@@ -13,7 +13,7 @@
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
                     <h:outputScript>selecionado($('#btnFechamento'));</h:outputScript>
-                    <p:panel styleClass="semBorda" header="#{msg.fechamento}">
+                    <p:panel styleClass="semBorda" header="#{msg.fechamentoMotorista}">
                         <h:form>
                             <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
                             <p:panelGrid id="filtroGrid" columns="4">
@@ -128,15 +128,14 @@
                                               style="max-width:150px"
                                               styleClass="fontepadrao"
                                               sortBy="#{fechamento.remetenteId.nomeFantasia}" >
-                                        <p:outputLabel value="#{fechamento.remetenteId.nomeFantasia}" title="#{fechamento.remetenteId.nomeFantasia}"/>
+                                        <p:outputLabel value="#{fechamento.remetenteId.nomeFantasia}"/>
                                     </p:column>
                                     <p:column headerText="#{msg.OCDestinatario}" 
                                               filterStyle="width:150px;"
                                               style="max-width:150px"
                                               styleClass="fontepadrao"
                                               sortBy="#{fechamento.destinatarioId.nomeFantasia}" >
-                                        <p:outputLabel value="#{fechamento.destinatarioId.nomeFantasia}"
-                                                       title="#{fechamento.destinatarioId.nomeFantasia}"/>
+                                        <p:outputLabel value="#{fechamento.destinatarioId.nomeFantasia}"/>
                                     </p:column>
                                     <p:column headerText="#{msg.OCVeiculo}" 
                                               styleClass="fontepadrao"
@@ -165,7 +164,7 @@
                                     <p:column style="text-align: right">
                                         <h:outputText value="#{msg.total}:" />
                                         <p:spacer />
-                                        <h:outputText id="totalDeOrdemColeta" value="#{fechamentoManager.totalOrdemColeta}" >
+                                        <h:outputText id="totalDeOrdemColeta" value="#{fechamentoManager.totalOrdemColetaMotorista}" >
                                             <f:convertNumber maxFractionDigits="2" currencySymbol="R$" />
                                         </h:outputText>
                                     </p:column>
