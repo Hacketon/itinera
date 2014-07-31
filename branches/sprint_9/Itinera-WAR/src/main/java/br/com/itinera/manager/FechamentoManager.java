@@ -38,16 +38,19 @@ public class FechamentoManager implements Serializable, MontarPaginas {
     private Motorista motorista;
     private double totalDespesa;
     private double totalOrdemColeta;
+    private final double valorKmRodado = 0.30;
 
     private Date dtInicioFiltro;
     private Date dtFimFiltro;
 
     public FechamentoManager() {
+        this.inicializarTotal();
         motorista = new Motorista();
     }
 
     @Override
     public String montarPaginaParaListar() {
+        this.inicializarTotal();
         return "/componentes/fechamento/FechamentoMotorista";
     }
 
@@ -65,8 +68,7 @@ public class FechamentoManager implements Serializable, MontarPaginas {
         if (this.motorista.getMotoristaId() == null) {
             Mensagem.mostrarMensagem("ATENÇÃO", "Escolha um motorista");
         } else {
-            totalDespesa = 0;
-            totalOrdemColeta = 0;
+            this.inicializarTotal();
             despesas = despesaFachada.filtrarDespesaPorMotorista(this.motorista, dtInicioFiltro, dtFimFiltro);
             ordemColetas = ordemColetaFachada.buscarPorMotorista(this.motorista, dtInicioFiltro, dtFimFiltro);
         }
@@ -87,9 +89,14 @@ public class FechamentoManager implements Serializable, MontarPaginas {
             setTotalOrdemColeta(Double.valueOf(0));
         } else {
             for (OrdemColeta oc : ordemColetas) {
-                totalOrdemColeta += oc.getValorTotal().doubleValue();
+                totalOrdemColeta += oc.getDistancia().doubleValue() * valorKmRodado;
             }
         }
+    }
+    
+    private void inicializarTotal() {
+        totalDespesa = 0;
+        totalOrdemColeta = 0;
     }
 
     public DespesaFachada getDespesaFachada() {
