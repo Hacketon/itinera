@@ -19,9 +19,13 @@
                             <p:panelGrid id="filtroGrid" columns="4">
                                 <h:outputText value="#{msg.periodoDeEmissao}" />
                                 <p:calendar id="dtInicioFiltro"
+                                            required="true"
+                                            requiredMessage="#{msgSis.obrigatorioData}"
                                             value="#{fechamentoManager.dtInicioFiltro}" />
                                 <h:outputText value="à" />
                                 <p:calendar id="dtFimFiltro"
+                                            required="true"
+                                            requiredMessage="#{msgSis.obrigatorioData}"
                                             value="#{fechamentoManager.dtFimFiltro}" />
 
                                 <p:outputLabel  value="#{msg.nome}" for="motorista"/>
@@ -105,9 +109,7 @@
                                              rendered="#{not empty fechamentoManager.ordemColetas}"
                                              value="#{fechamentoManager.ordemColetas}" 
                                              var="fechamento" >
-                                    <p:column headerText="#{msg.OCData}" 
-                                              filterBy="#{fechamento.dataOrdemColeta}"
-                                              filterMatchMode="equals"
+                                    <p:column headerText="#{msg.OCData}"
                                               style="text-align: center;"
                                               styleClass="fontepadrao"
                                               sortBy="#{fechamento.dataOrdemColeta}" >
@@ -116,16 +118,12 @@
                                         </h:outputText>
                                     </p:column>
                                     <p:column headerText="#{msg.OCRota}" 
-                                              filterBy="#{fechamento.rota}"
-                                              filterMatchMode="contains"
                                               filterStyle="width:200px"
                                               styleClass="fontepadrao"
                                               sortBy="#{fechamento.rota}" >
                                         <p:outputLabel value="#{fechamento.rota}" />
                                     </p:column>
-                                    <p:column headerText="#{msg.OCRemetente}" 
-                                              filterBy="#{fechamento.remetenteId.nomeFantasia}"
-                                              filterMatchMode="contains"
+                                    <p:column headerText="#{msg.OCRemetente}"
                                               filterStyle="width:150px;"
                                               style="max-width:150px"
                                               styleClass="fontepadrao"
@@ -133,8 +131,6 @@
                                         <p:outputLabel value="#{fechamento.remetenteId.nomeFantasia}" title="#{fechamento.remetenteId.nomeFantasia}"/>
                                     </p:column>
                                     <p:column headerText="#{msg.OCDestinatario}" 
-                                              filterBy="#{fechamento.destinatarioId.nomeFantasia}"
-                                              filterMatchMode="contains"
                                               filterStyle="width:150px;"
                                               style="max-width:150px"
                                               styleClass="fontepadrao"
@@ -143,8 +139,6 @@
                                                        title="#{fechamento.destinatarioId.nomeFantasia}"/>
                                     </p:column>
                                     <p:column headerText="#{msg.OCVeiculo}" 
-                                              filterBy="#{fechamento.veiculoId.placaVeiculo}"
-                                              filterMatchMode="contains"
                                               styleClass="fontepadrao"
                                               style="text-align: center;"
                                               sortBy="#{fechamento.veiculoId.placaVeiculo}" >
@@ -159,11 +153,11 @@
                                               sortBy="#{fechamento.ordemColetaId}" >
                                         <h:outputText value="#{fechamento.ordemColetaId}"/>
                                     </p:column>
-                                    <p:column headerText="#{msg.OCValor}" 
+                                    <p:column headerText="#{msg.distancia}"
                                               styleClass="fontepadrao"
-                                              style="text-align: right;"
-                                              sortBy="#{fechamento.valorTotal}" >
-                                        <h:outputText value="#{fechamento.valorTotal}"/>
+                                              style="text-align: right"
+                                              sortBy="#{fechamento.distancia}" >
+                                        <h:outputText value="#{fechamento.distancia}" />
                                     </p:column>
                                     
                                 </p:dataTable>
