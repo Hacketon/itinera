@@ -204,3 +204,7 @@ fieldset {
     color: rgb(46, 110, 158);
     font-size: 18px;
 }
+
+.negrito{
+    font-weight: bold;
+}
