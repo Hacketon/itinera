@@ -38,7 +38,11 @@ public class FechamentoManager implements Serializable, MontarPaginas {
     private Motorista motorista;
     private double totalDespesa;
     private double totalOrdemColeta;
+    private double totalOrdemColetaMotorista;
+    private double saldo;
     private final double valorKmRodado = 0.30;
+    private final String corSaldoPositivo = "#4be234";
+    private final String corSaldoNegativo = "#ed1212";
 
     private Date dtInicioFiltro;
     private Date dtFimFiltro;
@@ -63,6 +67,12 @@ public class FechamentoManager implements Serializable, MontarPaginas {
     public String montarPaginaParaAlterar() {
         return "";
     }
+    
+    public String montarPaginaParaListarFechamentoEmpresa() {
+        this.inicializarTotal();
+        this.calcularTotais();
+        return "/componentes/fechamento/Fechamento";
+    }
 
     public void filtrar() {
         if (this.motorista.getMotoristaId() == null) {
@@ -73,10 +83,21 @@ public class FechamentoManager implements Serializable, MontarPaginas {
             ordemColetas = ordemColetaFachada.buscarPorMotorista(this.motorista, dtInicioFiltro, dtFimFiltro);
         }
     }
+    
+    public void filtrarFechamento() {
+        if (this.dtInicioFiltro == null && this.dtFimFiltro == null) {
+            Mensagem.mostrarMensagem("ATENÇÃO", "Preencha as datas.");
+        } else {
+            this.inicializarTotal();
+            this.calcularTotais();
+            despesas = despesaFachada.filtrarDespesasPorData(dtInicioFiltro, dtFimFiltro);
+            ordemColetas = ordemColetaFachada.buscarPorPeriodo(dtInicioFiltro, dtFimFiltro);
+        }
+    }
 
     private void calcularTotalDespesa() {
         if (despesas.isEmpty()) {
-            setTotalDespesa(Double.valueOf(0));
+            totalDespesa = 0;
         } else {
             for (Despesa d : despesas) {
                 totalDespesa += d.getValor().doubleValue();
@@ -86,17 +107,44 @@ public class FechamentoManager implements Serializable, MontarPaginas {
 
     private void calcularTotalOrdemColeta() {
         if (ordemColetas.isEmpty()) {
-            setTotalOrdemColeta(Double.valueOf(0));
+            totalOrdemColeta = 0;
         } else {
             for (OrdemColeta oc : ordemColetas) {
-                totalOrdemColeta += oc.getDistancia().doubleValue() * valorKmRodado;
+                totalOrdemColeta += oc.getValorTotal().doubleValue();
             }
         }
+    }
+
+    private void calcularTotalOrdemColetaMotorista() {
+        if (ordemColetas.isEmpty()) {
+            totalOrdemColetaMotorista = 0;
+        } else {
+            for (OrdemColeta oc : ordemColetas) {
+                totalOrdemColetaMotorista += oc.getDistancia().doubleValue() * valorKmRodado;
+            }
+        }
+    }
+    
+    private void calcularSaldo() {
+        saldo = totalOrdemColeta - (totalDespesa+totalOrdemColetaMotorista);
     }
     
     private void inicializarTotal() {
         totalDespesa = 0;
         totalOrdemColeta = 0;
+        totalOrdemColetaMotorista = 0;
+        saldo = 0;
+    }
+    
+    private void calcularTotais() {
+        this.calcularTotalDespesa();
+        this.calcularTotalOrdemColeta();
+        this.calcularTotalOrdemColetaMotorista();
+        this.calcularSaldo();
+    }
+
+    public String definirCorSaldo() {
+        return (saldo >= 0 ) ? corSaldoPositivo : corSaldoNegativo;
     }
 
     public DespesaFachada getDespesaFachada() {
@@ -164,7 +212,6 @@ public class FechamentoManager implements Serializable, MontarPaginas {
     }
 
     public double getTotalDespesa() {
-        this.calcularTotalDespesa();
         return totalDespesa;
     }
 
@@ -173,12 +220,27 @@ public class FechamentoManager implements Serializable, MontarPaginas {
     }
 
     public double getTotalOrdemColeta() {
-        this.calcularTotalOrdemColeta();
         return totalOrdemColeta;
     }
 
     public void setTotalOrdemColeta(double totalOrdemColeta) {
         this.totalOrdemColeta = totalOrdemColeta;
+    }
+
+    public double getTotalOrdemColetaMotorista() {
+        return totalOrdemColetaMotorista;
+    }
+
+    public void setTotalOrdemColetaMotorista(double totalOrdemColetaMotorista) {
+        this.totalOrdemColetaMotorista = totalOrdemColetaMotorista;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
     }
 
 }
