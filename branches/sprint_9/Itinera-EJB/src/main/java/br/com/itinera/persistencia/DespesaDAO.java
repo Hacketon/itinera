@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import br.com.itinera.modelo.Despesa;
+import br.com.itinera.modelo.Motorista;
 import java.util.Date;
 
 /**
@@ -34,6 +35,14 @@ public class DespesaDAO extends GenericDAO {
 
     public List<Despesa> buscarPorData(Date dtInicioFiltro, Date dtFimFiltro) {
         return (List<Despesa>) em.createQuery("SELECT d FROM Despesa d WHERE d.data BETWEEN :dtInicio AND :dtFim")
+                .setParameter("dtInicio", dtInicioFiltro)
+                .setParameter("dtFim", dtFimFiltro)
+                .getResultList();
+    }
+
+    public List<Despesa> buscarPorMotorista(Motorista motorista, Date dtInicioFiltro, Date dtFimFiltro) {
+        return em.createQuery("SELECT d FROM Despesa d WHERE d.motorista = :motorista AND d.data BETWEEN :dtInicio AND :dtFim")
+                .setParameter("motorista", motorista)
                 .setParameter("dtInicio", dtInicioFiltro)
                 .setParameter("dtFim", dtFimFiltro)
                 .getResultList();
