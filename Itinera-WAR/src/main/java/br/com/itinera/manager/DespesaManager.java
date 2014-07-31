@@ -1,6 +1,5 @@
 package br.com.itinera.manager;
 
-import br.com.itinera.enuns.StatusDespesa;
 import br.com.itinera.fachada.DespesaFachada;
 import br.com.itinera.fachada.EmpresaFachada;
 import br.com.itinera.fachada.MotoristaFachada;

@@ -14,6 +14,7 @@
         <p:button  id="btnPlanoContas"      rendered="#{loginManager.grupoSecretaria}"       outcome="#{planoContasManager.montarPaginaParaListar()}"                        value="Plano de Contas"    style="background: none;" styleClass="botaomenu"/>
         <p:button  id="btnDespesa"          rendered="#{loginManager.grupoSecretaria}"       outcome="#{despesaManager.montarPaginaParaListar()}"                            value="Despesas"           style="background: none;" styleClass="botaomenu"/>
         <p:button  id="btnOrdemColeta"      rendered="#{loginManager.grupoSecretaria}"       outcome="#{ordemColetaManager.montarPaginaListagem()}"                          value="Ordem de Coleta"    style="background: none;" styleClass="botaomenu"/>
+        <p:button  id="btnFechamento"       rendered="#{loginManager.grupoSecretaria}"       outcome="#{fechamentoManager.montarPaginaParaListar()}"                         value="Fechamento"         style="background: none;" styleClass="botaomenu"/>
         
    </h:body>
 </html>
