@@ -31,17 +31,6 @@
         android:background="@color/botao_entrar"
         android:text="@string/despesas" />
 
-    <Button
-        android:id="@+id/btnMenuVoltar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnMenuDespesas"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/btnMenuDespesas"
-        android:layout_marginBottom="25dp"
-        android:background="@color/botao_entrar"
-        android:text="@string/voltar" />
-
     <TextView
         android:id="@+id/txtSaudacao"
         android:layout_width="wrap_content"

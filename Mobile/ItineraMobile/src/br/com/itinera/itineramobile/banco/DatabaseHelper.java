@@ -21,7 +21,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DESPESA_TABLE_CREATE =
 			"CREATE TABLE " + TABELA_DESPESA_NOME + " (" +
-			"codigo_despesa INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+			" _id integer primary key autoincrement, " +
+			"codigo_despesa INT, " +
 			"codigo_usuario INT, " +
 			"nome_fornecedor TEXT, " +
 			"numero_documento TEXT, " +
@@ -47,6 +48,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 	}
 	
+	public void salvar(Despesa despesa){
+		
+		long id = despesa.get_id();
+		if (id != 0 ){
+			update(despesa);
+		}else{
+			try {
+				insert(despesa);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void update(Despesa despesa)
+	{	    
+		SQLiteDatabase sqlLite = new DatabaseHelper(context).getWritableDatabase();
+		
+		ContentValues cv = new ContentValues();
+	     
+    	cv.put("codigo_usuario", despesa.getCodigoUsuario());
+    	cv.put("nome_fornecedor", despesa.getNomeFornecedor());
+    	cv.put("numero_documento", despesa.getNumeroDocumento());
+    	cv.put("valor", despesa.getValor());
+    	cv.put("data", despesa.getData());
+    	cv.put("tipo_despesa", despesa.getTipoDespesa());
+    	cv.put("_id", despesa.get_id());
+		
+	    int count = sqlLite.update(DatabaseHelper.TABELA_DESPESA_NOME, cv, "_id=?", new String[] {String.valueOf(despesa.get_id())});
+	}
+	
     public long insert(Despesa despesa) throws Exception {
     	//Com permissão de escrita no banco de dados
     	SQLiteDatabase sqlLite = new DatabaseHelper(context).getWritableDatabase();
@@ -61,6 +94,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     	cv.put("tipo_despesa", despesa.getTipoDespesa());
     
     	return sqlLite.insert(TABELA_DESPESA_NOME, null, cv);
+    }
+    
+    public void delete(Despesa despesa) throws Exception {
+    	SQLiteDatabase sqlLite = new DatabaseHelper(context).getWritableDatabase();
+        
+    	int count = sqlLite.delete(DatabaseHelper.TABELA_DESPESA_NOME, "nome_fornecedor=? and numero_documento=? and codigo_usuario=? ",	 new String[] {String.valueOf(despesa.getNomeFornecedor()),String.valueOf(despesa.getNumeroDocumento()),String.valueOf(despesa.getCodigoUsuario())});
     }
     
     public List<Despesa> pesquisarPorCampo(String campo, String valor){

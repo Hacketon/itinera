@@ -3,7 +3,7 @@ package br.com.itinera.itineramobile.tarefa;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.itinera.itineramobile.Login;
+import br.com.itinera.itineramobile.LoginActivity;
 import br.com.itinera.itineramobile.PesquisarDespesa;
 import br.com.itinera.itineramobile.banco.DatabaseHelper;
 import br.com.itinera.itineramobile.bean.Despesa;
@@ -32,7 +32,7 @@ public class PesquisaDespesaTarefa extends AsyncTask<String, List<Despesa>, Stri
 	
 	@Override
 	protected void onPostExecute(String result) {
-		if(listaDespesa == null){
+		if((listaDespesa == null) || listaDespesa.isEmpty()){
 			listaDespesa = new ArrayList<Despesa>();
 		}
 		

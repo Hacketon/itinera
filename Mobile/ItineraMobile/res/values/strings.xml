@@ -32,5 +32,8 @@
     <string name="botao_alterar">Alterar</string>
     <string name="botao_excluir">Excluir</string>
     <string name="title_activity_pesquisar_despesa">Pesquisar Despesa</string>
+    <string name="msg_campo_usuario_obrigatorio">O campo Usuario é obrigatório!</string>
+    <string name="msg_campo_senha_obrigatorio">O campo Senha é obrigatório!</string>
+    <string name="msg_usuario_ou_senha_invalido">Usuário ou senha inválido!</string>
 
 </resources>

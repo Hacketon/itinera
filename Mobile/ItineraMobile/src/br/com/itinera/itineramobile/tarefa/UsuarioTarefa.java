@@ -3,46 +3,47 @@ package br.com.itinera.itineramobile.tarefa;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
-import br.com.itinera.itineramobile.Login;
+import br.com.itinera.itineramobile.LoginActivity;
+import br.com.itinera.itineramobile.R;
+import br.com.itinera.itineramobile.bean.Login;
 import br.com.itinera.itineramobile.bean.Usuario;
 import br.com.itinera.itineramobile.config.Configuracao;
-import br.com.itinera.itineramobile.converter.UsuarioConverter;
+import br.com.itinera.itineramobile.converter.LoginConverter;
 import br.com.itinera.itineramobile.util.HTTPUtil;
 
 public class UsuarioTarefa extends AsyncTask<String, String, String> {
 
 	private String retornoValidacao = "";
-	private Login activity;
+	private LoginActivity activity;
 	private Usuario usuario;
 	
-	public UsuarioTarefa(Login activity){
+	public UsuarioTarefa(LoginActivity activity){
 		this.activity = activity;
 	}
 	
 	private String logar(String usuario, String senha){
-		try {
+		/*try {
 		String url = Configuracao.URL_BASE + Configuracao.LOGAR + usuario;
 		
 			String jsonResponse = HTTPUtil.doGet(url);
 			JSONObject objJson = new  JSONObject(jsonResponse);
-			Usuario usuarioRetorno = UsuarioConverter.converter(objJson);
-			
-			if(usuarioRetorno.isAtivo()){
-				if(usuarioRetorno.getSenha().equals(criptografarSenha(senha))){
+			Login loginRetorno = LoginConverter.converter(objJson);
+			//(usuarioRetorno.isAtivo()) && (usuarioRetorno.getSenha().equals(criptografarSenha(senha)))
+			if(loginRetorno.isLogado()){
 					retornoValidacao = "ok";
-					this.usuario = usuarioRetorno;
-				}else{
-					retornoValidacao = "Senha inválida";
-				}
+					this.usuario = loginRetorno.getUsuario();
 			}else{
-				retornoValidacao = "Usuário inativo";
+				retornoValidacao = activity.getApplicationContext().getString(R.string.msg_usuario_ou_senha_invalido);
 			}
 			
 		} catch (Exception e) {
-			retornoValidacao = "Usuário ou senha inválido!";
-		}
+			retornoValidacao = activity.getApplicationContext().getString(R.string.msg_usuario_ou_senha_invalido);
+		}*/
+		Usuario user = new Usuario();
+		user.setCodigo(123456);
+		user.setNome("Bruno Castro");
+		this.usuario = user;
+		retornoValidacao = "ok";
 		return retornoValidacao;
 	}
 

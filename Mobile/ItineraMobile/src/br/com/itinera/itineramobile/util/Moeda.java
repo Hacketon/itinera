@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.itinera.itineramobile.util;
 
 import java.math.BigDecimal;
@@ -22,7 +18,7 @@ public class Moeda {
         } else {
             return "R$ 0,00";
         }
-    }
+    } 
 
     public static String mascaraDinheiro(double valor, DecimalFormat moeda) {
         return moeda.format(valor);

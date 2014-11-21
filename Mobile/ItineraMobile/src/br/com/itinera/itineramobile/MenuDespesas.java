@@ -20,7 +20,6 @@ public class MenuDespesas extends Activity {
 	private TextView txtMenuDespesasDataAtual;
 	private Button btnMenuDespesasCadastrar;
 	private Button btnMenuDespesasPesquisar;
-	private Button btnMenuDespesasVoltar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,6 @@ public class MenuDespesas extends Activity {
 		txtMenuDespesasDataAtual = (TextView)findViewById(R.id.txtMenuDespesasSaudacao);
 		btnMenuDespesasCadastrar = (Button)findViewById(R.id.btnMenuDespesasCadastrar);
 		btnMenuDespesasPesquisar = (Button)findViewById(R.id.btnMenuDespesasPesquisar);
-		btnMenuDespesasVoltar = (Button)findViewById(R.id.btnMenuDespesasVoltar);
 		
 		btnMenuDespesasPesquisar.setOnClickListener(new OnClickListener() {
 			
@@ -39,23 +37,6 @@ public class MenuDespesas extends Activity {
 			public void onClick(View v) {
 				// click botao voltar
 				Intent i = new Intent(MenuDespesas.this, PesquisarDespesa.class);
-				
-				Bundle parametros = new Bundle();
-				parametros.putInt("codigo", codigoUsuario);
-				parametros.putString("nome", nomeUsuario);
-				
-				i.putExtras(parametros);
-				
-				startActivity(i);				
-			}
-		});
-		
-		btnMenuDespesasVoltar.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// click botao voltar
-				Intent i = new Intent(MenuDespesas.this, MenuPrincipal.class);
 				
 				Bundle parametros = new Bundle();
 				parametros.putInt("codigo", codigoUsuario);
