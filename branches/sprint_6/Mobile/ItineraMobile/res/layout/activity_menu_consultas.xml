@@ -9,17 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MenuConsultas" >
 
-    <Button
-        android:id="@+id/btnConsultaEmpresaVoltar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnConsultaEmpresaCnpj"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/btnConsultaEmpresaCnpj"
-        android:layout_marginBottom="29dp"
-        android:background="@color/botao_entrar"
-        android:text="@string/voltar" />
-
     <TextView
         android:id="@+id/txtMenuConsultasDataAtual"
         android:layout_width="wrap_content"

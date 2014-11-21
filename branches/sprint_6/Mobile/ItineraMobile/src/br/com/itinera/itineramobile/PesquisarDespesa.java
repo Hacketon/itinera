@@ -25,7 +25,6 @@ public class PesquisarDespesa extends Activity {
 
 	private ProgressDialog loadingDialog;
 	private AlertDialog errorAlertDialog;
-	private Button btnPesquisarDespesaVoltar;
 	private int codigoUsuario;
 	private String nomeUsuario;	
 	private ListaDespesaAdapter adapter;
@@ -38,7 +37,6 @@ public class PesquisarDespesa extends Activity {
 		setContentView(R.layout.activity_pesquisar_despesa);
 		
 		lstListaDespesa = (ListView)findViewById(R.id.lstListaDespesas);
-		btnPesquisarDespesaVoltar = (Button)findViewById(R.id.btnPesquisarDespesaVoltar);
 		btnAlterar = (Button)findViewById(R.id.btnAlterar);
 		
 		//Recupera parâmetros da tela anterior
@@ -49,23 +47,6 @@ public class PesquisarDespesa extends Activity {
 			codigoUsuario = parametros.getInt("codigo");
 			nomeUsuario = parametros.getString("nome");
 		}
-		
-		btnPesquisarDespesaVoltar.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// click botao voltar
-				Intent i = new Intent(PesquisarDespesa.this, MenuDespesas.class);
-				
-				Bundle parametros = new Bundle();
-				parametros.putInt("codigo", codigoUsuario);
-				parametros.putString("nome", nomeUsuario);
-				
-				i.putExtras(parametros);
-				
-				startActivity(i);				
-			}
-		});
 		
 		//Instância de objeto da tela de loading
 		loadingDialog = new ProgressDialog(PesquisarDespesa.this);
@@ -85,9 +66,15 @@ public class PesquisarDespesa extends Activity {
 	}
 	
 	public void montarListaAposProcessamento(List<Despesa> listaDespesa){
-		adapter = new ListaDespesaAdapter(this, listaDespesa);
-		lstListaDespesa.setAdapter(adapter);
-		lstListaDespesa.setVisibility(View.VISIBLE);
+		
+		if (listaDespesa != null && !listaDespesa.isEmpty()){
+			adapter = new ListaDespesaAdapter(this, listaDespesa);
+			lstListaDespesa.setAdapter(adapter);
+			lstListaDespesa.setVisibility(View.VISIBLE);
+		} else{
+			lstListaDespesa.setVisibility(View.INVISIBLE);
+		}
+		
 		loadingDialog.dismiss();
 	}
 	

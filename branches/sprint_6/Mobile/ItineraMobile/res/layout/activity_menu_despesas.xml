@@ -50,15 +50,4 @@
         android:background="@color/botao_entrar"
         android:text="@string/menu_despesa_pesquisar" />
 
-    <Button
-        android:id="@+id/btnMenuDespesasVoltar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnMenuDespesasPesquisar"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/btnMenuDespesasPesquisar"
-        android:layout_marginBottom="20dp"
-        android:background="@color/botao_entrar"
-        android:text="@string/voltar" />
-
 </RelativeLayout>

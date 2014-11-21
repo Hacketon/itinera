@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Despesa {
 
+	private long _id;
 	private int codigoDespesa;
 	private int codigoUsuario;
 	private String nomeFornecedor;
@@ -19,6 +20,7 @@ public class Despesa {
 	public Double getValor(){return valor;}
 	public String getData(){return data;}
 	public String getTipoDespesa(){return tipoDespesa;}
+	public long get_id() { return _id;	}
 	
 	public void setCodigoDespesa(int codigoDespesa){this.codigoDespesa = codigoDespesa;}
 	public void setCodigoUsuario(int codigoUsuario){this.codigoUsuario = codigoUsuario;}
@@ -27,5 +29,6 @@ public class Despesa {
 	public void setValor(Double valor){this.valor = valor;}
 	public void setData(String data){this.data = data;}
 	public void setTipoDespesa(String tipoDespesa){this.tipoDespesa = tipoDespesa;}
+	public void set_id(long _id) { this._id = _id; }
 	
 }

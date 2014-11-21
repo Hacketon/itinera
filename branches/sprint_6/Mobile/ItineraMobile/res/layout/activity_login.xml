@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Login" >
+    tools:context=".LoginActivity" >
 
     <TextView
         android:id="@+id/txtDataAtual"
@@ -62,22 +62,10 @@
         android:id="@+id/btnLoginEntrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/txtSenha"
         android:layout_below="@+id/txtSenha"
-        android:layout_marginTop="32dp"
-        android:layout_toRightOf="@+id/txtDataAtual"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
         android:background="@color/botao_entrar"
         android:text="@string/entrar" />
-
-    <Button
-        android:id="@+id/btnLVoltar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnLoginEntrar"
-        android:layout_alignBottom="@+id/btnLoginEntrar"
-        android:layout_alignLeft="@+id/jlbSenha"
-        android:layout_toLeftOf="@+id/txtSenha"
-        android:background="@color/botao_normal"
-        android:text="@string/voltar" />
 
 </RelativeLayout>

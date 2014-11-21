@@ -9,11 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".CadastroDespesa" >
 
-    <TextView
-        android:id="@+id/txtCadastrarDespesaDataAtual"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
 
     <Button
         android:id="@+id/btnCadastrarDespesa"
@@ -26,30 +21,11 @@
         android:background="@color/botao_entrar"
         android:text="@string/botao_salvar" />
 
-    <Button
-        android:id="@+id/btnVoltarDespesa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/btnCadastrarDespesa"
-        android:layout_alignRight="@+id/txtCadastrarDespesaDataAtual"
-        android:background="@color/botao_normal"
-        android:text="@string/voltar" />
-
     <TextView
-        android:id="@+id/txtCadastrarDespesaSaudacao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtCadastrarDespesaDataAtual"
-        android:layout_below="@+id/txtCadastrarDespesaDataAtual"
-        android:layout_marginTop="21dp"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/txtItemData"
+        android:id="@+id/txtCadastroDespesaNomeFornecedor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/txtCadastrarDespesaSaudacao"
         android:layout_marginTop="43dp"
         android:text="@string/cadastro_despesa_nome_Fornecedor" />
 
@@ -57,45 +33,19 @@
         android:id="@+id/txtCadastroDespesaFornecedor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/txtItemData"
-        android:layout_alignBottom="@+id/txtItemData"
-        android:layout_toRightOf="@+id/txtCadastrarDespesaDataAtual"
+        android:layout_alignBaseline="@+id/txtCadastroDespesaNomeFornecedor"
+        android:layout_alignBottom="@+id/txtCadastroDespesaNomeFornecedor"
+        android:layout_toRightOf="@+id/txtCadastroDespesaNomeFornecedor"
+        android:inputType="text"
         android:ems="10" >
-
         <requestFocus />
     </EditText>
-
-    <TextView
-        android:id="@+id/txtItemValor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtItemData"
-        android:layout_below="@+id/txtCadastroDespesaFornecedor"
-        android:layout_marginTop="30dp"
-        android:text="@string/cadastro_despesa_numero_documento" />
-
-    <EditText
-        android:id="@+id/txtCadastroDespesaDocumento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/txtItemValor"
-        android:layout_toRightOf="@+id/txtCadastrarDespesaDataAtual"
-        android:ems="10" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtItemValor"
-        android:layout_below="@+id/txtItemValor"
-        android:layout_marginTop="24dp"
-        android:text="@string/cadastro_despesa_data" />
 
     <EditText
         android:id="@+id/txtCadastroDespesaData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView5"
+        android:layout_alignBottom="@+id/textCadastrarDespesaData"
         android:layout_alignLeft="@+id/txtCadastroDespesaDocumento"
         android:layout_alignRight="@+id/txtCadastroDespesaDocumento"
         android:inputType="number"
@@ -106,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView5"
+        android:layout_below="@+id/textCadastrarDespesaData"
         android:layout_marginTop="33dp"
         android:text="@string/cadastro_despesa_valor" />
 
@@ -120,20 +70,30 @@
         android:ems="10" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/textCadastrarDespesaData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnVoltarDespesa"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="28dp"
-        android:text="@string/cadastro_despesa_tipo_despesa" />
+        android:layout_alignLeft="@+id/textView6"
+        android:layout_below="@+id/txtCadastrarDespesaNumeroDocumento"
+        android:layout_marginTop="31dp"
+        android:text="@string/cadastro_despesa_data" />
 
-    <Spinner
-        android:id="@+id/spnCadastroDespesaTipoDespesa"
+    <EditText
+        android:id="@+id/txtCadastroDespesaDocumento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView7"
-        android:layout_alignLeft="@+id/txtCadastroDespesaValor"
-        android:layout_below="@+id/txtCadastroDespesaValor" />
+		android:layout_alignBottom="@+id/txtCadastrarDespesaNumeroDocumento"
+        android:layout_toRightOf="@+id/txtCadastroDespesaNomeFornecedor"
+        android:ems="10"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/txtCadastrarDespesaNumeroDocumento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textCadastrarDespesaData"
+        android:layout_below="@+id/txtCadastroDespesaFornecedor"
+        android:layout_marginTop="45dp"
+        android:text="@string/cadastro_despesa_numero_documento" />
 
 </RelativeLayout>

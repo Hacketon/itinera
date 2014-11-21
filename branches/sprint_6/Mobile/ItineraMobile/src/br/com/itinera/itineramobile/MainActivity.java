@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Click do botão entrar
-				Intent i = new Intent(MainActivity.this, Login.class);
+				Intent i = new Intent(MainActivity.this, LoginActivity.class);
 				startActivity(i);				
 			}
 		});
