@@ -26,9 +26,7 @@ import android.widget.TextView;
 public class CadastroDespesa extends Activity {
 
 	private int codigoUsuario;
-	private String nomeUsuario;
 	private Button btnCadastrarDespesa;
-	private Button btnVoltarDespesa;
 	private TextView txtCadastrarDespesaDataAtual;
 	private TextView txtCadastrarDespesaSaudacao;
 	private EditText txtCadastroDespesaFornecedor;
@@ -37,6 +35,7 @@ public class CadastroDespesa extends Activity {
 	private EditText txtCadastroDespesaValor;
 	private Spinner spnCadastroDespesaTipoDespesa;
 	private AlertDialog errorAlertDialog;
+	private long _id;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +43,12 @@ public class CadastroDespesa extends Activity {
 		setContentView(R.layout.activity_cadastro_despesa);
 		
 		btnCadastrarDespesa = (Button) findViewById(R.id.btnCadastrarDespesa);
-		btnVoltarDespesa = (Button) findViewById(R.id.btnVoltarDespesa);
-		txtCadastrarDespesaDataAtual = (TextView) findViewById(R.id.txtCadastrarDespesaDataAtual);
-		txtCadastrarDespesaSaudacao = (TextView) findViewById(R.id.txtCadastrarDespesaSaudacao);
 		
 		txtCadastroDespesaFornecedor = (EditText) findViewById(R.id.txtCadastroDespesaFornecedor);
 		txtCadastroDespesaDocumento = (EditText) findViewById(R.id.txtCadastroDespesaDocumento);
 		txtCadastroDespesaData = (EditText) findViewById(R.id.txtCadastroDespesaData);
 		txtCadastroDespesaValor = (EditText) findViewById(R.id.txtCadastroDespesaValor);
-		spnCadastroDespesaTipoDespesa = (Spinner) findViewById(R.id.spnCadastroDespesaTipoDespesa);
+		//spnCadastroDespesaTipoDespesa = (Spinner) findViewById(R.id.spnCadastroDespesaTipoDespesa);
 		
 		txtCadastroDespesaData.addTextChangedListener(Mask.insert("##/##/####", txtCadastroDespesaData));
 		
@@ -65,23 +61,6 @@ public class CadastroDespesa extends Activity {
 					txtCadastroDespesaValor.setText(Moeda.mascaraDinheiro(txtCadastroDespesaValor.getText().toString(), Moeda.DINHEIRO_REAL));
 				}
 				
-			}
-		});
-		
-		btnVoltarDespesa.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// click botao voltar
-				Intent i = new Intent(CadastroDespesa.this, MenuDespesas.class);
-				
-				Bundle parametros = new Bundle();
-				parametros.putInt("codigo", codigoUsuario);
-				parametros.putString("nome", nomeUsuario);
-				
-				i.putExtras(parametros);
-				
-				startActivity(i);				
 			}
 		});
 		
@@ -98,15 +77,19 @@ public class CadastroDespesa extends Activity {
 				d.setData(txtCadastroDespesaData.getText().toString());
 				d.setNomeFornecedor(txtCadastroDespesaFornecedor.getText().toString());
 				d.setNumeroDocumento(txtCadastroDespesaDocumento.getText().toString());
-				d.setTipoDespesa("CombustÃ­vel");
+				d.setTipoDespesa("Combustível");
 				d.setValor(Double.valueOf(Moeda.desmascaraDinheiro(txtCadastroDespesaValor.getText().toString())));
+				if ( _id != 0 ){
+					d.set_id(_id);	
+				}
+				
 				
 				if(!validarCampos(d, txtCadastroDespesaFornecedor, txtCadastroDespesaData, txtCadastroDespesaValor)){
 					return;
 				}
 				
 				try {
-					long codigoDespesa = banco.insert(d);
+					banco.salvar(d);
 					showErrorMessage("Cadastro de despesa efetuado com sucesso.");
 					limparCampos(txtCadastrarDespesaDataAtual, txtCadastrarDespesaSaudacao, txtCadastroDespesaData, txtCadastroDespesaDocumento, txtCadastroDespesaFornecedor, txtCadastroDespesaValor);
 				} catch (Exception e) {
@@ -116,8 +99,8 @@ public class CadastroDespesa extends Activity {
 
 			private void limparCampos(TextView txtCadastrarDespesaDataAtual, TextView txtCadastrarDespesaSaudacao, EditText txtCadastroDespesaData, EditText txtCadastroDespesaDocumento, EditText txtCadastroDespesaFornecedor, EditText txtCadastroDespesaValor) {
 				// MÃ©todo de limpar campos
-				txtCadastrarDespesaDataAtual.setText("");
-				txtCadastrarDespesaSaudacao.setText("");
+				//txtCadastrarDespesaDataAtual.setText("");
+				//txtCadastrarDespesaSaudacao.setText("");
 				txtCadastroDespesaData.setText("");
 				txtCadastroDespesaDocumento.setText("");
 				txtCadastroDespesaFornecedor.setText("");
@@ -131,13 +114,27 @@ public class CadastroDespesa extends Activity {
 		Bundle parametros = i.getExtras();
 				
 		if(parametros != null){
-			txtCadastrarDespesaSaudacao.setText("Bem-vindo, "+parametros.getString("nome"));
+			//txtCadastrarDespesaSaudacao.setText("Bem-vindo, "+parametros.getString("nome"));
 				
 			codigoUsuario = parametros.getInt("codigo");
-			nomeUsuario = parametros.getString("nome");
+			String fornecedor = new String();
+			
+			long id = parametros.getLong("_id");
+			if (id != 0){
+			
+				txtCadastroDespesaFornecedor.setText(parametros.getString("nomeFornecedor"));
+				txtCadastroDespesaDocumento.setText(parametros.getString("numeroDocumento"));
+				txtCadastroDespesaData.setText(parametros.getString("data"));
+				Long valor = parametros.getLong("valor");
+				txtCadastroDespesaValor.setText(valor.toString());		
+				_id = parametros.getLong("_id");
+				
+				
+			}				
+			
 		}
 				
-		txtCadastrarDespesaDataAtual.setText(dataAtual());
+		//txtCadastrarDespesaDataAtual.setText(dataAtual());
 	}
 
 	@Override
@@ -172,19 +169,19 @@ public class CadastroDespesa extends Activity {
 	
 	private boolean validarCampos(Despesa d, EditText txtCadastroDespesaFornecedor, EditText txtCadastroDespesaData, EditText txtCadastroDespesaValor){
 		if(d.getNomeFornecedor().trim().equals("")){
-			showErrorMessage("O campo fornecedor Ã© obrigatÃ³rio!");
+			showErrorMessage("O campo fornecedor é obrigatório!");
 			txtCadastroDespesaFornecedor.requestFocus();
 			return false;
 		}
 		
 		if(d.getData().trim().equals("")){
-			showErrorMessage("O campo data Ã© obrigatÃ³rio!");
+			showErrorMessage("O campo data é obrigatório!");
 			txtCadastroDespesaData.requestFocus();
 			return false;
 		}
 		
 		if(d.getValor()== 0.0){
-			showErrorMessage("O campo valor Ã© obrigatÃ³rio!");
+			showErrorMessage("O campo valor é obrigatório!");
 			txtCadastroDespesaValor.requestFocus();
 			return false;
 		}

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="fundo_main">#FAEBD7</color>
-    <color name="botao_entrar">#DEB887</color>
-    <color name="botao_normal">#FFDAB9</color>
-    
+    <color name="fundo_main">#FFFFFF</color>
+    <color name="botao_entrar">#71afe5</color>
+    <color name="botao_normal">#71afe5</color>
 </resources>

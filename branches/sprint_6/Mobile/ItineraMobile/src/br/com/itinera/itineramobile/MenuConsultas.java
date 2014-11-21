@@ -19,7 +19,6 @@ public class MenuConsultas extends Activity {
 	private Button btnConsultaEmpresaNome;
 	private Button btnConsultaEmpresaEndereco;
 	private Button btnConsultaEmpresaCnpj;
-	private Button btnConsultaEmpresaVoltar;
 	private int codigoUsuario;
 	private String nomeUsuario;	
 	
@@ -34,7 +33,6 @@ public class MenuConsultas extends Activity {
 		btnConsultaEmpresaNome = (Button)findViewById(R.id.btnConsultaEmpresaNome);
 		btnConsultaEmpresaEndereco = (Button)findViewById(R.id.btnConsultaEmpresaEndereco);
 		btnConsultaEmpresaCnpj = (Button)findViewById(R.id.btnConsultaEmpresaCnpj);
-		btnConsultaEmpresaVoltar = (Button)findViewById(R.id.btnConsultaEmpresaVoltar);
 		
 		txtMenuConsultasDataAtual.setText(dataAtual());
 		
@@ -49,22 +47,6 @@ public class MenuConsultas extends Activity {
 			nomeUsuario = parametros.getString("nome");
 		}
 		
-		btnConsultaEmpresaVoltar.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// click botao voltar
-				Intent i = new Intent(MenuConsultas.this, MenuPrincipal.class);
-				
-				Bundle parametros = new Bundle();
-				parametros.putInt("codigo", codigoUsuario);
-				parametros.putString("nome", nomeUsuario);
-				
-				i.putExtras(parametros);
-				
-				startActivity(i);				
-			}
-		});
 	}
 
 	@Override

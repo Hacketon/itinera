@@ -9,21 +9,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".PesquisarDespesa" >
 
-    <Button
-        android:id="@+id/btnPesquisarDespesaVoltar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="@color/botao_entrar"
-        android:text="@string/voltar" />
-
     <ListView
         android:id="@+id/lstListaDespesas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnPesquisarDespesaVoltar"
-        android:layout_alignLeft="@+id/btnPesquisarDespesaVoltar"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="22dp" >
 

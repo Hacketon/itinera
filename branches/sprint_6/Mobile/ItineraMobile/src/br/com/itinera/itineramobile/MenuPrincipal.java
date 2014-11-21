@@ -18,7 +18,6 @@ public class MenuPrincipal extends Activity {
 	private TextView txtMenuDataAtual;
 	private Button btnMenuConsultas;
 	private Button btnMenuDespesas;
-	private Button btnMenuVoltar;
 	private int codigoUsuario;
 	private String nomeUsuario;	
 	
@@ -32,7 +31,6 @@ public class MenuPrincipal extends Activity {
 		txtMenuDataAtual = (TextView)findViewById(R.id.txtMenuDataAtual);
 		btnMenuConsultas = (Button)findViewById(R.id.btnMenuConsultas);
 		btnMenuDespesas = (Button)findViewById(R.id.btnMenuDespesas);
-		btnMenuVoltar = (Button)findViewById(R.id.btnMenuVoltar);
 		
 		txtMenuDataAtual.setText(dataAtual());
 		
@@ -46,17 +44,7 @@ public class MenuPrincipal extends Activity {
 			codigoUsuario = parametros.getInt("codigo");
 			nomeUsuario = parametros.getString("nome");
 		}
-		
-		
-		btnMenuVoltar.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// click botao voltar
-				Intent i = new Intent(MenuPrincipal.this, Login.class);
-				startActivity(i);				
-			}
-		});
+	
 		
 		btnMenuConsultas.setOnClickListener(new OnClickListener() {
 			
