@@ -61,7 +61,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Motorista.findByComplemento", query = "SELECT m FROM Motorista m WHERE m.endereco.complemento = :complemento"),
     @NamedQuery(name = "Motorista.findByBairro", query = "SELECT m FROM Motorista m WHERE m.endereco.bairro = :bairro"),
     @NamedQuery(name = "Motorista.findByConjugeNome", query = "SELECT m FROM Motorista m WHERE m.conjugeNome = :conjugeNome"),
-    @NamedQuery(name = "Motorista.findByDependentes", query = "SELECT m FROM Motorista m WHERE m.dependentes = :dependentes")})
+    @NamedQuery(name = "Motorista.findByDependentes", query = "SELECT m FROM Motorista m WHERE m.dependentes = :dependentes"),
+    @NamedQuery(name = "Motorista.findByIdMunicipio", query = "SELECT m FROM Motorista m WHERE m.idMunicipio.nomeMunicipio like :nomeMunicipio")})
 public class Motorista implements Serializable {
     
     @OneToMany(mappedBy = "motoristaId")

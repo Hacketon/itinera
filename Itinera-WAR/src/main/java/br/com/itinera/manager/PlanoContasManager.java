@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
 import javax.persistence.EntityExistsException;
 import org.primefaces.context.RequestContext;
 
@@ -133,6 +134,18 @@ public class PlanoContasManager implements Serializable, CRUD, MontarPaginas {
         planoContasAnterior.setDescricao(this.planoContas.getDescricao());
         planoContasAnterior.setTipoCombustivel(this.planoContas.getTipoCombustivel());
         return "/componentes/planoconta/AlterarPlanoConta";
+    }
+
+    public String converterBooleanTexto(Boolean tipoDeCombustivel) {
+        return tipoDeCombustivel ? "SIM" : "NAO";
+    }
+
+    public SelectItem[] getListaOpcoesSimNao() {
+        SelectItem[] opcoes = new SelectItem[3];
+        opcoes[0] = new SelectItem("", "Selecione");
+        opcoes[1] = new SelectItem("True", "SIM");
+        opcoes[2] = new SelectItem("False", "NAO");
+        return opcoes;
     }
 
     public PlanoContas getPlanoContas() {

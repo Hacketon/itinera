@@ -85,6 +85,15 @@
                                               sortBy="#{despesa.valor}" >
                                         <h:outputText value="#{despesa.valor}" />
                                     </p:column>
+
+<!--                                    <p:column headerText="-">
+                                        <p:commandButton value="Excel" ajax="false">
+                                            <p:dataExporter type="xls" target="tabelaDespesa" fileName="fechamento"/>
+                                        </p:commandButton>
+                                        <p:commandButton value="PDF" ajax="false">
+                                            <p:dataExporter type="pdf" target="tabelaDespesa" fileName="fechamento"/>
+                                        </p:commandButton>
+                                    </p:column>-->
                                 </p:dataTable>
                                 <p:summaryRow rendered="#{!empty fechamentoManager.despesas}">
                                     <p:column style="text-align: right">
@@ -114,12 +123,12 @@
                                             <f:convertDateTime pattern="dd/MM/yyyy" />
                                         </h:outputText>
                                     </p:column>
-                                    <p:column headerText="#{msg.OCRota}" 
+<!--                                    <p:column headerText="#{msg.OCRota}" 
                                               filterStyle="width:200px"
                                               styleClass="fontepadrao"
                                               sortBy="#{fechamento.rota}" >
                                         <p:outputLabel value="#{fechamento.rota}" />
-                                    </p:column>
+                                    </p:column>-->
                                     <p:column headerText="#{msg.OCRemetente}"
                                               filterStyle="width:150px;"
                                               style="max-width:150px"

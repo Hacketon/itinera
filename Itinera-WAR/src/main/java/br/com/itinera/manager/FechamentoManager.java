@@ -53,12 +53,6 @@ public class FechamentoManager implements Serializable, MontarPaginas {
     }
 
     @Override
-    public String montarPaginaParaListar() {
-        this.inicializarTotal();
-        return "/componentes/fechamento/FechamentoMotorista";
-    }
-
-    @Override
     public String montarPaginaParaCadastro() {
         return "";
     }
@@ -67,10 +61,23 @@ public class FechamentoManager implements Serializable, MontarPaginas {
     public String montarPaginaParaAlterar() {
         return "";
     }
+
+    @Override
+    public String montarPaginaParaListar() {
+        this.inicializarTotal();
+        this.calcularTotais();
+        motorista = new Motorista();
+        dtInicioFiltro = new Date();
+        dtFimFiltro = new Date();
+        return "/componentes/fechamento/FechamentoMotorista";
+    }
     
     public String montarPaginaParaListarFechamentoEmpresa() {
         this.inicializarTotal();
         this.calcularTotais();
+        motorista = new Motorista();
+        dtInicioFiltro = new Date();
+        dtFimFiltro = new Date();
         return "/componentes/fechamento/Fechamento";
     }
 
@@ -78,9 +85,10 @@ public class FechamentoManager implements Serializable, MontarPaginas {
         if (this.motorista.getMotoristaId() == null) {
             Mensagem.mostrarMensagem("ATENÇÃO", "Escolha um motorista");
         } else {
-            this.inicializarTotal();
             despesas = despesaFachada.filtrarDespesaPorMotorista(this.motorista, dtInicioFiltro, dtFimFiltro);
             ordemColetas = ordemColetaFachada.buscarPorMotorista(this.motorista, dtInicioFiltro, dtFimFiltro);
+            this.inicializarTotal();
+            this.calcularTotais();
         }
     }
     
@@ -88,10 +96,10 @@ public class FechamentoManager implements Serializable, MontarPaginas {
         if (this.dtInicioFiltro == null && this.dtFimFiltro == null) {
             Mensagem.mostrarMensagem("ATENÇÃO", "Preencha as datas.");
         } else {
-            this.inicializarTotal();
-            this.calcularTotais();
             despesas = despesaFachada.filtrarDespesasPorData(dtInicioFiltro, dtFimFiltro);
             ordemColetas = ordemColetaFachada.buscarPorPeriodo(dtInicioFiltro, dtFimFiltro);
+            this.inicializarTotal();
+            this.calcularTotais();
         }
     }
 

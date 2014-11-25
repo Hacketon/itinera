@@ -243,7 +243,7 @@ public class EmpresaManager implements Serializable {
 
     public List<SelectItem> getTipoEmpresaOpcoes() {
         List<SelectItem> tipoEmpresa = new ArrayList<SelectItem>();
-        tipoEmpresa.add(new SelectItem(null, "Selecione"));
+        tipoEmpresa.add(new SelectItem("", "Selecione"));
         for (TipoEmpresa te : TipoEmpresa.values()) {
             tipoEmpresa.add(new SelectItem(te.name(), te.toString()));
         }
