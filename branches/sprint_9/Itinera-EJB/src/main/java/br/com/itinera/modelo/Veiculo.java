@@ -6,7 +6,6 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,8 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Veiculo.findByChassi", query = "SELECT v FROM Veiculo v WHERE v.chassi = :chassi"),
     @NamedQuery(name = "Veiculo.findByNumeroRenavan", query = "SELECT v FROM Veiculo v WHERE v.numeroRenavan = :numeroRenavan"),
     @NamedQuery(name = "Veiculo.findByExercicioAtual", query = "SELECT v FROM Veiculo v WHERE v.exercicioAtual = :exercicioAtual"),
-    @NamedQuery(name = "Veiculo.findByCidadeVeiculo", query = "SELECT v FROM Veiculo v WHERE v.cidadeVeiculo = :cidadeVeiculo"),
-    @NamedQuery(name = "Veiculo.findByUfVeiculo", query = "SELECT v FROM Veiculo v WHERE v.ufVeiculo = :ufVeiculo"),
+//    @NamedQuery(name = "Veiculo.findByCidadeVeiculo", query = "SELECT v FROM Veiculo v WHERE v.cidadeVeiculo = :cidadeVeiculo"),
+//    @NamedQuery(name = "Veiculo.findByUfVeiculo", query = "SELECT v FROM Veiculo v WHERE v.ufVeiculo = :ufVeiculo"),
     @NamedQuery(name = "Veiculo.findByTipoCombustivel", query = "SELECT v FROM Veiculo v WHERE v.tipoCombustivel = :tipoCombustivel"),
     @NamedQuery(name = "Veiculo.findByCorPredominante", query = "SELECT v FROM Veiculo v WHERE v.corPredominante = :corPredominante"),
     @NamedQuery(name = "Veiculo.findByQtdeEixos", query = "SELECT v FROM Veiculo v WHERE v.qtdeEixos = :qtdeEixos"),
@@ -112,9 +111,13 @@ public class Veiculo implements Serializable {
     @Column(name = "exercicio_atual")
     private Short exercicioAtual;
     
-    @Size(max = 100)
-    @Column(name = "cidade_veiculo")
-    private String cidadeVeiculo;
+//    @Size(max = 100)
+//    @Column(name = "cidade_veiculo")
+//    private String cidadeVeiculo;
+    
+    @JoinColumn(name = "cidade_veiculo", referencedColumnName = "id_municipio")
+    @ManyToOne(optional = false)
+    private Municipio cidadeVeiculo;
     
     @Size(max = 2)
     @Column(name = "uf_veiculo")
@@ -276,11 +279,11 @@ public class Veiculo implements Serializable {
         this.exercicioAtual = exercicioAtual;
     }
 
-    public String getCidadeVeiculo() {
+    public Municipio getCidadeVeiculo() {
         return cidadeVeiculo;
     }
 
-    public void setCidadeVeiculo(String cidadeVeiculo) {
+    public void setCidadeVeiculo(Municipio cidadeVeiculo) {
         this.cidadeVeiculo = cidadeVeiculo;
     }
 

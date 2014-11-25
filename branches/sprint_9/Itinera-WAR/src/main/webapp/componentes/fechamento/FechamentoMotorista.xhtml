@@ -12,7 +12,7 @@
         <f:view>
             <ui:decorate template="/layout/logado/template.xhtml">
                 <ui:define name="conteudo">
-                    <h:outputScript>selecionado($('#btnFechamento'));</h:outputScript>
+                    <!--<h:outputScript>selecionado($('#btnFechamento'));</h:outputScript>-->
                     <p:panel styleClass="semBorda" header="#{msg.fechamentoMotorista}">
                         <h:form>
                             <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
@@ -43,9 +43,9 @@
                                                  update="gridDespesa gridOrdemColeta textoGridOC textoGridDespesa"
                                                  value="Buscar" />
                             </p:panelGrid>
-                            <h:outputLabel id="textoGridDespesa" value="Relação de despesas extras" rendered="#{not empty fechamentoManager.despesas}" />
+                            <h:outputLabel id="textoGridDespesa" value="Relação de despesas extras" />
                             <h:panelGrid id="gridDespesa">
-                                <h:outputText value="Preehca os parâmetros para filtrar os dados" 
+                                <h:outputText value="Nenhuma despesa encontrada" 
                                               rendered="#{empty fechamentoManager.despesas}" />
                                 <p:dataTable id="tabelaDespesa"
                                              emptyMessage="#{msg.listaSemRegistro}"
@@ -100,8 +100,10 @@
                                 </p:summaryRow>                                
                             </h:panelGrid>
                             
-                            <h:outputLabel id="textoGridOC" value="Relação de ordens de coleta" rendered="#{not empty fechamentoManager.ordemColetas}" />
+                            <h:outputLabel id="textoGridOC" value="Relação de ordens de coleta" />
                             <h:panelGrid id="gridOrdemColeta">
+                                <h:outputText value="Nenhuma ordem de coleta" 
+                                              rendered="#{empty fechamentoManager.despesas}" />
                                 <p:dataTable id="tabelaOrdemColeta"
                                              emptyMessage="#{msg.listagemVazioOrdemColeta}"
                                              paginator="true" 

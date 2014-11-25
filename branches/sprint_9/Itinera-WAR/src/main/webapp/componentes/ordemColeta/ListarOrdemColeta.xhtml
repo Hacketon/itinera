@@ -44,7 +44,8 @@
                                         <p:outputLabel value="#{msg.filtroNotaFiscal}"/>
                                     </p:column>
                                     <p:column>
-                                        <p:inputText value="#{ordemColetaManager.filtroNotaFiscal}"/>
+                                        <p:inputText value="#{ordemColetaManager.filtroNotaFiscal}" 
+                                                     onkeypress="mascara(this, formatarNumero())" />
                                     </p:column>
                                     <p:column>
                                         <p:commandButton value="#{msg.buscar}" 
@@ -69,7 +70,7 @@
                                              >
                                     <p:column headerText="#{msg.OCData}" 
                                               filterBy="#{ordemColeta.dataOrdemColeta}"
-                                              filterMatchMode="equals"
+                                              filterMatchMode="startsWith"
                                               style="text-align: center;"
                                               styleClass="fontepadrao"
                                               sortBy="#{ordemColeta.dataOrdemColeta}" >
@@ -77,7 +78,7 @@
                                     </p:column>
                                     <p:column headerText="#{msg.OCNumero}" 
                                               filterBy="#{ordemColeta.ordemColetaId}"
-                                              filterMatchMode="equals"
+                                              filterMatchMode="contains"
                                               filterStyle="width:70px"
                                               styleClass="fontepadrao"
                                               style="text-align: center;"
@@ -115,7 +116,7 @@
                                               filterBy="#{ordemColeta.veiculoId.placaVeiculo}"
                                               filterMatchMode="contains"
                                               styleClass="fontepadrao"
-                                              style="text-align: center;"
+                                              style="text-align: center; text-transform: uppercase"
                                               sortBy="#{ordemColeta.veiculoId.placaVeiculo}" >
                                         <h:outputText value="#{ordemColeta.veiculoId.placaVeiculo}"/>
                                     </p:column>

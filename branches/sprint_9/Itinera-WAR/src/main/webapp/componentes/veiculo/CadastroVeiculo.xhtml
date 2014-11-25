@@ -123,19 +123,22 @@
                                             <p:outputLabel  for="veiculoCidade"
                                                             value="#{msg.cidade}"
                                                             styleClass="fontepadrao"/>
-                                            <p:inputText    id="veiculoCidade"
-                                                            value="#{veiculoManager.veiculo.cidadeVeiculo}"
-                                                            rendererType="integer"
-                                                            maxlength="100"
-                                                            size="100"/>
-                                            <p:watermark for="veiculoCidade" value="#{msgSis.cidadeVeiculo}." />
+                                            <p:autoComplete value="#{veiculoManager.veiculo.cidadeVeiculo}" 
+                                                            id="veiculoCidade"
+                                                            completeMethod="#{veiculoManager.completeMunicipio}"
+                                                            converter="#{mngMunicipioConverter}" 
+                                                            minQueryLength="3"
+                                                            size="70">
+                                                <p:ajax update="veiculoUF"  event="itemSelect" />
+                                            </p:autoComplete>
+                                            <p:watermark value="#{msg.formularioCampoMunicipioDescricao}" for="veiculoCidade"/>
                                             <p:outputLabel  for="veiculoUF"
                                                             value="#{msg.uf}"
                                                             styleClass="fontepadrao"/>
-
                                             <p:inputMask    id="veiculoUF"
+                                                            disabled="true"
                                                             mask="#{msg.mascaraUf}"
-                                                            value="#{veiculoManager.veiculo.ufVeiculo}"
+                                                            value="#{veiculoManager.veiculo.cidadeVeiculo.codigoEstado.siglaEstado}"
                                                             rendererType="character"
                                                             size="10"/>
                                             <p:watermark for="veiculoUF" value="#{msg.sp}" />

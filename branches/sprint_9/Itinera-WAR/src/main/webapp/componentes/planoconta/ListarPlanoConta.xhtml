@@ -43,10 +43,12 @@
                                                       />
                                     </p:column>
 
-                                    <p:column sortBy="#{planoConta.tipoCombustivel}" 
+                                    <p:column filterOptions="#{planoContasManager.listaOpcoesSimNao}"
+                                              filterBy="#{planoConta.tipoCombustivel}"
+                                              sortBy="#{planoConta.tipoCombustivel}" 
                                               styleClass="fontepadrao"
                                               style="text-align: center;">
-                                        <h:outputText value="#{planoConta.tipoCombustivel}" />
+                                        <h:outputText value="#{planoContasManager.converterBooleanTexto(planoConta.tipoCombustivel)}" />
                                     </p:column>
 
                                     <p:column headerText="">

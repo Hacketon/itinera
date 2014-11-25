@@ -1,11 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.itinera.manager;
 
 import br.com.itinera.enuns.TipoCombustivel;
 import br.com.itinera.fachada.CategoriaVeiculoFachada;
+import br.com.itinera.fachada.MunicipioFachada;
 import br.com.itinera.fachada.VeiculoFachada;
 import br.com.itinera.ferramentas.Mensagem;
 import java.io.Serializable;
@@ -18,6 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 import br.com.itinera.modelo.CategoriaVeiculo;
+import br.com.itinera.modelo.Municipio;
 import br.com.itinera.modelo.Veiculo;
 import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.context.RequestContext;
@@ -35,6 +34,8 @@ public class VeiculoManager implements Serializable {
     private List<Veiculo> veiculos = new ArrayList<Veiculo>();
     private Boolean desabilitaCombustivel;
     private String mensagemAlteracao;
+    @EJB
+    private MunicipioFachada municipioFachada;
 
     @EJB
     private VeiculoFachada fachada;
@@ -79,6 +80,17 @@ public class VeiculoManager implements Serializable {
             this.desabilitaCombustivel = false;
         }
 
+    }
+
+    public List<Municipio> completeMunicipio(String query) {
+        List<Municipio> suggestions = new ArrayList<Municipio>();
+        for (Municipio p : municipioFachada.listMunicipios()) {
+            if (p.getNomeMunicipio().toUpperCase().contains(query.toUpperCase())) {
+                suggestions.add(p);
+            }
+        }
+
+        return suggestions;
     }
 
     public Integer contagem() {
@@ -179,7 +191,6 @@ public class VeiculoManager implements Serializable {
 
     public String converterBooleanTexto(Boolean ativo) {
         return ativo ? "Ativo" : "Inativo";
-
     }
 
     public String converterNumerico(String valor) {

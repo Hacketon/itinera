@@ -4,19 +4,23 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://java.sun.com/jsf/html">
     <h:body>
-        
-        <p:button  id="btnUsuario"           rendered="#{loginManager.grupoAdministrador}"    outcome="#{usuariosManager.montarPaginaParaListarUsuarios()}"                   value="Usuários"             style="background: none;" styleClass="botaomenu"/>
-        <p:button  id="btnGrupo"             rendered="#{loginManager.grupoAdministrador}"    outcome="#{grupoManager.montarPaginaParaListarGrupos()}"                        value="Grupos"               style="background: none;" styleClass="botaomenu"/>
-        <p:button  id="btnCategoriaVeiculo"  rendered="#{loginManager.grupoSecretaria}"       outcome="#{categoriaVeiculoManager.montarPaginaParaListarCategoriaVeiculo()}"   value="Categoria Veículos"   style="background: none;" styleClass="botaomenu"/>
-        <p:button  id="btnVeiculo"           rendered="#{loginManager.grupoSecretaria}"       outcome="#{veiculoManager.montarPaginaParaListarVeiculo()}"                     value="Veículos"             style="background: none;" styleClass="botaomenu"/>
-        <p:button  id="btnEmpresa"           rendered="#{loginManager.grupoSecretaria}"       outcome="#{empresaManager.listarEmpresa()}"                                     value="Empresas"             style="background: none;" styleClass="botaomenu"/>
-        <p:button  id="btnMotorista"         rendered="#{loginManager.grupoSecretaria}"       outcome="#{motoristaManager.montarPaginaParaListar()}"                          value="Motorista"            style="background: none;" styleClass="botaomenu"/>
-        <p:button  id="btnPlanoContas"       rendered="#{loginManager.grupoSecretaria}"       outcome="#{planoContasManager.montarPaginaParaListar()}"                        value="Plano de Contas"      style="background: none;" styleClass="botaomenu"/>
-        <p:button  id="btnDespesa"           rendered="#{loginManager.grupoSecretaria}"       outcome="#{despesaManager.montarPaginaParaListar()}"                            value="Despesas"             style="background: none;" styleClass="botaomenu"/>
-        <p:button  id="btnOrdemColeta"       rendered="#{loginManager.grupoSecretaria}"       outcome="#{ordemColetaManager.montarPaginaListagem()}"                          value="Ordem de Coleta"      style="background: none;" styleClass="botaomenu"/>
-        <p:button  id="btnFechamento"        rendered="#{loginManager.grupoSecretaria}"       outcome="#{fechamentoManager.montarPaginaParaListar()}"                         value="Fechamento Motorista" style="background: none;" styleClass="botaomenu"/>
-        <p:button  id="btnFechamentoEmpresa" rendered="#{loginManager.grupoSecretaria}"       outcome="#{fechamentoManager.montarPaginaParaListarFechamentoEmpresa()}"        value="Fechamento Empresa"   style="background: none;" styleClass="botaomenu"/>
-        
-   </h:body>
+        <h:form>
+            <p:menuButton value="Cadastro">
+                <p:menuitem id="btnCategoriaVeiculo"  rendered="#{loginManager.grupoSecretaria}"       outcome="#{categoriaVeiculoManager.montarPaginaParaListarCategoriaVeiculo()}"   value="Categoria Veículos" />
+                <p:menuitem id="btnVeiculo"           rendered="#{loginManager.grupoSecretaria}"       outcome="#{veiculoManager.montarPaginaParaListarVeiculo()}"                     value="Veículos"           />
+                <p:menuitem id="btnEmpresa"           rendered="#{loginManager.grupoSecretaria}"       outcome="#{empresaManager.listarEmpresa()}"                                     value="Empresas"           />
+                <p:menuitem id="btnMotorista"         rendered="#{loginManager.grupoSecretaria}"       outcome="#{motoristaManager.montarPaginaParaListar()}"                          value="Motorista"          />
+                <p:menuitem id="btnPlanoContas"       rendered="#{loginManager.grupoSecretaria}"       outcome="#{planoContasManager.montarPaginaParaListar()}"                        value="Plano de Contas"    />
+            </p:menuButton>
+            <p:menuButton value="Rota">
+                <p:menuitem id="btnDespesa"           rendered="#{loginManager.grupoSecretaria}"       outcome="#{despesaManager.montarPaginaParaListar()}"                            value="Despesas"           />
+                <p:menuitem id="btnOrdemColeta"       rendered="#{loginManager.grupoSecretaria}"       outcome="#{ordemColetaManager.montarPaginaListagem()}"                          value="Ordem de Coleta"    />
+            </p:menuButton>
+            <p:menuButton value="Financeiro">
+                <p:menuitem id="btnFechamento"        rendered="#{loginManager.grupoSecretaria}"       outcome="#{fechamentoManager.montarPaginaParaListar()}"                         value="Fechamento Motorista" />
+                <p:menuitem id="btnFechamentoEmpresa" rendered="#{loginManager.grupoSecretaria}"       outcome="#{fechamentoManager.montarPaginaParaListarFechamentoEmpresa()}"        value="Fechamento Empresa"   />
+            </p:menuButton>
+        </h:form>
+    </h:body>
 </html>
 

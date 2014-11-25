@@ -21,9 +21,6 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 public class CategoriaVeiculoManager implements Serializable {
     
-    
-    
-    
     private String mensagem;
     private String descricaoAnterior;
     private Boolean reboqueAnterior;
