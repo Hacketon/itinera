@@ -12,7 +12,6 @@ import br.com.itinera.modelo.OrdemColeta;
 import br.com.itinera.modelo.Veiculo;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,10 +40,8 @@ public class OrdemColetaManager implements Serializable{
    private List<OrdemColeta> ordensColeta;
    private Date filtroDataInicio;
    private Date filtroDataFim;
-   private Integer filtroNotaFiscal;
+   private BigDecimal filtroNotaFiscal;
    private BigDecimal valorTotal;
-   private BigDecimal valorUnitario;
-   private BigInteger quantidade;
    private boolean inserindo;
    private OrdemColeta ordemColetaAnterior;
    private String mensagem;
@@ -101,30 +98,13 @@ public class OrdemColetaManager implements Serializable{
         this.filtroDataFim = filtroDataFim;
     }
 
-    public Integer getFiltroNotaFiscal() {
+    public BigDecimal getFiltroNotaFiscal() {
         return filtroNotaFiscal;
     }
 
-    public void setFiltroNotaFiscal(Integer filtroNotaFiscal) {
+    public void setFiltroNotaFiscal(BigDecimal filtroNotaFiscal) {
         this.filtroNotaFiscal = filtroNotaFiscal;
     }
-
-    public BigDecimal getValorUnitario() {
-        return valorUnitario;
-    }
-
-    public void setValorUnitario(BigDecimal valorUnitario) {
-        this.valorUnitario = valorUnitario;
-    }
-
-    public BigInteger getQuantidade() {
-        return this.quantidade;
-    }
-
-    public void setQuantidade(BigInteger quantidade) {
-        this.quantidade = quantidade;
-    }
-    
    
     public String montarPaginaListagem(){
         this.inserindo = false;
@@ -138,9 +118,6 @@ public class OrdemColetaManager implements Serializable{
     public String montarPaginaCadastro(){
         this.setInserindo(true);
         this.ordemColeta = new OrdemColeta();
-        this.valorTotal = null;
-        this.valorUnitario = BigDecimal.ZERO;
-        this.quantidade = BigInteger.ZERO;
         return "/componentes/ordemColeta/CadastroOrdemColeta";
     }
     
@@ -153,17 +130,12 @@ public class OrdemColetaManager implements Serializable{
         this.ordemColetaAnterior.setQuantidade(this.ordemColeta.getQuantidade());
         this.ordemColetaAnterior.setValorUnitario(this.ordemColeta.getValorUnitario());
         this.inserindo = false;
-        this.valorTotal = this.ordemColeta.getValorTotal();
-        this.valorUnitario = this.ordemColeta.getValorUnitario();
-        this.quantidade = this.ordemColeta.getQuantidade();
         return "/componentes/ordemColeta/CadastroOrdemColeta";
     }
     
     public String inserir(){
         try{
-            this.ordemColeta.setValorUnitario(this.valorUnitario);
-            this.ordemColeta.setQuantidade(BigInteger.valueOf(this.quantidade.longValue()));
-            this.ordemColeta.setValorTotal(valorTotal);
+//            imprimirOrdem();
             fachada.inserir(ordemColeta);
             Mensagem.mostrarMensagemSucesso("Sucesso!", "Ordem de Coleta inserida com sucesso!");
             return montarPaginaListagem();
@@ -197,9 +169,6 @@ public class OrdemColetaManager implements Serializable{
     }
     
     public String alterar(){
-        this.ordemColeta.setValorUnitario(this.valorUnitario);
-        this.ordemColeta.setQuantidade(BigInteger.valueOf(this.quantidade.longValue()));
-        this.ordemColeta.setValorTotal(valorTotal);
         verificarAlteracao();
         if(mensagem.isEmpty()){
             return concluirAlteracao();
@@ -295,12 +264,12 @@ public class OrdemColetaManager implements Serializable{
         return sdf.format(data);
     }
     
-    public void calcular(){   
-        if(!(this.valorUnitario == null && this.quantidade == null)){
-            if(this.valorUnitario.doubleValue() > 0 && this.quantidade.doubleValue() > 0){
-                this.valorTotal = BigDecimal.valueOf(this.valorUnitario.doubleValue() * this.quantidade.doubleValue());
-            }   
-        }
+    public void calcular(){
+        ordemColeta.setValorTotal( 
+                BigDecimal.valueOf(
+                ordemColeta.getValorUnitario().doubleValue() *
+                ordemColeta.getQuantidade().doubleValue())
+        );
     }
     
     public String formataTextoLongo(String textoLongo){

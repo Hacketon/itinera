@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "OrdemColeta.findAll", query = "SELECT o FROM OrdemColeta o"),
     @NamedQuery(name = "OrdemColeta.findByOrdemColetaId", query = "SELECT o FROM OrdemColeta o WHERE o.ordemColetaId = :ordemColetaId"),
     @NamedQuery(name = "OrdemColeta.findByDataOrdemColeta", query = "SELECT o FROM OrdemColeta o WHERE o.dataOrdemColeta = :dataOrdemColeta"),
+//    @NamedQuery(name = "OrdemColeta.findByRota", query = "SELECT o FROM OrdemColeta o WHERE o.rota like :rota"),
     @NamedQuery(name = "OrdemColeta.findByValorUnitario", query = "SELECT o FROM OrdemColeta o WHERE o.valorUnitario = :valorUnitario"),
     @NamedQuery(name = "OrdemColeta.findByQuantidade", query = "SELECT o FROM OrdemColeta o WHERE o.quantidade = :quantidade"),
     @NamedQuery(name = "OrdemColeta.findByValorTotal", query = "SELECT o FROM OrdemColeta o WHERE o.valorTotal = :valorTotal"),
@@ -44,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "OrdemColeta.findByPeriodoInicio", query = "SELECT o FROM OrdemColeta o WHERE o.dataOrdemColeta >= :inicio"),
     @NamedQuery(name = "OrdemColeta.findByPeriodoFim", query = "SELECT o FROM OrdemColeta o WHERE o.dataOrdemColeta <= :fim"),
     @NamedQuery(name = "OrdemColeta.findByPeriodo", query = "SELECT o FROM OrdemColeta o WHERE o.dataOrdemColeta >= :inicio and o.dataOrdemColeta <= :fim"),
-    @NamedQuery(name = "OrdemColeta.findByDataEmissaoNf", query = "SELECT o FROM OrdemColeta o WHERE o.dataEmissaoNf = :dataEmissaoNf")})
+    @NamedQuery(name = "OrdemColeta.findByDataEmissaoNf", query = "SELECT o FROM OrdemColeta o WHERE o.dataEmissaoNf like :dataEmissaoNf")})
 public class OrdemColeta implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -62,14 +63,15 @@ public class OrdemColeta implements Serializable {
     @Column(name = "data_ordem_coleta")
     @Temporal(TemporalType.DATE)
     private Date dataOrdemColeta;
-    @Basic(optional = false)
+    
     @NotNull
     @Column(name = "valor_unitario")
     private BigDecimal valorUnitario;
-    @Basic(optional = false)
+    
     @NotNull
     @Column(name = "quantidade")
     private BigInteger quantidade;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "valor_total")
@@ -104,7 +106,7 @@ public class OrdemColeta implements Serializable {
     private Empresa remetenteId;
     
     @Transient
-    private String Rota;
+    private String rota;
 
     public OrdemColeta() {
         this.dataOrdemColeta = new Date();
@@ -251,7 +253,7 @@ public class OrdemColeta implements Serializable {
     }
     
     public String getRota(){
-        String rota = "";
+        rota = "";
         rota += (this.remetenteId.toString() == null)?"":this.remetenteId.getIdMunicipio().getNomeMunicipio() + " - ";
         rota += (this.destinatarioId.toString() == null)?"":this.destinatarioId.getIdMunicipio().getNomeMunicipio();            
         return rota;

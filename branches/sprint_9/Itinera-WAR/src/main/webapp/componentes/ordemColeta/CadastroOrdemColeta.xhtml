@@ -60,7 +60,8 @@
                                                         completeMethod="#{ordemColetaManager.completeVeiculo}"
                                                         converter="#{mngVeiculoConverter}"
                                                         value="#{ordemColetaManager.ordemColeta.veiculoId}"
-                                                        size="80" />
+                                                        size="80"
+                                                        style="text-transform: uppercase" />
                                         <p:watermark for="OCVeiculo" value="#{msg.OCMVeiculo}"/>
                                     </p:column>
                                 </p:row>
@@ -153,7 +154,7 @@
                                                      onkeypress="mascara(this, formatarNumeroDuasCasas)"
                                                      required="true" 
                                                      requiredMessage="#{msgSis.obrigatorioOCValorUnitario}" 
-                                                     value="#{ordemColetaManager.valorUnitario}" >
+                                                     value="#{ordemColetaManager.ordemColeta.valorUnitario}" >
                                             <p:ajax event="blur" update="OCTotal" listener="#{ordemColetaManager.calcular()}"/>
                                         </p:inputText>
                                         <p:watermark for="OCValorUnitario" value="#{msg.OCMValorUnitario}"/>
@@ -166,7 +167,7 @@
                                                      onkeypress="mascara(this, formatarNumero)"
                                                      required="true" 
                                                      requiredMessage="#{msgSis.obrigatorioOCQuantidade}"
-                                                     value="#{ordemColetaManager.quantidade}" >
+                                                     value="#{ordemColetaManager.ordemColeta.quantidade}" >
                                             <p:ajax event="blur" update="OCTotal" listener="#{ordemColetaManager.calcular()}"/>
                                         </p:inputText>
                                         <p:watermark for="OCQuantidade" value="#{msg.OCQuantidade}"/>
@@ -177,7 +178,7 @@
                                         </p:outputLabel>
                                     </p:column>
                                     <p:column>
-                                        <p:outputLabel id="OCTotal" value="#{ordemColetaManager.valorTotal}" styleClass="inputDesabilitado" />
+                                        <p:outputLabel id="OCTotal" value="#{ordemColetaManager.ordemColeta.valorTotal}" styleClass="inputDesabilitado" />
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -201,7 +202,7 @@
                                         <p:watermark for="OCDataNotaFiscal" value="#{msg.OCMDataNF}"/>
                                     </p:column>
                                     <p:column>
-                                        <p:outputLabel value="#{msg.OCDistancia}" />
+                                        <p:outputLabel value="#{msg.OCDistancia}" for="distancia" />
                                     </p:column>
                                     <p:column>
                                         <p:inputText id="distancia" 
@@ -209,7 +210,7 @@
                                                      required="true" 
                                                      requiredMessage="#{msgSis.obrigatorioOCDistancia}"
                                                      value="#{ordemColetaManager.ordemColeta.distancia}" />
-                                        <p:watermark for="distancia" value="#{msg.OCDistancia}" />
+                                        <p:watermark for="distancia" value="#{msg.OCDistancia}(KM)" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>

@@ -4,6 +4,7 @@ package br.com.itinera.fachada;
 import br.com.itinera.modelo.Motorista;
 import br.com.itinera.modelo.OrdemColeta;
 import br.com.itinera.persistencia.OrdemColetaDAO;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -22,7 +23,7 @@ public class OrdemColetaFachada {
         return dao.listar();
     }
     
-    public List<OrdemColeta> buscarPorPeriodoNotaFiscal(Date inicio,Date fim,Integer nota){
+    public List<OrdemColeta> buscarPorPeriodoNotaFiscal(Date inicio,Date fim,BigDecimal nota){
         boolean bInicio = (inicio == null);
         boolean bFim = (fim == null);
         boolean bNota = (nota == null);

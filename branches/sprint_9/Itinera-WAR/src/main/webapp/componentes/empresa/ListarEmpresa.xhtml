@@ -32,19 +32,16 @@
                                          rendered="#{not empty empresaManager.empresas}">
                                 <p:column filterBy="#{empresa.cnpj}"
                                           filterStyle="width:180px"
+                                          filterMatchMode="contains"
                                           headerText="#{msg.formularioCampoCNPJ}"
-                                          sortBy="#{empresa.cnpj}"
-                                          style=""
-                                          styleClass="" >
+                                          sortBy="#{empresa.cnpj}" >
                                     <h:outputText value="#{empresa.cnpj}" 
                                                   title="#{msg.formularioCampoCNPJ}:" /> 
                                 </p:column>
                                 <p:column filterBy="#{empresa.ie}"
                                           filterStyle="width:180px"
                                           headerText="#{msg.formularioCampoIE}"
-                                          sortBy="#{empresa.ie}"
-                                          style=""
-                                          styleClass="" >
+                                          sortBy="#{empresa.ie}" >
                                     <h:outputText value="#{empresa.ie}" 
                                                   title="#{msg.formularioCampoIE}:" /> 
                                 </p:column>
