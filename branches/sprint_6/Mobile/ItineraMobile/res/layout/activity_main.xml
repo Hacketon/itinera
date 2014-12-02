@@ -18,7 +18,7 @@
         android:layout_alignRight="@+id/imageView1"
         android:layout_below="@+id/imageView1"
         android:layout_marginTop="70dp"
-        android:background="@color/botao_entrar"
+        android:background="@layout/layout_botao_padrao"
         android:gravity="center"
         android:text="@string/entrar" />
 

@@ -35,7 +35,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/txtMenuConsultasSaudacao"
         android:layout_marginTop="24dp"
-        android:background="@color/botao_entrar"
+        android:background="@layout/layout_botao_padrao"
         android:text="@string/consulta_empresa_nome" />
 
     <Button
@@ -46,7 +46,7 @@
         android:layout_alignRight="@+id/btnConsultaEmpresaNome"
         android:layout_below="@+id/btnConsultaEmpresaNome"
         android:layout_marginTop="24dp"
-        android:background="@color/botao_entrar"
+        android:background="@layout/layout_botao_padrao"
         android:text="@string/consulta_empresa_endereco" />
 
     <Button
@@ -57,7 +57,7 @@
         android:layout_alignRight="@+id/btnConsultaEmpresaEndereco"
         android:layout_below="@+id/btnConsultaEmpresaEndereco"
         android:layout_marginTop="20dp"
-        android:background="@color/botao_entrar"
+        android:background="@layout/layout_botao_padrao"
         android:text="@string/consulta_empresa_cnpj" />
 
 </RelativeLayout>

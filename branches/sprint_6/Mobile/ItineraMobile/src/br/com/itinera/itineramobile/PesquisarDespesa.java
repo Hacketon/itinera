@@ -29,7 +29,6 @@ public class PesquisarDespesa extends Activity {
 	private String nomeUsuario;	
 	private ListaDespesaAdapter adapter;
 	private ListView lstListaDespesa;
-	private Button btnAlterar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,6 @@ public class PesquisarDespesa extends Activity {
 		setContentView(R.layout.activity_pesquisar_despesa);
 		
 		lstListaDespesa = (ListView)findViewById(R.id.lstListaDespesas);
-		btnAlterar = (Button)findViewById(R.id.btnAlterar);
 		
 		//Recupera parâmetros da tela anterior
 		Intent i = getIntent();
@@ -53,6 +51,8 @@ public class PesquisarDespesa extends Activity {
 		loadingDialog.setMessage("Carregando despesas...");
 		loadingDialog.setCancelable(true);
 		loadingDialog.show();
+		
+		//Monta lista
 		new PesquisaDespesaTarefa(this, "", "").execute();
 	}
 	
@@ -68,7 +68,7 @@ public class PesquisarDespesa extends Activity {
 	public void montarListaAposProcessamento(List<Despesa> listaDespesa){
 		
 		if (listaDespesa != null && !listaDespesa.isEmpty()){
-			adapter = new ListaDespesaAdapter(this, listaDespesa);
+			adapter = new ListaDespesaAdapter(PesquisarDespesa.this, listaDespesa);
 			lstListaDespesa.setAdapter(adapter);
 			lstListaDespesa.setVisibility(View.VISIBLE);
 		} else{
