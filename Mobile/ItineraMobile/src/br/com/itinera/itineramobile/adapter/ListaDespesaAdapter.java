@@ -24,7 +24,7 @@ import br.com.itinera.itineramobile.util.Moeda;
 
 public class ListaDespesaAdapter extends ArrayAdapter<Despesa> {
 
-	private LayoutInflater inflater;
+	//private LayoutInflater inflater;
 	private Context context;
 	private Despesa despesa;
 	private int posicaoLista;
@@ -33,25 +33,27 @@ public class ListaDespesaAdapter extends ArrayAdapter<Despesa> {
 		super(context, R.layout.item_lista_despesa, listaDespesa);
 		this.context = context;
 		
-		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		//this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	} 
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
+		View view = convertView;
 		
-		if(convertView == null){
-			convertView  = inflater.inflate(R.layout.item_lista_despesa, null);
+		if(view == null){
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			view  = inflater.inflate(R.layout.item_lista_despesa, parent,false);
 			holder = new ViewHolder();
-			holder.txtFornecedor = (TextView)convertView.findViewById(R.id.txtItemFornecedor);
-			holder.txtData = (TextView)convertView.findViewById(R.id.txtItemData);
-			holder.txtValor = (TextView)convertView.findViewById(R.id.txtItemValor);
-			holder.btnExcluir = (Button)convertView.findViewById(R.id.btnExcluir);
-			holder.btnAlterar = (Button)convertView.findViewById(R.id.btnAlterar);
+			holder.txtFornecedor = (TextView)view.findViewById(R.id.txtItemFornecedor);
+			holder.txtData = (TextView)view.findViewById(R.id.txtItemData);
+			holder.txtValor = (TextView)view.findViewById(R.id.txtItemValor);
+			holder.btnExcluir = (Button)view.findViewById(R.id.btnExcluir);
+			holder.btnAlterar = (Button)view.findViewById(R.id.btnAlterar);
 			
-			convertView.setTag(holder);
+			view.setTag(holder);
 		}else{
-			holder = (ViewHolder) convertView.getTag();
+			holder = (ViewHolder) view.getTag();
 		}
 		
 		Despesa d = getItem(position);
@@ -110,7 +112,7 @@ public class ListaDespesaAdapter extends ArrayAdapter<Despesa> {
 			}
 		});
 		
-		return convertView;
+		return view;
 	}
 	
 	
@@ -119,8 +121,9 @@ public class ListaDespesaAdapter extends ArrayAdapter<Despesa> {
 		TextView txtFornecedor;
 		TextView txtData;
 		TextView txtValor;
-		Button btnAlterar;
 		Button btnExcluir;
+		Button btnAlterar;
+		
 	}
 	
 	

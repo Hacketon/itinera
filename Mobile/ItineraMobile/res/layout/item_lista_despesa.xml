@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewNomeFornecedor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -16,26 +16,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/textViewNomeFornecedor"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewDataDespesa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/txtItemFornecedor"
         android:text="@string/cadastro_despesa_data" />
-
-    <Button
-        android:id="@+id/btnAlterar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/txtItemValor"
-        android:layout_marginTop="18dp"
-        android:background="@color/botao_normal"
-        android:text="@string/botao_alterar" />
 
     <Button
         android:id="@+id/btnExcluir"
@@ -44,34 +34,43 @@
         android:layout_alignBaseline="@+id/btnAlterar"
         android:layout_alignBottom="@+id/btnAlterar"
         android:layout_alignParentRight="true"
-        android:background="@color/botao_normal"
+        android:background="@layout/layout_botao_padrao"
         android:text="@string/botao_excluir" />
 
     <TextView
         android:id="@+id/txtItemData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignBaseline="@+id/textViewDataDespesa"
+        android:layout_alignBottom="@+id/textViewDataDespesa"
         android:layout_toRightOf="@+id/txtItemFornecedor"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewValorDespesa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/txtItemData"
-        android:layout_alignBottom="@+id/txtItemData"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewDataDespesa"
         android:text="@string/cadastro_despesa_valor" />
+
+    <Button
+        android:id="@+id/btnAlterar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtItemValor"
+        android:layout_marginTop="14dp"
+        android:background="@layout/layout_botao_padrao"
+        android:text="@string/botao_alterar" />
 
     <TextView
         android:id="@+id/txtItemValor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_toRightOf="@+id/textView3"
+        android:layout_alignBaseline="@+id/textViewValorDespesa"
+        android:layout_alignBottom="@+id/textViewValorDespesa"
+        android:layout_toRightOf="@+id/txtItemFornecedor"
         android:text="TextView" />
 
 </RelativeLayout>

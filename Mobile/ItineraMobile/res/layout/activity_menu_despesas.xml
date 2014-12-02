@@ -36,7 +36,7 @@
         android:layout_alignRight="@+id/txtMenuDespesasSaudacao"
         android:layout_below="@+id/txtMenuDespesasSaudacao"
         android:layout_marginTop="34dp"
-        android:background="@color/botao_entrar"
+        android:background="@layout/layout_botao_padrao"
         android:text="@string/menu_despesa_cadastrar" />
 
     <Button
@@ -47,7 +47,7 @@
         android:layout_alignRight="@+id/btnMenuDespesasCadastrar"
         android:layout_below="@+id/btnMenuDespesasCadastrar"
         android:layout_marginTop="21dp"
-        android:background="@color/botao_entrar"
+        android:background="@layout/layout_botao_padrao"
         android:text="@string/menu_despesa_pesquisar" />
 
 </RelativeLayout>
