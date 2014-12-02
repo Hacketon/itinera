@@ -26,45 +26,47 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int frota1=0x7f020000;
-        public static final int grupocamilo=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int itinera=0x7f020003;
+        public static final int button_padrao=0x7f020000;
+        public static final int button_padrao_pressed=0x7f020001;
+        public static final int frota1=0x7f020002;
+        public static final int grupocamilo=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int itinera=0x7f020005;
     }
     public static final class id {
         public static final int action_settings=0x7f090028;
-        public static final int btnAlterar=0x7f090023;
-        public static final int btnCadastrarDespesa=0x7f090000;
+        public static final int btnAlterar=0x7f090024;
+        public static final int btnCadastrarDespesa=0x7f090008;
         public static final int btnConsultaEmpresaCnpj=0x7f090016;
         public static final int btnConsultaEmpresaEndereco=0x7f090015;
         public static final int btnConsultaEmpresaNome=0x7f090014;
         public static final int btnEntrar=0x7f09000f;
-        public static final int btnExcluir=0x7f090025;
+        public static final int btnExcluir=0x7f090023;
         public static final int btnLoginEntrar=0x7f09000e;
         public static final int btnMenuConsultas=0x7f09001b;
         public static final int btnMenuDespesas=0x7f09001d;
         public static final int btnMenuDespesasCadastrar=0x7f090019;
         public static final int btnMenuDespesasPesquisar=0x7f09001a;
+        public static final int datePickerCadastroDespesaData=0x7f090002;
         public static final int imageView1=0x7f090010;
         public static final int imageView2=0x7f090011;
         public static final int jlbSenha=0x7f09000c;
         public static final int jlbUsuario=0x7f09000a;
         public static final int lstListaDespesas=0x7f09001f;
-        public static final int textCadastrarDespesaData=0x7f090004;
-        public static final int textView1=0x7f090020;
-        public static final int textView2=0x7f090022;
-        public static final int textView3=0x7f090027;
-        public static final int textView6=0x7f090006;
-        public static final int txtCadastrarDespesaNumeroDocumento=0x7f090008;
-        public static final int txtCadastroDespesaData=0x7f090003;
-        public static final int txtCadastroDespesaDocumento=0x7f090005;
-        public static final int txtCadastroDespesaFornecedor=0x7f090002;
-        public static final int txtCadastroDespesaNomeFornecedor=0x7f090001;
-        public static final int txtCadastroDespesaValor=0x7f090007;
+        public static final int textCadastrarDespesaData=0x7f090003;
+        public static final int textView6=0x7f090005;
+        public static final int textViewDataDespesa=0x7f090022;
+        public static final int textViewNomeFornecedor=0x7f090020;
+        public static final int textViewValorDespesa=0x7f090026;
+        public static final int txtCadastrarDespesaNumeroDocumento=0x7f090007;
+        public static final int txtCadastroDespesaDocumento=0x7f090004;
+        public static final int txtCadastroDespesaFornecedor=0x7f090001;
+        public static final int txtCadastroDespesaNomeFornecedor=0x7f090000;
+        public static final int txtCadastroDespesaValor=0x7f090006;
         public static final int txtDataAtual=0x7f090009;
-        public static final int txtItemData=0x7f090026;
+        public static final int txtItemData=0x7f090025;
         public static final int txtItemFornecedor=0x7f090021;
-        public static final int txtItemValor=0x7f090024;
+        public static final int txtItemValor=0x7f090027;
         public static final int txtMenuConsultasDataAtual=0x7f090012;
         public static final int txtMenuConsultasSaudacao=0x7f090013;
         public static final int txtMenuDataAtual=0x7f09001e;
@@ -83,6 +85,7 @@ public final class R {
         public static final int activity_menu_principal=0x7f030005;
         public static final int activity_pesquisar_despesa=0x7f030006;
         public static final int item_lista_despesa=0x7f030007;
+        public static final int layout_botao_padrao=0x7f030008;
     }
     public static final class menu {
         public static final int cadastro_despesa=0x7f080000;

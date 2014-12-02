@@ -1,6 +1,7 @@
 package br.com.itinera.itineramobile;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import br.com.itinera.itineramobile.banco.DatabaseHelper;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,7 +33,7 @@ public class CadastroDespesa extends Activity {
 	private TextView txtCadastrarDespesaSaudacao;
 	private EditText txtCadastroDespesaFornecedor;
 	private EditText txtCadastroDespesaDocumento;
-	private EditText txtCadastroDespesaData;
+	private DatePicker datePickerCadastroDespesaData;
 	private EditText txtCadastroDespesaValor;
 	private Spinner spnCadastroDespesaTipoDespesa;
 	private AlertDialog errorAlertDialog;
@@ -46,11 +48,9 @@ public class CadastroDespesa extends Activity {
 		
 		txtCadastroDespesaFornecedor = (EditText) findViewById(R.id.txtCadastroDespesaFornecedor);
 		txtCadastroDespesaDocumento = (EditText) findViewById(R.id.txtCadastroDespesaDocumento);
-		txtCadastroDespesaData = (EditText) findViewById(R.id.txtCadastroDespesaData);
+		datePickerCadastroDespesaData = (DatePicker) findViewById(R.id.datePickerCadastroDespesaData);
 		txtCadastroDespesaValor = (EditText) findViewById(R.id.txtCadastroDespesaValor);
 		//spnCadastroDespesaTipoDespesa = (Spinner) findViewById(R.id.spnCadastroDespesaTipoDespesa);
-		
-		txtCadastroDespesaData.addTextChangedListener(Mask.insert("##/##/####", txtCadastroDespesaData));
 		
 		txtCadastroDespesaValor.setOnFocusChangeListener(new OnFocusChangeListener() {
 			
@@ -69,12 +69,15 @@ public class CadastroDespesa extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Click cadastrar
-				DatabaseHelper banco = new DatabaseHelper(CadastroDespesa.this);
 				
 				Despesa d = new Despesa();
 				d.setCodigoDespesa(0);
 				d.setCodigoUsuario(codigoUsuario);
-				d.setData(txtCadastroDespesaData.getText().toString());
+				int day = datePickerCadastroDespesaData.getDayOfMonth();
+				int month = datePickerCadastroDespesaData.getMonth();
+				int year = datePickerCadastroDespesaData.getYear();
+				//PRECISA AJUSTAR PARA PEGAR A DATA DO PICKER
+				d.setData("01/01/2014");
 				d.setNomeFornecedor(txtCadastroDespesaFornecedor.getText().toString());
 				d.setNumeroDocumento(txtCadastroDespesaDocumento.getText().toString());
 				d.setTipoDespesa("Combustível");
@@ -83,25 +86,29 @@ public class CadastroDespesa extends Activity {
 					d.set_id(_id);	
 				}
 				
-				
-				if(!validarCampos(d, txtCadastroDespesaFornecedor, txtCadastroDespesaData, txtCadastroDespesaValor)){
+				if(!validarCampos(d, txtCadastroDespesaFornecedor, datePickerCadastroDespesaData, txtCadastroDespesaValor)){
 					return;
 				}
+				
+				
+				DatabaseHelper banco = new DatabaseHelper(CadastroDespesa.this);
+				
 				
 				try {
 					banco.salvar(d);
 					showErrorMessage("Cadastro de despesa efetuado com sucesso.");
-					limparCampos(txtCadastrarDespesaDataAtual, txtCadastrarDespesaSaudacao, txtCadastroDespesaData, txtCadastroDespesaDocumento, txtCadastroDespesaFornecedor, txtCadastroDespesaValor);
+					limparCampos(txtCadastrarDespesaDataAtual, txtCadastrarDespesaSaudacao, datePickerCadastroDespesaData, txtCadastroDespesaDocumento, txtCadastroDespesaFornecedor, txtCadastroDespesaValor);
 				} catch (Exception e) {
 					showErrorMessage("Falha ao gravar despesa.");
 				}
 			}
 
-			private void limparCampos(TextView txtCadastrarDespesaDataAtual, TextView txtCadastrarDespesaSaudacao, EditText txtCadastroDespesaData, EditText txtCadastroDespesaDocumento, EditText txtCadastroDespesaFornecedor, EditText txtCadastroDespesaValor) {
+			private void limparCampos(TextView txtCadastrarDespesaDataAtual, TextView txtCadastrarDespesaSaudacao, DatePicker txtCadastroDespesaData, EditText txtCadastroDespesaDocumento, EditText txtCadastroDespesaFornecedor, EditText txtCadastroDespesaValor) {
 				// MÃ©todo de limpar campos
 				//txtCadastrarDespesaDataAtual.setText("");
 				//txtCadastrarDespesaSaudacao.setText("");
-				txtCadastroDespesaData.setText("");
+				// TO-DO TRATAR COMO LIMPAR O CAMPO
+				//txtCadastroDespesaData.setText("");
 				txtCadastroDespesaDocumento.setText("");
 				txtCadastroDespesaFornecedor.setText("");
 				txtCadastroDespesaValor.setText("");	
@@ -124,7 +131,11 @@ public class CadastroDespesa extends Activity {
 			
 				txtCadastroDespesaFornecedor.setText(parametros.getString("nomeFornecedor"));
 				txtCadastroDespesaDocumento.setText(parametros.getString("numeroDocumento"));
-				txtCadastroDespesaData.setText(parametros.getString("data"));
+				
+				//CONVERTER O BUNDLE EM Date
+				
+				// SETAR O PICKER COM A DATA RECUPERADA
+				//txtCadastroDespesaData.setText(parametros.getString("data"));
 				Long valor = parametros.getLong("valor");
 				txtCadastroDespesaValor.setText(valor.toString());		
 				_id = parametros.getLong("_id");
@@ -167,7 +178,7 @@ public class CadastroDespesa extends Activity {
 		errorAlertDialog.show();
 	}
 	
-	private boolean validarCampos(Despesa d, EditText txtCadastroDespesaFornecedor, EditText txtCadastroDespesaData, EditText txtCadastroDespesaValor){
+	private boolean validarCampos(Despesa d, EditText txtCadastroDespesaFornecedor, DatePicker datePickerCadastroDespesaData, EditText txtCadastroDespesaValor){
 		if(d.getNomeFornecedor().trim().equals("")){
 			showErrorMessage("O campo fornecedor é obrigatório!");
 			txtCadastroDespesaFornecedor.requestFocus();
@@ -176,7 +187,7 @@ public class CadastroDespesa extends Activity {
 		
 		if(d.getData().trim().equals("")){
 			showErrorMessage("O campo data é obrigatório!");
-			txtCadastroDespesaData.requestFocus();
+			datePickerCadastroDespesaData.requestFocus();
 			return false;
 		}
 		

@@ -9,18 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".CadastroDespesa" >
 
-
-    <Button
-        android:id="@+id/btnCadastrarDespesa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="40dp"
-        android:layout_marginRight="25dp"
-        android:background="@color/botao_entrar"
-        android:text="@string/botao_salvar" />
-
     <TextView
         android:id="@+id/txtCadastroDespesaNomeFornecedor"
         android:layout_width="wrap_content"
@@ -41,8 +29,8 @@
         <requestFocus />
     </EditText>
 
-    <EditText
-        android:id="@+id/txtCadastroDespesaData"
+    <DatePicker
+        android:id="@+id/datePickerCadastroDespesaData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textCadastrarDespesaData"
@@ -65,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView6"
-        android:layout_alignLeft="@+id/txtCadastroDespesaData"
+        android:layout_alignLeft="@+id/datePickerCadastroDespesaData"
         android:inputType="number"
         android:ems="10" />
 
@@ -95,5 +83,17 @@
         android:layout_below="@+id/txtCadastroDespesaFornecedor"
         android:layout_marginTop="45dp"
         android:text="@string/cadastro_despesa_numero_documento" />
+
+    <Button
+        android:id="@+id/btnCadastrarDespesa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:background="@layout/layout_botao_padrao"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="@string/botao_salvar" />
 
 </RelativeLayout>

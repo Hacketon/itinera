@@ -17,7 +17,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/txtSaudacao"
         android:layout_marginTop="62dp"
-        android:background="@color/botao_entrar"
+        android:background="@layout/layout_botao_padrao"
         android:text="@string/consultas" />
 
     <Button
@@ -28,7 +28,7 @@
         android:layout_alignRight="@+id/btnMenuConsultas"
         android:layout_below="@+id/btnMenuConsultas"
         android:layout_marginTop="28dp"
-        android:background="@color/botao_entrar"
+        android:background="@layout/layout_botao_padrao"
         android:text="@string/despesas" />
 
     <TextView

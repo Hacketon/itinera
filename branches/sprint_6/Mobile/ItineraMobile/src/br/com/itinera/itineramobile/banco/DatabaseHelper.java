@@ -124,6 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     		
     		do{
     			d = new Despesa();
+    			//d.set_id(cursor.getLong(cursor.getColumnIndex("_id")));
     			d.setCodigoDespesa(cursor.getInt(cursor.getColumnIndex("codigo_despesa")));
     			d.setCodigoUsuario(cursor.getInt(cursor.getColumnIndex("codigo_usuario")));
     			d.setNomeFornecedor(cursor.getString(cursor.getColumnIndex("nome_fornecedor")));
