@@ -58,6 +58,7 @@ public class MenuDespesas extends Activity {
 				Bundle parametros = new Bundle();
 				parametros.putInt("codigo", codigoUsuario);
 				parametros.putString("nome", nomeUsuario);
+				parametros.putInt("tipo", 0);// incluir
 				
 				i.putExtras(parametros);
 				

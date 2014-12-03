@@ -27,25 +27,6 @@
         android:layout_below="@+id/txtItemFornecedor"
         android:text="@string/cadastro_despesa_data" />
 
-    <Button
-        android:id="@+id/btnExcluir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnAlterar"
-        android:layout_alignBottom="@+id/btnAlterar"
-        android:layout_alignParentRight="true"
-        android:background="@layout/layout_botao_padrao"
-        android:text="@string/botao_excluir" />
-
-    <TextView
-        android:id="@+id/txtItemData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewDataDespesa"
-        android:layout_alignBottom="@+id/textViewDataDespesa"
-        android:layout_toRightOf="@+id/txtItemFornecedor"
-        android:text="TextView" />
-
     <TextView
         android:id="@+id/textViewValorDespesa"
         android:layout_width="wrap_content"
@@ -54,15 +35,13 @@
         android:layout_below="@+id/textViewDataDespesa"
         android:text="@string/cadastro_despesa_valor" />
 
-    <Button
-        android:id="@+id/btnAlterar"
+    <TextView
+        android:id="@+id/txtItemData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/txtItemValor"
-        android:layout_marginTop="14dp"
-        android:background="@layout/layout_botao_padrao"
-        android:text="@string/botao_alterar" />
+        android:layout_above="@+id/txtItemValor"
+        android:layout_centerHorizontal="true"
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/txtItemValor"
@@ -70,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textViewValorDespesa"
         android:layout_alignBottom="@+id/textViewValorDespesa"
-        android:layout_toRightOf="@+id/txtItemFornecedor"
+        android:layout_alignLeft="@+id/txtItemData"
         android:text="TextView" />
 
 </RelativeLayout>
