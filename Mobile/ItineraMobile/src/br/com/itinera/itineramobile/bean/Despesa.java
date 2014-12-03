@@ -1,8 +1,9 @@
 package br.com.itinera.itineramobile.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Despesa {
+public class Despesa implements Serializable{
 
 	private long _id;
 	private int codigoDespesa;

@@ -110,7 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     	String where = "";
     	 
     	String[] colunas = new String[] { "codigo_despesa", "codigo_usuario", 
-    			"nome_fornecedor", "numero_documento", "valor", "data", "tipo_despesa"};
+    			"nome_fornecedor", "numero_documento", "valor", "data", "tipo_despesa","_id"};
     	 
     	String argumentos[] = new String[] {valor};
     	
@@ -119,12 +119,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     	Despesa d = null;
     	
     	
-    	if (cursor != null) {
+    	if (  cursor != null  && cursor.getCount() > 0) {
     		cursor.moveToFirst();
     		
     		do{
     			d = new Despesa();
-    			//d.set_id(cursor.getLong(cursor.getColumnIndex("_id")));
+    			d.set_id(cursor.getLong(cursor.getColumnIndex("_id")));
     			d.setCodigoDespesa(cursor.getInt(cursor.getColumnIndex("codigo_despesa")));
     			d.setCodigoUsuario(cursor.getInt(cursor.getColumnIndex("codigo_usuario")));
     			d.setNomeFornecedor(cursor.getString(cursor.getColumnIndex("nome_fornecedor")));
