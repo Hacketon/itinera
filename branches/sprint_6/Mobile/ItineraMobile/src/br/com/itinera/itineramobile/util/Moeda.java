@@ -18,7 +18,7 @@ public class Moeda {
         } else {
             return "R$ 0,00";
         }
-    } 
+    }
 
     public static String mascaraDinheiro(double valor, DecimalFormat moeda) {
         return moeda.format(valor);

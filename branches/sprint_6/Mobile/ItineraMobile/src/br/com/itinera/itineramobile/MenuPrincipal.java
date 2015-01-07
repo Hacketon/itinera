@@ -16,7 +16,6 @@ public class MenuPrincipal extends Activity {
 
 	private TextView txtSaudacao;
 	private TextView txtMenuDataAtual;
-	private Button btnMenuConsultas;
 	private Button btnMenuDespesas;
 	private int codigoUsuario;
 	private String nomeUsuario;	
@@ -29,7 +28,6 @@ public class MenuPrincipal extends Activity {
 		//Referência ao campo do layout
 		txtSaudacao = (TextView)findViewById(R.id.txtSaudacao);
 		txtMenuDataAtual = (TextView)findViewById(R.id.txtMenuDataAtual);
-		btnMenuConsultas = (Button)findViewById(R.id.btnMenuConsultas);
 		btnMenuDespesas = (Button)findViewById(R.id.btnMenuDespesas);
 		
 		txtMenuDataAtual.setText(dataAtual());
@@ -45,23 +43,6 @@ public class MenuPrincipal extends Activity {
 			nomeUsuario = parametros.getString("nome");
 		}
 	
-		
-		btnMenuConsultas.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// click botao consultas
-				
-				Bundle parametros = new Bundle();
-				parametros.putInt("codigo", codigoUsuario);
-				parametros.putString("nome", nomeUsuario);
-				
-				Intent i = new Intent(MenuPrincipal.this, MenuConsultas.class);
-				i.putExtras(parametros);
-				startActivity(i);				
-			}
-		});
-		
 		btnMenuDespesas.setOnClickListener(new OnClickListener() {
 			
 			@Override
