@@ -52,5 +52,12 @@ public abstract class Mask {
 			}
 		};
 	}
+	
+	public static String setLeftPadding(String text, char charPad, int length){
+		
+		String strPad = String.format("%"+length+"s", text).replace(' ', charPad);
+		
+		return strPad;
+	}
 
 }
