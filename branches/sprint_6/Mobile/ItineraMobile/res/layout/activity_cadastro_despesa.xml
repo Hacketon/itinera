@@ -8,13 +8,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".CadastroDespesa" >
-
+    
     <TextView
         android:id="@+id/txtCadastroDespesaNomeFornecedor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="90dp"
         android:text="@string/cadastro_despesa_nome_Fornecedor" />
 
     <EditText
@@ -29,14 +29,14 @@
         <requestFocus />
     </EditText>
 
-    <DatePicker
-        android:id="@+id/datePickerCadastroDespesaData"
+    <Button
+        android:id="@+id/buttonDatePickerCadastroDespesaData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textCadastrarDespesaData"
         android:layout_alignLeft="@+id/txtCadastroDespesaDocumento"
         android:layout_alignRight="@+id/txtCadastroDespesaDocumento"
-        android:inputType="number"
+        android:text="@string/label_selecionar_data"
         android:ems="10" />
 
     <TextView
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView6"
-        android:layout_alignLeft="@+id/datePickerCadastroDespesaData"
+        android:layout_alignLeft="@+id/buttonDatePickerCadastroDespesaData"
         android:inputType="number"
         android:ems="10" />
 

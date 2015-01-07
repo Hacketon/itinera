@@ -9,28 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MenuPrincipal" >
 
-    <Button
-        android:id="@+id/btnMenuConsultas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/txtSaudacao"
-        android:layout_marginTop="62dp"
-        android:background="@layout/layout_botao_padrao"
-        android:text="@string/consultas" />
-
-    <Button
-        android:id="@+id/btnMenuDespesas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnMenuConsultas"
-        android:layout_alignRight="@+id/btnMenuConsultas"
-        android:layout_below="@+id/btnMenuConsultas"
-        android:layout_marginTop="28dp"
-        android:background="@layout/layout_botao_padrao"
-        android:text="@string/despesas" />
-
     <TextView
         android:id="@+id/txtSaudacao"
         android:layout_width="wrap_content"
@@ -50,5 +28,16 @@
         android:layout_alignLeft="@+id/txtSaudacao"
         android:layout_marginBottom="27dp"
         android:text="TextView" />
+
+    <Button
+        android:id="@+id/btnMenuDespesas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtSaudacao"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtSaudacao"
+        android:layout_marginTop="26dp"
+        android:background="@layout/layout_botao_padrao"
+        android:text="@string/despesas" />
 
 </RelativeLayout>
